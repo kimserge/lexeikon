@@ -34,6 +34,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Noto Sans',s
 .scroll{overflow-x:auto}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .top{background:var(--band);color:var(--bandink);padding-bottom:18px;padding-top:max(clamp(22px,4vw,48px),env(safe-area-inset-top))}
+.uil{font:600 14px 'Noto Sans',sans-serif;min-height:40px;padding:0 8px;border-radius:8px;border:1px solid rgb(255 255 255/.35);background:transparent;color:var(--bandink);align-self:flex-start}
+.uil option{color:#17191e}
 .tin{max-width:1240px;margin:auto;display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
 h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:balance}
 .sub{margin:8px 0 0;opacity:.88;max-width:62ch}
@@ -102,6 +104,7 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
 .def .l{display:block}
 .def .l.f{margin-top:.55em}
 .def .l.f:first-child{margin-top:0}
+.def .l.q{padding-inline-start:.9em;border-inline-start:2px solid var(--line);margin-top:.3em}
 .def .l.x{padding-inline-start:.9em;margin-top:.45em;border-inline-start:2px solid var(--line)}
 .ex{color:light-dark(#7d828b,#8f959f)}
 .exb{font-weight:400;font-style:normal}
@@ -110,7 +113,7 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
 .l.x .exb,.l.x .ex .ex{font-style:normal}
 .hit{cursor:pointer}
 .hit.long:not(.open) .def{max-height:7.6em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
-.hit.long:not(.open)::after{content:'развернуть';display:block;font:13px 'Noto Sans',sans-serif;color:var(--lap);margin-top:2px}
+.hit.long:not(.open)::after{content:var(--exp,'…');display:block;font:13px 'Noto Sans',sans-serif;color:var(--lap);margin-top:2px}
 .acts{display:none;gap:8px;flex-wrap:wrap;margin:0 0 12px}
 .acts .btn{min-height:38px}
 .tro{background:var(--card);border-radius:10px;padding:10px 14px;margin:0 0 14px;white-space:pre-line;font:16px/1.55 var(--lex)}
@@ -170,8 +173,9 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
   <div class="tin">
     <div>
       <h1>LexEikôn</h1>
-      <p class="sub">Набирайте латиницей без диакритики: <b>gmerti</b> найдёт <span class="sc">ღმერთი</span>, <b>mlk</b> — <span class="sc">ܡܠܟܐ</span>. Можно и в оригинальном письме; ищется сразу во всех словарях.</p>
+      <p class="sub" data-i18n="sub"></p>
     </div>
+    <select id="uil" class="uil" data-i18n-aria="uilang"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select>
   </div>
   <div class="glyphs" aria-hidden="true">ܐ ა α A ա አ ا ܒ ბ β B բ በ ب ܓ გ γ C գ ገ ج ܕ დ δ D դ ደ د</div>
 </header>
@@ -180,41 +184,41 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
   <section>
     <div class="qrow">
       <div class="qbox">
-        <label for="q" class="vh">Поиск</label>
+        <label for="q" class="vh" data-i18n="search"></label>
         <input id="q" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" dir="auto" role="combobox" aria-controls="sug" aria-expanded="false" aria-autocomplete="list" placeholder="gmerti, mlk, tagavor…">
         <ul id="sug" class="sug" role="listbox" hidden></ul>
       </div>
-      <button id="clr" class="btn ghost" hidden>Очистить</button>
-      <button id="kbB" class="btn ghost" aria-expanded="false" aria-controls="kb">Алфавит</button>
+      <button id="clr" class="btn ghost" hidden data-i18n="clear"></button>
+      <button id="kbB" class="btn ghost" aria-expanded="false" aria-controls="kb" data-i18n="alphabet"></button>
     </div>
     <div id="kb" class="kb" hidden></div>
-    <div class="chips" id="chips" role="group" aria-label="Язык"></div>
+    <div class="chips" id="chips" role="group" data-i18n-aria="langgrp"></div>
     <div class="opts">
-      <div class="seg" id="mode" role="group" aria-label="Режим поиска">
-        <button data-m="pre" class="on">Начало</button><button data-m="in">Содержит</button><button data-m="ex">Точно</button><button data-m="re">Regex</button>
+      <div class="seg" id="mode" role="group" data-i18n-aria="modegrp">
+        <button data-m="pre" class="on" data-i18n="pre"></button><button data-m="in" data-i18n="in"></button><button data-m="ex" data-i18n="ex"></button><button data-m="re">Regex</button>
       </div>
-      <label class="chk"><input type="checkbox" id="scope" checked> искать и в переводах</label>
+      <label class="chk"><input type="checkbox" id="scope" checked> <span data-i18n="scope"></span></label>
     </div>
     <p id="stat" class="stat" aria-live="polite"></p>
     <ol id="res" class="res"></ol>
-    <button id="more" class="btn ghost" hidden>Показать ещё</button>
+    <button id="more" class="btn ghost" hidden data-i18n="more"></button>
   </section>
 
-  <aside class="lib"><details class="libd" id="trD"><summary><h2>Транслитерация</h2></summary>
-    <p class="note">Выберите систему для каждого языка: она показывается рядом с заглавными словами и в списке вариантов. Ниже — полная таблица выбранной системы.</p>
+  <aside class="lib"><details class="libd" id="trD"><summary><h2 data-i18n="sec_tr"></h2></summary>
+    <p class="note" data-i18n="tr_note"></p>
     <div id="trsec"></div>
   </details>
-  <details class="libd" id="setD"><summary><h2>Настройки</h2></summary>
-    <details class="set" open><summary>Словари <span id="libn" class="note"></span></summary>
+  <details class="libd" id="setD"><summary><h2 data-i18n="sec_set"></h2></summary>
+    <details class="set" open><summary><span data-i18n="dicts"></span> <span id="libn" class="note"></span></summary>
       <ul id="dl" class="dl"></ul>
-      <p class="note">Lexicon Linguae Aethiopicae: цифровое издание TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt и др.), лицензия CC BY-NC-SA 4.0.</p>
+      <p class="note" data-i18n="attrib"></p>
     </details>
     <p id="sync" class="sync"></p>
   </details></aside>
 </main>
 
 <div id="ov" class="ov" hidden><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dt" id="dlg"></div></div>
-<div id="pop" class="pop" role="dialog" aria-label="Латинский словарь" hidden></div>
+<div id="pop" class="pop" role="dialog" data-i18n-aria="poptitle" hidden></div>
 <div id="toast" class="toast" role="status"></div>
 
 <script>
@@ -224,6 +228,106 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const LS={get(k,d){try{const v=localStorage.getItem('lex_'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('lex_'+k,JSON.stringify(v))}catch(e){}}};
 
 const LANGS={syr:['Сирийский','сир.'],ka:['Древнегрузинский','груз.'],grc:['Древнегреческий','греч.'],la:['Латынь','лат.'],hy:['Армянский','арм.'],gez:['Эфиопский (геэз)','эфиоп.'],ar:['Арабский','араб.'],xx:['Другой','—']};
+/* ---------- interface languages ---------- */
+const EX='<b>gmerti</b> → <span class="sc">ღმერთი</span>, <b>mlk</b> → <span class="sc">ܡܠܟܐ</span>, <b>tagavor</b> → <span class="sc">թագաւոր</span>, <b>ngs</b> → <span class="sc">ነግሠ</span>';
+const I18N={
+ ru:{name:'Русский',
+  sub:'Набирайте латиницей без диакритики: <b>gmerti</b> найдёт <span class="sc">ღმერთი</span>, <b>mlk</b> — <span class="sc">ܡܠܟܐ</span>. Можно и в оригинальном письме; ищется сразу во всех словарях.',
+  search:'Поиск',clear:'Очистить',alphabet:'Алфавит',more:'Показать ещё',copy:'копировать',expand:'развернуть',close:'Закрыть',
+  all:'Все',langgrp:'Язык',modegrp:'Режим поиска',pre:'Начало',in:'Содержит',ex:'Точно',scope:'искать и в переводах',
+  sec_tr:'Транслитерация',tr_note:'Выберите систему для каждого языка: она показывается рядом с заглавными словами и в списке вариантов. Ниже — полная таблица выбранной системы.',
+  sec_set:'Настройки',dicts:'Словари',uilang:'Язык интерфейса',
+  attrib:'Lexicon Linguae Aethiopicae: цифровое издание TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt и др.), лицензия CC BY-NC-SA 4.0.',
+  found:'Найдено: ',none:'Ничего не найдено. Попробуйте режим «Содержит» или другой язык.',rxerr:'Ошибка в регулярном выражении',
+  empty:(tot,a,n)=>`<b>${tot}</b> статей в ${a} из ${n} словар${n==1?'я':'ей'}${a?'':' — включите хотя бы один в списке словарей'}. Например: ${EX}. Транслитерация и словари — внизу.`,
+  loading:'Словари загружаются…',libn:(a,n,t)=>`${a} из ${n} включены · ${t} статей`,abbr:'ст.',
+  space:'пробел',bksp:'⌫ стереть',off:'не показывать',cons:'Согласные',orders:'Порядки (на примере ለ)',
+  sixth:'Шестой порядок: ə; в конце слова и перед слогом с полной гласной не пишется',
+  grcn:'γγ → ng, αυ → au, ου → ou; густое придыхание → h, ῥ → rh',copied:'Скопировано',copyfail:'Не удалось скопировать',poptitle:'Латинский словарь',usearia:'Использовать в поиске',
+  lang:{syr:'Сирийский',ka:'Древнегрузинский',grc:'Древнегреческий',la:'Латынь',hy:'Армянский',gez:'Эфиопский (геэз)',ar:'Арабский',xx:'Другой'},
+  chip:{syr:'Сир.',ka:'Груз.',grc:'Греч.',la:'Лат.',hy:'Арм.',gez:'Эфиоп.',ar:'Араб.',xx:'Др.'},
+  tag:{syr:'сир.',ka:'груз.',grc:'греч.',la:'лат.',hy:'арм.',gez:'эфиоп.',ar:'араб.',xx:'—'},
+  sys:{syr_sci:'Научная (консонантная)',ka_sci:'Картвелологическая: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Национальная 2002: k’ t’ ts’ ch’ gh',hy_hm:'Хюбшман — Мейе: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Традиционная (Дилльман — Ламбдин): a, ā',gez_ham:'Гамбургская (Encyclopaedia Aethiopica): ä, a',grc_sci:'Научная',ar_din:'DIN 31635'}},
+ en:{name:'English',
+  sub:'Type in Latin letters without diacritics: <b>gmerti</b> finds <span class="sc">ღმერთი</span>, <b>mlk</b> — <span class="sc">ܡܠܟܐ</span>. Original scripts work too; all dictionaries are searched at once.',
+  search:'Search',clear:'Clear',alphabet:'Alphabet',more:'Show more',copy:'copy',expand:'expand',close:'Close',
+  all:'All',langgrp:'Language',modegrp:'Search mode',pre:'Starts with',in:'Contains',ex:'Exact',scope:'also search translations',
+  sec_tr:'Transliteration',tr_note:'Choose a system for each language: it is shown next to headwords and in the suggestion list. The full table of the selected system is below.',
+  sec_set:'Settings',dicts:'Dictionaries',uilang:'Interface language',
+  attrib:'Lexicon Linguae Aethiopicae: digital edition by TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt et al.), licence CC BY-NC-SA 4.0.',
+  found:'Found: ',none:'Nothing found. Try “Contains” mode or another language.',rxerr:'Error in regular expression',
+  empty:(tot,a,n)=>`<b>${tot}</b> entries in ${a} of ${n} dictionaries${a?'':' — enable at least one in the list'}. For example: ${EX}. Transliteration and dictionaries are at the bottom.`,
+  loading:'Loading dictionaries…',libn:(a,n,t)=>`${a} of ${n} enabled · ${t} entries`,abbr:'entries',
+  space:'space',bksp:'⌫ delete',off:'do not show',cons:'Consonants',orders:'Orders (example ለ)',
+  sixth:'Sixth order: ə; not written word-finally or before a syllable with a full vowel',
+  grcn:'γγ → ng, αυ → au, ου → ou; rough breathing → h, ῥ → rh',copied:'Copied',copyfail:'Could not copy',poptitle:'Latin dictionary',usearia:'Use in search',
+  lang:{syr:'Syriac',ka:'Old Georgian',grc:'Ancient Greek',la:'Latin',hy:'Armenian',gez:'Ethiopic (Gəʿəz)',ar:'Arabic',xx:'Other'},
+  chip:{syr:'Syr.',ka:'Geo.',grc:'Grk.',la:'Lat.',hy:'Arm.',gez:'Eth.',ar:'Ar.',xx:'Oth.'},
+  tag:{syr:'syr.',ka:'geo.',grc:'grk.',la:'lat.',hy:'arm.',gez:'eth.',ar:'ar.',xx:'—'},
+  sys:{syr_sci:'Scientific (consonantal)',ka_sci:'Kartvelological: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditional (Dillmann–Lambdin): a, ā',gez_ham:'Hamburg (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientific',ar_din:'DIN 31635'}},
+ de:{name:'Deutsch',
+  sub:'Lateinisch tippen, ohne Diakritika: <b>gmerti</b> findet <span class="sc">ღმერთი</span>, <b>mlk</b> — <span class="sc">ܡܠܟܐ</span>. Die Originalschrift geht auch; alle Wörterbücher werden zugleich durchsucht.',
+  search:'Suche',clear:'Löschen',alphabet:'Alphabet',more:'Mehr anzeigen',copy:'kopieren',expand:'aufklappen',close:'Schließen',
+  all:'Alle',langgrp:'Sprache',modegrp:'Suchmodus',pre:'Anfang',in:'Enthält',ex:'Genau',scope:'auch in Übersetzungen suchen',
+  sec_tr:'Transliteration',tr_note:'Wählen Sie für jede Sprache ein System: Es erscheint neben den Lemmata und in der Vorschlagsliste. Darunter steht die vollständige Tabelle.',
+  sec_set:'Einstellungen',dicts:'Wörterbücher',uilang:'Sprache der Oberfläche',
+  attrib:'Lexicon Linguae Aethiopicae: digitale Edition TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt u. a.), Lizenz CC BY-NC-SA 4.0.',
+  found:'Gefunden: ',none:'Nichts gefunden. Versuchen Sie „Enthält“ oder eine andere Sprache.',rxerr:'Fehler im regulären Ausdruck',
+  empty:(tot,a,n)=>`<b>${tot}</b> Einträge in ${a} von ${n} Wörterbüchern${a?'':' — aktivieren Sie mindestens eines in der Liste'}. Zum Beispiel: ${EX}. Transliteration und Wörterbücher finden Sie unten.`,
+  loading:'Wörterbücher werden geladen…',libn:(a,n,t)=>`${a} von ${n} aktiv · ${t} Einträge`,abbr:'Einträge',
+  space:'Leerzeichen',bksp:'⌫ löschen',off:'nicht anzeigen',cons:'Konsonanten',orders:'Ordnungen (Beispiel ለ)',
+  sixth:'Sechste Ordnung: ə; im Wortauslaut und vor einer Silbe mit Vollvokal nicht geschrieben',
+  grcn:'γγ → ng, αυ → au, ου → ou; Spiritus asper → h, ῥ → rh',copied:'Kopiert',copyfail:'Kopieren fehlgeschlagen',poptitle:'Lateinisches Wörterbuch',usearia:'In der Suche verwenden',
+  lang:{syr:'Syrisch',ka:'Altgeorgisch',grc:'Altgriechisch',la:'Latein',hy:'Armenisch',gez:'Äthiopisch (Gəʿəz)',ar:'Arabisch',xx:'Andere'},
+  chip:{syr:'Syr.',ka:'Georg.',grc:'Griech.',la:'Lat.',hy:'Arm.',gez:'Äth.',ar:'Arab.',xx:'And.'},
+  tag:{syr:'syr.',ka:'georg.',grc:'griech.',la:'lat.',hy:'arm.',gez:'äth.',ar:'arab.',xx:'—'},
+  sys:{syr_sci:'Wissenschaftlich (konsonantisch)',ka_sci:'Kartvelologisch: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditionell (Dillmann–Lambdin): a, ā',gez_ham:'Hamburger System (Encyclopaedia Aethiopica): ä, a',grc_sci:'Wissenschaftlich',ar_din:'DIN 31635'}},
+ fr:{name:'Français',
+  sub:'Tapez en caractères latins, sans diacritiques : <b>gmerti</b> trouve <span class="sc">ღმერთი</span>, <b>mlk</b> — <span class="sc">ܡܠܟܐ</span>. L’écriture originale fonctionne aussi ; tous les dictionnaires sont interrogés à la fois.',
+  search:'Recherche',clear:'Effacer',alphabet:'Alphabet',more:'Afficher plus',copy:'copier',expand:'déplier',close:'Fermer',
+  all:'Tous',langgrp:'Langue',modegrp:'Mode de recherche',pre:'Début',in:'Contient',ex:'Exact',scope:'chercher aussi dans les traductions',
+  sec_tr:'Translittération',tr_note:'Choisissez un système pour chaque langue : il s’affiche à côté des lemmes et dans la liste de suggestions. La table complète du système choisi figure ci-dessous.',
+  sec_set:'Réglages',dicts:'Dictionnaires',uilang:'Langue de l’interface',
+  attrib:'Lexicon Linguae Aethiopicae : édition numérique TraCES / Hiob-Ludolf-Zentrum, Hambourg (A. Bausi, A. Ellwardt et al.), licence CC BY-NC-SA 4.0.',
+  found:'Résultats : ',none:'Aucun résultat. Essayez le mode « Contient » ou une autre langue.',rxerr:'Erreur dans l’expression régulière',
+  empty:(tot,a,n)=>`<b>${tot}</b> articles dans ${a} dictionnaire${a>1?'s':''} sur ${n}${a?'':' — activez-en au moins un dans la liste'}. Par exemple : ${EX}. Translittération et dictionnaires en bas de page.`,
+  loading:'Chargement des dictionnaires…',libn:(a,n,t)=>`${a} sur ${n} activés · ${t} articles`,abbr:'art.',
+  space:'espace',bksp:'⌫ effacer',off:'ne pas afficher',cons:'Consonnes',orders:'Ordres (exemple ለ)',
+  sixth:'Sixième ordre : ə ; non noté en fin de mot ni devant une syllabe à voyelle pleine',
+  grcn:'γγ → ng, αυ → au, ου → ou ; esprit rude → h, ῥ → rh',copied:'Copié',copyfail:'Copie impossible',poptitle:'Dictionnaire latin',usearia:'Utiliser dans la recherche',
+  lang:{syr:'Syriaque',ka:'Géorgien ancien',grc:'Grec ancien',la:'Latin',hy:'Arménien',gez:'Éthiopien (guèze)',ar:'Arabe',xx:'Autre'},
+  chip:{syr:'Syr.',ka:'Géo.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Éth.',ar:'Ar.',xx:'Aut.'},
+  tag:{syr:'syr.',ka:'géo.',grc:'gr.',la:'lat.',hy:'arm.',gez:'éth.',ar:'ar.',xx:'—'},
+  sys:{syr_sci:'Scientifique (consonantique)',ka_sci:'Kartvélologique : ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nationale 2002 : k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet : tʻ c č ł',hy_lc:'ALA-LC : tʻ ts ch gh',gez_trad:'Traditionnelle (Dillmann–Lambdin) : a, ā',gez_ham:'Hambourg (Encyclopaedia Aethiopica) : ä, a',grc_sci:'Scientifique',ar_din:'DIN 31635'}},
+ it:{name:'Italiano',
+  sub:'Digitate in caratteri latini, senza diacritici: <b>gmerti</b> trova <span class="sc">ღმერთი</span>, <b>mlk</b> — <span class="sc">ܡܠܟܐ</span>. Funziona anche la scrittura originale; si cerca in tutti i dizionari insieme.',
+  search:'Ricerca',clear:'Cancella',alphabet:'Alfabeto',more:'Mostra altri',copy:'copia',expand:'espandi',close:'Chiudi',
+  all:'Tutti',langgrp:'Lingua',modegrp:'Modalità di ricerca',pre:'Inizio',in:'Contiene',ex:'Esatto',scope:'cerca anche nelle traduzioni',
+  sec_tr:'Traslitterazione',tr_note:'Scegliete un sistema per ogni lingua: compare accanto ai lemmi e nell’elenco dei suggerimenti. Sotto, la tabella completa del sistema scelto.',
+  sec_set:'Impostazioni',dicts:'Dizionari',uilang:'Lingua dell’interfaccia',
+  attrib:'Lexicon Linguae Aethiopicae: edizione digitale TraCES / Hiob-Ludolf-Zentrum, Amburgo (A. Bausi, A. Ellwardt et al.), licenza CC BY-NC-SA 4.0.',
+  found:'Trovati: ',none:'Nessun risultato. Provate la modalità «Contiene» o un’altra lingua.',rxerr:'Errore nell’espressione regolare',
+  empty:(tot,a,n)=>`<b>${tot}</b> voci in ${a} dizionari${a==1?'o':''} su ${n}${a?'':' — attivatene almeno uno nell’elenco'}. Per esempio: ${EX}. Traslitterazione e dizionari in fondo alla pagina.`,
+  loading:'Caricamento dei dizionari…',libn:(a,n,t)=>`${a} su ${n} attivi · ${t} voci`,abbr:'voci',
+  space:'spazio',bksp:'⌫ cancella',off:'non mostrare',cons:'Consonanti',orders:'Ordini (esempio ለ)',
+  sixth:'Sesto ordine: ə; non si scrive in fine di parola né davanti a sillaba con vocale piena',
+  grcn:'γγ → ng, αυ → au, ου → ou; spirito aspro → h, ῥ → rh',copied:'Copiato',copyfail:'Impossibile copiare',poptitle:'Dizionario latino',usearia:'Usa nella ricerca',
+  lang:{syr:'Siriaco',ka:'Georgiano antico',grc:'Greco antico',la:'Latino',hy:'Armeno',gez:'Etiopico (geʿez)',ar:'Arabo',xx:'Altro'},
+  chip:{syr:'Sir.',ka:'Georg.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Etiop.',ar:'Ar.',xx:'Altro'},
+  tag:{syr:'sir.',ka:'georg.',grc:'gr.',la:'lat.',hy:'arm.',gez:'etiop.',ar:'ar.',xx:'—'},
+  sys:{syr_sci:'Scientifica (consonantica)',ka_sci:'Cartvelologica: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nazionale 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Tradizionale (Dillmann–Lambdin): a, ā',gez_ham:'Amburghese (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientifica',ar_din:'DIN 31635'}}
+};
+let UIL=LS.get('ui',null);
+if(!I18N[UIL]){const n=((navigator.languages&&navigator.languages[0])||navigator.language||'ru').slice(0,2).toLowerCase();UIL=I18N[n]?n:'ru'}
+let I=I18N[UIL];
+function applyLang(){
+  I=I18N[UIL];document.documentElement.lang=UIL;
+  for(const k in LANGS)LANGS[k]=[I.lang[k],I.tag[k]];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.innerHTML=I[el.dataset.i18n]});
+  document.querySelectorAll('[data-i18n-aria]').forEach(el=>el.setAttribute('aria-label',I[el.dataset.i18nAria]));
+  document.documentElement.style.setProperty('--exp',JSON.stringify(I.expand));
+  const sel=$('#uil');if(sel)sel.value=UIL;
+}
 const KEYS={
  syr:'ܐ ܒ ܓ ܕ ܗ ܘ ܙ ܚ ܛ ܝ ܟ ܠ ܡ ܢ ܣ ܥ ܦ ܨ ܩ ܪ ܫ ܬ',
  ka:'ა ბ გ დ ე ვ ზ ჱ თ ი კ ლ მ ნ ჲ ო პ ჟ რ ს ტ ჳ უ ფ ქ ღ ყ შ ჩ ც ძ წ ჭ ხ ჴ ჯ ჰ ჵ',
@@ -301,15 +405,15 @@ const RTM={
 const GZB={0x1200:'h',0x1208:'l',0x1210:'ḥ',0x1218:'m',0x1220:'ś',0x1228:'r',0x1230:'s',0x1238:'š',0x1240:'q',0x1248:'qʷ',0x1260:'b',0x1268:'v',0x1270:'t',0x1278:'č',0x1280:'ḫ',0x1288:'ḫʷ',0x1290:'n',0x1298:'ñ',0x12A0:'ʾ',0x12A8:'k',0x12B0:'kʷ',0x12B8:'x',0x12C8:'w',0x12D0:'ʿ',0x12D8:'z',0x12E0:'ž',0x12E8:'y',0x12F0:'d',0x1300:'ǧ',0x1308:'g',0x1310:'gʷ',0x1320:'ṭ',0x1328:'č̣',0x1330:'p̣',0x1338:'ṣ',0x1340:'ḍ',0x1348:'f',0x1350:'p'};
 const GZV=['ä','u','i','a','e','ə','o','ʷa'],GZL=['ä','','i','a','e','ə','',''];
 const TRS={
- syr:{sci:{n:'Научная (консонантная)',m:RTM.syr}},
- ka:{sci:{n:'Картвелологическая: ḳ ṭ ṗ c̣ č̣ ġ',m:RTM.ka},
-     nat:{n:'Национальная 2002: k’ t’ ts’ ch’ gh',m:{'ა':'a','ბ':'b','გ':'g','დ':'d','ე':'e','ვ':'v','ზ':'z','ჱ':'ē','თ':'t','ი':'i','კ':'k’','ლ':'l','მ':'m','ნ':'n','ჲ':'y','ო':'o','პ':'p’','ჟ':'zh','რ':'r','ს':'s','ტ':'t’','ჳ':'w','უ':'u','ფ':'p','ქ':'k','ღ':'gh','ყ':'q’','შ':'sh','ჩ':'ch','ც':'ts','ძ':'dz','წ':'ts’','ჭ':'ch’','ხ':'kh','ჴ':'q','ჯ':'j','ჰ':'h','ჵ':'ō','ჶ':'f'}}},
- hy:{hm:{n:'Хюбшман — Мейе: tʻ c č ł',m:RTM.hy},
-     lc:{n:'ALA-LC: tʻ ts ch gh',m:{'ա':'a','բ':'b','գ':'g','դ':'d','ե':'e','զ':'z','է':'ē','ը':'ě','թ':'tʻ','ժ':'zh','ի':'i','լ':'l','խ':'kh','ծ':'ts','կ':'k','հ':'h','ձ':'dz','ղ':'gh','ճ':'ch','մ':'m','յ':'y','ն':'n','շ':'sh','ո':'o','չ':'chʻ','պ':'p','ջ':'j','ռ':'ṙ','ս':'s','վ':'v','տ':'t','ր':'r','ց':'tsʻ','ւ':'w','փ':'pʻ','ք':'kʻ','օ':'ō','ֆ':'f','և':'ew'}}},
- gez:{trad:{n:'Традиционная (Дилльман — Ламбдин): a, ā',V:['a','u','i','ā','e','ə','o','ʷā'],VL:['a','','i','ā','e','ə','',''],B:Object.assign({},GZB,{0x1340:'ṣ́'})},
-      ham:{n:'Гамбургская (Encyclopaedia Aethiopica): ä, a',V:GZV,VL:GZL,B:GZB}},
- grc:{sci:{n:'Научная',m:RTM.grc}},
- ar:{din:{n:'DIN 31635',m:RTM.ar}}
+ syr:{sci:{n:'syr_sci',m:RTM.syr}},
+ ka:{sci:{n:'ka_sci',m:RTM.ka},
+     nat:{n:'ka_nat',m:{'ა':'a','ბ':'b','გ':'g','დ':'d','ე':'e','ვ':'v','ზ':'z','ჱ':'ē','თ':'t','ი':'i','კ':'k’','ლ':'l','მ':'m','ნ':'n','ჲ':'y','ო':'o','პ':'p’','ჟ':'zh','რ':'r','ს':'s','ტ':'t’','ჳ':'w','უ':'u','ფ':'p','ქ':'k','ღ':'gh','ყ':'q’','შ':'sh','ჩ':'ch','ც':'ts','ძ':'dz','წ':'ts’','ჭ':'ch’','ხ':'kh','ჴ':'q','ჯ':'j','ჰ':'h','ჵ':'ō','ჶ':'f'}}},
+ hy:{hm:{n:'hy_hm',m:RTM.hy},
+     lc:{n:'hy_lc',m:{'ա':'a','բ':'b','գ':'g','դ':'d','ե':'e','զ':'z','է':'ē','ը':'ě','թ':'tʻ','ժ':'zh','ի':'i','լ':'l','խ':'kh','ծ':'ts','կ':'k','հ':'h','ձ':'dz','ղ':'gh','ճ':'ch','մ':'m','յ':'y','ն':'n','շ':'sh','ո':'o','չ':'chʻ','պ':'p','ջ':'j','ռ':'ṙ','ս':'s','վ':'v','տ':'t','ր':'r','ց':'tsʻ','ւ':'w','փ':'pʻ','ք':'kʻ','օ':'ō','ֆ':'f','և':'ew'}}},
+ gez:{trad:{n:'gez_trad',V:['a','u','i','ā','e','ə','o','ʷā'],VL:['a','','i','ā','e','ə','',''],B:Object.assign({},GZB,{0x1340:'ṣ́'})},
+      ham:{n:'gez_ham',V:GZV,VL:GZL,B:GZB}},
+ grc:{sci:{n:'grc_sci',m:RTM.grc}},
+ ar:{din:{n:'ar_din',m:RTM.ar}}
 };
 let trCfg=Object.assign({syr:'sci',ka:'sci',hy:'hm',gez:'trad',grc:'sci',ar:'din'},LS.get('trcfg',{}));
 function sciTr(w,L){
@@ -342,12 +446,12 @@ function trTable(L){
   if(L==='gez'){
     const cons=Object.entries(sys.B).filter(([b])=>![0x1248,0x1288,0x12B0,0x1310].includes(+b)).map(([b,v])=>`<span><b>${String.fromCharCode(+b)}</b> ${esc(v)}</span>`).join('');
     const ord=['1','2','3','4','5','6','7'].map((n,o)=>`<span><b>${String.fromCharCode(0x1208+o)}</b> l${esc(sys.V[o])}</span>`).join('');
-    return `<p class="lg">Согласные</p><div class="sch">${cons}</div><p class="lg">Порядки (на примере ለ)</p><div class="sch">${ord}</div><p class="note">Шестой порядок: ə; в конце слова и перед слогом с полной гласной не пишется (ንጉሥ → ${esc(sciTr('ንጉሥ','gez')||'nəguś')}, ነግሠ → ${esc(sciTr('ነግሠ','gez')||'')}).</p>`;
+    return `<p class="lg">${I.cons}</p><div class="sch">${cons}</div><p class="lg">${I.orders}</p><div class="sch">${ord}</div><p class="note">${I.sixth} (ንጉሥ → ${esc(sciTr('ንጉሥ','gez')||'nəguś')}, ነግሠ → ${esc(sciTr('ነግሠ','gez')||'')}).</p>`;
   }
-  return `<div class="sch">${Object.entries(sys.m).map(([c,v])=>`<span><b>${esc(c)}</b> ${esc(v)}</span>`).join('')}</div>`+(L==='hy'?'<p class="note">ու → u</p>':'')+(L==='grc'?'<p class="note">γγ → ng, αυ → au, ου → ou; густое придыхание → h, ῥ → rh</p>':'');
+  return `<div class="sch">${Object.entries(sys.m).map(([c,v])=>`<span><b>${esc(c)}</b> ${esc(v)}</span>`).join('')}</div>`+(L==='hy'?'<p class="note">ու → u</p>':'')+(L==='grc'?'<p class="note">'+I.grcn+'</p>':'');
 }
 function renderTrSec(){
-  $('#trsec').innerHTML=Object.keys(TRS).map(L=>`<div class="trl"><label class="trh"><span>${LANGS[L][0]}</span><select data-tl="${L}">${Object.entries(TRS[L]).map(([k,v])=>`<option value="${k}" ${trCfg[L]===k?'selected':''}>${esc(v.n)}</option>`).join('')}<option value="off" ${trCfg[L]==='off'?'selected':''}>не показывать</option></select></label><div class="trt">${trTable(L)}</div></div>`).join('');
+  $('#trsec').innerHTML=Object.keys(TRS).map(L=>`<div class="trl"><label class="trh"><span>${LANGS[L][0]}</span><select data-tl="${L}">${Object.entries(TRS[L]).map(([k,v])=>`<option value="${k}" ${trCfg[L]===k?'selected':''}>${esc(I.sys[v.n]||v.n)}</option>`).join('')}<option value="off" ${trCfg[L]==='off'?'selected':''}>${I.off}</option></select></label><div class="trt">${trTable(L)}</div></div>`).join('');
 }
 function cheatHtml(){
   const rows=[[')','ʾ ʼ \' — алеф'],['(','ʿ ` — айн'],['h','ḥ ḫ'],['x','ḫ, kh'],['s','ṣ ś š'],['t','ṭ ṯ θ'],['d','ḍ ḏ'],['z','ẓ ž ʒ'],['g','ġ ǧ'],['k','ḳ kʻ'],['q','q q̇'],['c','č c̣ ç'],['p','ṗ p̣ pʻ φ'],['e','ē η'],['o','ō ω']];
@@ -421,7 +525,7 @@ async function loadBuiltins(){
   const gone=LS.get('gone',[]);
   for(const k of BUILTIN){
     const id='b-'+k;if(gone.includes(id)||dicts.some(d=>d.id===id&&d.v===BVER))continue;dicts=dicts.filter(d=>d.id!==id);
-    try{setSync('Загружаю встроенные словари…');
+    try{setSync(I.loading);
       const d=await (await fetch('data/'+k+'.json')).json();
       d.demo=true;d.v=BVER;d.created=BUILTIN.indexOf(k);dicts.push(d);dicts.sort((a,b)=>a.created-b.created);
       await idb.put(d);refresh();
@@ -438,11 +542,11 @@ function search(){
   results=[];shown=0;
   if(!q.trim()){
     $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();
-    $('#res').insertAdjacentHTML('beforeend',`<li class="empty">${dicts.length?`<b>${total.toLocaleString('ru')}</b> статей в ${act.length} из ${dicts.length} словар${dicts.length==1?'я':'ей'}${act.length?'':' — включите хотя бы один в списке словарей'}. Например: <b>gmerti</b> → ღმერთი, <b>mlk</b> → ܡܠܟܐ, <b>tagavor</b> → թագաւոր, <b>ngs</b> → ነግሠ. Транслитерация и словари — внизу.`:'Словари загружаются…'}</li>`);
+    $('#res').insertAdjacentHTML('beforeend',`<li class="empty">${dicts.length?I.empty(total.toLocaleString(UIL),act.length,dicts.length):I.loading}</li>`);
     return;
   }
   let re=null;
-  if(mode==='re'){try{re=new RegExp(q,'iu')}catch(e){$('#stat').textContent='Ошибка в регулярном выражении';$('#res').innerHTML='';$('#more').hidden=true;sugHide();return}}
+  if(mode==='re'){try{re=new RegExp(q,'iu')}catch(e){$('#stat').textContent=I.rxerr;$('#res').innerHTML='';$('#more').hidden=true;sugHide();return}}
   const lat=!re&&isLatinQ(q),RX={};
   if(lat)for(const L in CL)RX[L]=buildRx(q,L);
   const qh=norm(q),qd=words(qh).trim();
@@ -463,7 +567,7 @@ function search(){
     }
   }
   results.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
-  $('#stat').textContent=results.length?`Найдено: ${results.length.toLocaleString('ru')}`:'Ничего не найдено. Попробуйте режим «Содержит» или другой язык.';
+  $('#stat').textContent=results.length?I.found+results.length.toLocaleString(UIL):I.none;
   $('#res').innerHTML='';more();renderSug();
 }
 let sugIdx=-1,sugOff=false,sugItems=[];
@@ -485,7 +589,7 @@ function sugPick(j){const it=sugItems[j];if(!it)return;$('#q').value=it.w;$('#cl
 function more(){
   const part=results.slice(shown,shown+PAGE);shown+=part.length;
   $('#res').insertAdjacentHTML('beforeend',part.map(([s,_,d,i])=>{const e=d.entries[i],l=elang(d,i);
-    return `<li><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><span class="hw" dir="auto">${esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · ${esc(d.name)}</span><button class="cp">копировать</button></div><div class="def" dir="${l==='ar'?ddir(e[1]):'ltr'}">${LATDEF.has(d.id)?linkLat(formatDef(e[1],l,e[0])):formatDef(e[1],l,e[0])}</div></article></li>`}).join(''));
+    return `<li><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><span class="hw" dir="auto">${esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · ${esc(d.name)}</span><button class="cp">${I.copy}</button></div><div class="def" dir="${l==='ar'?ddir(e[1]):'ltr'}">${LATDEF.has(d.id)?linkLat(formatDef(e[1],l,e[0])):formatDef(e[1],l,e[0])}</div></article></li>`}).join(''));
   $('#more').hidden=shown>=results.length;
   requestAnimationFrame(()=>{for(const h of $('#res').querySelectorAll('.hit:not([data-m])')){h.dataset.m=1;const d=h.querySelector('.def');if(d.scrollHeight>d.getBoundingClientRect().height*0+ 7.6*parseFloat(getComputedStyle(d).fontSize)+4)h.classList.add('long')}});
 }
@@ -500,6 +604,7 @@ function formatDef(raw,L,hw){
       src=(/[^\x02-\x07\s]/.test(nf)?nf:'')+(nl<0?'':(/[^\x02-\x07\s]/.test(nf)?src.slice(nl):src.slice(nl+1)))}}
   if(L==='ka')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF](?:[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF\-–]|[\s,]+(?=[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
   if(L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/-?[\u0531-\u0587\uFB13-\uFB17](?:[\u0531-\u0587\uFB13-\uFB17\u055A-\u055F\-–]|[\s,]+(?=-?[\u0531-\u0587\uFB13-\uFB17]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
+  if(L==='gez')src=src.replace(/;((?:\x05)?)[ \t]+(?=[\u1200-\u137F])/g,(m,x,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:';'+x+'\n\x01'});
   if(L==='syr')src=src.replace(/(\.)((?:[ \t]|\x05)+)((?:\x02[^\x03]*\x03\s*)*)(?=[\u0710-\u074F])/g,(m,a,w,b,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:a+(w.includes('\x05')?'\x05':'')+'\n'+b});
   if(L==='ka'||L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>{let r='',gap='';for(const part of t.split(/(\x06[^\x07]*\x07)/)){if(part.startsWith('\x06')){if(r&&/[A-Za-zА-Яа-яЁё]/.test(gap))r=r.replace(/\s+$/,'')+'\n';r+=part;gap=''}else{r+=part;gap+=part}}return '\x04'+r+'\x05'});
   for(const line of src.split('\n')){
@@ -520,7 +625,8 @@ function formatDef(raw,L,hw){
   let g=false,ex=false;
   return lines.filter(l=>l.trim()!=='@').map((l,li)=>{
     let cls=(ex||/^\s*\x04/.test(l))?' x':'';
-    if(L==='gez'&&li===0&&l.length<40&&!/[ሀ-፿\x02-\x07]/.test(l)&&/[a-zʾʿḥḫṣśṭḍ']/.test(l)){return `<span class="l gt">${l}</span>`}
+    if(L==='gez'&&li===0&&l.length<40&&!/[ሀ-፿\x02-\x07]/.test(l)&&/[a-zʾʿḥḫṣśṭḍ']/.test(l)){return ''}
+    if(l.startsWith('\x01')){l=l.slice(1);if(!ex&&!g){return `<span class="l q">${l.replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>')}</span>`}}
     if(/^@\s*/.test(l)){cls=' f';l=l.replace(/^@\s*(.*)$/,'<b class="fm">$1</b>')}
     if(L==='syr'){const SY='[\\u0700-\\u074F\\u0300-\\u036F]+';
       const rx=new RegExp('^((?:\\x02[^\\x03]*\\x03\\s*)*)('+SY+'(?:\\s+(?:sive|et|vel|aut)\\s+'+SY+')*)');
@@ -529,7 +635,7 @@ function formatDef(raw,L,hw){
     if(L==='gez'){
       if(/^[ሀ-፿]+፡/.test(l)){cls=' f';l=l.replace(/^[ሀ-፿]+፡(?:,?\s+(?:et|vel|sive|seu|aut|nec non|et rarius)\s+[ሀ-፿]+፡)*/,m=>m.replace(/[ሀ-፿]+፡/g,'<b class="fm">$&</b>'))}
       l=l.replace(/(\x02pl\.\x03\s+)([ሀ-፿]+፡)((?:,?\s+(?:et|vel|sive)\s+[ሀ-፿]+፡)*)/g,(m,a,b,c)=>a+'<b class="fm">'+b+'</b>'+c.replace(/[ሀ-፿]+፡/g,'<b class="fm">$&</b>'));
-      l=l.replace(/^([A-D]\.)(?=\s)/,'<b class="st">$1</b>').replace(/(^|\s|>)(I{1,3}|IV|VI{0,3}|IX|X)(?=,?\s*(?:<b class="sn">|\d|$))/g,'$1<b class="st">$2</b>');
+      l=l.replace(/^([A-D]\.)(?=\s)/,'<b class="st">$1</b>').replace(/(^|\s|>)((?:I{1,3}|IV|VI{0,3}|IX|X)(?:,\s?\d{1,2}(?![\d)]))?)(?=$|[\s,.;:]|<)/g,'$1<i class="gr">$2</i>');
     }
     l=l.replace(/\(([^()]*\d[^()]*)\)/g,'<span class="ex">($1)</span>');
     let pre=(g?'<i class="gr">':'')+(ex?'<span class="ex">':'');
@@ -545,11 +651,11 @@ const plain=s=>String(s||'').replace(/[\x02-\x07]/g,'');
 function langsPresent(){const s=new Set();for(const d of dicts){if(d.lang==='mix')d.entries.forEach(e=>s.add(e[2]));else s.add(d.lang)}return Object.keys(LANGS).filter(k=>s.has(k))}
 function renderChips(){
   const ls=langsPresent();if(langF&&!ls.includes(langF))langF='';
-  $('#chips').innerHTML=[['','Все']].concat(ls.map(k=>[k,({syr:'Сир.',ka:'Груз.',grc:'Греч.',la:'Лат.',hy:'Арм.',gez:'Эфиоп.',ar:'Араб.',xx:'Др.'})[k]||LANGS[k][0]])).map(([k,n])=>`<button data-l="${k}" class="${k===langF?'on':''}" aria-pressed="${k===langF}">${n}</button>`).join('');
+  $('#chips').innerHTML=[['',I.all]].concat(ls.map(k=>[k,I.chip[k]||LANGS[k][0]])).map(([k,n])=>`<button data-l="${k}" class="${k===langF?'on':''}" aria-pressed="${k===langF}">${n}</button>`).join('');
 }
 function renderLib(){
-  const act=dicts.filter(d=>!off.has(d.id));$('#libn').textContent=`${act.length} из ${dicts.length} включены · ${act.reduce((n,d)=>n+d.entries.length,0).toLocaleString('ru')} статей`;
-  $('#dl').innerHTML=dicts.length?dicts.map(d=>`<li><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="Использовать в поиске" style="width:20px;height:20px;accent-color:var(--lap)"><span><span class="nm">${esc(d.name)}</span><span class="mt">${d.lang==='mix'?'7 языков':esc((LANGS[d.lang]||LANGS.xx)[0])} · ${d.entries.length.toLocaleString('ru')} ст.</span></span></li>`).join(''):'';
+  const act=dicts.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,dicts.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
+  $('#dl').innerHTML=dicts.length?dicts.map(d=>`<li><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><span><span class="nm">${esc(d.name)}</span><span class="mt">${d.lang==='mix'?'7 языков':esc((LANGS[d.lang]||LANGS.xx)[0])} · ${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span></span></li>`).join(''):'';
 }
 function refresh(){renderLib();renderChips();renderKb();search()}
 
@@ -560,7 +666,7 @@ function renderKb(){
   const L=Object.keys(KEYS);if(langF&&KEYS[langF])kbLang=langF;
   let h=`<div class="kl">${L.map(l=>`<button data-k="${l}" class="${l===kbLang?'on':''}">${LANGS[l][0]}</button>`).join('')}</div>`;
   if(kbLang==='gez'&&gezBase!=null)h+=`<div class="keys forms">${[0,1,2,3,4,5,6].map(o=>`<button data-c="${String.fromCharCode(gezBase+o)}">${String.fromCharCode(gezBase+o)}</button>`).join('')}</div>`;
-  h+=`<div class="keys">${KEYS[kbLang].split(' ').map(c=>`<button ${kbLang==='gez'?'data-g':'data-c'}="${c}">${c}</button>`).join('')}<button class="fn" data-c=" ">пробел</button><button class="fn" data-bs="1">⌫ стереть</button></div>`;
+  h+=`<div class="keys">${KEYS[kbLang].split(' ').map(c=>`<button ${kbLang==='gez'?'data-g':'data-c'}="${c}">${c}</button>`).join('')}<button class="fn" data-c=" ">${I.space}</button><button class="fn" data-bs="1">${I.bksp}</button></div>`;
   k.innerHTML=h;k.dir=kbLang==='syr'||kbLang==='ar'?'rtl':'ltr';
 }
 function insert(c){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;q.value=q.value.slice(0,a)+c+q.value.slice(b);q.setSelectionRange(a+c.length,a+c.length);debounced()}
@@ -694,7 +800,7 @@ function linkLat(html){
 function showLat(w){
   const d=laDict(),ix=laLookup(w);if(!d||!ix.length)return;
   const lem=[...new Set(ix.map(i=>d.entries[i][0]))].join(', ');
-  $('#pop').innerHTML=`<div class="ph"><span class="pt"><b>${esc(w)}</b>${norm(lem)!==norm(w)?' → '+esc(lem):''} · ${esc(d.name)}</span><button class="btn ghost" id="popX">Закрыть</button></div>`+
+  $('#pop').innerHTML=`<div class="ph"><span class="pt"><b>${esc(w)}</b>${norm(lem)!==norm(w)?' → '+esc(lem):''} · ${esc(d.name)}</span><button class="btn ghost" id="popX">${I.close}</button></div>`+
     ix.map(i=>`<article><div class="hd"><span class="hw">${esc(d.entries[i][0])}</span></div><div class="def">${formatDef(d.entries[i][1],'la')}</div></article>`).join('');
   $('#pop').hidden=false;
 }
@@ -723,7 +829,7 @@ $('#res').addEventListener('click',async e=>{
   const w=e.target.closest('.lw');if(w&&(!h.classList.contains('long')||h.classList.contains('open'))){showLat(w.dataset.w);return}
   if(h&&!c0){if(h.classList.contains('long')){if(getSelection().toString())return;h.classList.toggle('open')}return}
   const c=c0;if(c){const b=c.closest('.hit'),d=dicts.find(x=>x.id===b.dataset.d),en=d&&d.entries[+b.dataset.i];
-    try{await navigator.clipboard.writeText(en[0]+' — '+plain(en[1]));toast('Скопировано')}catch(err){toast('Не удалось скопировать')}}
+    try{await navigator.clipboard.writeText(en[0]+' — '+plain(en[1]));toast(I.copied)}catch(err){toast(I.copyfail)}}
 });
 $('#pop').addEventListener('click',e=>{if(e.target.id==='popX')$('#pop').hidden=true;const w=e.target.closest('.lw');if(w)showLat(w.dataset.w)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#pop').hidden=true});
@@ -756,6 +862,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#ov').hidden)ne
 (async()=>{
   await idb.open();
   dicts=((await idb.all())||[]).sort((a,b)=>a.created-b.created);
+  applyLang();$('#uil').addEventListener('change',e=>{UIL=e.target.value;LS.set('ui',UIL);applyLang();renderTrSec();refresh()});
   renderTrSec();$('#trsec').addEventListener('change',e=>{const L=e.target.dataset.tl;if(!L)return;trCfg[L]=e.target.value;LS.set('trcfg',trCfg);renderTrSec();search()});
   refresh();
   await loadBuiltins();setSync('');

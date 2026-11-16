@@ -1,7 +1,7 @@
 {
   "name": "LexEikôn",
   "short_name": "LexEikôn",
-  "description": "Словари сирийского, древнегрузинского, эфиопского, латыни и армянского — поиск латиницей по всем сразу. Издательство Eikon.",
+  "description": "Dictionaries of ancient languages — Syriac, Old Georgian, Ethiopic, Latin, Armenian. Eikon.",
   "lang": "ru",
   "start_url": "./",
   "scope": "./",
