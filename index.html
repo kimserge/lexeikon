@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>LexEikôn</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<meta name="theme-color" content="#13265c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LexEikôn">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,300;1,400&family=Noto+Sans:ital,wght@0,400;0,600;1,400&family=Noto+Sans+Georgian&family=Noto+Sans+Armenian&family=Noto+Sans+Ethiopic&family=Noto+Sans+Syriac&family=Noto+Serif+Georgian:wght@400;700&family=Noto+Serif+Armenian:wght@400;700&family=Noto+Serif+Ethiopic:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: scholarly, quiet, exact — a reading-room tool.
+   IDEA: a rubricated lexicon page: headwords in vermilion, glosses in ink.
+   PICTURE: the working search and its results; a band of letters from seven scripts.
+   COLOUR and TYPE: lapis band, white page, vermilion rubric; Noto Serif + script Notos, Noto Sans for UI.
+   LAYOUT: search and results first; library column beside on wide screens, below on phones. */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#111317);--ink:light-dark(#17191e,#e8e6e1);--mut:light-dark(#5b606a,#9ba1ab);
+--line:light-dark(#e2e4e9,#2a2e36);--card:light-dark(#f5f6f8,#1a1d23);--rub:light-dark(#b02a1f,#ff8d7d);
+--lap:light-dark(#1d3a9e,#a9bcff);--band:light-dark(#13265c,#0c1838);--bandink:#f3f1ea;
+--lex:'Noto Serif','Noto Sans Syriac','Noto Serif Georgian','Noto Serif Armenian','Noto Serif Ethiopic','Noto Naskh Arabic',serif}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Noto Sans',system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(22px,4vw,48px) max(5vw,16px)}
+.scroll{overflow-x:auto}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.top{background:var(--band);color:var(--bandink);padding-bottom:18px;padding-top:max(clamp(22px,4vw,48px),env(safe-area-inset-top))}
+.tin{max-width:1240px;margin:auto;display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:balance}
+.sub{margin:8px 0 0;opacity:.88;max-width:62ch}
+.sub b{font-weight:600}.sub i{font-family:'Noto Serif',serif}.sub .sc{font-family:var(--lex);font-size:1.1em}
+.glyphs{max-width:1240px;margin:18px auto 0;font:400 26px/1.2 var(--lex);letter-spacing:.35em;opacity:.38;white-space:nowrap;overflow:hidden}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:10px;border:1px solid var(--lap);background:var(--lap);color:var(--bg);font:600 15px 'Noto Sans',sans-serif;cursor:pointer}
+.btn.light{background:var(--bandink);color:#13265c;border-color:var(--bandink)}
+.btn.ghost{background:transparent;color:var(--lap)}
+.btn:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--rub);outline-offset:2px}
+.wrap{max-width:1240px;margin:auto;padding:clamp(18px,3vw,36px) max(5vw,16px) 60px;display:grid;gap:36px}
+@media(min-width:900px){.wrap{grid-template-columns:minmax(0,1fr) 330px}}
+.qrow{display:flex;gap:10px}
+#q{flex:1;font:400 22px/1.3 var(--lex);padding:12px 16px;border:2px solid var(--ink);border-radius:12px;background:var(--bg);color:var(--ink);min-height:56px}
+.chips,.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+.chips button,.seg button{min-height:40px;padding:0 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;font:15px 'Noto Sans',sans-serif;cursor:pointer}
+.chips button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;border-radius:0;background:transparent}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on{background:var(--lap);color:var(--bg)}
+.chk{display:inline-flex;gap:8px;align-items:center;min-height:40px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--lap)}
+.kb{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.kb .kl{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.kb .kl button{min-height:34px;padding:0 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--mut);cursor:pointer;font-size:13px}
+.kb .kl button.on{color:var(--ink);border-color:var(--ink)}
+.keys{display:flex;flex-wrap:wrap;gap:6px}
+.keys button{min-width:44px;min-height:44px;font:22px/1 var(--lex);border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+.keys button.fn{font:14px 'Noto Sans',sans-serif;padding:0 12px;color:var(--mut)}
+.keys.forms{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+.qbox{position:relative;flex:1}
+#q{width:100%}
+#q::-webkit-search-cancel-button{display:none}
+.sug{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:5;background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 28px rgb(0 0 0/.16);list-style:none;margin:0;padding:4px;max-height:62vh;overflow:auto}
+.sug li{display:flex;gap:10px;align-items:baseline;justify-content:space-between;padding:8px 12px;border-radius:8px;cursor:pointer;min-height:44px}
+.sug li.act,.sug li:hover{background:var(--card)}
+.sug .w{font:700 21px/1.3 var(--lex);color:var(--rub);overflow-wrap:anywhere}
+.sug .m{font-size:13px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%;flex:0 1 auto}
+.how{margin-top:10px}
+.cheat{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:6px 12px;align-items:baseline;font-size:14px;margin:4px 0 6px}
+.cheat .k{font:700 18px 'Noto Sans',sans-serif;color:var(--rub);text-align:center;min-width:1.4em}
+.cheat .v{color:var(--mut);font-family:'Noto Serif',serif;white-space:nowrap}
+.cheat .s{font-size:13px}.cheat .s b{font:400 17px var(--lex);color:var(--ink)}
+.tr{font:italic 400 16px 'Noto Serif',serif;color:var(--mut);margin-inline-start:8px}
+.how summary{cursor:pointer;font-size:14px;color:var(--lap);min-height:40px;display:flex;align-items:center}
+.how .lg{margin:10px 0 2px;font-weight:600;font-size:14px}
+.sch{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:2px 12px;font-size:14px}
+.sch b{font:400 18px var(--lex);margin-inline-start:4px}
+.stat{color:var(--mut);margin:18px 0 6px;font-size:14px}
+.res{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.res li{border-bottom:1px solid var(--line)}
+.hit{padding:14px 2px}
+.hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 4px}
+.cp{margin-inline-start:auto;background:none;border:0;color:var(--lap);font:13px 'Noto Sans',sans-serif;cursor:pointer;min-height:32px;padding:0 4px}
+.lw{cursor:pointer;text-decoration:underline dotted color-mix(in srgb,var(--lap) 55%,transparent);text-underline-offset:3px}
+.lw:hover{color:var(--lap)}
+.pop{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);box-shadow:0 -10px 30px rgb(0 0 0/.18);max-height:62vh;overflow:auto;padding:14px max(5vw,16px) 22px;border-radius:16px 16px 0 0}
+.pop .ph{display:flex;align-items:baseline;gap:10px;justify-content:space-between;position:sticky;top:-14px;background:var(--bg);padding:6px 0}
+.pop .pt{font-size:14px;color:var(--mut)}
+.pop .pt b{font:700 20px var(--lex);color:var(--rub)}
+.pop article{border-top:1px solid var(--line);padding:10px 0}
+@media(min-width:900px){.pop{left:auto;right:24px;bottom:24px;width:520px;border-radius:16px;border:1px solid var(--line)}}
+.hw{font:700 22px/1.3 var(--lex);color:var(--rub)}
+.tag{font-size:13px;color:var(--mut);margin-inline-start:10px;white-space:nowrap}
+.def{display:block;margin-top:4px;font:17px/1.5 var(--lex);overflow-wrap:anywhere}
+.def .l{display:block}
+.def .l.f{margin-top:.55em}
+.def .l.f:first-child{margin-top:0}
+.def .l.x{padding-inline-start:.9em;margin-top:.45em;border-inline-start:2px solid var(--line)}
+.ex{color:light-dark(#7d828b,#8f959f)}
+.exb{font-weight:400;font-style:normal}
+.def .l.x{font-family:'Noto Sans','Noto Sans Georgian','Noto Sans Armenian','Noto Sans Syriac','Noto Sans Ethiopic',sans-serif;font-size:15.5px}
+.l.x .ex{font-style:italic}
+.l.x .exb,.l.x .ex .ex{font-style:normal}
+.hit{cursor:pointer}
+.hit.long:not(.open) .def{max-height:7.6em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.hit.long:not(.open)::after{content:'развернуть';display:block;font:13px 'Noto Sans',sans-serif;color:var(--lap);margin-top:2px}
+.acts{display:none;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.acts .btn{min-height:38px}
+.tro{background:var(--card);border-radius:10px;padding:10px 14px;margin:0 0 14px;white-space:pre-line;font:16px/1.55 var(--lex)}
+.tro:empty{display:none}
+.gr{font-style:italic;font-weight:300;color:light-dark(#2e7d4f,#86d6a2)}
+.sn{font-weight:700;color:var(--lap);font-family:'Noto Sans',sans-serif;font-size:.9em}
+.st{font-weight:700;color:var(--lap)}
+.fm{font-weight:700;color:light-dark(#c9645a,#e9a79c)}
+.gt{font-style:italic;color:var(--mut)}
+.sync:empty{display:none}
+.empty{padding:28px 0;color:var(--mut);max-width:60ch}
+.empty b{color:var(--ink)}
+#more{margin-top:14px}
+.lib h2{font:700 24px/1.2 'Noto Serif',serif;margin:0;display:inline}
+.lib .set>summary{font-weight:600;min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer}
+.trl{border-top:1px solid var(--line);padding:10px 0}
+.trh{display:grid;gap:4px;font-weight:600}
+.trh select{font:15px 'Noto Sans',sans-serif;min-height:42px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);max-width:100%}
+.trt{margin-top:8px}
+.trt .lg{margin:8px 0 2px;font-size:13px;color:var(--mut);font-weight:600}
+#setD{margin-top:18px}
+.lib .set{border-top:1px solid var(--line);padding-top:4px;margin-top:6px}
+.libd>summary{cursor:pointer;min-height:44px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;justify-items:start;color:var(--mut);font-size:14px}
+.drop.over{border-color:var(--lap);background:var(--card)}
+.dl{list-style:none;padding:0;margin:16px 0}
+.dl li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.dl .nm{font-weight:600;overflow-wrap:anywhere}
+.dl .mt{display:block;font-size:13px;color:var(--mut)}
+.dl .del{min-height:40px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:none;color:var(--mut);cursor:pointer;font-size:13px}
+.dl .del.sure{border-color:var(--rub);color:var(--rub)}
+.sync{font-size:14px;color:var(--mut)}
+.set summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}
+.note{font-size:13px;color:var(--mut)}
+.ov{position:fixed;inset:0;background:rgb(0 0 0/.45);display:grid;place-items:center;padding:12px;z-index:10}
+.ov[hidden]{display:none}
+.dlg{background:var(--bg);color:var(--ink);border-radius:16px;width:min(680px,100%);max-height:92vh;overflow:auto;padding:22px}
+.dlg h2{font:700 22px/1.2 'Noto Serif',serif;margin:0 0 16px;overflow-wrap:anywhere}
+.fg{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;align-items:flex-end}
+.fg label:not(.chk){display:grid;gap:4px;font-size:13px;color:var(--mut);flex:1 1 200px}
+.fg input,.fg select{font:16px 'Noto Sans',sans-serif;min-height:44px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.cols{border:1px solid var(--line);border-radius:10px;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:4px 16px}
+.cols legend{font-size:13px;color:var(--mut)}
+.pv{border-collapse:collapse;font:15px var(--lex);width:100%}
+.pv th,.pv td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:start;vertical-align:top;max-width:260px}
+.pv th{font:600 13px 'Noto Sans',sans-serif;color:var(--mut)}
+.pv .h{color:var(--rub);font-weight:700}
+.act{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw}
+.toast.on{opacity:1}
+@media(prefers-reduced-motion:reduce){.toast{transition:none}}
+@media(max-width:600px){.hw{font-size:20px}#clr{flex:1}#kbB{padding:0 10px;font-size:14px}.qrow{flex-wrap:wrap}.qbox{flex-basis:100%}.glyphs{font-size:20px}}
+</style>
+</head>
+<body>
+<header class="band top">
+  <div class="tin">
+    <div>
+      <h1>LexEikôn</h1>
+      <p class="sub">Набирайте латиницей без диакритики: <b>gmerti</b> найдёт <span class="sc">ღმერთი</span>, <b>mlk</b> — <span class="sc">ܡܠܟܐ</span>. Можно и в оригинальном письме; ищется сразу во всех словарях.</p>
+    </div>
+  </div>
+  <div class="glyphs" aria-hidden="true">ܐ ა α A ա አ ا ܒ ბ β B բ በ ب ܓ გ γ C գ ገ ج ܕ დ δ D դ ደ د</div>
+</header>
+
+<main class="wrap">
+  <section>
+    <div class="qrow">
+      <div class="qbox">
+        <label for="q" class="vh">Поиск</label>
+        <input id="q" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" dir="auto" role="combobox" aria-controls="sug" aria-expanded="false" aria-autocomplete="list" placeholder="gmerti, mlk, tagavor…">
+        <ul id="sug" class="sug" role="listbox" hidden></ul>
+      </div>
+      <button id="clr" class="btn ghost" hidden>Очистить</button>
+      <button id="kbB" class="btn ghost" aria-expanded="false" aria-controls="kb">Алфавит</button>
+    </div>
+    <div id="kb" class="kb" hidden></div>
+    <div class="chips" id="chips" role="group" aria-label="Язык"></div>
+    <div class="opts">
+      <div class="seg" id="mode" role="group" aria-label="Режим поиска">
+        <button data-m="pre" class="on">Начало</button><button data-m="in">Содержит</button><button data-m="ex">Точно</button><button data-m="re">Regex</button>
+      </div>
+      <label class="chk"><input type="checkbox" id="scope" checked> искать и в переводах</label>
+    </div>
+    <p id="stat" class="stat" aria-live="polite"></p>
+    <ol id="res" class="res"></ol>
+    <button id="more" class="btn ghost" hidden>Показать ещё</button>
+  </section>
+
+  <aside class="lib"><details class="libd" id="trD"><summary><h2>Транслитерация</h2></summary>
+    <p class="note">Выберите систему для каждого языка: она показывается рядом с заглавными словами и в списке вариантов. Ниже — полная таблица выбранной системы.</p>
+    <div id="trsec"></div>
+  </details>
+  <details class="libd" id="setD"><summary><h2>Настройки</h2></summary>
+    <details class="set" open><summary>Словари <span id="libn" class="note"></span></summary>
+      <ul id="dl" class="dl"></ul>
+    </details>
+    <p id="sync" class="sync"></p>
+  </details></aside>
+</main>
+
+<div id="ov" class="ov" hidden><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dt" id="dlg"></div></div>
+<div id="pop" class="pop" role="dialog" aria-label="Латинский словарь" hidden></div>
+<div id="toast" class="toast" role="status"></div>
+
+<script>
+{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LS={get(k,d){try{const v=localStorage.getItem('lex_'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('lex_'+k,JSON.stringify(v))}catch(e){}}};
+
+const LANGS={syr:['Сирийский','сир.'],ka:['Древнегрузинский','груз.'],grc:['Древнегреческий','греч.'],la:['Латынь','лат.'],hy:['Армянский','арм.'],gez:['Эфиопский (геэз)','эфиоп.'],ar:['Арабский','араб.'],xx:['Другой','—']};
+const KEYS={
+ syr:'ܐ ܒ ܓ ܕ ܗ ܘ ܙ ܚ ܛ ܝ ܟ ܠ ܡ ܢ ܣ ܥ ܦ ܨ ܩ ܪ ܫ ܬ',
+ ka:'ა ბ გ დ ე ვ ზ ჱ თ ი კ ლ მ ნ ჲ ო პ ჟ რ ს ტ ჳ უ ფ ქ ღ ყ შ ჩ ც ძ წ ჭ ხ ჴ ჯ ჰ ჵ',
+ grc:'α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ σ ς τ υ φ χ ψ ω',
+ hy:'ա բ գ դ ե զ է ը թ ժ ի լ խ ծ կ հ ձ ղ ճ մ յ ն շ ո չ պ ջ ռ ս վ տ ր ց ւ փ ք օ ֆ',
+ ar:'ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي ء ة ى',
+ gez:[0x1200,0x1208,0x1210,0x1218,0x1220,0x1228,0x1230,0x1240,0x1260,0x1270,0x1280,0x1290,0x12A0,0x12A8,0x12C8,0x12D0,0x12D8,0x12E8,0x12F0,0x1308,0x1320,0x1330,0x1338,0x1340,0x1348,0x1350].map(c=>String.fromCharCode(c)).join(' ')
+};
+
+const opt=Object.assign({lat:true,gez:true,ar:true},LS.get('opt',{}));
+const GEZ={0x1210:0x1200,0x1280:0x1200,0x1220:0x1230,0x12D0:0x12A0,0x1340:0x1338};
+function norm(s){
+  s=String(s).normalize('NFKD').replace(/\p{M}/gu,'').toLowerCase();
+  s=s.replace(/ς/g,'σ').replace(/[ⴀ-ⴥ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x2D00+0x10D0))
+     .replace(/[ـ܏()\[\]\-‐·]/g,'').replace(/[፡-፨]/g,' ').replace(/[ٱ]/g,'ا');
+  if(opt.lat)s=s.replace(/j/g,'i').replace(/v/g,'u');
+  if(opt.ar)s=s.replace(/ة/g,'ه').replace(/ى/g,'ي');
+  if(opt.gez)s=s.replace(/[ሀ-ፗ]/g,c=>{const x=c.charCodeAt(0),b=x&~7;return GEZ[b]?String.fromCharCode(GEZ[b]+(x&7)):c});
+  return s.replace(/\s+/g,' ').trim();
+}
+const ddir=s=>{const r=(String(s).match(/[\u0590-\u08FF]/g)||[]).length,l=(String(s).match(/[A-Za-z\u00C0-\u024F\u0370-\u03FF\u0400-\u04FF\u0530-\u058F\u10A0-\u10FF\u1200-\u139F\u1F00-\u1FFF]/g)||[]).length;return r>l?'rtl':'ltr'};
+const words=s=>' '+s.replace(/[^\p{L}\p{N}]+/gu,' ').trim()+' ';
+function detect(str){
+  const R={syr:/[܀-ݏ]/g,ka:/[Ⴀ-ჿⴀ-⴯Ა-Ჿ]/g,grc:/[Ͱ-Ͽἀ-῿]/g,hy:/[԰-֏]/g,gez:/[ሀ-᎟]/g,ar:/[؀-ۿ]/g,la:/[A-Za-z]/g};
+  let best='xx',bn=0;for(const k in R){const n=(str.match(R[k])||[]).length;if(n>bn){bn=n;best=k}}return best;
+}
+
+/* ---------- Latin input: consonant classes ---------- */
+const CL={
+ syr:{sem:1,M:'ܐܘܝ',A:'ܐ',m:{')':'ܐ','(':'ܥ',b:'ܒ',v:'ܒ',g:'ܓ',d:'ܕ',h:'ܗܚ',w:'ܘ',z:'ܙ',x:'ܚ',t:'ܬܛ',y:'ܝ',j:'ܝ',k:'ܟ',l:'ܠ',m:'ܡ',n:'ܢ',s:'ܣܨܫ',c:'ܨ',p:'ܦ',f:'ܦ',q:'ܩ',r:'ܪ',sh:'ܫ',kh:'ܟܚ',th:'ܬ',dh:'ܕ',gh:'ܓ',ts:'ܨ'}},
+ ar:{sem:1,M:'اوي',A:'ا',m:{')':'اء','(':'ع',b:'ب',p:'ب',t:'تطث',th:'ث',j:'ج',g:'جغ',gh:'غ',h:'هحخ',x:'خ',kh:'خ',d:'دضذ',dh:'ذ',r:'ر',z:'زظذ',s:'سصش',sh:'ش',c:'ص',f:'ف',v:'ف',q:'ق',k:'ك',l:'ل',m:'م',n:'ن',w:'و',y:'ي'}},
+ gez:{sem:1,M:'',A:'አ',m:{')':'አ','(':'ዐ',h:'ሀሐኀ',x:'ኀ',kh:'ኀ',l:'ለ',m:'መ',s:'ሰሠሸጸፀ',sh:'ሸ',r:'ረ',q:'ቀ',b:'በ',v:'ቨ',t:'ተጠ',c:'ቸጨጸ',ch:'ቸጨ',n:'ነኘ',k:'ከኸ',w:'ወ',z:'ዘዠ',y:'የ',d:'ደ',j:'ጀ',g:'ገ',p:'ፐጰ',f:'ፈ'}},
+ ka:{m:{a:'ა',b:'ბ',g:'გღ',d:'დ',e:'ეჱ',v:'ვ',z:'ზჟძ',t:'თტ',i:'იჲ',k:'კქ',l:'ლ',m:'მ',n:'ნ',o:'ოჵ',p:'პფ',f:'ფ',r:'რ',s:'სშ',u:'უჳ',w:'ჳ',y:'ჲ',q:'ყჴ',x:'ხ',c:'ცწჩჭ',j:'ჯძ',h:'ჰ',sh:'შ',zh:'ჟ',gh:'ღ',kh:'ხ',ch:'ჩჭ',ts:'ცწ',dz:'ძ',th:'თ',ph:'ფ'}},
+ hy:{m:{a:'ա',b:'բ',g:'գղ',d:'դ',e:'եէ',z:'զժձ',t:'տթ',i:'ի',l:'լղ',x:'խ',c:'ծցճչ',k:'կք',q:'ք',h:'հ',j:'ձջ',m:'մ',y:'յ',n:'ն',s:'սշ',o:'ոօ',p:'պփ',f:'ֆ',r:'րռ',v:{re:'վ|ու|ւ',show:'վւ'},w:'ւ',u:{re:'ու|ւ',show:'ու'},'ə':'ը','@':'ը',sh:'շ',zh:'ժ',gh:'ղ',kh:'խ',ch:'ճչ',ts:'ծց',dz:'ձ',th:'թ',ph:'փ'}},
+ grc:{m:{a:'α',b:'β',g:'γ',d:'δ',e:'εη',z:'ζ',t:'τθ',i:'ι',k:'κχ',c:'κχ',l:'λ',m:'μ',n:'ν',x:'ξχ',o:'οω',p:'πφ',f:'φ',r:'ρ',s:'σ',u:'υ',y:'υ',w:'ω',h:'',th:'θ',ph:'φ',ch:'χ',kh:'χ',ps:'ψ',ks:'ξ',rh:'ρ'}}
+};
+const VOW=new Set(['a','e','i','o','u','ə','ǝ']);
+const reEsc=s=>s.replace(/[.*+?^${}()|[\]\\\-]/g,'\\$&');
+const LAB={0x1248:0x1240,0x1288:0x1280,0x12B0:0x12A8,0x1310:0x1308};
+function semKey(h,L){
+  let s=norm(h).replace(/[^\p{L}]/gu,'');
+  if(L==='gez')s=[...s].map(c=>{const x=c.codePointAt(0);if(x<0x1200||x>0x137F)return c;let b=x&~7;b=LAB[b]||b;return String.fromCharCode(b)}).join('');
+  return s;
+}
+const isLatinQ=q=>/[A-Za-zÀ-ɏḀ-ỿ)(ʾʿ’‘`'@əǝł]/.test(q)&&!/[Ͱ-ϿЀ-ԯ԰-֏֐-ࣿႠ-ჿሀ-᎟Ა-Ჿἀ-῿ⴀ-⴯]/.test(q);
+const prep=q=>q.replace(/[ʾ’'ʼ]/g,')').replace(/[ʿ‘`ʻ]/g,'(').replace(/ł/g,'l').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase();
+function buildRx(q,L){
+  const c=CL[L],src=prep(q),toks=[];
+  if(!c.sem&&/[()ʾʿ]/.test(q))return {ok:false};
+  const cls=v=>v==null?null:typeof v==='object'?'(?:'+v.re+')':v===''?'':'['+[...new Set([...v].map(x=>norm(x)))].map(reEsc).join('')+']';
+  const Mre=c.sem&&c.M?'['+[...c.M].map(x=>reEsc(norm(x))).join('')+']*':'';
+  const J=c.sem?Mre:' ?';
+  let i=0;
+  while(i<src.length){
+    const two=src.substr(i,2);
+    if(two.length===2&&c.m[two]!=null){
+      const a=c.sem&&VOW.has(two[0])?'':cls(c.m[two[0]]),b=c.sem&&VOW.has(two[1])?'':cls(c.m[two[1]]);
+      const alt=[cls(c.m[two])];if(a!=null&&b!=null)alt.push(a+(a&&b?J:'')+b);
+      toks.push('(?:'+alt.join('|')+')');i+=2;continue}
+    const ch=src[i++];
+    if(c.sem&&VOW.has(ch))continue;
+    const t=cls(c.m[ch]);if(t)toks.push(t);
+  }
+  if(!toks.length)return {ok:false};
+  const body=toks.join(J),A=c.A?'(?:'+reEsc(norm(c.A))+')?':'';
+  return {ok:true,ex:new RegExp('^'+A+body+Mre+'$','u'),pre:new RegExp('^'+A+body,'u'),in:new RegExp(body,'u')};
+}
+const RTM={
+ ka:{'ა':'a','ბ':'b','გ':'g','დ':'d','ე':'e','ვ':'v','ზ':'z','ჱ':'ē','თ':'t','ი':'i','კ':'ḳ','ლ':'l','მ':'m','ნ':'n','ჲ':'y','ო':'o','პ':'ṗ','ჟ':'ž','რ':'r','ს':'s','ტ':'ṭ','ჳ':'w','უ':'u','ფ':'p','ქ':'k','ღ':'ġ','ყ':'q̇','შ':'š','ჩ':'č','ც':'c','ძ':'ʒ','წ':'c̣','ჭ':'č̣','ხ':'x','ჴ':'q','ჯ':'ǯ','ჰ':'h','ჵ':'ō','ჶ':'f'},
+ hy:{'ա':'a','բ':'b','գ':'g','դ':'d','ե':'e','զ':'z','է':'ē','ը':'ə','թ':'tʻ','ժ':'ž','ի':'i','լ':'l','խ':'x','ծ':'c','կ':'k','հ':'h','ձ':'j','ղ':'ł','ճ':'č','մ':'m','յ':'y','ն':'n','շ':'š','ո':'o','չ':'čʻ','պ':'p','ջ':'ǰ','ռ':'ṙ','ս':'s','վ':'v','տ':'t','ր':'r','ց':'cʻ','ւ':'w','փ':'pʻ','ք':'kʻ','օ':'ō','ֆ':'f','և':'ew'},
+ syr:{'ܐ':'ʾ','ܒ':'b','ܓ':'g','ܕ':'d','ܗ':'h','ܘ':'w','ܙ':'z','ܚ':'ḥ','ܛ':'ṭ','ܝ':'y','ܟ':'k','ܠ':'l','ܡ':'m','ܢ':'n','ܣ':'s','ܥ':'ʿ','ܦ':'p','ܨ':'ṣ','ܩ':'q','ܪ':'r','ܫ':'š','ܬ':'t'},
+ ar:{'ء':'ʾ','ا':'ā','ب':'b','ت':'t','ث':'ṯ','ج':'ǧ','ح':'ḥ','خ':'ḫ','د':'d','ذ':'ḏ','ر':'r','ز':'z','س':'s','ش':'š','ص':'ṣ','ض':'ḍ','ط':'ṭ','ظ':'ẓ','ع':'ʿ','غ':'ġ','ف':'f','ق':'q','ك':'k','ل':'l','م':'m','ن':'n','ه':'h','و':'w','ي':'y','ى':'ā','ة':'a'},
+ grc:{'α':'a','β':'b','γ':'g','δ':'d','ε':'e','ζ':'z','η':'ē','θ':'th','ι':'i','κ':'k','λ':'l','μ':'m','ν':'n','ξ':'x','ο':'o','π':'p','ρ':'r','σ':'s','ς':'s','τ':'t','υ':'y','φ':'ph','χ':'ch','ψ':'ps','ω':'ō'}
+};
+const GZB={0x1200:'h',0x1208:'l',0x1210:'ḥ',0x1218:'m',0x1220:'ś',0x1228:'r',0x1230:'s',0x1238:'š',0x1240:'q',0x1248:'qʷ',0x1260:'b',0x1268:'v',0x1270:'t',0x1278:'č',0x1280:'ḫ',0x1288:'ḫʷ',0x1290:'n',0x1298:'ñ',0x12A0:'ʾ',0x12A8:'k',0x12B0:'kʷ',0x12B8:'x',0x12C8:'w',0x12D0:'ʿ',0x12D8:'z',0x12E0:'ž',0x12E8:'y',0x12F0:'d',0x1300:'ǧ',0x1308:'g',0x1310:'gʷ',0x1320:'ṭ',0x1328:'č̣',0x1330:'p̣',0x1338:'ṣ',0x1340:'ḍ',0x1348:'f',0x1350:'p'};
+const GZV=['ä','u','i','a','e','ə','o','ʷa'],GZL=['ä','','i','a','e','ə','',''];
+const TRS={
+ syr:{sci:{n:'Научная (консонантная)',m:RTM.syr}},
+ ka:{sci:{n:'Картвелологическая: ḳ ṭ ṗ c̣ č̣ ġ',m:RTM.ka},
+     nat:{n:'Национальная 2002: k’ t’ ts’ ch’ gh',m:{'ა':'a','ბ':'b','გ':'g','დ':'d','ე':'e','ვ':'v','ზ':'z','ჱ':'ē','თ':'t','ი':'i','კ':'k’','ლ':'l','მ':'m','ნ':'n','ჲ':'y','ო':'o','პ':'p’','ჟ':'zh','რ':'r','ს':'s','ტ':'t’','ჳ':'w','უ':'u','ფ':'p','ქ':'k','ღ':'gh','ყ':'q’','შ':'sh','ჩ':'ch','ც':'ts','ძ':'dz','წ':'ts’','ჭ':'ch’','ხ':'kh','ჴ':'q','ჯ':'j','ჰ':'h','ჵ':'ō','ჶ':'f'}}},
+ hy:{hm:{n:'Хюбшман — Мейе: tʻ c č ł',m:RTM.hy},
+     lc:{n:'ALA-LC: tʻ ts ch gh',m:{'ա':'a','բ':'b','գ':'g','դ':'d','ե':'e','զ':'z','է':'ē','ը':'ě','թ':'tʻ','ժ':'zh','ի':'i','լ':'l','խ':'kh','ծ':'ts','կ':'k','հ':'h','ձ':'dz','ղ':'gh','ճ':'ch','մ':'m','յ':'y','ն':'n','շ':'sh','ո':'o','չ':'chʻ','պ':'p','ջ':'j','ռ':'ṙ','ս':'s','վ':'v','տ':'t','ր':'r','ց':'tsʻ','ւ':'w','փ':'pʻ','ք':'kʻ','օ':'ō','ֆ':'f','և':'ew'}}},
+ gez:{trad:{n:'Традиционная (Дилльман — Ламбдин): a, ā',V:['a','u','i','ā','e','ə','o','ʷā'],VL:['a','','i','ā','e','ə','',''],B:Object.assign({},GZB,{0x1340:'ṣ́'})},
+      ham:{n:'Гамбургская (Encyclopaedia Aethiopica): ä, a',V:GZV,VL:GZL,B:GZB}},
+ grc:{sci:{n:'Научная',m:RTM.grc}},
+ ar:{din:{n:'DIN 31635',m:RTM.ar}}
+};
+let trCfg=Object.assign({syr:'sci',ka:'sci',hy:'hm',gez:'trad',grc:'sci',ar:'din'},LS.get('trcfg',{}));
+function sciTr(w,L){
+  const sysk=trCfg[L];if(!TRS[L]||!sysk||sysk==='off')return '';const sys=TRS[L][sysk];if(!sys)return '';
+  let s=String(w);
+  if(L==='gez'){
+    const sy=[];
+    for(const ch of s){const x=ch.codePointAt(0);
+      if(x>=0x1200&&x<=0x137F){const b=x&~7,o=x&7,c=sys.B[b];if(c!=null){sy.push({c,v:[0x1248,0x1288,0x12B0,0x1310].includes(b)?sys.VL[o]:sys.V[o]});continue}}
+      sy.push({t:ch==='፡'||ch==='።'?' ':ch})}
+    for(let i=0;i<sy.length;i++){const y=sy[i];if(y.v!=='ə')continue;const pv=sy[i-1],nx=sy[i+1];
+      if(!nx||nx.t!=null)y.v='';else if(pv&&pv.c&&nx.v&&nx.v!=='ə')y.v=''}
+    return sy.map(y=>y.t??y.c+y.v).join('').replace(/\s+/g,' ').trim();
+  }
+  if(L==='grc'){
+    return s.split(/(\s+)/).map(wd=>{const d=wd.normalize('NFD'),rough=d.slice(0,4).includes('̔');
+      let t=d.replace(/\p{M}/gu,'').toLowerCase().replace(/γγ/g,'ng').replace(/γκ/g,'nk').replace(/γξ/g,'nx').replace(/γχ/g,'nch').replace(/αυ/g,'au').replace(/ευ/g,'eu').replace(/ηυ/g,'ēu').replace(/ου/g,'ou').replace(/υι/g,'yi');
+      t=[...t].map(c=>sys.m[c]??c).join('');
+      if(rough)t=t[0]==='r'?'rh'+t.slice(1):'h'+t;return t}).join('');
+  }
+  s=s.normalize('NFC');
+  if(L==='syr'||L==='ar')s=s.normalize('NFD').replace(/\p{M}/gu,'');
+  if(L==='hy')s=s.toLowerCase().replace(/ու/g,'u');
+  if(L==='ar')s=s.replace(/(^|\s)ا/g,'$1a');
+  return [...s].map(c=>sys.m[c]??c).join('');
+}
+const trTag=(w,L)=>{const t=sciTr(w,L);return t?`<span class="tr">${esc(t)}</span>`:''};
+function trTable(L){
+  const sys=TRS[L][trCfg[L]&&trCfg[L]!=='off'?trCfg[L]:Object.keys(TRS[L])[0]];
+  if(L==='gez'){
+    const cons=Object.entries(sys.B).filter(([b])=>![0x1248,0x1288,0x12B0,0x1310].includes(+b)).map(([b,v])=>`<span><b>${String.fromCharCode(+b)}</b> ${esc(v)}</span>`).join('');
+    const ord=['1','2','3','4','5','6','7'].map((n,o)=>`<span><b>${String.fromCharCode(0x1208+o)}</b> l${esc(sys.V[o])}</span>`).join('');
+    return `<p class="lg">Согласные</p><div class="sch">${cons}</div><p class="lg">Порядки (на примере ለ)</p><div class="sch">${ord}</div><p class="note">Шестой порядок: ə; в конце слова и перед слогом с полной гласной не пишется (ንጉሥ → ${esc(sciTr('ንጉሥ','gez')||'nəguś')}, ነግሠ → ${esc(sciTr('ነግሠ','gez')||'')}).</p>`;
+  }
+  return `<div class="sch">${Object.entries(sys.m).map(([c,v])=>`<span><b>${esc(c)}</b> ${esc(v)}</span>`).join('')}</div>`+(L==='hy'?'<p class="note">ու → u</p>':'')+(L==='grc'?'<p class="note">γγ → ng, αυ → au, ου → ou; густое придыхание → h, ῥ → rh</p>':'');
+}
+function renderTrSec(){
+  $('#trsec').innerHTML=Object.keys(TRS).map(L=>`<div class="trl"><label class="trh"><span>${LANGS[L][0]}</span><select data-tl="${L}">${Object.entries(TRS[L]).map(([k,v])=>`<option value="${k}" ${trCfg[L]===k?'selected':''}>${esc(v.n)}</option>`).join('')}<option value="off" ${trCfg[L]==='off'?'selected':''}>не показывать</option></select></label><div class="trt">${trTable(L)}</div></div>`).join('');
+}
+function cheatHtml(){
+  const rows=[[')','ʾ ʼ \' — алеф'],['(','ʿ ` — айн'],['h','ḥ ḫ'],['x','ḫ, kh'],['s','ṣ ś š'],['t','ṭ ṯ θ'],['d','ḍ ḏ'],['z','ẓ ž ʒ'],['g','ġ ǧ'],['k','ḳ kʻ'],['q','q q̇'],['c','č c̣ ç'],['p','ṗ p̣ pʻ φ'],['e','ē η'],['o','ō ω']];
+  const order=['syr','ar','gez','ka','hy','grc'];
+  return '<div class="cheat">'+rows.map(([k,v])=>{
+    const per=order.map(L=>{const m=CL[L].m[k];if(!m||typeof m!=='string')return '';const ch=[...new Set([...m])];return `${LANGS[L][1]} <b>${esc(ch.join(' '))}</b>`}).filter(Boolean).join(' · ');
+    return `<span class="k">${esc(k)}</span><span class="v">${esc(v)}</span><span class="s">${per||'—'}</span>`}).join('')+'</div><p class="note">Одна латинская буква находит все её «виды»: точки, черточки и апострофы набирать не нужно. В сирийском, арабском и геэзе гласные можно не набирать.</p>';
+}
+function howHtml(){
+  const show=v=>typeof v==='object'?v.show:v;
+  return `<p class="note">Набирайте латиницей, точки и черточки не нужны: <b>h</b> находит h, ḥ, ḫ; <b>t</b> — t, ṭ, ṯ; <b>s</b> — s, ṣ, ś, š. <b>)</b> — алеф, <b>(</b> — айн. В сирийском, арабском и геэзе гласные не набираются, поиск идёт по согласным: ktb → ܟܬܒܐ, كتاب. Варианты появляются в списке под полем; можно набирать и в оригинальном письме.</p>`+
+  Object.keys(CL).map(L=>`<p class="lg">${LANGS[L][0]}</p><div class="sch">${Object.entries(CL[L].m).filter(([k,v])=>show(v)).map(([k,v])=>`<span><code>${esc(k)}</code><b>${esc([...show(v)].join(' '))}</b></span>`).join('')}</div>`).join('');
+}
+
+/* ---------- storage ---------- */
+const idb={db:null,
+  open(){return new Promise(res=>{try{const r=indexedDB.open('lexicon',1);r.onupgradeneeded=()=>r.result.createObjectStore('d',{keyPath:'id'});r.onsuccess=()=>{this.db=r.result;res(true)};r.onerror=()=>res(false)}catch(e){res(false)}})},
+  tx(mode,fn){return new Promise(res=>{try{if(!this.db)return res(null);const t=this.db.transaction('d',mode),s=t.objectStore('d');const r=fn(s);t.oncomplete=()=>res(r&&r.result);t.onerror=()=>res(null)}catch(e){res(null)}})},
+  all(){return this.tx('readonly',s=>s.getAll())},
+  put(o){const {hk,dk,...c}=o;return this.tx('readwrite',s=>s.put(c))},
+  del(id){return this.tx('readwrite',s=>s.delete(id))}
+};
+let dicts=[];const off=new Set(LS.get('off',[]));
+let cloud=null;
+function setSync(t){$('#sync').textContent=t}
+function keys(d){if(!d.hk){d.hk=d.entries.map(e=>norm(e[0]));d.dk=d.entries.map(e=>words(norm(e[1]||'')));d.sk=d.entries.map((e,i)=>{const L=elang(d,i);return CL[L]&&CL[L].sem?semKey(e[0],L):null})}}
+
+async function upload(d){
+  if(!cloud||d.demo)return;
+  try{
+    setSync('Сохраняю «'+d.name+'» в аккаунт…');
+    const chunks=[];let cur=[],sz=0;
+    for(const e of d.entries){const l=(e[0].length+(e[1]||'').length+8)*3;if(sz+l>200000&&cur.length){chunks.push(cur);cur=[];sz=0}cur.push([e[0],e[1]||'']);sz+=l}
+    if(cur.length)chunks.push(cur);
+    for(let i=0;i<chunks.length;i++)await cloud.col.doc('c_'+d.id+'_'+i).set({e:chunks[i]});
+    cloud.list=cloud.list.filter(m=>m.id!==d.id).concat({id:d.id,name:d.name,lang:d.lang,count:d.entries.length,chunks:chunks.length,created:d.created});
+    await cloud.col.doc('index').set({dicts:cloud.list});
+    syncOk();
+  }catch(e){setSync(e&&e.code==='quota_exceeded'?'Место в аккаунте закончилось: «'+d.name+'» сохранён только в этом браузере.':'Не удалось сохранить «'+d.name+'» в аккаунт; он есть в этом браузере.')}
+}
+async function unload(id){
+  if(!cloud)return;const m=cloud.list.find(x=>x.id===id);if(!m)return;
+  try{cloud.list=cloud.list.filter(x=>x.id!==id);await cloud.col.doc('index').set({dicts:cloud.list});
+    for(let i=0;i<m.chunks;i++)await cloud.col.doc('c_'+id+'_'+i).delete();}catch(e){}
+}
+function syncOk(){setSync('Словари сохранены в вашем аккаунте: они откроются и на телефоне, и на компьютере.')}
+async function initCloud(){
+  try{
+    if(!window.claude||!claude.use){setSync('Словари хранятся только в этом браузере.');return}
+    const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
+    const uid=user&&await user.id();
+    if(!db||!uid){setSync('Словари хранятся только в этом браузере.');return}
+    const col=db.collection('data/users/'+uid);
+    const ix=await col.doc('index').get();
+    cloud={col,list:ix.exists?((ix.data().dicts)||[]).slice():[]};
+    for(const m of cloud.list){
+      if(dicts.some(d=>d.id===m.id))continue;
+      setSync('Загружаю «'+m.name+'» из аккаунта…');
+      const ents=[];for(let i=0;i<m.chunks;i++){const s=await col.doc('c_'+m.id+'_'+i).get();if(s.exists)ents.push(...s.data().e)}
+      const d={id:m.id,name:m.name,lang:m.lang,created:m.created,entries:ents};
+      await idb.put(d);dicts.push(d);refresh();
+    }
+    for(const d of dicts.slice())if(!d.demo&&!cloud.list.some(m=>m.id===d.id))await upload(d);
+    syncOk();
+  }catch(e){cloud=null;setSync('Нет связи с аккаунтом — словари хранятся в этом браузере.')}
+}
+
+/* ---------- built-in dictionaries ---------- */
+const BUILTIN=['syr','ka','gez','la','hy'],BVER=5;
+async function loadBuiltins(){
+  const gone=LS.get('gone',[]);
+  for(const k of BUILTIN){
+    const id='b-'+k;if(gone.includes(id)||dicts.some(d=>d.id===id&&d.v===BVER))continue;dicts=dicts.filter(d=>d.id!==id);
+    try{setSync('Загружаю встроенный словарь ('+LANGS[k][0].toLowerCase()+')…');
+      const d=await (await fetch('data/'+k+'.json')).json();
+      d.demo=true;d.v=BVER;d.created=BUILTIN.indexOf(k);dicts.push(d);dicts.sort((a,b)=>a.created-b.created);
+      await idb.put(d);refresh();
+    }catch(e){}
+  }
+}
+
+/* ---------- search ---------- */
+let mode='pre',langF=LS.get('lang',''),results=[],shown=0;const PAGE=50;
+const elang=(d,i)=>d.entries[i][2]||d.lang;
+function search(){
+  const q=$('#q').value,scope=$('#scope').checked,act=dicts.filter(d=>!off.has(d.id));
+  const total=act.reduce((n,d)=>n+d.entries.length,0);
+  results=[];shown=0;
+  if(!q.trim()){
+    $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();
+    $('#res').insertAdjacentHTML('beforeend',`<li class="empty">${dicts.length?`<b>${total.toLocaleString('ru')}</b> статей в ${act.length} из ${dicts.length} словар${dicts.length==1?'я':'ей'}${act.length?'':' — включите хотя бы один в списке словарей'}. Например: <b>gmerti</b> → ღმერთი, <b>mlk</b> → ܡܠܟܐ, <b>tagavor</b> → թագաւոր, <b>ngs</b> → ነግሠ. Транслитерация и словари — внизу.`:'Словари загружаются…'}</li>`);
+    return;
+  }
+  let re=null;
+  if(mode==='re'){try{re=new RegExp(q,'iu')}catch(e){$('#stat').textContent='Ошибка в регулярном выражении';$('#res').innerHTML='';$('#more').hidden=true;sugHide();return}}
+  const lat=!re&&isLatinQ(q),RX={};
+  if(lat)for(const L in CL)RX[L]=buildRx(q,L);
+  const qh=norm(q),qd=words(qh).trim();
+  for(const d of act){
+    keys(d);const E=d.entries;
+    for(let i=0;i<E.length;i++){
+      const L=elang(d,i);
+      if(langF&&L!==langF)continue;
+      let s=-1,pos=0;
+      if(re){if(re.test(E[i][0]))s=0;else if(scope&&re.test(E[i][1]||''))s=3}
+      else{
+        const rx=lat&&RX[L];
+        if(rx){if(rx.ok){const k=CL[L].sem?d.sk[i]:d.hk[i];if(rx.ex.test(k))s=0;else if(mode!=='ex'&&rx.pre.test(k))s=1;else if(mode==='in'&&rx.in.test(k))s=2}}
+        else{const h=d.hk[i];if(h===qh)s=0;else if(mode!=='ex'&&h.startsWith(qh))s=1;else if(mode==='in'&&h.includes(qh))s=2}
+        if(s<0&&scope&&qd){const k=d.dk[i],x=mode==='ex'?k.indexOf(' '+qd+' '):mode==='pre'?k.indexOf(' '+qd):k.indexOf(qd);if(x>=0){s=3;pos=x}}
+      }
+      if(s>=0)results.push([s,s===3?pos*4+Math.min(E[i][1].length,400)/100:E[i][0].length+(lat&&RX[L]?30:0),d,i]);
+    }
+  }
+  results.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+  $('#stat').textContent=results.length?`Найдено: ${results.length.toLocaleString('ru')}`:'Ничего не найдено. Попробуйте режим «Содержит» или другой язык.';
+  $('#res').innerHTML='';more();renderSug();
+}
+let sugIdx=-1,sugOff=false,sugItems=[];
+function sugHide(){$('#sug').hidden=true;$('#q').setAttribute('aria-expanded','false');sugIdx=-1}
+function renderSug(){
+  if(sugOff||document.activeElement!==$('#q')||!$('#q').value.trim()){sugHide();return}
+  const m=new Map();
+  for(const r of results){if(r[0]>2)break;const d=r[2],e=d.entries[r[3]],L=elang(d,r[3]),k=e[0]+'\u0001'+L;
+    if(!m.has(k)){if(m.size>=12)continue;m.set(k,{w:e[0],L,n:0,ds:new Set()})}const it=m.get(k);it.n++;it.ds.add(d.name)}
+  sugItems=[...m.values()];
+  if(!sugItems.length){sugHide();return}
+  $('#sug').innerHTML=sugItems.map((it,j)=>`<li role="option" id="sg${j}" data-j="${j}" aria-selected="${j===sugIdx}" class="${j===sugIdx?'act':''}"><span><span class="w" dir="auto">${esc(it.w)}</span>${trTag(it.w,it.L)}</span><span class="m">${esc(LANGS[it.L]?LANGS[it.L][1]:'')} · ${esc([...it.ds].join(', '))}</span></li>`).join('');
+  $('#sug').hidden=false;$('#q').setAttribute('aria-expanded','true');
+}
+function sugMove(dj){if($('#sug').hidden)return;const n=sugItems.length;sugIdx+=dj;if(sugIdx>=n)sugIdx=-1;else if(sugIdx<-1)sugIdx=n-1;
+  $('#sug').querySelectorAll('li').forEach((li,j)=>{li.classList.toggle('act',j===sugIdx);li.setAttribute('aria-selected',j===sugIdx)});
+  const a=$('#sg'+sugIdx);if(a)a.scrollIntoView({block:'nearest'});$('#q').setAttribute('aria-activedescendant',sugIdx>=0?'sg'+sugIdx:'')}
+function sugPick(j){const it=sugItems[j];if(!it)return;$('#q').value=it.w;$('#clr').hidden=false;sugOff=true;sugHide();search()}
+function more(){
+  const part=results.slice(shown,shown+PAGE);shown+=part.length;
+  $('#res').insertAdjacentHTML('beforeend',part.map(([s,_,d,i])=>{const e=d.entries[i],l=elang(d,i);
+    return `<li><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><span class="hw" dir="auto">${esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · ${esc(d.name)}</span><button class="cp">копировать</button></div><div class="def" dir="${l==='ar'?ddir(e[1]):'ltr'}">${LATDEF.has(d.id)?linkLat(formatDef(e[1],l,e[0])):formatDef(e[1],l,e[0])}</div></article></li>`}).join(''));
+  $('#more').hidden=shown>=results.length;
+  requestAnimationFrame(()=>{for(const h of $('#res').querySelectorAll('.hit:not([data-m])')){h.dataset.m=1;const d=h.querySelector('.def');if(d.scrollHeight>d.getBoundingClientRect().height*0+ 7.6*parseFloat(getComputedStyle(d).fontSize)+4)h.classList.add('long')}});
+}
+
+/* ---------- entry formatting ---------- */
+function formatDef(raw,L,hw){
+  if(!raw)return '—';
+  const lines=[];let src=String(raw);
+  if(L==='ka'&&hw){const nl=src.indexOf('\n'),f=(nl<0?src:src.slice(0,nl)).replace(/[\x02-\x07]/g,'').trim(),k=x=>x.replace(/[()\-\s]/g,'');if(k(f)===k(hw))src=nl<0?'':src.slice(nl+1)}
+  if((L==='hy'||L==='la')&&hw){const nl=src.indexOf('\n'),f=nl<0?src:src.slice(0,nl),m=f.match(/^([\x02-\x07]*)([\s\S]*)$/);
+    if(m[2]===hw||m[2].startsWith(hw+' ')||m[2].startsWith(hw+',')||m[2].startsWith(hw+'\x05')){const r=m[2].slice(hw.length).replace(/^[\s,]+/,'');const nf=m[1]+r;
+      src=(/[^\x02-\x07\s]/.test(nf)?nf:'')+(nl<0?'':(/[^\x02-\x07\s]/.test(nf)?src.slice(nl):src.slice(nl+1)))}}
+  if(L==='ka')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF](?:[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF\-–]|[\s,]+(?=[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
+  if(L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/-?[\u0531-\u0587\uFB13-\uFB17](?:[\u0531-\u0587\uFB13-\uFB17\u055A-\u055F\-–]|[\s,]+(?=-?[\u0531-\u0587\uFB13-\uFB17]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
+  if(L==='syr')src=src.replace(/(\.)((?:[ \t]|\x05)+)((?:\x02[^\x03]*\x03\s*)*)(?=[\u0710-\u074F])/g,(m,a,w,b,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:a+(w.includes('\x05')?'\x05':'')+'\n'+b});
+  if(L==='ka'||L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>{let r='',gap='';for(const part of t.split(/(\x06[^\x07]*\x07)/)){if(part.startsWith('\x06')){if(r&&/[A-Za-zА-Яа-яЁё]/.test(gap))r=r.replace(/\s+$/,'')+'\n';r+=part;gap=''}else{r+=part;gap+=part}}return '\x04'+r+'\x05'});
+  for(const line of src.split('\n')){
+    let h=esc(line),out='',dep=0,last=0,m,n=0;
+    const re=/(^|\s)(?:-\s+)?(\d{1,2})([).])(?=\s|$)/g;
+    while((m=re.exec(h))){
+      const before=h.slice(last,m.index);
+      for(const ch of before){if(ch==='(')dep++;else if(ch===')')dep=Math.max(0,dep-1)}
+      const atStart=!(out+before).replace(/[\s\x02-\x05]/g,'');
+      if(dep>0||(m[3]==='.'&&!atStart)||+m[2]>30){out+=before+m[0];last=re.lastIndex;continue}
+      const sn=`<b class="sn">${m[2]}${m[3]}</b>`;
+      if(atStart||n===0)out+=before+m[1]+sn;else out+=before.replace(/[\s\-–;,]+$/,'')+'\n'+sn;
+      n++;last=re.lastIndex;
+    }
+    out+=h.slice(last);
+    lines.push(...out.split('\n'));
+  }
+  let g=false,ex=false;
+  return lines.filter(l=>l.trim()!=='@').map((l,li)=>{
+    let cls=(ex||/^\s*\x04/.test(l))?' x':'';
+    if(L==='gez'&&li===0&&l.length<40&&!/[ሀ-፿\x02-\x07]/.test(l)&&/[a-zʾʿḥḫṣśṭḍ']/.test(l)){return `<span class="l gt">${l}</span>`}
+    if(/^@\s*/.test(l)){cls=' f';l=l.replace(/^@\s*(.*)$/,'<b class="fm">$1</b>')}
+    if(L==='syr'){const SY='[\\u0700-\\u074F\\u0300-\\u036F]+';
+      const rx=new RegExp('^((?:\\x02[^\\x03]*\\x03\\s*)*)('+SY+'(?:\\s+(?:sive|et|vel|aut)\\s+'+SY+')*)');
+      if(rx.test(l)){if(li===0){cls=' f';l=l.replace(rx,(m,a,b)=>a+b.replace(new RegExp(SY,'g'),'<b class="fm">$&</b>'))}
+        else{cls=' x';l='<span class="ex">'+l.replace(new RegExp(SY,'g'),'<b class="exb">$&</b>')+'</span>'}}}
+    if(L==='gez'){
+      if(/^[ሀ-፿]+፡/.test(l)){cls=' f';l=l.replace(/^[ሀ-፿]+፡(?:,?\s+(?:et|vel|sive|seu|aut|nec non|et rarius)\s+[ሀ-፿]+፡)*/,m=>m.replace(/[ሀ-፿]+፡/g,'<b class="fm">$&</b>'))}
+      l=l.replace(/(\x02pl\.\x03\s+)([ሀ-፿]+፡)((?:,?\s+(?:et|vel|sive)\s+[ሀ-፿]+፡)*)/g,(m,a,b,c)=>a+'<b class="fm">'+b+'</b>'+c.replace(/[ሀ-፿]+፡/g,'<b class="fm">$&</b>'));
+      l=l.replace(/^([A-D]\.)(?=\s)/,'<b class="st">$1</b>').replace(/(^|\s|>)(I{1,3}|IV|VI{0,3}|IX|X)(?=,?\s*(?:<b class="sn">|\d|$))/g,'$1<b class="st">$2</b>');
+    }
+    l=l.replace(/\(([^()]*\d[^()]*)\)/g,'<span class="ex">($1)</span>');
+    let pre=(g?'<i class="gr">':'')+(ex?'<span class="ex">':'');
+    for(const ch of l){if(ch==='\x02')g=true;else if(ch==='\x03')g=false;else if(ch==='\x04')ex=true;else if(ch==='\x05')ex=false}
+    l=pre+l.replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>')+(ex?'</span>':'')+(g?'</i>':'');
+    return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
+  }).join('');
+}
+const LATDEF=new Set(['b-syr','b-gez']);
+const plain=s=>String(s||'').replace(/[\x02-\x07]/g,'');
+
+/* ---------- UI rendering ---------- */
+function langsPresent(){const s=new Set();for(const d of dicts){if(d.lang==='mix')d.entries.forEach(e=>s.add(e[2]));else s.add(d.lang)}return Object.keys(LANGS).filter(k=>s.has(k))}
+function renderChips(){
+  const ls=langsPresent();if(langF&&!ls.includes(langF))langF='';
+  $('#chips').innerHTML=[['','Все']].concat(ls.map(k=>[k,({syr:'Сир.',ka:'Груз.',grc:'Греч.',la:'Лат.',hy:'Арм.',gez:'Эфиоп.',ar:'Араб.',xx:'Др.'})[k]||LANGS[k][0]])).map(([k,n])=>`<button data-l="${k}" class="${k===langF?'on':''}" aria-pressed="${k===langF}">${n}</button>`).join('');
+}
+function renderLib(){
+  const act=dicts.filter(d=>!off.has(d.id));$('#libn').textContent=`${act.length} из ${dicts.length} включены · ${act.reduce((n,d)=>n+d.entries.length,0).toLocaleString('ru')} статей`;
+  $('#dl').innerHTML=dicts.length?dicts.map(d=>`<li><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="Использовать в поиске" style="width:20px;height:20px;accent-color:var(--lap)"><span><span class="nm">${esc(d.name)}</span><span class="mt">${d.lang==='mix'?'7 языков':esc((LANGS[d.lang]||LANGS.xx)[0])} · ${d.entries.length.toLocaleString('ru')} ст.</span></span></li>`).join(''):'';
+}
+function refresh(){renderLib();renderChips();renderKb();search()}
+
+/* keyboard */
+let kbLang=LS.get('kb','syr'),gezBase=null;
+function renderKb(){
+  const k=$('#kb');if(k.hidden)return;
+  const L=Object.keys(KEYS);if(langF&&KEYS[langF])kbLang=langF;
+  let h=`<div class="kl">${L.map(l=>`<button data-k="${l}" class="${l===kbLang?'on':''}">${LANGS[l][0]}</button>`).join('')}</div>`;
+  if(kbLang==='gez'&&gezBase!=null)h+=`<div class="keys forms">${[0,1,2,3,4,5,6].map(o=>`<button data-c="${String.fromCharCode(gezBase+o)}">${String.fromCharCode(gezBase+o)}</button>`).join('')}</div>`;
+  h+=`<div class="keys">${KEYS[kbLang].split(' ').map(c=>`<button ${kbLang==='gez'?'data-g':'data-c'}="${c}">${c}</button>`).join('')}<button class="fn" data-c=" ">пробел</button><button class="fn" data-bs="1">⌫ стереть</button></div>`;
+  k.innerHTML=h;k.dir=kbLang==='syr'||kbLang==='ar'?'rtl':'ltr';
+}
+function insert(c){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;q.value=q.value.slice(0,a)+c+q.value.slice(b);q.setSelectionRange(a+c.length,a+c.length);debounced()}
+function backspace(){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b){q.value=q.value.slice(0,a)+q.value.slice(b);q.setSelectionRange(a,a)}else if(a>0){const s=[...q.value.slice(0,a)];s.pop();const p=s.join('');q.value=p+q.value.slice(a);q.setSelectionRange(p.length,p.length)}debounced()}
+
+let tmr;function debounced(){$('#clr').hidden=!$('#q').value;clearTimeout(tmr);tmr=setTimeout(search,120)}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2600)}
+
+/* ---------- import ---------- */
+function decode(buf,enc){
+  const u=new Uint8Array(buf);
+  if(enc==='auto'){
+    if(u[0]===0xFF&&u[1]===0xFE)enc='utf-16le';else if(u[0]===0xFE&&u[1]===0xFF)enc='utf-16be';
+    else{try{return new TextDecoder('utf-8',{fatal:true}).decode(buf)}catch(e){enc='windows-1251'}}
+  }
+  return new TextDecoder(enc).decode(buf);
+}
+function parseCSV(t,d){
+  const rows=[];let row=[],f='',q=false;
+  for(let i=0;i<t.length;i++){const c=t[i];
+    if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+    else if(c==='"'&&f==='')q=true;
+    else if(c===d){row.push(f);f=''}
+    else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;row.push(f);f='';if(row.some(x=>x.trim()))rows.push(row);row=[]}
+    else f+=c}
+  row.push(f);if(row.some(x=>x.trim()))rows.push(row);return rows;
+}
+const SEPS=[['\t','Табуляция'],[';','Точка с запятой'],[',','Запятая'],['|','Черта |'],[' — ','Тире —'],[' – ','Тире –'],[' - ','Дефис с пробелами'],[' = ','Знак ='],[': ','Двоеточие'],['ws','Первый пробел']];
+function fromDelim(t,sep){
+  const lines=t.split(/\r?\n/).filter(l=>l.trim());
+  if(sep==='auto'){const smp=lines.slice(0,200);sep='ws';for(const [s] of SEPS.slice(0,9)){if(smp.filter(l=>l.includes(s)).length>=smp.length*.8){sep=s;break}}}
+  let raw;
+  if(sep.length===1)raw=parseCSV(t,sep);
+  else raw=lines.map(l=>{const m=sep==='ws'?l.match(/^(\S+)\s+(.*)$/):null;if(sep==='ws')return m?[m[1],m[2]]:[l];const k=l.indexOf(sep);return k<0?[l]:[l.slice(0,k),l.slice(k+sep.length)]});
+  const h0=raw[0]||[];
+  const header=h0.some(c=>/^\s*(word|lemma|headword|form|gloss|def|definition|meaning|translation|слово|лемма|форма|значение|перевод|mot|sens|traduction)\s*$/i.test(c));
+  return {kind:'text',raw,header,sep};
+}
+const sval=v=>v==null?'':Array.isArray(v)?v.map(sval).join('; '):typeof v==='object'?JSON.stringify(v):String(v);
+function fromJSON(j){
+  if(Array.isArray(j)){
+    if(Array.isArray(j[0]))return {kind:'json',raw:j.map(r=>r.map(sval)),header:false};
+    const ks=[];for(const o of j.slice(0,300))for(const k of Object.keys(o||{}))if(!ks.includes(k))ks.push(k);
+    return {kind:'json',fixed:ks,raw:j.map(o=>ks.map(k=>sval(o&&o[k]))),header:false};
+  }
+  if(j&&typeof j==='object')return {kind:'json',fixed:['Слово','Значение'],raw:Object.entries(j).map(([k,v])=>[k,sval(v)]),header:false};
+  return null;
+}
+function fromXML(t){
+  const doc=new DOMParser().parseFromString(t,'application/xml');
+  if(doc.getElementsByTagName('parsererror').length)return null;
+  const es=[...doc.getElementsByTagName('entry'),...doc.getElementsByTagName('entryFree')];
+  if(!es.length)return null;
+  const raw=es.map(e=>{const c=e.cloneNode(true);const h=c.querySelector('orth')||c.querySelector('form')||c.firstElementChild;const hw=h?h.textContent.replace(/\s+/g,' ').trim():'';if(h)h.remove();return [hw,c.textContent.replace(/\s+/g,' ').trim()]});
+  return {kind:'xml',fixed:['Заглавное слово','Статья'],raw,header:false};
+}
+function dslClean(l,h){return l.replace(/\{\{.*?\}\}/g,'').replace(/\[s\].*?\[\/s\]/g,'').replace(/(?<!\\)\[[^\]]*\]/g,'').replace(/<<|>>/g,'').replace(/(?<!\\)~/g,()=>h).replace(/\\(.)/g,'$1').replace(/[ \t]+/g,' ').trim()}
+function fromDSL(t){
+  let title='',hws=[],body=[];const raw=[];
+  const flush=()=>{for(const h of hws)raw.push([h,body.map(l=>dslClean(l,h)).filter(Boolean).join('\n')])};
+  for(const line of t.split(/\r?\n/)){
+    if(line.startsWith('#')){const m=line.match(/^#NAME\s+"(.*)"/);if(m)title=m[1];continue}
+    if(!line.trim())continue;
+    if(/^[ \t]/.test(line))body.push(line);
+    else{if(body.length){flush();hws=[];body=[]}const h=line.replace(/[{}]/g,'').replace(/\\(.)/g,'$1').trim();if(h)hws.push(h)}
+  }
+  flush();return {kind:'dsl',fixed:['Заглавное слово','Статья'],raw,header:false,title};
+}
+function parse(txt,name,sep){
+  name=name.replace(/\.dz$/i,'');
+  const ext=(name.split('.').pop()||'').toLowerCase(),t=txt.trimStart();
+  if(ext==='dsl'||/^#(NAME|INDEX_LANGUAGE)/.test(t))return fromDSL(txt);
+  if(ext==='json'||/^[\[{]/.test(t)){try{const r=fromJSON(JSON.parse(txt));if(r)return r}catch(e){}}
+  if(['xml','tei'].includes(ext)||t.startsWith('<')){const r=fromXML(txt);if(r)return r}
+  return fromDelim(txt,sep);
+}
+let queue=[],cur=null;
+const dataRows=()=>cur.p.header?cur.p.raw.slice(1):cur.p.raw;
+function colNames(){const p=cur.p;if(p.fixed)return p.fixed;const n=Math.max(1,...p.raw.slice(0,300).map(r=>r.length));return Array.from({length:n},(_,i)=>p.header&&p.raw[0][i]?.trim()?p.raw[0][i].trim():'Колонка '+(i+1))}
+function reparse(keepLang){
+  cur.p=parse(decode(cur.buf,cur.enc),cur.name,cur.sep);
+  const n=colNames().length;cur.hw=0;cur.def=new Set(Array.from({length:n},(_,i)=>i).filter(i=>i));
+  if(!keepLang)cur.lang=detect(dataRows().slice(0,300).map(r=>r[0]||'').join(' '));
+}
+function enqueue(files){queue.push(...files);if(!cur)nextFile()}
+async function nextFile(){
+  const f=queue.shift();if(!f){cur=null;$('#ov').hidden=true;return}
+  try{let buf=await f.arrayBuffer();const u=new Uint8Array(buf);
+    if(u[0]===0x1f&&u[1]===0x8b)buf=await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+    cur={name:f.name,buf,enc:'auto',sep:'auto',dname:f.name.replace(/(\.dsl)?\.[^.]+$/i,'')};reparse();if(cur.p.title)cur.dname=cur.p.title;renderDlg();$('#ov').hidden=false;setTimeout(()=>$('#iN')&&$('#iN').focus(),30)}
+  catch(e){toast('Не удалось прочитать '+f.name);nextFile()}
+}
+function renderDlg(){
+  const p=cur.p,rows=dataRows(),cols=colNames();
+  const encs=[['auto','Авто (UTF-8)'],['utf-8','UTF-8'],['utf-16le','UTF-16 LE'],['windows-1251','Windows-1251'],['windows-1252','Windows-1252'],['iso-8859-7','ISO-8859-7']];
+  $('#dlg').innerHTML=`<h2 id="dt">Новый словарь: ${esc(cur.name)}</h2>
+  <div class="fg"><label>Название<input id="iN" value="${esc(cur.dname)}"></label>
+  <label>Язык заглавных слов<select id="iL">${Object.entries(LANGS).map(([k,v])=>`<option value="${k}" ${k===cur.lang?'selected':''}>${v[0]}</option>`).join('')}</select></label></div>
+  <div class="fg">${p.kind==='text'?`<label>Разделитель<select id="iS"><option value="auto" ${cur.sep==='auto'?'selected':''}>Авто${cur.sep==='auto'?' ('+esc((SEPS.find(s=>s[0]===p.sep)||['',''])[1])+')':''}</option>${SEPS.map(([s,n])=>`<option value="${esc(s)}" ${cur.sep===s?'selected':''}>${n}</option>`).join('')}</select></label>`:''}
+  <label>Кодировка<select id="iE">${encs.map(([k,n])=>`<option value="${k}" ${k===cur.enc?'selected':''}>${n}</option>`).join('')}</select></label>
+  ${p.fixed?'':`<label class="chk"><input type="checkbox" id="iH" ${p.header?'checked':''}> первая строка — заголовки</label>`}</div>
+  <div class="fg"><label>Заглавное слово — колонка<select id="iW">${cols.map((c,i)=>`<option value="${i}" ${i===cur.hw?'selected':''}>${esc(c)}</option>`).join('')}</select></label></div>
+  ${cols.length>1?`<fieldset class="cols"><legend>В текст статьи включить</legend>${cols.map((c,i)=>i===cur.hw?'':`<label class="chk"><input type="checkbox" data-c="${i}" ${cur.def.has(i)?'checked':''}> ${esc(c)}</label>`).join('')}</fieldset>`:''}
+  <div class="scroll"><table class="pv"><thead><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>${rows.slice(0,5).map(r=>`<tr>${cols.map((_,i)=>`<td dir="${i===cur.hw?'auto':ddir(r[i]||'')}" class="${i===cur.hw?'h':''}">${esc((r[i]||'').slice(0,140))}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+  <p class="note">${rows.length.toLocaleString('ru')} строк${queue.length?` · ещё в очереди: ${queue.length}`:''}. Если буквы выглядят как «кракозябры», смените кодировку.</p>
+  <div class="act"><button class="btn ghost" id="iX">${queue.length?'Пропустить':'Отмена'}</button><button class="btn" id="iOK" ${rows.length?'':'disabled'}>Добавить ${rows.length.toLocaleString('ru')} статей</button></div>`;
+}
+async function doImport(){
+  const rows=dataRows(),cols=colNames(),hw=cur.hw,dc=[...cur.def].filter(i=>i!==hw).sort((a,b)=>a-b);
+  const lbl=dc.length>1&&(cur.p.header||!!cur.p.fixed);const entries=[];
+  for(const r of rows){const h=(r[hw]||'').trim();if(!h)continue;
+    entries.push([h,dc.map(i=>{const v=(r[i]||'').trim();return v?(lbl?cols[i]+': ':'')+v:''}).filter(Boolean).join(' · ')])}
+  const d={id:'d'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),name:$('#iN').value.trim()||cur.dname,lang:$('#iL').value,created:Date.now(),entries};
+  await idb.put(d);dicts.push(d);refresh();toast('Добавлено: «'+d.name+'», '+entries.length.toLocaleString('ru')+' статей');
+  upload(d);nextFile();
+}
+
+let LATF={},laIdx=null;const LSTOP=new Set('et in ad cum est sunt sive seu vel aut de ex non nec qui quae quod quam ut sc id ab per pro sub si ac atque etiam vid cf ibid seq coll'.split(' '));
+function laDict(){return dicts.find(d=>d.id==='b-la')}
+function laLookup(w){
+  const d=laDict();if(!d)return [];
+  if(!laIdx||laIdx.d!==d){laIdx={d,m:new Map()};d.entries.forEach((e,i)=>{const k=norm(e[0]);if(!laIdx.m.has(k))laIdx.m.set(k,[]);laIdx.m.get(k).push(i)})}
+  const n=norm(w),keys=[n,...(LATF[n]||[])],out=[];
+  for(const k of keys)for(const i of laIdx.m.get(k)||[])if(!out.includes(i))out.push(i);
+  return out;
+}
+function linkLat(html){
+  if(!laDict())return html;
+  return html.split(/(<[^>]+>)/).map(t=>t.startsWith('<')?t:t.replace(/[A-Za-zāēīōūăĕĭŏŭæœÆŒ]{2,}/g,w=>!LSTOP.has(w.toLowerCase())&&laLookup(w).length?`<span class="lw" data-w="${w}">${w}</span>`:w)).join('');
+}
+function showLat(w){
+  const d=laDict(),ix=laLookup(w);if(!d||!ix.length)return;
+  const lem=[...new Set(ix.map(i=>d.entries[i][0]))].join(', ');
+  $('#pop').innerHTML=`<div class="ph"><span class="pt"><b>${esc(w)}</b>${norm(lem)!==norm(w)?' → '+esc(lem):''} · ${esc(d.name)}</span><button class="btn ghost" id="popX">Закрыть</button></div>`+
+    ix.map(i=>`<article><div class="hd"><span class="hw">${esc(d.entries[i][0])}</span></div><div class="def">${formatDef(d.entries[i][1],'la')}</div></article>`).join('');
+  $('#pop').hidden=false;
+}
+
+/* ---------- events ---------- */
+$('#q').addEventListener('input',debounced);
+$('#q').addEventListener('input',()=>{sugOff=false;sugIdx=-1});
+$('#clr').addEventListener('click',()=>{$('#q').value='';$('#clr').hidden=true;sugOff=false;search();$('#q').focus()});
+$('#q').addEventListener('keydown',e=>{
+  if($('#sug').hidden){if(e.key==='ArrowDown'&&$('#q').value.trim()){sugOff=false;renderSug()}return}
+  if(e.key==='ArrowDown'){e.preventDefault();sugMove(1)}
+  else if(e.key==='ArrowUp'){e.preventDefault();sugMove(-1)}
+  else if(e.key==='Enter'){if(sugIdx>=0){e.preventDefault();sugPick(sugIdx)}else sugHide()}
+  else if(e.key==='Escape'){sugOff=true;sugHide()}
+});
+$('#q').addEventListener('focus',()=>{if(!sugOff)renderSug()});
+$('#q').addEventListener('blur',()=>setTimeout(sugHide,150));
+$('#sug').addEventListener('mousedown',e=>e.preventDefault());
+$('#sug').addEventListener('click',e=>{const li=e.target.closest('li');if(li)sugPick(+li.dataset.j)});
+$('#scope').addEventListener('change',search);
+$('#mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;mode=b.dataset.m;$('#mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));search()});
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;langF=b.dataset.l;LS.set('lang',langF);renderChips();renderKb();search()});
+$('#more').addEventListener('click',more);
+$('#res').addEventListener('click',async e=>{
+  const c0=e.target.closest('.cp');const h=e.target.closest('.hit');
+  const w=e.target.closest('.lw');if(w&&(!h.classList.contains('long')||h.classList.contains('open'))){showLat(w.dataset.w);return}
+  if(h&&!c0){if(h.classList.contains('long')){if(getSelection().toString())return;h.classList.toggle('open')}return}
+  const c=c0;if(c){const b=c.closest('.hit'),d=dicts.find(x=>x.id===b.dataset.d),en=d&&d.entries[+b.dataset.i];
+    try{await navigator.clipboard.writeText(en[0]+' — '+plain(en[1]));toast('Скопировано')}catch(err){toast('Не удалось скопировать')}}
+});
+$('#pop').addEventListener('click',e=>{if(e.target.id==='popX')$('#pop').hidden=true;const w=e.target.closest('.lw');if(w)showLat(w.dataset.w)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#pop').hidden=true});
+document.addEventListener('click',e=>{if(!$('#pop').hidden&&!e.target.closest('#pop')&&!e.target.closest('.lw'))$('#pop').hidden=true});
+$('#kbB').addEventListener('click',()=>{const k=$('#kb');k.hidden=!k.hidden;$('#kbB').setAttribute('aria-expanded',!k.hidden);renderKb()});
+$('#kb').addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault()});
+$('#kb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.k){kbLang=b.dataset.k;gezBase=null;LS.set('kb',kbLang);renderKb();return}
+  if(b.dataset.g){const x=b.dataset.g.charCodeAt(0);if(gezBase===x)insert(b.dataset.g);gezBase=x;renderKb();return}
+  if(b.dataset.bs){backspace();return}
+  if(b.dataset.c!=null)insert(b.dataset.c);
+});
+$('#dl').addEventListener('change',e=>{const t=e.target.dataset.t;if(!t)return;e.target.checked?off.delete(t):off.add(t);LS.set('off',[...off]);search()});
+$('#dl').addEventListener('click',async e=>{const b=e.target.closest('.del');if(!b)return;
+  if(!b.classList.contains('sure')){b.classList.add('sure');b.textContent='Точно?';setTimeout(()=>{b.classList.remove('sure');b.textContent='Удалить'},3000);return}
+  const id=b.dataset.x,d0=dicts.find(d=>d.id===id);dicts=dicts.filter(d=>d.id!==id);await idb.del(id);if(d0&&d0.demo)LS.set('gone',[...LS.get('gone',[]),id]);else unload(id);
+  off.delete(id);LS.set('off',[...off]);refresh();toast('Словарь удалён')});
+document.querySelectorAll('[data-o]').forEach(c=>{c.checked=!!opt[c.dataset.o];c.addEventListener('change',()=>{opt[c.dataset.o]=c.checked;LS.set('opt',opt);dicts.forEach(d=>{d.hk=d.dk=d.sk=null});search()})});
+$('#ov').addEventListener('change',e=>{const t=e.target;
+  if(t.id==='iE'){cur.enc=t.value;cur.dname=$('#iN').value;reparse(true);renderDlg()}
+  else if(t.id==='iS'){cur.sep=t.value;cur.dname=$('#iN').value;reparse(true);renderDlg()}
+  else if(t.id==='iH'){cur.p.header=t.checked;cur.dname=$('#iN').value;renderDlg()}
+  else if(t.id==='iW'){cur.hw=+t.value;cur.def.delete(cur.hw);cur.dname=$('#iN').value;cur.lang=$('#iL').value;renderDlg()}
+  else if(t.id==='iL'){cur.lang=t.value}
+  else if(t.dataset.c!=null){t.checked?cur.def.add(+t.dataset.c):cur.def.delete(+t.dataset.c)}
+});
+$('#ov').addEventListener('click',e=>{if(e.target.id==='iOK'){e.target.disabled=true;doImport()}else if(e.target.id==='iX')nextFile()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#ov').hidden)nextFile()});
+/* ---------- start ---------- */
+(async()=>{
+  await idb.open();
+  dicts=((await idb.all())||[]).sort((a,b)=>a.created-b.created);
+  renderTrSec();$('#trsec').addEventListener('change',e=>{const L=e.target.dataset.tl;if(!L)return;trCfg[L]=e.target.value;LS.set('trcfg',trCfg);renderTrSec();search()});
+  refresh();
+  await loadBuiltins();setSync('');
+  try{LATF=await (await fetch('data/latforms.json')).json();search()}catch(e){}
+})();
+}
+</script>
+<script>if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))navigator.serviceWorker.register("sw.js").catch(()=>{});</script>
+</body>
+</html>
