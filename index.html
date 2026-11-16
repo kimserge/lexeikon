@@ -245,11 +245,11 @@ const I18N={
   loading:'Словари загружаются…',libn:(a,n,t)=>`${a} из ${n} включены · ${t} статей`,abbr:'ст.',
   space:'пробел',bksp:'⌫ стереть',off:'не показывать',cons:'Согласные',orders:'Порядки (на примере ለ)',
   sixth:'Шестой порядок: ə; в конце слова и перед слогом с полной гласной не пишется',
-  grcn:'γγ → ng, αυ → au, ου → ou; густое придыхание → h, ῥ → rh',copied:'Скопировано',copyfail:'Не удалось скопировать',poptitle:'Латинский словарь',usearia:'Использовать в поиске',
+  syrsp:'Спирантизация бгдкпт (ḇ ḡ ḏ ḵ p̄ ṯ) обозначается, только если в написании стоит рукаха (точка под буквой); в неогласованных словах её не видно.',grcn:'γγ → ng, αυ → au, ου → ou; густое придыхание → h, ῥ → rh',copied:'Скопировано',copyfail:'Не удалось скопировать',poptitle:'Латинский словарь',usearia:'Использовать в поиске',
   lang:{syr:'Сирийский',ka:'Древнегрузинский',grc:'Древнегреческий',la:'Латынь',hy:'Армянский',gez:'Эфиопский (геэз)',ar:'Арабский',xx:'Другой'},
   chip:{syr:'Сир.',ka:'Груз.',grc:'Греч.',la:'Лат.',hy:'Арм.',gez:'Эфиоп.',ar:'Араб.',xx:'Др.'},
   tag:{syr:'сир.',ka:'груз.',grc:'греч.',la:'лат.',hy:'арм.',gez:'эфиоп.',ar:'араб.',xx:'—'},
-  sys:{syr_sci:'Научная (консонантная)',ka_sci:'Картвелологическая: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Национальная 2002: k’ t’ ts’ ch’ gh',hy_hm:'Хюбшман — Мейе: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Традиционная (Дилльман — Ламбдин): a, ā',gez_ham:'Гамбургская (Encyclopaedia Aethiopica): ä, a',grc_sci:'Научная',ar_din:'DIN 31635'}},
+  sys:{syr_sci:'Научная (консонантная)',syr_alt:'Научная с ˀ и ˁ',ka_sci:'Картвелологическая: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Национальная 2002: k’ t’ ts’ ch’ gh',hy_hm:'Хюбшман — Мейе: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Традиционная (Дилльман — Ламбдин): a, ā',gez_ham:'Гамбургская (Encyclopaedia Aethiopica): ä, a',grc_sci:'Научная',ar_din:'DIN 31635'}},
  en:{name:'English',
   sub:'Type in Latin letters without diacritics: <b>gmerti</b> finds <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. Original scripts work too; all dictionaries are searched at once.',
   search:'Search',clear:'Clear',alphabet:'Alphabet',more:'Show more',copy:'copy',expand:'expand',close:'Close',
@@ -262,11 +262,11 @@ const I18N={
   loading:'Loading dictionaries…',libn:(a,n,t)=>`${a} of ${n} enabled · ${t} entries`,abbr:'entries',
   space:'space',bksp:'⌫ delete',off:'do not show',cons:'Consonants',orders:'Orders (example ለ)',
   sixth:'Sixth order: ə; not written word-finally or before a syllable with a full vowel',
-  grcn:'γγ → ng, αυ → au, ου → ou; rough breathing → h, ῥ → rh',copied:'Copied',copyfail:'Could not copy',poptitle:'Latin dictionary',usearia:'Use in search',
+  syrsp:'Spirantization of bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) is marked only where the spelling has rukkakha (dot below the letter); in unvocalized words it is not visible.',grcn:'γγ → ng, αυ → au, ου → ou; rough breathing → h, ῥ → rh',copied:'Copied',copyfail:'Could not copy',poptitle:'Latin dictionary',usearia:'Use in search',
   lang:{syr:'Syriac',ka:'Old Georgian',grc:'Ancient Greek',la:'Latin',hy:'Armenian',gez:'Ethiopic (Gəʿəz)',ar:'Arabic',xx:'Other'},
   chip:{syr:'Syr.',ka:'Geo.',grc:'Grk.',la:'Lat.',hy:'Arm.',gez:'Eth.',ar:'Ar.',xx:'Oth.'},
   tag:{syr:'syr.',ka:'geo.',grc:'grk.',la:'lat.',hy:'arm.',gez:'eth.',ar:'ar.',xx:'—'},
-  sys:{syr_sci:'Scientific (consonantal)',ka_sci:'Kartvelological: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditional (Dillmann–Lambdin): a, ā',gez_ham:'Hamburg (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientific',ar_din:'DIN 31635'}},
+  sys:{syr_sci:'Scientific (consonantal)',syr_alt:'Scientific with ˀ and ˁ',ka_sci:'Kartvelological: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditional (Dillmann–Lambdin): a, ā',gez_ham:'Hamburg (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientific',ar_din:'DIN 31635'}},
  de:{name:'Deutsch',
   sub:'Lateinisch tippen, ohne Diakritika: <b>gmerti</b> findet <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. Die Originalschrift geht auch; alle Wörterbücher werden zugleich durchsucht.',
   search:'Suche',clear:'Löschen',alphabet:'Alphabet',more:'Mehr anzeigen',copy:'kopieren',expand:'aufklappen',close:'Schließen',
@@ -279,11 +279,11 @@ const I18N={
   loading:'Wörterbücher werden geladen…',libn:(a,n,t)=>`${a} von ${n} aktiv · ${t} Einträge`,abbr:'Einträge',
   space:'Leerzeichen',bksp:'⌫ löschen',off:'nicht anzeigen',cons:'Konsonanten',orders:'Ordnungen (Beispiel ለ)',
   sixth:'Sechste Ordnung: ə; im Wortauslaut und vor einer Silbe mit Vollvokal nicht geschrieben',
-  grcn:'γγ → ng, αυ → au, ου → ou; Spiritus asper → h, ῥ → rh',copied:'Kopiert',copyfail:'Kopieren fehlgeschlagen',poptitle:'Lateinisches Wörterbuch',usearia:'In der Suche verwenden',
+  syrsp:'Die Spirantisierung von bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) wird nur angezeigt, wenn die Schreibung ein Rukkākhā (Punkt unter dem Buchstaben) hat; in unvokalisierten Wörtern ist sie nicht erkennbar.',grcn:'γγ → ng, αυ → au, ου → ou; Spiritus asper → h, ῥ → rh',copied:'Kopiert',copyfail:'Kopieren fehlgeschlagen',poptitle:'Lateinisches Wörterbuch',usearia:'In der Suche verwenden',
   lang:{syr:'Syrisch',ka:'Altgeorgisch',grc:'Altgriechisch',la:'Latein',hy:'Armenisch',gez:'Äthiopisch (Gəʿəz)',ar:'Arabisch',xx:'Andere'},
   chip:{syr:'Syr.',ka:'Georg.',grc:'Griech.',la:'Lat.',hy:'Arm.',gez:'Äth.',ar:'Arab.',xx:'And.'},
   tag:{syr:'syr.',ka:'georg.',grc:'griech.',la:'lat.',hy:'arm.',gez:'äth.',ar:'arab.',xx:'—'},
-  sys:{syr_sci:'Wissenschaftlich (konsonantisch)',ka_sci:'Kartvelologisch: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditionell (Dillmann–Lambdin): a, ā',gez_ham:'Hamburger System (Encyclopaedia Aethiopica): ä, a',grc_sci:'Wissenschaftlich',ar_din:'DIN 31635'}},
+  sys:{syr_sci:'Wissenschaftlich (konsonantisch)',syr_alt:'Wissenschaftlich mit ˀ und ˁ',ka_sci:'Kartvelologisch: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditionell (Dillmann–Lambdin): a, ā',gez_ham:'Hamburger System (Encyclopaedia Aethiopica): ä, a',grc_sci:'Wissenschaftlich',ar_din:'DIN 31635'}},
  fr:{name:'Français',
   sub:'Tapez en caractères latins, sans diacritiques : <b>gmerti</b> trouve <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. L’écriture originale fonctionne aussi ; tous les dictionnaires sont interrogés à la fois.',
   search:'Recherche',clear:'Effacer',alphabet:'Alphabet',more:'Afficher plus',copy:'copier',expand:'déplier',close:'Fermer',
@@ -296,11 +296,11 @@ const I18N={
   loading:'Chargement des dictionnaires…',libn:(a,n,t)=>`${a} sur ${n} activés · ${t} articles`,abbr:'art.',
   space:'espace',bksp:'⌫ effacer',off:'ne pas afficher',cons:'Consonnes',orders:'Ordres (exemple ለ)',
   sixth:'Sixième ordre : ə ; non noté en fin de mot ni devant une syllabe à voyelle pleine',
-  grcn:'γγ → ng, αυ → au, ου → ou ; esprit rude → h, ῥ → rh',copied:'Copié',copyfail:'Copie impossible',poptitle:'Dictionnaire latin',usearia:'Utiliser dans la recherche',
+  syrsp:'La spirantisation de bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) n’est notée que si la graphie porte le rukkokho (point souscrit) ; dans les mots non vocalisés, elle n’est pas visible.',grcn:'γγ → ng, αυ → au, ου → ou ; esprit rude → h, ῥ → rh',copied:'Copié',copyfail:'Copie impossible',poptitle:'Dictionnaire latin',usearia:'Utiliser dans la recherche',
   lang:{syr:'Syriaque',ka:'Géorgien ancien',grc:'Grec ancien',la:'Latin',hy:'Arménien',gez:'Éthiopien (guèze)',ar:'Arabe',xx:'Autre'},
   chip:{syr:'Syr.',ka:'Géo.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Éth.',ar:'Ar.',xx:'Aut.'},
   tag:{syr:'syr.',ka:'géo.',grc:'gr.',la:'lat.',hy:'arm.',gez:'éth.',ar:'ar.',xx:'—'},
-  sys:{syr_sci:'Scientifique (consonantique)',ka_sci:'Kartvélologique : ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nationale 2002 : k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet : tʻ c č ł',hy_lc:'ALA-LC : tʻ ts ch gh',gez_trad:'Traditionnelle (Dillmann–Lambdin) : a, ā',gez_ham:'Hambourg (Encyclopaedia Aethiopica) : ä, a',grc_sci:'Scientifique',ar_din:'DIN 31635'}},
+  sys:{syr_sci:'Scientifique (consonantique)',syr_alt:'Scientifique avec ˀ et ˁ',ka_sci:'Kartvélologique : ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nationale 2002 : k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet : tʻ c č ł',hy_lc:'ALA-LC : tʻ ts ch gh',gez_trad:'Traditionnelle (Dillmann–Lambdin) : a, ā',gez_ham:'Hambourg (Encyclopaedia Aethiopica) : ä, a',grc_sci:'Scientifique',ar_din:'DIN 31635'}},
  it:{name:'Italiano',
   sub:'Digitate in caratteri latini, senza diacritici: <b>gmerti</b> trova <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. Funziona anche la scrittura originale; si cerca in tutti i dizionari insieme.',
   search:'Ricerca',clear:'Cancella',alphabet:'Alfabeto',more:'Mostra altri',copy:'copia',expand:'espandi',close:'Chiudi',
@@ -313,11 +313,11 @@ const I18N={
   loading:'Caricamento dei dizionari…',libn:(a,n,t)=>`${a} su ${n} attivi · ${t} voci`,abbr:'voci',
   space:'spazio',bksp:'⌫ cancella',off:'non mostrare',cons:'Consonanti',orders:'Ordini (esempio ለ)',
   sixth:'Sesto ordine: ə; non si scrive in fine di parola né davanti a sillaba con vocale piena',
-  grcn:'γγ → ng, αυ → au, ου → ou; spirito aspro → h, ῥ → rh',copied:'Copiato',copyfail:'Impossibile copiare',poptitle:'Dizionario latino',usearia:'Usa nella ricerca',
+  syrsp:'La spirantizzazione di bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) è indicata solo se la grafia ha il rukkākhā (punto sotto la lettera); nelle parole non vocalizzate non è visibile.',grcn:'γγ → ng, αυ → au, ου → ou; spirito aspro → h, ῥ → rh',copied:'Copiato',copyfail:'Impossibile copiare',poptitle:'Dizionario latino',usearia:'Usa nella ricerca',
   lang:{syr:'Siriaco',ka:'Georgiano antico',grc:'Greco antico',la:'Latino',hy:'Armeno',gez:'Etiopico (geʿez)',ar:'Arabo',xx:'Altro'},
   chip:{syr:'Sir.',ka:'Georg.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Etiop.',ar:'Ar.',xx:'Altro'},
   tag:{syr:'sir.',ka:'georg.',grc:'gr.',la:'lat.',hy:'arm.',gez:'etiop.',ar:'ar.',xx:'—'},
-  sys:{syr_sci:'Scientifica (consonantica)',ka_sci:'Cartvelologica: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nazionale 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Tradizionale (Dillmann–Lambdin): a, ā',gez_ham:'Amburghese (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientifica',ar_din:'DIN 31635'}}
+  sys:{syr_sci:'Scientifica (consonantica)',syr_alt:'Scientifica con ˀ e ˁ',ka_sci:'Cartvelologica: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nazionale 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Tradizionale (Dillmann–Lambdin): a, ā',gez_ham:'Amburghese (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientifica',ar_din:'DIN 31635'}}
 };
 let UIL=LS.get('ui',null);
 if(!I18N[UIL]){const n=((navigator.languages&&navigator.languages[0])||navigator.language||'ru').slice(0,2).toLowerCase();UIL=I18N[n]?n:'ru'}
@@ -407,7 +407,7 @@ const RTM={
 const GZB={0x1200:'h',0x1208:'l',0x1210:'ḥ',0x1218:'m',0x1220:'ś',0x1228:'r',0x1230:'s',0x1238:'š',0x1240:'q',0x1248:'qʷ',0x1260:'b',0x1268:'v',0x1270:'t',0x1278:'č',0x1280:'ḫ',0x1288:'ḫʷ',0x1290:'n',0x1298:'ñ',0x12A0:'ʾ',0x12A8:'k',0x12B0:'kʷ',0x12B8:'x',0x12C8:'w',0x12D0:'ʿ',0x12D8:'z',0x12E0:'ž',0x12E8:'y',0x12F0:'d',0x1300:'ǧ',0x1308:'g',0x1310:'gʷ',0x1320:'ṭ',0x1328:'č̣',0x1330:'p̣',0x1338:'ṣ',0x1340:'ḍ',0x1348:'f',0x1350:'p'};
 const GZV=['ä','u','i','a','e','ə','o','ʷa'],GZL=['ä','','i','a','e','ə','',''];
 const TRS={
- syr:{sci:{n:'syr_sci',m:RTM.syr}},
+ syr:{sci:{n:'syr_sci',m:RTM.syr},alt:{n:'syr_alt',m:Object.assign({},RTM.syr,{'ܐ':'ˀ','ܥ':'ˁ'})}},
  ka:{sci:{n:'ka_sci',m:RTM.ka},
      nat:{n:'ka_nat',m:{'ა':'a','ბ':'b','გ':'g','დ':'d','ე':'e','ვ':'v','ზ':'z','ჱ':'ē','თ':'t','ი':'i','კ':'k’','ლ':'l','მ':'m','ნ':'n','ჲ':'y','ო':'o','პ':'p’','ჟ':'zh','რ':'r','ს':'s','ტ':'t’','ჳ':'w','უ':'u','ფ':'p','ქ':'k','ღ':'gh','ყ':'q’','შ':'sh','ჩ':'ch','ც':'ts','ძ':'dz','წ':'ts’','ჭ':'ch’','ხ':'kh','ჴ':'q','ჯ':'j','ჰ':'h','ჵ':'ō','ჶ':'f'}}},
  hy:{hm:{n:'hy_hm',m:RTM.hy},
@@ -437,7 +437,10 @@ function sciTr(w,L){
       if(rough)t=t[0]==='r'?'rh'+t.slice(1):'h'+t;return t}).join('');
   }
   s=s.normalize('NFC');
-  if(L==='syr'||L==='ar')s=s.normalize('NFD').replace(/\p{M}/gu,'');
+  if(L==='syr'){const SP={'ܒ':'ḇ','ܓ':'ḡ','ܕ':'ḏ','ܟ':'ḵ','ܦ':'p̄','ܬ':'ṯ'};let r='';const a=[...s.normalize('NFD')];
+    for(let i=0;i<a.length;i++){const c=a[i];if(/\p{M}/u.test(c))continue;let j=i+1,rk=false;while(j<a.length&&/\p{M}/u.test(a[j])){if(a[j]==='\u0742')rk=true;j++}r+=rk&&SP[c]?SP[c]:(sys.m[c]??c)}
+    return r}
+  if(L==='ar')s=s.normalize('NFD').replace(/\p{M}/gu,'');
   if(L==='hy')s=s.toLowerCase().replace(/ու/g,'u');
   if(L==='ar')s=s.replace(/(^|\s)ا/g,'$1a');
   return [...s].map(c=>sys.m[c]??c).join('');
@@ -450,7 +453,7 @@ function trTable(L){
     const ord=['1','2','3','4','5','6','7'].map((n,o)=>`<span><b>${String.fromCharCode(0x1208+o)}</b> l${esc(sys.V[o])}</span>`).join('');
     return `<p class="lg">${I.cons}</p><div class="sch">${cons}</div><p class="lg">${I.orders}</p><div class="sch">${ord}</div><p class="note">${I.sixth} (ንጉሥ → ${esc(sciTr('ንጉሥ','gez')||'nəguś')}, ነግሠ → ${esc(sciTr('ነግሠ','gez')||'')}).</p>`;
   }
-  return `<div class="sch">${Object.entries(sys.m).map(([c,v])=>`<span><b>${esc(c)}</b> ${esc(v)}</span>`).join('')}</div>`+(L==='hy'?'<p class="note">ու → u</p>':'')+(L==='grc'?'<p class="note">'+I.grcn+'</p>':'');
+  return `<div class="sch">${Object.entries(sys.m).map(([c,v])=>`<span><b>${esc(c)}</b> ${esc(v)}</span>`).join('')}</div>`+(L==='hy'?'<p class="note">ու → u</p>':'')+(L==='syr'?'<p class="note">'+I.syrsp+'</p>':'')+(L==='grc'?'<p class="note">'+I.grcn+'</p>':'');
 }
 function renderTrSec(){
   $('#trsec').innerHTML=Object.keys(TRS).map(L=>`<div class="trl"><label class="trh"><span>${LANGS[L][0]}</span><select data-tl="${L}">${Object.entries(TRS[L]).map(([k,v])=>`<option value="${k}" ${trCfg[L]===k?'selected':''}>${esc(I.sys[v.n]||v.n)}</option>`).join('')}<option value="off" ${trCfg[L]==='off'?'selected':''}>${I.off}</option></select></label><div class="trt">${trTable(L)}</div></div>`).join('');
