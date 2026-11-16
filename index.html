@@ -245,17 +245,6 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd>sergey.kim [at] unil.ch</dd>
     </dl>
-    <h3 data-i18n="cr_src"></h3>
-    <ul class="src">
-      <li>Dillmann, <i>Lexicon Linguae Aethiopicae</i> (1865) — TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt et al.), CC BY-NC-SA 4.0</li>
-      <li>Dillmann, <i>Chrestomathia Aethiopica</i>: glossarium &amp; index — DSL</li>
-      <li><i>Lexidion Syriacum</i> — DSL</li>
-      <li>Серебряков, древнегрузинско-русский словарь — DSL</li>
-      <li>Bedrossian, <i>New Dictionary Armenian–English</i> (1875–1879) — DSL</li>
-      <li>Тананушко, латинско-русский словарь — DSL</li>
-      <li>W. Whitaker, <i>Words</i> (Latin–English) — public domain</li>
-      <li>Lebaigue (1881); Quicherat–Daveluy–Chatelain (1892); Quicherat (1866) — DSL: Leiris, 2007</li>
-    </ul>
   </div>
 </footer>
 
@@ -278,7 +267,7 @@ const I18N={
   search:'Поиск',clear:'Очистить',alphabet:'Алфавит',more:'Показать ещё',copy:'копировать',expand:'развернуть',close:'Закрыть',
   all:'Все',langgrp:'Язык',modegrp:'Режим поиска',pre:'Начало',in:'Содержит',ex:'Точно',scope:'искать и в переводах',
   sec_tr:'Транслитерация',tr_note:'Выберите систему для каждого языка: она показывается рядом с заглавными словами и в списке вариантов. Ниже — полная таблица выбранной системы.',
-  sec_set:'Выбрать словари',cr_title:'Авторы и источники',cp_unk:'права не указаны',cp_auth:'автор и издатель',cr_author:'Автор',cr_course:'Курс',cr_cname:'Методология цифрового издания',cr_pub:'Издательство',cr_contact:'Контакт',cr_src:'Словари',credit:'Инструмент создан Sergey Kim (UNIL, FTSR, IRSB) в рамках курса «Методология цифрового издания».',inbody:'Найдено внутри статей',dicts:'Словари',uilang:'Язык интерфейса',
+  sec_set:'Выбрать словари',cr_title:'Об инструменте',cp_unk:'права не указаны',cp_auth:'автор и издатель',cr_author:'Автор',cr_course:'Курс',cr_cname:'Методология цифрового издания',cr_pub:'Издательство',cr_contact:'Контакт',cr_src:'Словари',credit:'Инструмент создан Sergey Kim (UNIL, FTSR, IRSB) в рамках курса «Методология цифрового издания».',inbody:'Найдено внутри статей',dicts:'Словари',uilang:'Язык интерфейса',
   attrib:'Lexicon Linguae Aethiopicae: цифровое издание TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt и др.), лицензия CC BY-NC-SA 4.0.',
   found:'Найдено: ',none:'Ничего не найдено. Попробуйте режим «Содержит» или другой язык.',rxerr:'Ошибка в регулярном выражении',
   empty:(tot,a,n)=>`<b>${tot}</b> статей в ${a} из ${n} словар${n==1?'я':'ей'}${a?'':' — включите хотя бы один в списке словарей'}. Например: ${EX}. Транслитерация и выбор словарей — внизу.`,
@@ -710,8 +699,8 @@ function renderChips(){
 }
 const CPY={'b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 function renderLib(){
-  const act=dicts.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,dicts.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
-  $('#dl').innerHTML=dicts.length?dicts.map(d=>`<li><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><span><span class="nm">${esc(d.name)}</span><span class="mt">${d.lang==='mix'?'7 языков':esc((LANGS[d.lang]||LANGS.xx)[0])} · ${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}</span></li>`).join(''):'';
+  const HIDE=new Set(['b-hy']);off.delete('b-hy');const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
+  $('#dl').innerHTML=vis.length?vis.map(d=>`<li><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><span><span class="nm">${esc(d.name)}</span><span class="mt">${d.lang==='mix'?'7 языков':esc((LANGS[d.lang]||LANGS.xx)[0])} · ${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}</span></li>`).join(''):'';
 }
 function refresh(){renderLib();renderChips();renderKb();search()}
 
