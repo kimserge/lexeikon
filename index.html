@@ -207,6 +207,7 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
   <details class="libd" id="setD"><summary><h2>Настройки</h2></summary>
     <details class="set" open><summary>Словари <span id="libn" class="note"></span></summary>
       <ul id="dl" class="dl"></ul>
+      <p class="note">Lexicon Linguae Aethiopicae: цифровое издание TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt и др.), лицензия CC BY-NC-SA 4.0.</p>
     </details>
     <p id="sync" class="sync"></p>
   </details></aside>
@@ -415,12 +416,12 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','ka','gez','la','hy'],BVER=5;
+const BUILTIN=['syr','ka','dil','gez','la','hy'],BVER=5;
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
   for(const k of BUILTIN){
     const id='b-'+k;if(gone.includes(id)||dicts.some(d=>d.id===id&&d.v===BVER))continue;dicts=dicts.filter(d=>d.id!==id);
-    try{setSync('Загружаю встроенный словарь ('+LANGS[k][0].toLowerCase()+')…');
+    try{setSync('Загружаю встроенные словари…');
       const d=await (await fetch('data/'+k+'.json')).json();
       d.demo=true;d.v=BVER;d.created=BUILTIN.indexOf(k);dicts.push(d);dicts.sort((a,b)=>a.created-b.created);
       await idb.put(d);refresh();
@@ -537,7 +538,7 @@ function formatDef(raw,L,hw){
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
-const LATDEF=new Set(['b-syr','b-gez']);
+const LATDEF=new Set(['b-syr','b-gez','b-dil']);
 const plain=s=>String(s||'').replace(/[\x02-\x07]/g,'');
 
 /* ---------- UI rendering ---------- */
