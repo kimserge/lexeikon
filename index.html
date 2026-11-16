@@ -123,6 +123,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
 .def .l.s{margin-top:.45em}
 .def .l.s:first-child{margin-top:0}
 .def .l.s2{padding-inline-start:1.2em;margin-top:.2em}
+.def .l.s3{padding-inline-start:2.4em;margin-top:.15em}
 .def .l.q{padding-inline-start:.9em;border-inline-start:2px solid var(--line);margin-top:.3em}
 .def .l.x{padding-inline-start:.9em;margin-top:.45em;border-inline-start:2px solid var(--line)}
 .ex{color:light-dark(#7d828b,#8f959f)}
@@ -556,7 +557,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','ka','dil','gez','la','hy'],BVER=7;
+const BUILTIN=['syr','ka','dil','gez','la','hy'],BVER=8;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -670,7 +671,9 @@ function formatDef(raw,L,hw){
   let g=false,ex=false;
   return lines.filter(l=>l.trim()!=='@').map((l,li)=>{
     let cls=(ex||/^\s*\x04/.test(l))?' x':(/^<b class="sn">/.test(l)?' s':'');
-    if(!cls&&/^[a-h]\)\s/.test(l)){cls=' s2';l=l.replace(/^([a-h]\))\s/,'<b class="sn">$1</b> ')}
+    if(!cls&&/^[a-p]\)\s/.test(l)){cls=' s2';l=l.replace(/^([a-p]\))\s/,'<b class="sn">$1</b> ')}
+    else if(!cls&&/^[α-ω]\)\s/.test(l)){cls=' s3';l=l.replace(/^([α-ω]\))\s/,'<b class="sn">$1</b> ')}
+    else if(!cls&&/^[A-H]\)\s/.test(l)){cls=' s';l=l.replace(/^([A-H]\))\s/,'<b class="sn">$1</b> ')}
     if(L==='gez'&&li===0&&l.length<40&&!/[ሀ-፿\x02-\x07]/.test(l)&&/[a-zʾʿḥḫṣśṭḍ']/.test(l)){return ''}
     if(l.startsWith('\x01')){l=l.slice(1);if(!ex&&!g){return `<span class="l x"><span class="ex">${l.replace(/[\u1200-\u137F][\u1200-\u137F፡\s]*[\u1200-\u137F፡]|[\u1200-\u137F]/g,'\x06$&\x07').replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>')}</span></span>`}}
     if(/^@\s*/.test(l)){cls=' f';l=l.replace(/^@\s*(.*)$/,'<b class="fm">$1</b>')}
