@@ -1,4 +1,4 @@
-const V='lexeikon-v21';
+const V='lexeikon-v22';
 const PRE=['./','index.html','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png',
  'data/syr.json','data/ka.json','data/dil.json','data/gez.json','data/la.json','data/hy.json','data/latforms.json'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(PRE)).then(()=>self.skipWaiting()))});
