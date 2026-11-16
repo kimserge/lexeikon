@@ -523,13 +523,14 @@ async function initCloud(){
 
 /* ---------- built-in dictionaries ---------- */
 const BUILTIN=['syr','ka','dil','gez','la','hy'],BVER=6;
+const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
-  for(const k of BUILTIN){
+  for(const k of [...BUILTIN,latExtra()].filter(Boolean)){
     const id='b-'+k;if(gone.includes(id)||dicts.some(d=>d.id===id&&d.v===BVER))continue;dicts=dicts.filter(d=>d.id!==id);
     try{setSync(I.loading);
       const d=await (await fetch('data/'+k+'.json')).json();
-      d.demo=true;d.v=BVER;d.created=BUILTIN.indexOf(k);dicts.push(d);dicts.sort((a,b)=>a.created-b.created);
+      d.demo=true;d.v=BVER;d.created=BUILTIN.includes(k)?BUILTIN.indexOf(k):4.5;dicts.push(d);dicts.sort((a,b)=>a.created-b.created);
       await idb.put(d);refresh();
     }catch(e){}
   }
@@ -602,7 +603,7 @@ function formatDef(raw,L,hw){
   const lines=[];let src=String(raw);
   if(L==='ka'&&hw){const nl=src.indexOf('\n'),f=(nl<0?src:src.slice(0,nl)).replace(/[\x02-\x07]/g,'').trim(),k=x=>x.replace(/[()\-\s]/g,'');if(k(f)===k(hw))src=nl<0?'':src.slice(nl+1)}
   if((L==='hy'||L==='la')&&hw){const nl=src.indexOf('\n'),f=nl<0?src:src.slice(0,nl),m=f.match(/^([\x02-\x07]*)([\s\S]*)$/);
-    if(m[2]===hw||m[2].startsWith(hw+' ')||m[2].startsWith(hw+',')||m[2].startsWith(hw+'\x05')){const r=m[2].slice(hw.length).replace(/^[\s,]+/,'');const nf=m[1]+r;
+    if(m[2]===hw||m[2].startsWith(hw+' ')||m[2].startsWith(hw+',')||m[2].startsWith(hw+':')||m[2].startsWith(hw+'\x05')){const r=m[2].slice(hw.length).replace(/^[\s,]+/,'');const nf=m[1]+r;
       src=(/[^\x02-\x07\s]/.test(nf)?nf:'')+(nl<0?'':(/[^\x02-\x07\s]/.test(nf)?src.slice(nl):src.slice(nl+1)))}}
   if(L==='ka')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF](?:[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF\-–]|[\s,]+(?=[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
   if(L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/-?[\u0531-\u0587\uFB13-\uFB17](?:[\u0531-\u0587\uFB13-\uFB17\u055A-\u055F\-–]|[\s,]+(?=-?[\u0531-\u0587\uFB13-\uFB17]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
@@ -787,7 +788,8 @@ async function doImport(){
 }
 
 let LATF={},laIdx=null;const LSTOP=new Set('et in ad cum est sunt sive seu vel aut de ex non nec qui quae quod quam ut sc id ab per pro sub si ac atque etiam vid cf ibid seq coll'.split(' '));
-function laDict(){return dicts.find(d=>d.id==='b-la')}
+const LATUI={ru:'b-la',en:'b-laen',de:'b-laen',it:'b-laen',fr:'b-lafr'};
+function laDict(){return dicts.find(d=>d.id===LATUI[UIL]&&!off.has(d.id))||dicts.find(d=>['b-la','b-laen','b-lafr'].includes(d.id)&&!off.has(d.id))}
 function laLookup(w){
   const d=laDict();if(!d)return [];
   if(!laIdx||laIdx.d!==d){laIdx={d,m:new Map()};d.entries.forEach((e,i)=>{const k=norm(e[0]);if(!laIdx.m.has(k))laIdx.m.set(k,[]);laIdx.m.get(k).push(i)})}
@@ -803,7 +805,7 @@ function showLat(w){
   const d=laDict(),ix=laLookup(w);if(!d||!ix.length)return;
   const lem=[...new Set(ix.map(i=>d.entries[i][0]))].join(', ');
   $('#pop').innerHTML=`<div class="ph"><span class="pt"><b>${esc(w)}</b>${norm(lem)!==norm(w)?' → '+esc(lem):''} · ${esc(d.name)}</span><button class="btn ghost" id="popX">${I.close}</button></div>`+
-    ix.map(i=>`<article><div class="hd"><span class="hw">${esc(d.entries[i][0])}</span></div><div class="def">${formatDef(d.entries[i][1],'la')}</div></article>`).join('');
+    ix.map(i=>`<article><div class="hd"><span class="hw">${esc(d.entries[i][0])}</span></div><div class="def">${formatDef(d.entries[i][1],'la',d.entries[i][0])}</div></article>`).join('');
   $('#pop').hidden=false;
 }
 
@@ -864,7 +866,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#ov').hidden)ne
 (async()=>{
   await idb.open();
   dicts=((await idb.all())||[]).sort((a,b)=>a.created-b.created);
-  applyLang();$('#uil').addEventListener('change',e=>{UIL=e.target.value;LS.set('ui',UIL);applyLang();renderTrSec();refresh()});
+  applyLang();$('#uil').addEventListener('change',e=>{UIL=e.target.value;LS.set('ui',UIL);applyLang();renderTrSec();refresh();laIdx=null;loadBuiltins().then(()=>{setSync('');refresh()})});
   renderTrSec();$('#trsec').addEventListener('change',e=>{const L=e.target.dataset.tl;if(!L)return;trCfg[L]=e.target.value;LS.set('trcfg',trCfg);renderTrSec();applyLang();search()});
   refresh();
   await loadBuiltins();setSync('');
