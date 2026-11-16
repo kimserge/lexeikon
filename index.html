@@ -104,6 +104,8 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
 .def .l{display:block}
 .def .l.f{margin-top:.55em}
 .def .l.f:first-child{margin-top:0}
+.def .l.s{margin-top:.45em}
+.def .l.s:first-child{margin-top:0}
 .def .l.q{padding-inline-start:.9em;border-inline-start:2px solid var(--line);margin-top:.3em}
 .def .l.x{padding-inline-start:.9em;margin-top:.45em;border-inline-start:2px solid var(--line)}
 .ex{color:light-dark(#7d828b,#8f959f)}
@@ -232,7 +234,7 @@ const LANGS={syr:['Сирийский','сир.'],ka:['Древнегрузин�
 const EX='<b>gmerti</b> → <span class="sc">ღმერთი</span>, <b>mlk</b> → <span class="sc">ܡܠܟܐ</span>, <b>tagavor</b> → <span class="sc">թագաւոր</span>, <b>ngs</b> → <span class="sc">ነግሠ</span>';
 const I18N={
  ru:{name:'Русский',
-  sub:'Набирайте латиницей без диакритики: <b>gmerti</b> найдёт <i>%ka%</i><span class="sc">ღმერთი</span>, <b>mlk</b> — <i>%syr%</i><span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>%gez%</i><span class="sc">ነግሠ</span>. Можно и в оригинальном письме; ищется сразу во всех словарях.',
+  sub:'Набирайте латиницей без диакритики: <b>gmerti</b> найдёт <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. Можно и в оригинальном письме; ищется сразу во всех словарях.',
   search:'Поиск',clear:'Очистить',alphabet:'Алфавит',more:'Показать ещё',copy:'копировать',expand:'развернуть',close:'Закрыть',
   all:'Все',langgrp:'Язык',modegrp:'Режим поиска',pre:'Начало',in:'Содержит',ex:'Точно',scope:'искать и в переводах',
   sec_tr:'Транслитерация',tr_note:'Выберите систему для каждого языка: она показывается рядом с заглавными словами и в списке вариантов. Ниже — полная таблица выбранной системы.',
@@ -249,7 +251,7 @@ const I18N={
   tag:{syr:'сир.',ka:'груз.',grc:'греч.',la:'лат.',hy:'арм.',gez:'эфиоп.',ar:'араб.',xx:'—'},
   sys:{syr_sci:'Научная (консонантная)',ka_sci:'Картвелологическая: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Национальная 2002: k’ t’ ts’ ch’ gh',hy_hm:'Хюбшман — Мейе: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Традиционная (Дилльман — Ламбдин): a, ā',gez_ham:'Гамбургская (Encyclopaedia Aethiopica): ä, a',grc_sci:'Научная',ar_din:'DIN 31635'}},
  en:{name:'English',
-  sub:'Type in Latin letters without diacritics: <b>gmerti</b> finds <i>%ka%</i><span class="sc">ღმერთი</span>, <b>mlk</b> — <i>%syr%</i><span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>%gez%</i><span class="sc">ነግሠ</span>. Original scripts work too; all dictionaries are searched at once.',
+  sub:'Type in Latin letters without diacritics: <b>gmerti</b> finds <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. Original scripts work too; all dictionaries are searched at once.',
   search:'Search',clear:'Clear',alphabet:'Alphabet',more:'Show more',copy:'copy',expand:'expand',close:'Close',
   all:'All',langgrp:'Language',modegrp:'Search mode',pre:'Starts with',in:'Contains',ex:'Exact',scope:'also search translations',
   sec_tr:'Transliteration',tr_note:'Choose a system for each language: it is shown next to headwords and in the suggestion list. The full table of the selected system is below.',
@@ -266,7 +268,7 @@ const I18N={
   tag:{syr:'syr.',ka:'geo.',grc:'grk.',la:'lat.',hy:'arm.',gez:'eth.',ar:'ar.',xx:'—'},
   sys:{syr_sci:'Scientific (consonantal)',ka_sci:'Kartvelological: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditional (Dillmann–Lambdin): a, ā',gez_ham:'Hamburg (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientific',ar_din:'DIN 31635'}},
  de:{name:'Deutsch',
-  sub:'Lateinisch tippen, ohne Diakritika: <b>gmerti</b> findet <i>%ka%</i><span class="sc">ღმერთი</span>, <b>mlk</b> — <i>%syr%</i><span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>%gez%</i><span class="sc">ነግሠ</span>. Die Originalschrift geht auch; alle Wörterbücher werden zugleich durchsucht.',
+  sub:'Lateinisch tippen, ohne Diakritika: <b>gmerti</b> findet <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. Die Originalschrift geht auch; alle Wörterbücher werden zugleich durchsucht.',
   search:'Suche',clear:'Löschen',alphabet:'Alphabet',more:'Mehr anzeigen',copy:'kopieren',expand:'aufklappen',close:'Schließen',
   all:'Alle',langgrp:'Sprache',modegrp:'Suchmodus',pre:'Anfang',in:'Enthält',ex:'Genau',scope:'auch in Übersetzungen suchen',
   sec_tr:'Transliteration',tr_note:'Wählen Sie für jede Sprache ein System: Es erscheint neben den Lemmata und in der Vorschlagsliste. Darunter steht die vollständige Tabelle.',
@@ -283,7 +285,7 @@ const I18N={
   tag:{syr:'syr.',ka:'georg.',grc:'griech.',la:'lat.',hy:'arm.',gez:'äth.',ar:'arab.',xx:'—'},
   sys:{syr_sci:'Wissenschaftlich (konsonantisch)',ka_sci:'Kartvelologisch: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditionell (Dillmann–Lambdin): a, ā',gez_ham:'Hamburger System (Encyclopaedia Aethiopica): ä, a',grc_sci:'Wissenschaftlich',ar_din:'DIN 31635'}},
  fr:{name:'Français',
-  sub:'Tapez en caractères latins, sans diacritiques : <b>gmerti</b> trouve <i>%ka%</i><span class="sc">ღმერთი</span>, <b>mlk</b> — <i>%syr%</i><span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>%gez%</i><span class="sc">ነግሠ</span>. L’écriture originale fonctionne aussi ; tous les dictionnaires sont interrogés à la fois.',
+  sub:'Tapez en caractères latins, sans diacritiques : <b>gmerti</b> trouve <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. L’écriture originale fonctionne aussi ; tous les dictionnaires sont interrogés à la fois.',
   search:'Recherche',clear:'Effacer',alphabet:'Alphabet',more:'Afficher plus',copy:'copier',expand:'déplier',close:'Fermer',
   all:'Tous',langgrp:'Langue',modegrp:'Mode de recherche',pre:'Début',in:'Contient',ex:'Exact',scope:'chercher aussi dans les traductions',
   sec_tr:'Translittération',tr_note:'Choisissez un système pour chaque langue : il s’affiche à côté des lemmes et dans la liste de suggestions. La table complète du système choisi figure ci-dessous.',
@@ -300,7 +302,7 @@ const I18N={
   tag:{syr:'syr.',ka:'géo.',grc:'gr.',la:'lat.',hy:'arm.',gez:'éth.',ar:'ar.',xx:'—'},
   sys:{syr_sci:'Scientifique (consonantique)',ka_sci:'Kartvélologique : ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nationale 2002 : k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet : tʻ c č ł',hy_lc:'ALA-LC : tʻ ts ch gh',gez_trad:'Traditionnelle (Dillmann–Lambdin) : a, ā',gez_ham:'Hambourg (Encyclopaedia Aethiopica) : ä, a',grc_sci:'Scientifique',ar_din:'DIN 31635'}},
  it:{name:'Italiano',
-  sub:'Digitate in caratteri latini, senza diacritici: <b>gmerti</b> trova <i>%ka%</i><span class="sc">ღმერთი</span>, <b>mlk</b> — <i>%syr%</i><span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>%gez%</i><span class="sc">ነግሠ</span>. Funziona anche la scrittura originale; si cerca in tutti i dizionari insieme.',
+  sub:'Digitate in caratteri latini, senza diacritici: <b>gmerti</b> trova <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. Funziona anche la scrittura originale; si cerca in tutti i dizionari insieme.',
   search:'Ricerca',clear:'Cancella',alphabet:'Alfabeto',more:'Mostra altri',copy:'copia',expand:'espandi',close:'Chiudi',
   all:'Tutti',langgrp:'Lingua',modegrp:'Modalità di ricerca',pre:'Inizio',in:'Contiene',ex:'Esatto',scope:'cerca anche nelle traduzioni',
   sec_tr:'Traslitterazione',tr_note:'Scegliete un sistema per ogni lingua: compare accanto ai lemmi e nell’elenco dei suggerimenti. Sotto, la tabella completa del sistema scelto.',
@@ -604,7 +606,7 @@ function formatDef(raw,L,hw){
       src=(/[^\x02-\x07\s]/.test(nf)?nf:'')+(nl<0?'':(/[^\x02-\x07\s]/.test(nf)?src.slice(nl):src.slice(nl+1)))}}
   if(L==='ka')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF](?:[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF\-–]|[\s,]+(?=[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
   if(L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/-?[\u0531-\u0587\uFB13-\uFB17](?:[\u0531-\u0587\uFB13-\uFB17\u055A-\u055F\-–]|[\s,]+(?=-?[\u0531-\u0587\uFB13-\uFB17]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
-  if(L==='gez')src=src.replace(/;((?:\x05)?)[ \t]+(?=[\u1200-\u137F])/g,(m,x,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:';'+x+'\n\x01'});
+  if(L==='gez')src=src.replace(/([;:])((?:\x05)?)[ \t]+(?=[\u1200-\u137F])/g,(m,p,x,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:p+x+'\n\x01'});
   if(L==='syr')src=src.replace(/(\.)((?:[ \t]|\x05)+)((?:\x02[^\x03]*\x03\s*)*)(?=[\u0710-\u074F])/g,(m,a,w,b,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:a+(w.includes('\x05')?'\x05':'')+'\n'+b});
   if(L==='ka'||L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>{let r='',gap='';for(const part of t.split(/(\x06[^\x07]*\x07)/)){if(part.startsWith('\x06')){if(r&&/[A-Za-zА-Яа-яЁё]/.test(gap))r=r.replace(/\s+$/,'')+'\n';r+=part;gap=''}else{r+=part;gap+=part}}return '\x04'+r+'\x05'});
   for(const line of src.split('\n')){
@@ -616,7 +618,7 @@ function formatDef(raw,L,hw){
       const atStart=!(out+before).replace(/[\s\x02-\x05]/g,'');
       if(dep>0||(m[3]==='.'&&!atStart)||+m[2]>30){out+=before+m[0];last=re.lastIndex;continue}
       const sn=`<b class="sn">${m[2]}${m[3]}</b>`;
-      if(atStart||n===0)out+=before+m[1]+sn;else out+=before.replace(/[\s\-–;,]+$/,'')+'\n'+sn;
+      if(atStart)out+=before+m[1]+sn;else out+=before.replace(/[\s\-–;,]+$/,'')+'\n'+sn;
       n++;last=re.lastIndex;
     }
     out+=h.slice(last);
@@ -624,9 +626,9 @@ function formatDef(raw,L,hw){
   }
   let g=false,ex=false;
   return lines.filter(l=>l.trim()!=='@').map((l,li)=>{
-    let cls=(ex||/^\s*\x04/.test(l))?' x':'';
+    let cls=(ex||/^\s*\x04/.test(l))?' x':(/^<b class="sn">/.test(l)?' s':'');
     if(L==='gez'&&li===0&&l.length<40&&!/[ሀ-፿\x02-\x07]/.test(l)&&/[a-zʾʿḥḫṣśṭḍ']/.test(l)){return ''}
-    if(l.startsWith('\x01')){l=l.slice(1);if(!ex&&!g){return `<span class="l q">${l.replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>')}</span>`}}
+    if(l.startsWith('\x01')){l=l.slice(1);if(!ex&&!g){return `<span class="l x"><span class="ex">${l.replace(/[\u1200-\u137F][\u1200-\u137F፡\s]*[\u1200-\u137F፡]|[\u1200-\u137F]/g,'\x06$&\x07').replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>')}</span></span>`}}
     if(/^@\s*/.test(l)){cls=' f';l=l.replace(/^@\s*(.*)$/,'<b class="fm">$1</b>')}
     if(L==='syr'){const SY='[\\u0700-\\u074F\\u0300-\\u036F]+';
       const rx=new RegExp('^((?:\\x02[^\\x03]*\\x03\\s*)*)('+SY+'(?:\\s+(?:sive|et|vel|aut)\\s+'+SY+')*)');
@@ -795,7 +797,7 @@ function laLookup(w){
 }
 function linkLat(html){
   if(!laDict())return html;
-  return html.split(/(<[^>]+>)/).map(t=>t.startsWith('<')?t:t.replace(/[A-Za-zāēīōūăĕĭŏŭæœÆŒ]{2,}/g,w=>!LSTOP.has(w.toLowerCase())&&laLookup(w).length?`<span class="lw" data-w="${w}">${w}</span>`:w)).join('');
+  let gr=0;return html.split(/(<[^>]+>)/).map(t=>{if(t.startsWith('<')){if(t.startsWith('<i class="gr"'))gr=1;else if(t==='</i>')gr=0;return t}if(gr)return t;return t.replace(/(?<![A-Za-zāēīōūăĕĭŏŭæœÆŒ])(?:[A-Za-zāēīōūăĕĭŏŭæœÆŒ]{2,}(?![A-Za-zāēīōūăĕĭŏŭæœÆŒ.])|[a-zāēīōūăĕĭŏŭæœ][A-Za-zāēīōūăĕĭŏŭæœÆŒ]+(?=\.))/g,w=>!LSTOP.has(w.toLowerCase())&&laLookup(w).length?`<span class="lw" data-w="${w}">${w}</span>`:w)}).join('');
 }
 function showLat(w){
   const d=laDict(),ix=laLookup(w);if(!d||!ix.length)return;
