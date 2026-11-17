@@ -225,7 +225,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
     <div class="qrow">
       <div class="qbox">
         <label for="q" class="vh" data-i18n="search"></label>
-        <input id="q" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" dir="auto" role="combobox" aria-controls="sug" aria-expanded="false" aria-autocomplete="list" placeholder="gmerti, mlk, tagavor…">
+        <input id="q" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" dir="auto" role="combobox" aria-controls="sug" aria-expanded="false" aria-autocomplete="list" placeholder="mlk, ngs, gmerti…">
         <ul id="sug" class="sug" role="listbox" hidden></ul>
       </div>
     </div>
@@ -263,7 +263,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd>sergey.kim [at] unil.ch</dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.39 (17.11.2026)</p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.40 (17.11.2026)</p>
   </div>
 </footer>
 
@@ -279,10 +279,10 @@ const LS={get(k,d){try{const v=localStorage.getItem('lex_'+k);return v==null?d:J
 
 const LANGS={syr:['Сирийский','сир.'],ka:['Древнегрузинский','груз.'],grc:['Древнегреческий','греч.'],la:['Латынь','лат.'],hy:['Армянский','арм.'],gez:['Эфиопский (геэз)','эфиоп.'],ar:['Арабский','араб.'],cop:['Коптский','копт.'],xx:['Другой','—']};
 /* ---------- interface languages ---------- */
-const EX='<b>gmerti</b> → <span class="sc">ღმერთი</span>, <b>mlk</b> → <span class="sc">ܡܠܟܐ</span>, <b>tagavor</b> → <span class="sc">թագաւոր</span>, <b>ngs</b> → <span class="sc">ነግሠ</span>';
+const EX='<b>mlk</b> → <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> → <span class="sc">ነግሠ</span>, <b>gmerti</b> → <span class="sc">ღმერთი</span>, <b>tagavor</b> → <span class="sc">թագաւոր</span>';
 const I18N={
  ru:{lgbnote:'включить или выключить все словари языка',tagline:'учебные словари древних языков',interim:'Распознавание промежуточное, не окончательное',name:'Русский',
-  sub:'Набирайте латиницей без диакритики: <b>gmerti</b> найдёт <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. Можно и в оригинальном письме; ищется сразу во всех словарях.',
+  sub:'Набирайте латиницей без диакритики: <b>mlk</b> найдёт <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Можно и в оригинальном письме; ищется сразу во всех словарях.',
   search:'Поиск',clear:'Очистить',alphabet:'Алфавит',more:'Показать ещё',copy:'копировать',expand:'развернуть',close:'Закрыть',
   all:'Все',langgrp:'Язык',modegrp:'Режим поиска',pre:'Начало',in:'Содержит',ex:'Точно',scope:'искать и в переводах',
   sec_tr:'Транслитерация',tr_note:'Выберите систему для каждого языка: она показывается рядом с заглавными словами и в списке вариантов. Ниже — полная таблица выбранной системы.',
@@ -299,7 +299,7 @@ const I18N={
   tag:{syr:'сир.',ka:'груз.',grc:'греч.',la:'лат.',hy:'арм.',gez:'эфиоп.',ar:'араб.',xx:'—'},
   sys:{syr_sci:'Научная (консонантная)',syr_alt:'Научная с ˀ и ˁ',ka_sci:'Картвелологическая: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Национальная 2002: k’ t’ ts’ ch’ gh',hy_hm:'Хюбшман — Мейе: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Традиционная (Дилльман — Ламбдин): a, ā',gez_ham:'Гамбургская (Encyclopaedia Aethiopica): ä, a',grc_sci:'Научная',ar_din:'DIN 31635',cop_sci:'Научная (Лейтон): š j c ti',cop_simple:'Упрощённая: sh j ky ti'}},
  en:{lgbnote:'turn all dictionaries of a language on or off',tagline:'study dictionaries of ancient languages',interim:'Intermediate recognition, not final',name:'English',
-  sub:'Type in Latin letters without diacritics: <b>gmerti</b> finds <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. Original scripts work too; all dictionaries are searched at once.',
+  sub:'Type in Latin letters without diacritics: <b>mlk</b> finds <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Original scripts work too; all dictionaries are searched at once.',
   search:'Search',clear:'Clear',alphabet:'Alphabet',more:'Show more',copy:'copy',expand:'expand',close:'Close',
   all:'All',langgrp:'Language',modegrp:'Search mode',pre:'Starts with',in:'Contains',ex:'Exact',scope:'also search translations',
   sec_tr:'Transliteration',tr_note:'Choose a system for each language: it is shown next to headwords and in the suggestion list. The full table of the selected system is below.',
@@ -316,7 +316,7 @@ const I18N={
   tag:{syr:'syr.',ka:'geo.',grc:'grk.',la:'lat.',hy:'arm.',gez:'eth.',ar:'ar.',xx:'—'},
   sys:{syr_sci:'Scientific (consonantal)',syr_alt:'Scientific with ˀ and ˁ',ka_sci:'Kartvelological: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditional (Dillmann–Lambdin): a, ā',gez_ham:'Hamburg (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientific',ar_din:'DIN 31635',cop_sci:'Scientific (Layton): š j c ti',cop_simple:'Simplified: sh j ky ti'}},
  de:{lgbnote:'alle Wörterbücher einer Sprache ein- oder ausschalten',tagline:'Studienwörterbücher alter Sprachen',interim:'Vorläufige Texterkennung, nicht endgültig',name:'Deutsch',
-  sub:'Lateinisch tippen, ohne Diakritika: <b>gmerti</b> findet <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. Die Originalschrift geht auch; alle Wörterbücher werden zugleich durchsucht.',
+  sub:'Lateinisch tippen, ohne Diakritika: <b>mlk</b> findet <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Die Originalschrift geht auch; alle Wörterbücher werden zugleich durchsucht.',
   search:'Suche',clear:'Löschen',alphabet:'Alphabet',more:'Mehr anzeigen',copy:'kopieren',expand:'aufklappen',close:'Schließen',
   all:'Alle',langgrp:'Sprache',modegrp:'Suchmodus',pre:'Anfang',in:'Enthält',ex:'Genau',scope:'auch in Übersetzungen suchen',
   sec_tr:'Transliteration',tr_note:'Wählen Sie für jede Sprache ein System: Es erscheint neben den Lemmata und in der Vorschlagsliste. Darunter steht die vollständige Tabelle.',
@@ -333,7 +333,7 @@ const I18N={
   tag:{syr:'syr.',ka:'georg.',grc:'griech.',la:'lat.',hy:'arm.',gez:'äth.',ar:'arab.',xx:'—'},
   sys:{syr_sci:'Wissenschaftlich (konsonantisch)',syr_alt:'Wissenschaftlich mit ˀ und ˁ',ka_sci:'Kartvelologisch: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditionell (Dillmann–Lambdin): a, ā',gez_ham:'Hamburger System (Encyclopaedia Aethiopica): ä, a',grc_sci:'Wissenschaftlich',ar_din:'DIN 31635',cop_sci:'Wissenschaftlich (Layton): š j c ti',cop_simple:'Vereinfacht: sh j ky ti'}},
  fr:{lgbnote:'activer ou désactiver tous les dictionnaires d’une langue',tagline:'dictionnaires d’étude des langues anciennes',interim:'Reconnaissance intermédiaire, non définitive',name:'Français',
-  sub:'Tapez en caractères latins, sans diacritiques : <b>gmerti</b> trouve <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. L’écriture originale fonctionne aussi ; tous les dictionnaires sont interrogés à la fois.',
+  sub:'Tapez en caractères latins, sans diacritiques : <b>mlk</b> trouve <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. L’écriture originale fonctionne aussi ; tous les dictionnaires sont interrogés à la fois.',
   search:'Recherche',clear:'Effacer',alphabet:'Alphabet',more:'Afficher plus',copy:'copier',expand:'déplier',close:'Fermer',
   all:'Tous',langgrp:'Langue',modegrp:'Mode de recherche',pre:'Début',in:'Contient',ex:'Exact',scope:'chercher aussi dans les traductions',
   sec_tr:'Translittération',tr_note:'Choisissez un système pour chaque langue : il s’affiche à côté des lemmes et dans la liste de suggestions. La table complète du système choisi figure ci-dessous.',
@@ -350,7 +350,7 @@ const I18N={
   tag:{syr:'syr.',ka:'géo.',grc:'gr.',la:'lat.',hy:'arm.',gez:'éth.',ar:'ar.',xx:'—'},
   sys:{syr_sci:'Scientifique (consonantique)',syr_alt:'Scientifique avec ˀ et ˁ',ka_sci:'Kartvélologique : ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nationale 2002 : k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet : tʻ c č ł',hy_lc:'ALA-LC : tʻ ts ch gh',gez_trad:'Traditionnelle (Dillmann–Lambdin) : a, ā',gez_ham:'Hambourg (Encyclopaedia Aethiopica) : ä, a',grc_sci:'Scientifique',ar_din:'DIN 31635',cop_sci:'Scientifique (Layton) : š j c ti',cop_simple:'Simplifiée : sh j ky ti'}},
  it:{lgbnote:'attivare o disattivare tutti i dizionari di una lingua',tagline:'dizionari di studio delle lingue antiche',interim:'Riconoscimento intermedio, non definitivo',name:'Italiano',
-  sub:'Digitate in caratteri latini, senza diacritici: <b>gmerti</b> trova <i>ġmerti</i> <span class="sc">ღმერთი</span>, <b>mlk</b> — <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>. Funziona anche la scrittura originale; si cerca in tutti i dizionari insieme.',
+  sub:'Digitate in caratteri latini, senza diacritici: <b>mlk</b> trova <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Funziona anche la scrittura originale; si cerca in tutti i dizionari insieme.',
   search:'Ricerca',clear:'Cancella',alphabet:'Alfabeto',more:'Mostra altri',copy:'copia',expand:'espandi',close:'Chiudi',
   all:'Tutti',langgrp:'Lingua',modegrp:'Modalità di ricerca',pre:'Inizio',in:'Contiene',ex:'Esatto',scope:'cerca anche nelle traduzioni',
   sec_tr:'Traslitterazione',tr_note:'Scegliete un sistema per ogni lingua: compare accanto ai lemmi e nell’elenco dei suggerimenti. Sotto, la tabella completa del sistema scelto.',
@@ -728,7 +728,7 @@ function renderChips(){
 }
 const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'A',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ع'};
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;(by[d.lang]=by[d.lang]||[]).push(d.id)}
-  $('#lgb').innerHTML=Object.keys(LANGS).filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
+  $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
 const INTERIM=new Set(['b-ka','b-rai','b-mis']);
 const CPY={'b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 function renderLib(){
