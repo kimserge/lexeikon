@@ -251,7 +251,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd>sergey.kim [at] unil.ch</dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.29 (17.11.2026)</p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.30 (17.11.2026)</p>
   </div>
 </footer>
 
@@ -567,7 +567,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','ka','kac','dil','gez','rai','la','hy','cop'],BVER=10;
+const BUILTIN=['syr','ka','kac','grc','dil','gez','rai','la','hy','cop'],BVER=11;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -660,6 +660,7 @@ function formatDef(raw,L,hw){
   if(L==='la')src=src.split('\n').map((ln,i)=>{if(ln.startsWith('\x04'))return ln;const m=ln.match(/^(\d+\)\s)?([^:\x04\u0400-\u04FF]{2,90}?,[^:\x04\u0400-\u04FF]*?:)(?=\s|$)/);if(m)return (m[1]||'')+'\x0b'+m[2]+'\x0c'+ln.slice(m[0].length);if(i===0){const k=ln.search(/\s\d+\)|[\u0400-\u04FF]/),pre=k<0?ln:ln.slice(0,k);if(pre.trim()&&pre.length<60&&(k<0?ln.length<50:/,|\x03/.test(pre)))return '\x0b'+pre.replace(/\s+$/,'')+'\x0c'+(k<0?'':' '+ln.slice(k).replace(/^\s+/,''))}return ln}).join('\n');
   if(L==='ka')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF](?:[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF\-–]|[\s,]+(?=[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
   if(L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/-?[\u0531-\u0587\uFB13-\uFB17](?:[\u0531-\u0587\uFB13-\uFB17\u055A-\u055F\-–]|[\s,]+(?=-?[\u0531-\u0587\uFB13-\uFB17]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
+  if(L==='grc')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/-?[\u0370-\u03FF\u1F00-\u1FFF](?:[\u0370-\u03FF\u1F00-\u1FFF\-–]|[\s,]+(?=-?[\u0370-\u03FF\u1F00-\u1FFF]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
   if(L==='gez')src=src.split('\n').map(ln=>ln.replace(/([\p{L}:.;\]])\s+((?:[a-p]|[α-ω])\)\s)/gu,(m,p,mk,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:p+'\n'+mk})).join('\n');
   if(L==='gez')src=src.replace(/([;:])((?:\x05)?)[ \t]+(?=[\u1200-\u137F])/g,(m,p,x,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}if(d)return m;if(/^[\u1200-\u137F]+፡\s*(?:,|\x02|$)/.test(str.slice(o+m.length)))return /^\s*$/.test(str.slice(0,o))?'':p+x+'\n';return p+x+'\n\x01'});
   if(L==='syr')src=src.replace(/(\.)((?:[ \t]|\x05)+)((?:\x02[^\x03]*\x03\s*)*)(?=[\u0710-\u074F])/g,(m,a,w,b,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:a+(w.includes('\x05')?'\x05':'')+'\n'+b});
@@ -714,7 +715,7 @@ function renderChips(){
   $('#chips').innerHTML=[['',I.all]].concat(ls.map(k=>[k,I.chip[k]||LANGS[k][0]])).map(([k,n])=>`<button data-l="${k}" class="${k===langF?'on':''}" aria-pressed="${k===langF}">${n}</button>`).join('');
 }
 const INTERIM=new Set(['b-ka','b-rai']);
-const CPY={'b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
+const CPY={'b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 function renderLib(){
   const HIDE=new Set(['b-hy']);off.delete('b-hy');const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
   $('#dl').innerHTML=vis.length?vis.map(d=>`<li><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><span><span class="nm">${esc(d.name)}</span><span class="mt">${d.lang==='mix'?'7 языков':esc((LANGS[d.lang]||LANGS.xx)[0])} · ${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}${INTERIM.has(d.id)?`<span class="cpy itm">⚠ ${esc(I.interim)}</span>`:''}</span></li>`).join(''):'';
