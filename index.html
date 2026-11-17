@@ -152,8 +152,9 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
 .tro:empty{display:none}
 .gr{font-style:italic;font-weight:300;color:light-dark(#2e7d4f,#86d6a2)}
 .cpy.itm{color:var(--rub)}
-.def .et{color:var(--mut);font-style:italic;font-weight:300}
+.def .et{color:var(--mut);font:italic 300 .86em/1.5 'Noto Sans',sans-serif}
 .def .et .ex{font-style:italic}
+.def .et .nl{font-style:normal;font-weight:400;font-family:var(--lex)}
 .sn{font-weight:700;color:var(--lap);font-family:'Noto Sans',sans-serif;font-size:.9em}
 .st{font-weight:700;color:var(--lap)}
 .fm{font-weight:700;color:light-dark(#c9645a,#e9a79c)}
@@ -265,7 +266,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd>sergey.kim [at] unil.ch</dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.42 (17.11.2026)</p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.43 (17.11.2026)</p>
   </div>
 </footer>
 
@@ -675,7 +676,7 @@ function formatDef(raw,L,hw){
   if(L==='ka')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF](?:[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF\-–]|[\s,]+(?=[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
   if(L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/-?[\u0531-\u0587\uFB13-\uFB17](?:[\u0531-\u0587\uFB13-\uFB17\u055A-\u055F\-–]|[\s,]+(?=-?[\u0531-\u0587\uFB13-\uFB17]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
   if(L==='grc')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/-?[\u0370-\u03FF\u1F00-\u1FFF](?:[\u0370-\u03FF\u1F00-\u1FFF\-–]|[\s,]+(?=-?[\u0370-\u03FF\u1F00-\u1FFF]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
-  if(L==='gez')src=src.replace(/\[[^\[\]]*\]/g,'\x0e$&\x0f');
+  if(L==='gez')src=src.replace(/\[[^\[\]]*\]/g,m=>'\x0e'+m.replace(/[\u0370-\u03FF\u1F00-\u1FFF\u0590-\u06FF\u0700-\u074F\u1200-\u137F\u0300-\u036F](?:[\u0370-\u03FF\u1F00-\u1FFF\u0590-\u06FF\u0700-\u074F\u1200-\u137F\u0300-\u036F፡ ]*[\u0370-\u03FF\u1F00-\u1FFF\u0590-\u06FF\u0700-\u074F\u1200-\u137F\u0300-\u036F፡])?/g,'\x10$&\x11')+'\x0f');
   if(L==='gez')src=src.split('\n').map(ln=>ln.replace(/([\p{L}:.;\]])\s+((?:[a-p]|[α-ω])\)\s)/gu,(m,p,mk,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='('||ch==='[')d++;else if(ch===')'||ch===']')d=Math.max(0,d-1)}return d?m:p+'\n'+mk})).join('\n');
   if(L==='gez')src=src.replace(/([;:])((?:\x05)?)[ \t]+(?=[\u1200-\u137F])/g,(m,p,x,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='('||ch==='[')d++;else if(ch===')'||ch===']')d=Math.max(0,d-1)}if(d)return m;if(/^[\u1200-\u137F]+፡\s*(?:,|\x02|$)/.test(str.slice(o+m.length)))return /^\s*$/.test(str.slice(0,o))?'':p+x+'\n';return p+x+'\n\x01'});
   if(L==='syr')src=src.replace(/(\.)((?:[ \t]|\x05)+)((?:\x02[^\x03]*\x03\s*)*)(?=[\u0710-\u074F])/g,(m,a,w,b,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:a+(w.includes('\x05')?'\x05':'')+'\n'+b});
@@ -702,7 +703,7 @@ function formatDef(raw,L,hw){
     else if(!cls&&/^[α-ω]\)\s/.test(l)){cls=' s3';l=l.replace(/^([α-ω]\))\s/,'<b class="sn">$1</b> ')}
     else if(!cls&&/^[A-H]\)\s/.test(l)){cls=' s';l=l.replace(/^([A-H]\))\s/,'<b class="sn">$1</b> ')}
     if(L==='gez'&&li===0&&l.length<40&&!/[ሀ-፿\x02-\x07]/.test(l)&&/[a-zʾʿḥḫṣśṭḍ']/.test(l)){return ''}
-    if(l.startsWith('\x01')){l=l.slice(1);if(!ex&&!g){return `<span class="l x"><span class="ex">${l.replace(/[\u1200-\u137F][\u1200-\u137F፡\s]*[\u1200-\u137F፡]|[\u1200-\u137F]/g,'\x06$&\x07').replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>').replace(/\x0e/g,'<span class="et">').replace(/\x0f/g,'</span>')}</span></span>`}}
+    if(l.startsWith('\x01')){l=l.slice(1);if(!ex&&!g){return `<span class="l x"><span class="ex">${l.replace(/[\u1200-\u137F][\u1200-\u137F፡\s]*[\u1200-\u137F፡]|[\u1200-\u137F]/g,'\x06$&\x07').replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>').replace(/\x0e/g,'<span class="et">').replace(/\x0f/g,'</span>').replace(/\x10/g,'<span class="nl">').replace(/\x11/g,'</span>')}</span></span>`}}
     if(/^@\s*/.test(l)){cls=' f';l=l.replace(/^@\s*(.*)$/,'<b class="fm">$1</b>')}
     if(L==='syr'){const SY='[\\u0700-\\u074F\\u0300-\\u036F]+';
       const rx=new RegExp('^((?:\\x02[^\\x03]*\\x03\\s*)*)('+SY+'(?:\\s+(?:sive|et|vel|aut)\\s+'+SY+')*)');
@@ -716,7 +717,7 @@ function formatDef(raw,L,hw){
     l=l.replace(/\(([^()]*\d[^()]*)\)/g,'<span class="ex">($1)</span>');
     let pre=(et?'<span class="et">':'')+(g?'<i class="gr">':'')+(ex?'<span class="ex">':'');
     for(const ch of l){if(ch==='\x0e')et=true;else if(ch==='\x0f')et=false;else if(ch==='\x02')g=true;else if(ch==='\x03')g=false;else if(ch==='\x04')ex=true;else if(ch==='\x05')ex=false}
-    l=pre+l.replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>').replace(/\x0b/g,'<span class="mo">').replace(/\x0c/g,'</span>').replace(/\x0e/g,'<span class="et">').replace(/\x0f/g,'</span>')+(ex?'</span>':'')+(g?'</i>':'')+(et?'</span>':'');
+    l=pre+l.replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>').replace(/\x0b/g,'<span class="mo">').replace(/\x0c/g,'</span>').replace(/\x0e/g,'<span class="et">').replace(/\x0f/g,'</span>').replace(/\x10/g,'<span class="nl">').replace(/\x11/g,'</span>')+(ex?'</span>':'')+(g?'</i>':'')+(et?'</span>':'');
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
