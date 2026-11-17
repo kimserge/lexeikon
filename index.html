@@ -36,6 +36,13 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Noto Sans',s
 .top{background:var(--band);color:var(--bandink);padding-bottom:18px;padding-top:max(clamp(22px,4vw,48px),env(safe-area-inset-top))}
 .uil{font:600 14px 'Noto Sans',sans-serif;min-height:40px;padding:0 8px;border-radius:8px;border:1px solid rgb(255 255 255/.35);background:transparent;color:var(--bandink);align-self:flex-start}
 .uil option{color:#17191e}
+body.cmp .top{position:sticky;top:0;z-index:8;padding-top:10px;padding-bottom:10px;box-shadow:0 4px 14px rgb(0 0 0/.18)}
+body.cmp .top .tg,body.cmp .top .sub,body.cmp .top .sub2,body.cmp .top .credit{display:none}
+body.cmp .top h1{font-size:24px}
+body.cmp .tin{flex-wrap:nowrap;align-items:center}
+body.cmp .uil{min-height:34px}
+body.cmp .lgb{margin-top:8px}
+body.cmp .lgb button{height:44px}
 .sub2{margin:6px 0 0;font-size:14px;opacity:.82;max-width:62ch}
 .credit{margin:8px 0 0;font-size:13px;opacity:.7;max-width:62ch}
 .foot{background:var(--card);border-top:1px solid var(--line);margin-top:20px}
@@ -270,7 +277,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.46</p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.47</p>
   </div>
 </footer>
 
@@ -633,7 +640,10 @@ function search(){
       if(s>=0)results.push([s,s===3?pos*4+Math.min(E[i][1].length,400)/100:E[i][0].length+(lat&&RX[L]?30:0),d,i]);
     }
   }
+  const loc=d=>GLOSS[d.id]===UIL?0:1;
   results.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+  {const slots={};results.forEach((r,k)=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);(slots[g]=slots[g]||[]).push(k)});
+   const old=results.slice();for(const g in slots){const ks=slots[g],it=ks.map(k=>old[k]);it.sort((a,b)=>loc(a[2])-loc(b[2]));ks.forEach((k,n)=>results[k]=it[n])}}
   $('#stat').textContent=results.length?I.found+results.length.toLocaleString(UIL):I.none;
   $('#res').innerHTML='';more();renderSug();
 }
@@ -725,6 +735,7 @@ function formatDef(raw,L,hw){
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
+const GLOSS={'b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-gez','b-dil','b-mis']);
 const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c]/g,'');
 
@@ -755,7 +766,8 @@ function renderKb(){
 function insert(c){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;q.value=q.value.slice(0,a)+c+q.value.slice(b);q.setSelectionRange(a+c.length,a+c.length);debounced()}
 function backspace(){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b){q.value=q.value.slice(0,a)+q.value.slice(b);q.setSelectionRange(a,a)}else if(a>0){const s=[...q.value.slice(0,a)];s.pop();const p=s.join('');q.value=p+q.value.slice(a);q.setSelectionRange(p.length,p.length)}debounced()}
 
-let tmr;function debounced(){$('#clr').hidden=!$('#q').value;clearTimeout(tmr);tmr=setTimeout(search,120)}
+function cmpUpd(){document.body.classList.toggle('cmp',!!$('#q').value.trim()||document.activeElement===$('#q'))}
+let tmr;function debounced(){cmpUpd();$('#clr').hidden=!$('#q').value;clearTimeout(tmr);tmr=setTimeout(search,120)}
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2600)}
 
 /* ---------- import ---------- */
@@ -900,6 +912,8 @@ $('#q').addEventListener('keydown',e=>{
   else if(e.key==='Enter'){if(sugIdx>=0){e.preventDefault();sugPick(sugIdx)}else sugHide()}
   else if(e.key==='Escape'){sugOff=true;sugHide()}
 });
+$('#q').addEventListener('focus',cmpUpd);
+$('#q').addEventListener('blur',()=>setTimeout(cmpUpd,160));
 $('#q').addEventListener('focus',()=>{if(!sugOff)renderSug()});
 $('#q').addEventListener('blur',()=>setTimeout(sugHide,150));
 $('#sug').addEventListener('mousedown',e=>e.preventDefault());
