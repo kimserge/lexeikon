@@ -247,7 +247,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd>sergey.kim [at] unil.ch</dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim</p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.24</p>
   </div>
 </footer>
 
@@ -650,6 +650,7 @@ function formatDef(raw,L,hw){
   if(L==='la')src=src.split('\n').map((ln,i)=>{if(ln.startsWith('\x04'))return ln;const m=ln.match(/^(\d+\)\s)?([^:\x04\u0400-\u04FF]{2,90}?,[^:\x04\u0400-\u04FF]*?:)(?=\s|$)/);if(m)return (m[1]||'')+'\x0b'+m[2]+'\x0c'+ln.slice(m[0].length);if(i===0){const k=ln.search(/\s\d+\)|[\u0400-\u04FF]/),pre=k<0?ln:ln.slice(0,k);if(pre.trim()&&pre.length<60&&(k<0?ln.length<50:/,|\x03/.test(pre)))return '\x0b'+pre.replace(/\s+$/,'')+'\x0c'+(k<0?'':' '+ln.slice(k).replace(/^\s+/,''))}return ln}).join('\n');
   if(L==='ka')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF](?:[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF\-–]|[\s,]+(?=[\u10A0-\u10FF\u2D00-\u2D25\u1C90-\u1CBF]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
   if(L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>'\x04'+t.replace(/-?[\u0531-\u0587\uFB13-\uFB17](?:[\u0531-\u0587\uFB13-\uFB17\u055A-\u055F\-–]|[\s,]+(?=-?[\u0531-\u0587\uFB13-\uFB17]))*/g,(x,o,t2)=>((t2.slice(0,o).match(/\(/g)||[]).length>(t2.slice(0,o).match(/\)/g)||[]).length?x:'\x06'+x+'\x07'))+'\x05');
+  if(L==='gez')src=src.split('\n').map(ln=>ln.replace(/([\p{L}:.;\]])\s+((?:[a-p]|[α-ω])\)\s)/gu,(m,p,mk,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:p+'\n'+mk})).join('\n');
   if(L==='gez')src=src.replace(/([;:])((?:\x05)?)[ \t]+(?=[\u1200-\u137F])/g,(m,p,x,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:p+x+'\n\x01'});
   if(L==='syr')src=src.replace(/(\.)((?:[ \t]|\x05)+)((?:\x02[^\x03]*\x03\s*)*)(?=[\u0710-\u074F])/g,(m,a,w,b,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:a+(w.includes('\x05')?'\x05':'')+'\n'+b});
   if(L==='ka'||L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>{let r='',gap='';for(const part of t.split(/(\x06[^\x07]*\x07)/)){if(part.startsWith('\x06')){if(r&&/[A-Za-zА-Яа-яЁё]/.test(gap))r=r.replace(/\s+$/,'')+'\n';r+=part;gap=''}else{r+=part;gap+=part}}return '\x04'+r+'\x05'});
