@@ -58,7 +58,10 @@ body.cmp .lgb button{height:44px}
 .foot a{color:var(--lap)}
 .src{margin:0;padding-inline-start:1.1em;font-size:14px;color:var(--mut)}
 .src li{margin:3px 0}
-.yrs{margin:18px 0 0;font-size:13px;color:var(--mut)}
+.yrs{margin:18px 0 0;font-size:13px;color:var(--mut);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.upd{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border:1px solid var(--lap);border-radius:999px;background:var(--bg);color:var(--lap);font:600 13px 'Noto Sans',sans-serif;cursor:pointer}
+.upd:active{background:var(--lap);color:var(--bg)}
+.upd.busy svg{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .tin{max-width:1240px;margin:auto;display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
 h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:balance}
 h1 .tg{display:block;font:400 clamp(17px,2.4vw,22px)/1.3 'Noto Serif',serif;opacity:.85;margin-top:6px}
@@ -286,7 +289,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.58</p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.59 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button></p>
   </div>
 </footer>
 
@@ -304,7 +307,7 @@ const LANGS={syr:['Сирийский','сир.'],ka:['Древнегрузин�
 /* ---------- interface languages ---------- */
 const EX='<b>mlk</b> → <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> → <span class="sc">ነግሠ</span>, <b>gmerti</b> → <span class="sc">ღმერთი</span>, <b>tagavor</b> → <span class="sc">թագաւոր</span>';
 const I18N={
- ru:{lgbnote:'включить или выключить все словари языка',tagline:'учебные словари древних языков',interim:'Распознавание промежуточное, не окончательное',name:'Русский',
+ ru:{upd:'Обновить версию',lgbnote:'включить или выключить все словари языка',tagline:'учебные словари древних языков',interim:'Распознавание промежуточное, не окончательное',name:'Русский',
   sub:'Набирайте транслитерацией без диакритики: <b>mlk</b> найдёт <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Можно и в оригинальном письме.',
   search:'Поиск',clear:'Очистить',alphabet:'Алфавит',more:'Показать ещё',copy:'копировать',expand:'развернуть',close:'Закрыть',
   all:'Все',langgrp:'Язык',modegrp:'Режим поиска',pre:'Начало',in:'Содержит',ex:'Точно',scope:'искать и в переводах',
@@ -321,7 +324,7 @@ const I18N={
   chip:{syr:'Сир.',ka:'Груз.',grc:'Греч.',la:'Лат.',hy:'Арм.',gez:'Эфиоп.',ar:'Араб.',cop:'Копт.',xx:'Др.'},
   tag:{syr:'сир.',ka:'груз.',grc:'греч.',la:'лат.',hy:'арм.',gez:'эфиоп.',ar:'араб.',xx:'—'},
   sys:{syr_sci:'Научная (консонантная)',syr_alt:'Научная с ʔ и ʕ',ka_sci:'Картвелологическая: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Национальная 2002: k’ t’ ts’ ch’ gh',hy_hm:'Хюбшман — Мейе: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Традиционная (Дилльман — Ламбдин): a, ā',gez_ham:'Гамбургская (Encyclopaedia Aethiopica): ä, a',grc_sci:'Научная',ar_din:'DIN 31635',cop_sci:'Научная (Лейтон): š j c ti',cop_simple:'Упрощённая: sh j ky ti'}},
- en:{lgbnote:'turn all dictionaries of a language on or off',tagline:'study dictionaries of ancient languages',interim:'Intermediate recognition, not final',name:'English',
+ en:{upd:'Update to latest version',lgbnote:'turn all dictionaries of a language on or off',tagline:'study dictionaries of ancient languages',interim:'Intermediate recognition, not final',name:'English',
   sub:'Type in transliteration, without diacritics: <b>mlk</b> finds <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Original scripts work too.',
   search:'Search',clear:'Clear',alphabet:'Alphabet',more:'Show more',copy:'copy',expand:'expand',close:'Close',
   all:'All',langgrp:'Language',modegrp:'Search mode',pre:'Starts with',in:'Contains',ex:'Exact',scope:'also search translations',
@@ -338,7 +341,7 @@ const I18N={
   chip:{syr:'Syr.',ka:'Geo.',grc:'Grk.',la:'Lat.',hy:'Arm.',gez:'Eth.',ar:'Ar.',cop:'Copt.',xx:'Oth.'},
   tag:{syr:'syr.',ka:'geo.',grc:'grk.',la:'lat.',hy:'arm.',gez:'eth.',ar:'ar.',xx:'—'},
   sys:{syr_sci:'Scientific (consonantal)',syr_alt:'Scientific with ʔ and ʕ',ka_sci:'Kartvelological: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditional (Dillmann–Lambdin): a, ā',gez_ham:'Hamburg (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientific',ar_din:'DIN 31635',cop_sci:'Scientific (Layton): š j c ti',cop_simple:'Simplified: sh j ky ti'}},
- de:{lgbnote:'alle Wörterbücher einer Sprache ein- oder ausschalten',tagline:'Studienwörterbücher alter Sprachen',interim:'Vorläufige Texterkennung, nicht endgültig',name:'Deutsch',
+ de:{upd:'Neueste Version laden',lgbnote:'alle Wörterbücher einer Sprache ein- oder ausschalten',tagline:'Studienwörterbücher alter Sprachen',interim:'Vorläufige Texterkennung, nicht endgültig',name:'Deutsch',
   sub:'In Umschrift tippen, ohne Diakritika: <b>mlk</b> findet <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Die Originalschrift geht auch.',
   search:'Suche',clear:'Löschen',alphabet:'Alphabet',more:'Mehr anzeigen',copy:'kopieren',expand:'aufklappen',close:'Schließen',
   all:'Alle',langgrp:'Sprache',modegrp:'Suchmodus',pre:'Anfang',in:'Enthält',ex:'Genau',scope:'auch in Übersetzungen suchen',
@@ -355,7 +358,7 @@ const I18N={
   chip:{syr:'Syr.',ka:'Georg.',grc:'Griech.',la:'Lat.',hy:'Arm.',gez:'Äth.',ar:'Arab.',cop:'Kopt.',xx:'And.'},
   tag:{syr:'syr.',ka:'georg.',grc:'griech.',la:'lat.',hy:'arm.',gez:'äth.',ar:'arab.',xx:'—'},
   sys:{syr_sci:'Wissenschaftlich (konsonantisch)',syr_alt:'Wissenschaftlich mit ʔ und ʕ',ka_sci:'Kartvelologisch: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditionell (Dillmann–Lambdin): a, ā',gez_ham:'Hamburger System (Encyclopaedia Aethiopica): ä, a',grc_sci:'Wissenschaftlich',ar_din:'DIN 31635',cop_sci:'Wissenschaftlich (Layton): š j c ti',cop_simple:'Vereinfacht: sh j ky ti'}},
- fr:{lgbnote:'activer ou désactiver tous les dictionnaires d’une langue',tagline:'dictionnaires d’étude des langues anciennes',interim:'Reconnaissance intermédiaire, non définitive',name:'Français',
+ fr:{upd:'Mettre à jour',lgbnote:'activer ou désactiver tous les dictionnaires d’une langue',tagline:'dictionnaires d’étude des langues anciennes',interim:'Reconnaissance intermédiaire, non définitive',name:'Français',
   sub:'Tapez en translittération, sans diacritiques : <b>mlk</b> trouve <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. L’écriture originale fonctionne aussi.',
   search:'Recherche',clear:'Effacer',alphabet:'Alphabet',more:'Afficher plus',copy:'copier',expand:'déplier',close:'Fermer',
   all:'Tous',langgrp:'Langue',modegrp:'Mode de recherche',pre:'Début',in:'Contient',ex:'Exact',scope:'chercher aussi dans les traductions',
@@ -372,7 +375,7 @@ const I18N={
   chip:{syr:'Syr.',ka:'Géo.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Éth.',ar:'Ar.',cop:'Copte',xx:'Aut.'},
   tag:{syr:'syr.',ka:'géo.',grc:'gr.',la:'lat.',hy:'arm.',gez:'éth.',ar:'ar.',xx:'—'},
   sys:{syr_sci:'Scientifique (consonantique)',syr_alt:'Scientifique avec ʔ et ʕ',ka_sci:'Kartvélologique : ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nationale 2002 : k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet : tʻ c č ł',hy_lc:'ALA-LC : tʻ ts ch gh',gez_trad:'Traditionnelle (Dillmann–Lambdin) : a, ā',gez_ham:'Hambourg (Encyclopaedia Aethiopica) : ä, a',grc_sci:'Scientifique',ar_din:'DIN 31635',cop_sci:'Scientifique (Layton) : š j c ti',cop_simple:'Simplifiée : sh j ky ti'}},
- it:{lgbnote:'attivare o disattivare tutti i dizionari di una lingua',tagline:'dizionari di studio delle lingue antiche',interim:'Riconoscimento intermedio, non definitivo',name:'Italiano',
+ it:{upd:'Aggiorna versione',lgbnote:'attivare o disattivare tutti i dizionari di una lingua',tagline:'dizionari di studio delle lingue antiche',interim:'Riconoscimento intermedio, non definitivo',name:'Italiano',
   sub:'Digitate in traslitterazione, senza diacritici: <b>mlk</b> trova <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Funziona anche la scrittura originale.',
   search:'Ricerca',clear:'Cancella',alphabet:'Alfabeto',more:'Mostra altri',copy:'copia',expand:'espandi',close:'Chiudi',
   all:'Tutti',langgrp:'Lingua',modegrp:'Modalità di ricerca',pre:'Inizio',in:'Contiene',ex:'Esatto',scope:'cerca anche nelle traduzioni',
@@ -614,7 +617,7 @@ async function loadBuiltins(){
   for(const k of [...BUILTIN,latExtra()].filter(Boolean)){
     const id='b-'+k;if(gone.includes(id)||dicts.some(d=>d.id===id&&d.v===BVER))continue;dicts=dicts.filter(d=>d.id!==id);
     try{setSync(I.loading);
-      const d=await (await fetch('data/'+k+'.json')).json();
+      const d=await (await fetch('data/'+k+'.json',FRESH?{cache:'reload'}:{})).json();
       d.demo=true;d.v=BVER;d.created=BUILTIN.includes(k)?BUILTIN.indexOf(k):6.5;dicts.push(d);dicts.sort((a,b)=>a.created-b.created);
       await idb.put(d);refresh();
     }catch(e){}
@@ -917,6 +920,18 @@ function showLat(w){
   $('#pop').hidden=false;
 }
 
+/* ---------- update to latest version ---------- */
+const FRESH=/[?&]fresh=/.test(location.search);
+async function hardUpdate(){
+  const b=$('#upd');b.classList.add('busy');b.disabled=true;
+  try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}}catch(e){}
+  try{if(window.caches){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}}catch(e){}
+  try{if(idb.db)idb.db.close()}catch(e){}
+  try{await new Promise(res=>{const r=indexedDB.deleteDatabase('lexicon');r.onsuccess=r.onerror=r.onblocked=()=>res()})}catch(e){}
+  try{Object.keys(localStorage).filter(k=>k.startsWith('lex_')).forEach(k=>localStorage.removeItem(k))}catch(e){}
+  location.replace(location.pathname+'?fresh='+Date.now());
+}
+$('#upd').addEventListener('click',hardUpdate);
 /* ---------- events ---------- */
 $('#q').addEventListener('input',debounced);
 $('#q').addEventListener('input',()=>{sugOff=false;sugIdx=-1});
@@ -983,7 +998,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#ov').hidden)ne
   renderTrSec();$('#trsec').addEventListener('change',e=>{const L=e.target.dataset.tl;if(!L)return;trCfg[L]=e.target.value;LS.set('trcfg',trCfg);renderTrSec();applyLang();search()});
   refresh();
   await loadBuiltins();setSync('');
-  try{LATF=await (await fetch('data/latforms.json')).json();search()}catch(e){}
+  try{LATF=await (await fetch('data/latforms.json',FRESH?{cache:'reload'}:{})).json();search()}catch(e){}
+  if(FRESH)try{history.replaceState(null,'',location.pathname)}catch(e){}
 })();
 }
 </script>
