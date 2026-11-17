@@ -270,7 +270,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.45</p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.46</p>
   </div>
 </footer>
 
@@ -869,7 +869,7 @@ async function doImport(){
 
 let LATF={},laIdx=null;const LSTOP=new Set('et in ad cum est sunt sive seu vel aut de ex non nec qui quae quod quam ut sc id ab per pro sub si ac atque etiam vid cf ibid seq coll'.split(' '));
 const LATUI={ru:'b-la',en:'b-laen',de:'b-laen',it:'b-laen',fr:'b-lafr'};
-function laDict(){return dicts.find(d=>d.id===LATUI[UIL]&&!off.has(d.id))||dicts.find(d=>['b-la','b-laen','b-lafr'].includes(d.id)&&!off.has(d.id))}
+function laDict(){return dicts.find(d=>d.id===LATUI[UIL])||dicts.find(d=>['b-la','b-laen','b-lafr'].includes(d.id))}
 function laLookup(w){
   const d=laDict();if(!d)return [];
   if(!laIdx||laIdx.d!==d){laIdx={d,m:new Map()};d.entries.forEach((e,i)=>{const k=norm(e[0]);if(!laIdx.m.has(k))laIdx.m.set(k,[]);laIdx.m.get(k).push(i)})}
