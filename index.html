@@ -36,7 +36,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Noto Sans',s
 .top{background:var(--band);color:var(--bandink);padding-bottom:18px;padding-top:max(clamp(22px,4vw,48px),env(safe-area-inset-top))}
 .uil{font:600 14px 'Noto Sans',sans-serif;min-height:40px;padding:0 8px;border-radius:8px;border:1px solid rgb(255 255 255/.35);background:transparent;color:var(--bandink);align-self:flex-start}
 .uil option{color:#17191e}
-body.cmp .top{position:sticky;top:0;z-index:8;padding-top:10px;padding-bottom:10px;box-shadow:0 4px 14px rgb(0 0 0/.18)}
+body.cmp .top{position:sticky;top:0;z-index:8;padding-top:10px;padding-bottom:10px}
+body.cmp .qsticky{position:sticky;top:var(--hh,106px);z-index:7;background:var(--bg);margin:calc(-1*clamp(18px,3vw,36px)) calc(-1*max(5vw,16px)) 0;padding:10px max(5vw,16px);box-shadow:0 6px 12px -8px rgb(0 0 0/.25)}
+@media(min-width:900px){body.cmp .qsticky{margin-right:0;padding-right:0}}
 body.cmp .top .tg,body.cmp .top .sub,body.cmp .top .sub2,body.cmp .top .credit{display:none}
 body.cmp .top h1{font-size:24px}
 body.cmp .tin{flex-wrap:nowrap;align-items:center}
@@ -232,6 +234,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
 
 <main class="wrap">
   <section>
+    <div class="qsticky">
     <div class="qtools">
       <button id="kbB" class="btn ghost" aria-expanded="false" aria-controls="kb" data-i18n="alphabet"></button>
       <span class="syms" id="syms"><button type="button" class="md" data-s="ʾ" title="aleph" aria-label="ʾ aleph">ʾ</button><button type="button" class="md" data-s="ʿ" title="ayin" aria-label="ʿ ayin">ʿ</button><button type="button" data-s="ʔ" title="aleph" aria-label="ʔ aleph">ʔ</button><button type="button" data-s="ʕ" title="ayin" aria-label="ʕ ayin">ʕ</button></span>
@@ -243,6 +246,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
         <input id="q" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" dir="auto" role="combobox" aria-controls="sug" aria-expanded="false" aria-autocomplete="list" placeholder="mlk, ngs, gmerti…">
         <ul id="sug" class="sug" role="listbox" hidden></ul>
       </div>
+    </div>
     </div>
     <div id="kb" class="kb" hidden></div>
     <div class="opts">
@@ -277,7 +281,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.47</p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.48</p>
   </div>
 </footer>
 
@@ -766,6 +770,7 @@ function renderKb(){
 function insert(c){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;q.value=q.value.slice(0,a)+c+q.value.slice(b);q.setSelectionRange(a+c.length,a+c.length);debounced()}
 function backspace(){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b){q.value=q.value.slice(0,a)+q.value.slice(b);q.setSelectionRange(a,a)}else if(a>0){const s=[...q.value.slice(0,a)];s.pop();const p=s.join('');q.value=p+q.value.slice(a);q.setSelectionRange(p.length,p.length)}debounced()}
 
+try{new ResizeObserver(()=>document.documentElement.style.setProperty('--hh',$('header').offsetHeight+'px')).observe($('header'))}catch(e){}
 function cmpUpd(){document.body.classList.toggle('cmp',!!$('#q').value.trim()||document.activeElement===$('#q'))}
 let tmr;function debounced(){cmpUpd();$('#clr').hidden=!$('#q').value;clearTimeout(tmr);tmr=setTimeout(search,120)}
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2600)}
