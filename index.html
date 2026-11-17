@@ -292,7 +292,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.62 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.63 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button></p>
   </div>
 </footer>
 
@@ -921,7 +921,7 @@ function linkLat(html){
 }
 function showLat(w){
   lastLat=w;const d=laDict();if(!d)return;const ix=laLookup(w),t=latT(),want=LATD[t];
-  const lt=`<div class="lt" role="group">Lat <span aria-hidden="true">→</span> ${['ru','en','fr'].map(k=>`<button type="button" data-lt="${k}" class="${k===t?'on':''}" aria-pressed="${k===t}">${k[0].toUpperCase()+k[1]}</button>`).join('')}</div>`;
+  const lt=`<div class="lt" role="group">Lat <span aria-hidden="true">→</span> ${['fr','en','ru'].map(k=>`<button type="button" data-lt="${k}" class="${k===t?'on':''}" aria-pressed="${k===t}">${k[0].toUpperCase()+k[1]}</button>`).join('')}</div>`;
   const lem=[...new Set(ix.map(i=>d.entries[i][0]))].join(', ');
   $('#pop').innerHTML=`<div class="ph"><span class="pt"><b>${esc(w)}</b>${ix.length&&norm(lem)!==norm(w)?' → '+esc(lem):''} · ${esc(d.name)}</span><button class="btn ghost" id="popX">${I.close}</button></div>`+lt+
     (d.id!==want?`<p class="note">…</p>`:'')+
