@@ -34,7 +34,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Noto Sans',s
 .scroll{overflow-x:auto}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .top{background:var(--band);color:var(--bandink);padding-bottom:18px;padding-top:max(clamp(22px,4vw,48px),env(safe-area-inset-top))}
-.uil{font:600 14px 'Noto Sans',sans-serif;min-height:40px;padding:0 8px;border-radius:8px;border:1px solid rgb(255 255 255/.35);background:transparent;color:var(--bandink);align-self:flex-start}
+.uil{font:600 14px 'Noto Sans',sans-serif;min-height:40px;padding:0 8px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);margin-inline-start:auto;flex:0 0 auto;cursor:pointer}
 .uil option{color:#17191e}
 body.cmp .top{position:sticky;top:0;z-index:8;padding-top:10px;padding-bottom:10px}
 body.cmp .qsticky{position:sticky;top:var(--hh,106px);z-index:7;background:var(--bg);margin:calc(-1*clamp(18px,3vw,36px)) calc(-1*max(5vw,16px)) 0;padding:10px max(5vw,16px);box-shadow:0 6px 12px -8px rgb(0 0 0/.25)}
@@ -42,7 +42,6 @@ body.cmp .qsticky{position:sticky;top:var(--hh,106px);z-index:7;background:var(-
 body.cmp .top .tg,body.cmp .top .sub,body.cmp .top .sub2,body.cmp .top .credit{display:none}
 body.cmp .top h1{font-size:24px}
 body.cmp .tin{flex-wrap:nowrap;align-items:center}
-body.cmp .uil{min-height:34px}
 body.cmp .lgb{margin-top:8px}
 body.cmp .lgb button{height:44px}
 .sub2{margin:6px 0 0;font-size:14px;opacity:.82;max-width:62ch}
@@ -78,9 +77,11 @@ h1 .tg{display:block;font:400 clamp(17px,2.4vw,22px)/1.3 'Noto Serif',serif;opac
 .wrap{max-width:1240px;margin:auto;padding:clamp(18px,3vw,36px) max(5vw,16px) 60px;display:grid;gap:36px}
 @media(min-width:900px){.wrap{grid-template-columns:minmax(0,1fr) 330px}}
 .qrow{display:flex;gap:10px}
-.qtools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;align-items:center}
+.qtools{display:flex;flex-wrap:nowrap;gap:clamp(4px,1.5vw,8px);margin-bottom:8px;align-items:center}
+#kbB,#clr{flex:0 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 clamp(5px,2.4vw,18px);font-size:clamp(12px,3.6vw,15px)}
+.syms{flex:0 1 auto;min-width:0}
 .syms{display:inline-flex;gap:6px}
-.syms button{width:44px;min-height:44px;padding:0;border:1px solid var(--lap);border-radius:10px;background:transparent;color:var(--lap);font:400 24px/1 'Noto Serif','Noto Sans',serif;cursor:pointer}
+.syms button{width:clamp(28px,9vw,44px);min-height:44px;padding:0;border:1px solid var(--lap);border-radius:10px;background:transparent;color:var(--lap);font:400 24px/1 'Noto Serif','Noto Sans',serif;cursor:pointer}
 .syms button.md{font-size:40px;line-height:0;padding-top:.42em}
 .syms button:active{background:var(--lap);color:var(--bg)}
 #clr{margin-inline-start:auto}
@@ -215,7 +216,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw}
 .toast.on{opacity:1}
 @media(prefers-reduced-motion:reduce){.toast{transition:none}}
-@media(max-width:600px){.tin{flex-wrap:nowrap;align-items:flex-start;gap:10px}.uil{flex:0 0 auto;min-height:34px;font-size:13px;padding:0 4px}.syms button.md{font-size:34px}.top{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:10px}h1{font-size:26px}h1 .tg{font-size:15px;margin-top:3px}.top .sub{font-size:13px;line-height:1.4;margin-top:6px}.sub2,.credit{font-size:12px;margin-top:4px}.lgb{margin-top:10px}.syms button{width:38px;min-height:40px;font-size:21px}.syms{gap:5px}.qtools{gap:6px}.hw{font-size:20px}#kbB,#clr{padding:0 12px;font-size:14px}.qrow{flex-wrap:wrap}.qbox{flex-basis:100%}.lgb{gap:6px}.lgb button{width:42px;height:46px;border-radius:10px;gap:2px}.lgb button .s{font-size:19px}.lgb button .a{font-size:9px;letter-spacing:0}.lgb .lgn{font-size:11.5px;line-height:1.25}}
+@media(max-width:600px){.tin{flex-wrap:nowrap;align-items:flex-start;gap:10px}.syms button.md{font-size:34px}.top{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:10px}h1{font-size:26px}h1 .tg{font-size:15px;margin-top:3px}.top .sub{font-size:13px;line-height:1.4;margin-top:6px}.sub2,.credit{font-size:12px;margin-top:4px}.lgb{margin-top:10px}.syms button{min-height:40px;font-size:21px}.syms{gap:clamp(3px,1.2vw,5px)}.hw{font-size:20px}.qrow{flex-wrap:wrap}.qbox{flex-basis:100%}.lgb{gap:6px}.lgb button{width:42px;height:46px;border-radius:10px;gap:2px}.lgb button .s{font-size:19px}.lgb button .a{font-size:9px;letter-spacing:0}.lgb .lgn{font-size:11.5px;line-height:1.25}}
 </style>
 </head>
 <body>
@@ -227,7 +228,6 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <p class="sub2" data-i18n="latnote"></p>
       <p class="credit" data-i18n="credit"></p>
     </div>
-    <select id="uil" class="uil" data-i18n-aria="uilang"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select>
   </div>
   <div class="lgb" id="lgb" role="group" data-i18n-aria="langgrp"></div>
 </header>
@@ -254,6 +254,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
         <button data-m="pre" class="on" data-i18n="pre"></button><button data-m="in" data-i18n="in"></button><button data-m="ex" data-i18n="ex"></button><button data-m="re">Regex</button>
       </div>
       <label class="chk"><input type="checkbox" id="scope" checked> <span data-i18n="scope"></span></label>
+      <select id="uil" class="uil" data-i18n-aria="uilang"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select>
     </div>
     <p id="stat" class="stat" aria-live="polite"></p>
     <ol id="res" class="res"></ol>
@@ -281,7 +282,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.48</p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.49</p>
   </div>
 </footer>
 
