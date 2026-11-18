@@ -625,7 +625,7 @@ const idb={db:null,
 let dicts=[];const off=new Set(LS.get('off',[]));
 let cloud=null;
 function setSync(t){$('#sync').textContent=t}
-function keys(d){if(!d.hk){d.hk=d.entries.map(e=>norm(e[0]));d.dk=d.entries.map(e=>words(norm(e[1]||'')));d.sk=d.entries.map((e,i)=>{const L=elang(d,i);return CL[L]&&CL[L].sem?semKey(e[0],L):null})}}
+function keys(d){if(!d.hk){d.hk=d.entries.map(e=>norm(e[0]));d.dk=d.entries.map(e=>words(norm((e[1]||'')+(e[3]&&e[3].pair?' '+e[3].de:''))));d.sk=d.entries.map((e,i)=>{const L=elang(d,i);return CL[L]&&CL[L].sem?semKey(e[0],L):null})}}
 
 async function upload(d){
   if(!cloud||d.demo)return;
@@ -764,7 +764,7 @@ function markHits(html){
   if(!HL.qd&&!HL.re)return html;
   return html.split(/(<[^>]+>|&(?:#\d+|\w+);)/).map((t,i)=>i%2?t:markText(t)).join('');
 }
-const trLang=e=>{const t=e[3];return !t?null:t[UIL]?UIL:t.en?'en':null},trOf=e=>{const l=trLang(e);return l?e[3][l]:null},trBtn=e=>{const l=trLang(e),a='Lat',b=l[0].toUpperCase()+l.slice(1);return `<button class="trb" type="button" aria-label="${a} / ${b}"><span class="a">${a}</span>/<span class="b">${b}</span></button>`};
+const trLang=e=>{const t=e[3];return !t?null:t.pair?'de':t[UIL]?UIL:t.en?'en':null},trOf=e=>{const l=trLang(e);return l?e[3][l]:null},trBtn=e=>{const l=trLang(e),p=e[3].pair,a=p?p[0]:'Lat',b=p?p[1]:l[0].toUpperCase()+l.slice(1);return `<button class="trb" type="button" aria-label="${a} / ${b}"><span class="a">${a}</span>/<span class="b">${b}</span></button>`};
 function defHtml(d,e,l){
   const base=x=>LATDEF.has(d.id)?linkLat(x):x,la=base(formatDef(e[1],l,e[0])),r=trOf(e);if(!r)return la;
   const a=e[1].split('\n'),b=r.split('\n');
