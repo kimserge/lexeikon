@@ -50,7 +50,8 @@ body.cmp .hdr .uil{min-height:36px}
 .hrow{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px 10px}.hrow h1{grid-column:1/-1;grid-row:1}.hrow .uil{grid-column:1;grid-row:2}.hrow .tg{grid-column:2;grid-row:2}
 body.cmp .hdr .hrow{display:flex;flex-direction:row;align-items:center;gap:12px}
 body.cmp .top .sub,body.cmp .top .sub2,body.cmp .top .credit{display:none}
-@media(max-height:600px){body:not(.cmp) .hdr{position:static}}
+body:not(.cmp) .hdr{display:contents}
+body:not(.cmp) .qsticky{position:sticky;top:var(--sat);z-index:8;box-shadow:0 calc(-1*var(--sat)) 0 var(--bg),0 6px 12px -8px rgb(0 0 0/.25)}
 @media(max-width:899px){body.cmp .hdr .tg{display:none}}
 .sub2{margin:6px 0 0;font-size:14px;opacity:.82;max-width:62ch}
 .credit{margin:8px 0 0;font-size:13px;opacity:.7;max-width:62ch}
@@ -314,7 +315,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.9 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.9.1 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
   </div>
 </footer>
 
