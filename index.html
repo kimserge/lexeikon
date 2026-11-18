@@ -1040,7 +1040,7 @@ async function hardUpdate(){
   try{if(window.caches){const ks=await caches.keys();await Promise.all(ks.filter(k=>k.startsWith('lexeikon-v')).map(k=>caches.delete(k)))}}catch(e){}
   try{if(idb.db)idb.db.close()}catch(e){}
   try{await new Promise(res=>{const r=indexedDB.deleteDatabase('lexicon');r.onsuccess=r.onerror=r.onblocked=()=>res()})}catch(e){}
-  try{Object.keys(localStorage).filter(k=>k.startsWith('lex_')).forEach(k=>localStorage.removeItem(k))}catch(e){}
+  try{Object.keys(localStorage).filter(k=>k.startsWith('lex_')&&k!=='lex_visd').forEach(k=>localStorage.removeItem(k))}catch(e){}
   location.replace(location.pathname+'?fresh='+Date.now());
 }
 $('#upd').addEventListener('click',hardUpdate);
