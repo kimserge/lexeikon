@@ -81,11 +81,11 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
 .btn.light{background:var(--bandink);color:#13265c;border-color:var(--bandink)}
 .btn.ghost{background:transparent;color:var(--lap)}
 .btn:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--rub);outline-offset:2px}
-.sug{position:fixed;right:0;z-index:8;width:50vw;margin:0;padding:4px;list-style:none;background:var(--bg);border:1px solid var(--line);border-inline-end:0;border-radius:12px 0 0 12px;box-shadow:-6px 8px 20px rgb(0 0 0/.14);overflow:auto;overscroll-behavior:contain}
-.sug li{padding:7px 10px;border-radius:8px;cursor:pointer;min-height:44px}.sug li.act,.sug li:hover{background:var(--card)}
-.sug .w{display:block;font:700 19px/1.25 var(--lex);color:var(--rub);overflow-wrap:anywhere}.sug .tr{display:block;margin:0;font-size:13px}.sug .m{display:block;font-size:12px;line-height:1.3;color:var(--mut);overflow-wrap:anywhere}
+.sug{position:fixed;right:0;z-index:8;width:50vw;margin:0;padding:4px;list-style:none;background:var(--bg);border:1px solid var(--line);border-radius:0 0 10px 10px;box-shadow:0 8px 18px rgb(0 0 0/.14);overflow:auto;overscroll-behavior:contain}
+.sug li{padding:4px 8px;border-radius:6px;cursor:pointer}.sug li.act,.sug li:hover{background:var(--card)}
+.sug .w{font:700 16px/1.25 var(--lex);color:var(--rub);overflow-wrap:anywhere}.sug .tr{margin:0 0 0 6px;font-size:12px}.sug .m{display:block;font-size:11px;line-height:1.25;color:var(--mut);overflow-wrap:anywhere}
 @media(max-width:899px){body.sugo #res,body.sugo #more{margin-inline-end:calc(50vw - max(5vw,16px) + 8px)}}
-@media(min-width:900px){.sug{border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgb(0 0 0/.14)}}
+@media(min-width:900px){.sug{border-radius:0 10px 10px 0}}
 .wrap{max-width:1240px;margin:auto;padding:clamp(18px,3vw,36px) max(5vw,16px) 60px;display:grid;gap:36px}
 @media(min-width:900px){.wrap{grid-template-columns:minmax(0,1fr) 330px}}
 .qrow{display:flex;gap:10px}
@@ -688,10 +688,11 @@ function search(){
 let HL={qd:'',qh:'',mode:'pre',re:null,lat:false,rx:{}},inbHead=false;
 let sugIdx=-1,sugOff=false,sugItems=[];
 function sugHide(){$('#sug').hidden=true;document.body.classList.remove('sugo');$('#q').setAttribute('aria-expanded','false');$('#q').removeAttribute('aria-activedescendant');sugIdx=-1}
-function sugPos(){const s=$('#sug');if(s.hidden)return;const v=window.visualViewport,vh=v?v.height+v.offsetTop:innerHeight,k=$('#kb');
-  const t=Math.min(Math.max($('.qsticky').getBoundingClientRect().bottom,k.hidden?0:k.getBoundingClientRect().bottom,$('#res').getBoundingClientRect().top)+6,vh-110);
-  s.style.top=t+'px';s.style.maxHeight=Math.max(96,vh-t-8)+'px';
-  if(innerWidth>=900){const a=$('.lib').getBoundingClientRect();s.style.left=a.left+'px';s.style.width=a.width+'px';s.style.right='auto'}else{s.style.left=s.style.width=s.style.right=''}}
+function sugPos(){const s=$('#sug');if(s.hidden)return;const v=window.visualViewport,vh=v?v.height+v.offsetTop:innerHeight,k=$('#kb'),q=$('#q'),r=q.getBoundingClientRect(),g=document.activeElement===q?5:0,wide=innerWidth>=900;
+  let t,l,w;
+  if(wide){t=r.top-g;l=r.right+g;w=Math.min($('.lib').getBoundingClientRect().width,innerWidth-l-12)}
+  else{t=k.hidden?r.bottom+g:k.getBoundingClientRect().bottom;l=innerWidth/2;w=r.right-l}
+  t=Math.min(t,vh-110);s.style.top=t+'px';s.style.left=l+'px';s.style.width=w+'px';s.style.right='auto';s.style.maxHeight=Math.max(96,vh-t-8)+'px'}
 function renderSug(){
   const q=$('#q');if(sugOff||!q.value.trim()||(document.activeElement!==q&&$('#kb').hidden)){sugHide();return}
   const m=new Map();
