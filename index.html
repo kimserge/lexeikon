@@ -94,11 +94,11 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
 #clr{margin-inline-start:auto}
 #kbB[aria-expanded="true"]{background:var(--rub);border-color:var(--rub);color:var(--bg)}
 #q{flex:1;font:400 22px/1.3 var(--lex);padding:12px 16px;border:2px solid var(--ink);border-radius:12px;background:var(--bg);color:var(--ink);min-height:56px}
-.chips,.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+.chips,.opts{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:8px;align-items:center}
 .chips button,.seg button{min-height:40px;padding:0 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;font:15px 'Noto Sans',sans-serif;cursor:pointer}
 .chips button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.seg button{border:0;border-radius:0;background:transparent}
+.seg button{border:0;border-radius:0;background:transparent;min-height:32px;padding:0 10px;font-size:13px}
 .seg button+button{border-left:1px solid var(--line)}
 .seg button.on{background:var(--lap);color:var(--bg)}
 .chk{display:inline-flex;gap:8px;align-items:center;min-height:40px;cursor:pointer}
@@ -107,9 +107,11 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
 .kb .kl{display:flex;flex-wrap:nowrap;gap:4px;margin-bottom:10px;direction:ltr}
 .kb .kl button{flex:1 1 auto;min-width:0;white-space:nowrap;min-height:34px;padding:0 3px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--mut);cursor:pointer;font-size:clamp(11px,3vw,13px)}
 .kb .kl button.on{color:var(--ink);border-color:var(--ink)}
-.keys{display:flex;flex-wrap:wrap;gap:6px}
-.keys button{min-width:44px;min-height:44px;font:22px/1 var(--lex);border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
-.keys button.fn{font:14px 'Noto Sans',sans-serif;padding:0 12px;color:var(--mut)}
+.keys{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px}
+.keys.forms{display:flex;flex-wrap:wrap}.keys.forms button{min-width:44px}
+.keys button{min-width:0;min-height:44px;padding:0;font:22px/1 var(--lex);border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+.keys button.fn{font:13px 'Noto Sans',sans-serif;padding:0 4px;color:var(--mut);white-space:nowrap;overflow:hidden}
+.bsi{display:inline-block;font-size:16px;line-height:1}.kb[dir=rtl] .bsi{transform:scaleX(-1)}
 .keys.forms{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
 .qbox{position:relative;flex:1}
 #q{width:100%}
@@ -124,7 +126,7 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
 .how .lg{margin:10px 0 2px;font-weight:600;font-size:14px}
 .sch{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:2px 12px;font-size:14px}
 .sch b{font:400 18px var(--lex);margin-inline-start:4px}
-.stat{color:var(--mut);margin:18px 0 6px;font-size:14px}
+.stat{color:var(--mut);margin:6px 0 4px;font-size:13px}
 .res{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .res li{border-bottom:1px solid var(--line)}
 .res li.inb{background:var(--card);border-radius:12px;border-bottom:0;margin:6px 0;padding:0 12px}
@@ -137,9 +139,9 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
 .tv{display:none}body[data-trm=la] .tla,body[data-trm=ru] .tru,body[data-trm=both] .tbo{display:block}
 .pla+.pru{margin-top:3px}.pru{color:var(--trg);margin-inline-start:1.25em;padding-inline-end:10px;border-inline-end:2px solid var(--trg);margin-bottom:8px}
 .tru .pru{margin-inline-start:0;margin-bottom:0}
-.pru .ex,.pru .l.x .ex{color:var(--trg)}.pru .l.x{border-inline-start:0;padding-inline-start:0}
-.trb{margin-inline-start:auto;min-height:32px;padding:0 10px;background:none;border:1px solid var(--trg);border-radius:8px;color:var(--mut);font:600 13px 'Noto Sans',sans-serif;cursor:pointer}
-body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,body[data-trm=both] .trb .b{color:var(--trg);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.pru .ex,.pru .l.x .ex{color:color-mix(in srgb,var(--trg) 68%,var(--bg))}
+.trb{margin-inline-start:auto;min-height:32px;padding:0 10px;background:none;border:1px solid var(--trg);border-radius:8px;color:var(--mut);font:400 13px 'Noto Sans',sans-serif;cursor:pointer}
+body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,body[data-trm=both] .trb .b{color:var(--trg);font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
 .trb+.cp{margin-inline-start:8px}
 .cp{margin-inline-start:auto;background:none;border:0;color:var(--rub);font:13px 'Noto Sans',sans-serif;cursor:pointer;min-height:32px;padding:0 4px}
 .lw{cursor:pointer;text-decoration:underline dotted color-mix(in srgb,var(--lap) 55%,transparent);text-underline-offset:3px}
@@ -301,7 +303,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.1 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.2 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
   </div>
 </footer>
 
@@ -622,7 +624,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','cos','ka','kac','agwb','grc','dil','gez','rai','la','hy','mis','cop'],BVER=16;
+const BUILTIN=['syr','cos','ka','kac','agwb','grc','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=18;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -694,7 +696,7 @@ function more(){
   const part=results.slice(shown,shown+PAGE);shown+=part.length;
   $('#res').insertAdjacentHTML('beforeend',part.map(([s,_,d,i])=>{const e=d.entries[i],l=elang(d,i);
     let sep='';if(s===3&&!inbHead){inbHead=true;sep=`<li class="sep">${I.inbody} · ${results.filter(r=>r[0]===3).length.toLocaleString(UIL)}</li>`}
-    return sep+`<li class="${s===3?'inb':''}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><span class="hw" dir="auto">${s<3?`<mark class="hl">${esc(e[0])}</mark>`:esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · ${esc(d.name)}</span>${e[3]&&e[3].ru?'<button class="trb" type="button" aria-label="лат / ру"><span class="a">лат</span>/<span class="b">ру</span></button>':''}<button class="cp">${I.copy}</button></div><div class="def" dir="${l==='ar'?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}).join(''));
+    return sep+`<li class="${s===3?'inb':''}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><span class="hw" dir="auto">${s<3?`<mark class="hl">${esc(e[0])}</mark>`:esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · ${esc(d.name)}</span>${e[3]&&e[3].ru?'<button class="trb" type="button" aria-label="лат / ру"><span class="a">лат</span>/<span class="b">ру</span></button>':''}<button class="cp">${I.copy}</button></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}).join(''));
   $('#more').hidden=shown>=results.length;
   requestAnimationFrame(()=>{for(const h of $('#res').querySelectorAll('.hit:not([data-m])')){h.dataset.m=1;const d=h.querySelector('.def');if(d.scrollHeight>d.getBoundingClientRect().height*0+(d.querySelector('.tv')?18:7.6)*parseFloat(getComputedStyle(d).fontSize)+4)h.classList.add('long')}});
 }
@@ -757,8 +759,8 @@ function formatDef(raw,L,hw,noRoot){
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
-const GLOSS={'b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
-const LATDEF=new Set(['b-syr','b-gez','b-dil','b-mis']);
+const GLOSS={'b-kun':'de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
+const LATDEF=new Set(['b-syr','b-gez','b-dil','b-mis','b-che']);
 const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c]/g,'');
 
 /* ---------- UI rendering ---------- */
@@ -767,9 +769,9 @@ function renderChips(){}
 const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'A',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ع'};
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;(by[d.lang]=by[d.lang]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
-const INTERIM=new Set(['b-cos','b-ka','b-rai','b-mis']);
+const INTERIM=new Set(['b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
 const INL=new Set(['b-agwb']);
-const CPY={'b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'R. Costaz, Dictionnaire syriaque-français · © Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
+const CPY={'b-kun':()=>'© Künzle · OCR LexEikôn: p. 1–2','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–420','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'R. Costaz, Dictionnaire syriaque-français · © Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 function renderLib(){
   const HIDE=new Set(['b-hy']);renderLgb();const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
   $('#dl').innerHTML=vis.length?vis.map(d=>`<li><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><span><span class="nm">${esc(d.name)}</span>${INL.has(d.id)?`<span class="cpy inl">${esc(CPY[d.id]())}</span>`:''}<span class="mt">${d.lang==='mix'?'7 языков':esc((LANGS[d.lang]||LANGS.xx)[0])} · ${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]&&!INL.has(d.id)?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}${INTERIM.has(d.id)?`<span class="cpy itm">⚠ ${esc(I.interim)}</span>`:''}</span></li>`).join(''):'';
@@ -783,9 +785,23 @@ function renderKb(){
   const L=Object.keys(KEYS);if(langF&&KEYS[langF])kbLang=langF;
   let h=`<div class="kl">${L.map(l=>`<button data-k="${l}" class="${l===kbLang?'on':''}" title="${esc((I.lang&&I.lang[l])||LANGS[l][0])}">${esc((I.chip&&I.chip[l]||l).replace(/\.$/,''))}</button>`).join('')}</div>`;
   if(kbLang==='gez'&&gezBase!=null)h+=`<div class="keys forms">${[0,1,2,3,4,5,6].map(o=>`<button data-c="${String.fromCharCode(gezBase+o)}">${String.fromCharCode(gezBase+o)}</button>`).join('')}</div>`;
-  h+=`<div class="keys">${KEYS[kbLang].split(' ').map(c=>`<button ${kbLang==='gez'?'data-g':'data-c'}="${c}">${c}</button>`).join('')}<button class="fn" data-c=" ">${I.space}</button><button class="fn" data-bs="1">${I.bksp}</button></div>`;
-  k.innerHTML=h;k.dir=kbLang==='syr'||kbLang==='ar'?'rtl':'ltr';
+  h+=`<div class="keys">${KEYS[kbLang].split(' ').map(c=>`<button ${kbLang==='gez'?'data-g':'data-c'}="${c}">${c}</button>`).join('')}<button class="fn" data-c=" " aria-label="${esc(I.space)}" title="${esc(I.space)}">${I.space}</button><button class="fn" data-bs="1" aria-label="${esc(I.bksp.replace('⌫','').trim())}" title="${esc(I.bksp.replace('⌫','').trim())}"><span class="bsi">⌫</span> ${esc(I.bksp.replace('⌫','').trim())}</button></div>`;
+  k.innerHTML=h;k.dir=kbLang==='syr'||kbLang==='ar'?'rtl':'ltr';layoutKeys();
 }
+function layoutKeys(){
+  const g=$('#kb').querySelector('.keys:not(.forms)');if(!g||!g.clientWidth)return;
+  const n=g.querySelectorAll('button:not(.fn)').length,w=g.clientWidth,gap=6,base=Math.max(5,Math.floor((w+gap)/50)),ok=c=>c>=5&&(w-gap*(c-1))/c>=34;
+  let cols=base,free=base-n%base;
+  for(const c of [base,base+1,base-1,base+2,base-2,base+3,base-3,base+4]){const f=c-n%c;if(ok(c)&&f>=2&&f<c){cols=c;free=f;break}}
+  if(free<2){cols++;free=cols-n%cols}
+  g.style.gridTemplateColumns=`repeat(${cols},minmax(0,1fr))`;
+  const [sp,bs]=g.querySelectorAll('.fn'),b=Math.ceil(free/2),a=free-b||0;
+  sp.hidden=a<1;sp.style.gridColumn=`span ${Math.max(a,1)}`;bs.style.gridColumn=`span ${a<1?free:b}`;
+  sp.textContent=I.space;bs.innerHTML=`<span class="bsi">⌫</span> ${esc(I.bksp.replace('⌫','').trim())}`;
+  if(sp.scrollWidth>sp.clientWidth)sp.textContent='␣';
+  if(bs.scrollWidth>bs.clientWidth)bs.innerHTML='<span class="bsi">⌫</span>';
+}
+addEventListener('resize',layoutKeys);
 function insert(c){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;q.value=q.value.slice(0,a)+c+q.value.slice(b);q.setSelectionRange(a+c.length,a+c.length);debounced()}
 function backspace(){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b){q.value=q.value.slice(0,a)+q.value.slice(b);q.setSelectionRange(a,a)}else if(a>0){const s=[...q.value.slice(0,a)];s.pop();const p=s.join('');q.value=p+q.value.slice(a);q.setSelectionRange(p.length,p.length)}debounced()}
 
@@ -952,7 +968,7 @@ $('#q').addEventListener('blur',()=>setTimeout(cmpUpd,160));
 $('#scope').addEventListener('change',search);
 $('#mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;mode=b.dataset.m;$('#mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));search()});
 $('#more').addEventListener('click',more);
-document.body.dataset.trm=LS.get('trm','both');
+document.body.dataset.trm=LS.get('trm','la');
 $('#res').addEventListener('click',async e=>{
   if(e.target.closest('.trb')){const o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset.trm)+1)%3];document.body.dataset.trm=m;LS.set('trm',m);return}
   const c0=e.target.closest('.cp');const h=e.target.closest('.hit');
