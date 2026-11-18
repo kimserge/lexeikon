@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>if(navigator.standalone)document.documentElement.classList.add("iospwa")</script>
 <title>LexEikôn — учебные словари древних языков</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -21,7 +22,7 @@
    PICTURE: the working search and its results; a band of letters from seven scripts.
    COLOUR and TYPE: lapis band, white page, vermilion rubric; Noto Serif + script Notos, Noto Sans for UI.
    LAYOUT: search and results first; library column beside on wide screens, below on phones. */
-:root{color-scheme:light dark;
+:root{--sat:env(safe-area-inset-top,0px);color-scheme:light dark;
 --bg:light-dark(#ffffff,#111317);--ink:light-dark(#17191e,#e8e6e1);--mut:light-dark(#5b606a,#9ba1ab);
 --line:light-dark(#e2e4e9,#2a2e36);--card:light-dark(#f5f6f8,#1a1d23);--rub:light-dark(#b02a1f,#ff8d7d);
 --lap:light-dark(#1d3a9e,#a9bcff);--band:light-dark(#13265c,#0c1838);--bandink:#f3f1ea;
@@ -33,12 +34,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Noto Sans',s
 .band{padding:clamp(22px,4vw,48px) max(5vw,16px)}
 .scroll{overflow-x:auto}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-.top{background:var(--band);color:var(--bandink);padding-bottom:18px;padding-top:max(clamp(22px,4vw,48px),env(safe-area-inset-top))}
-.hrow{display:flex;align-items:flex-start;gap:12px}
-.uil{font:600 14px 'Noto Sans',sans-serif;min-height:40px;padding:0 6px;border-radius:10px;border:1px solid rgb(255 255 255/.5);background:rgb(255 255 255/.12);color:var(--bandink);flex:0 0 auto;cursor:pointer;margin-top:4px}
-body.cmp .hrow{align-items:center}body.cmp .uil{margin-top:0;min-height:36px}
+.top{background:var(--band);color:var(--bandink);padding-bottom:18px;padding-top:calc(clamp(22px,4vw,48px) + var(--sat))}
+.hrow{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.uil{font:600 14px 'Noto Sans',sans-serif;min-height:40px;padding:0 6px;border-radius:10px;border:1px solid rgb(255 255 255/.5);background:rgb(255 255 255/.12);color:var(--bandink);flex:0 0 auto;cursor:pointer}
+body.cmp .hrow{flex-direction:row;align-items:center;gap:12px}body.cmp .uil{min-height:36px}
 .uil option{color:#17191e}
-body.cmp .top{position:sticky;top:0;z-index:8;padding-top:10px;padding-bottom:10px}
+body.cmp .top{position:sticky;top:0;z-index:8;padding-top:calc(10px + var(--sat));padding-bottom:10px}
 body.cmp .qsticky{position:sticky;top:var(--hh,106px);z-index:7;background:var(--bg);margin:calc(-1*clamp(18px,3vw,36px)) calc(-1*max(5vw,16px)) 0;padding:10px max(5vw,16px);box-shadow:0 6px 12px -8px rgb(0 0 0/.25)}
 @media(min-width:900px){body.cmp .qsticky{margin-right:0;padding-right:0}}
 body.cmp .top .tg,body.cmp .top .sub,body.cmp .top .sub2,body.cmp .top .credit{display:none}
@@ -48,18 +49,18 @@ body.cmp .lgb{margin-top:8px}
 body.cmp .lgb button{height:44px}
 .sub2{margin:6px 0 0;font-size:14px;opacity:.82;max-width:62ch}
 .credit{margin:8px 0 0;font-size:13px;opacity:.7;max-width:62ch}
-.foot{background:var(--card);border-top:1px solid var(--line);margin-top:20px}
+.foot{background:var(--card);border-top:1px solid var(--line);margin-top:20px;padding-top:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));font-size:12px;line-height:1.45}
 .fin{max-width:1240px;margin:auto}
-.foot h2{font:700 22px/1.2 'Noto Serif',serif;margin:0 0 12px}
-.foot h3{font:600 15px 'Noto Sans',sans-serif;margin:18px 0 6px;color:var(--mut)}
-.cr{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;margin:0}
-.cr dt{color:var(--mut);font-size:14px}
+.foot h2{font:700 14px/1.2 'Noto Serif',serif;margin:0 0 8px}
+.foot h3{font:600 12px 'Noto Sans',sans-serif;margin:12px 0 4px;color:var(--mut)}
+.cr{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;margin:0}
+.cr dt{color:var(--mut);font-size:12px}
 .cr dd{margin:0}
 .foot a{color:var(--lap)}
-.src{margin:0;padding-inline-start:1.1em;font-size:14px;color:var(--mut)}
+.src{margin:0;padding-inline-start:1.1em;font-size:12px;color:var(--mut)}
 .src li{margin:3px 0}
-.yrs{margin:18px 0 0;font-size:13px;color:var(--mut);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
-.upd{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border:1px solid var(--lap);border-radius:999px;background:var(--bg);color:var(--lap);font:600 13px 'Noto Sans',sans-serif;cursor:pointer}
+.yrs{margin:10px 0 0;font-size:11px;color:var(--mut);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.upd{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 10px;border:1px solid var(--lap);border-radius:999px;background:var(--bg);color:var(--lap);font:600 11px 'Noto Sans',sans-serif;cursor:pointer}
 .upd:active{background:var(--lap);color:var(--bg)}
 .upd.busy svg{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .tin{max-width:1240px;margin:auto;display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
@@ -204,6 +205,10 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
 .dl li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .dl .nm{font-weight:600;overflow-wrap:anywhere}
 .dl .cpy{display:block;font-size:12px;color:var(--mut);opacity:.85}
+.dl .cpy.inl{display:inline;margin-inline-start:8px;font-weight:400}
+@media(min-width:900px){.top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-inline:clamp(24px,2.5vw,48px)}.top .tin{max-width:none;margin:0;flex:1 1 auto}.top .lgb{max-width:none;margin:0;flex:0 0 auto}body.cmp .top{align-items:center}body.cmp .top .lgb{margin-top:0}}
+@media(display-mode:standalone){:root{--sat:max(env(safe-area-inset-top,0px),12px)}}
+html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
 .dl .mt{display:block;font-size:13px;color:var(--mut)}
 .dl .del{min-height:40px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:none;color:var(--mut);cursor:pointer;font-size:13px}
 .dl .del.sure{border-color:var(--rub);color:var(--rub)}
@@ -227,14 +232,14 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw}
 .toast.on{opacity:1}
 @media(prefers-reduced-motion:reduce){.toast{transition:none}}
-@media(max-width:600px){.tin{flex-wrap:nowrap;align-items:flex-start;gap:10px}.syms button.md{font-size:34px}.top{padding-top:max(12px,env(safe-area-inset-top));padding-bottom:10px}h1{font-size:26px}h1 .tg{font-size:15px;margin-top:3px}.top .sub{font-size:13px;line-height:1.4;margin-top:6px}.sub2,.credit{font-size:12px;margin-top:4px}.lgb{margin-top:10px}.syms button{min-height:40px;font-size:21px}.syms{gap:clamp(3px,1.2vw,5px)}.hw{font-size:20px}.qrow{flex-wrap:wrap}.qbox{flex-basis:100%}.lgb{gap:6px}.lgb button{width:42px;height:46px;border-radius:10px;gap:2px}.lgb button .s{font-size:19px}.lgb button .a{font-size:9px;letter-spacing:0}.lgb .lgn{font-size:11.5px;line-height:1.25}}
+@media(max-width:600px){.tin{flex-wrap:nowrap;align-items:flex-start;gap:10px}.syms button.md{font-size:34px}.top{padding-top:calc(14px + var(--sat));padding-bottom:10px}h1{font-size:26px}h1 .tg{font-size:15px;margin-top:3px}.top .sub{font-size:13px;line-height:1.4;margin-top:6px}.sub2,.credit{font-size:12px;margin-top:4px}.lgb{margin-top:10px}.syms button{min-height:40px;font-size:21px}.syms{gap:clamp(3px,1.2vw,5px)}.hw{font-size:20px}.qrow{flex-wrap:wrap}.qbox{flex-basis:100%}.lgb{gap:6px}.lgb button{width:42px;height:46px;border-radius:10px;gap:2px}.lgb button .s{font-size:19px}.lgb button .a{font-size:9px;letter-spacing:0}.lgb .lgn{font-size:11.5px;line-height:1.25}}
 </style>
 </head>
 <body>
 <header class="band top">
   <div class="tin">
     <div>
-      <div class="hrow"><select id="uil" class="uil" data-i18n-aria="uilang"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select><h1>LexEikôn <span class="tg" data-i18n="tagline"></span></h1></div>
+      <div class="hrow"><h1>LexEikôn <span class="tg" data-i18n="tagline"></span></h1><select id="uil" class="uil" data-i18n-aria="uilang"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select></div>
       <p class="sub" data-i18n="sub"></p>
       <p class="sub2" data-i18n="latnote"></p>
       <p class="credit" data-i18n="credit"></p>
@@ -292,7 +297,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9c
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.64 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.0 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
   </div>
 </footer>
 
@@ -613,7 +618,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','cos','ka','kac','grc','dil','gez','rai','la','hy','mis','cop'],BVER=14;
+const BUILTIN=['syr','cos','ka','kac','agwb','grc','dil','gez','rai','la','hy','mis','cop'],BVER=15;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -621,7 +626,7 @@ async function loadBuiltins(){
     const id='b-'+k;if(gone.includes(id)||dicts.some(d=>d.id===id&&d.v===BVER))continue;dicts=dicts.filter(d=>d.id!==id);
     try{setSync(I.loading);
       const d=await (await fetch('data/'+k+'.json',FRESH?{cache:'reload'}:{})).json();
-      d.demo=true;d.v=BVER;d.created=BUILTIN.includes(k)?BUILTIN.indexOf(k):6.5;dicts.push(d);dicts.sort((a,b)=>a.created-b.created);
+      d.demo=true;d.v=BVER;d.created=BUILTIN.includes(k)?BUILTIN.indexOf(k):7.5;dicts.push(d);dicts.sort((a,b)=>a.created-b.created);
       await idb.put(d);refresh();
     }catch(e){}
   }
@@ -756,7 +761,7 @@ function formatDef(raw,L,hw){
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
-const GLOSS={'b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
+const GLOSS={'b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-gez','b-dil','b-mis']);
 const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c]/g,'');
 
@@ -767,10 +772,11 @@ const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'A',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ع'}
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;(by[d.lang]=by[d.lang]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
 const INTERIM=new Set(['b-cos','b-ka','b-rai','b-mis']);
-const CPY={'b-cos':()=>'R. Costaz, Dictionnaire syriaque-français · © Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
+const INL=new Set(['b-agwb']);
+const CPY={'b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'R. Costaz, Dictionnaire syriaque-français · © Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 function renderLib(){
   const HIDE=new Set(['b-hy']);renderLgb();const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
-  $('#dl').innerHTML=vis.length?vis.map(d=>`<li><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><span><span class="nm">${esc(d.name)}</span><span class="mt">${d.lang==='mix'?'7 языков':esc((LANGS[d.lang]||LANGS.xx)[0])} · ${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}${INTERIM.has(d.id)?`<span class="cpy itm">⚠ ${esc(I.interim)}</span>`:''}</span></li>`).join(''):'';
+  $('#dl').innerHTML=vis.length?vis.map(d=>`<li><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><span><span class="nm">${esc(d.name)}</span>${INL.has(d.id)?`<span class="cpy inl">${esc(CPY[d.id]())}</span>`:''}<span class="mt">${d.lang==='mix'?'7 языков':esc((LANGS[d.lang]||LANGS.xx)[0])} · ${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]&&!INL.has(d.id)?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}${INTERIM.has(d.id)?`<span class="cpy itm">⚠ ${esc(I.interim)}</span>`:''}</span></li>`).join(''):'';
 }
 function refresh(){renderLib();renderChips();renderKb();search()}
 
@@ -933,8 +939,8 @@ function showLat(w){
 const FRESH=/[?&]fresh=/.test(location.search);
 async function hardUpdate(){
   const b=$('#upd');b.classList.add('busy');b.disabled=true;
-  try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}}catch(e){}
-  try{if(window.caches){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}}catch(e){}
+  try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations(),me=new URL('./',location.href).href;await Promise.all(rs.filter(r=>r.scope===me).map(r=>r.unregister()))}}catch(e){}
+  try{if(window.caches){const ks=await caches.keys();await Promise.all(ks.filter(k=>k.startsWith('lexeikon-v')).map(k=>caches.delete(k)))}}catch(e){}
   try{if(idb.db)idb.db.close()}catch(e){}
   try{await new Promise(res=>{const r=indexedDB.deleteDatabase('lexicon');r.onsuccess=r.onerror=r.onblocked=()=>res()})}catch(e){}
   try{Object.keys(localStorage).filter(k=>k.startsWith('lex_')).forEach(k=>localStorage.removeItem(k))}catch(e){}
