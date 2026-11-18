@@ -1,4 +1,4 @@
-const V='lx164-1';
+const V='lx164-2';
 const PRE=['./','index.html','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png',
  'data/syr.json','data/cos.json','data/ka.json','data/kac.json','data/dil.json','data/gez.json','data/rai.json','data/la.json','data/hy.json','data/mis.json','data/cop.json','data/latforms.json'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(PRE)).then(()=>self.skipWaiting()))});
