@@ -539,6 +539,23 @@ const TRS={
  cop:{sci:{n:'cop_sci',m:RTM.cop},simple:{n:'cop_simple',m:Object.assign({},RTM.cop,{'ϣ':'sh','ϧ':'kh','ϭ':'ky'})}}
 };
 let trCfg=Object.assign({syr:'sci',ka:'sci',hy:'hm',gez:'trad',grc:'sci',ar:'din',cop:'sci'},LS.get('trcfg',{}));
+function arTr(w,m){const V={'َ':'a','ِ':'i','ُ':'u'},T={'ً':'an','ٍ':'in','ٌ':'un'},SUN='تثدذرزسشصضطظلن';
+  const info=x=>({v:x.k.map(k=>V[k]).find(Boolean)||'',t:x.k.map(k=>T[k]).find(Boolean)||'',d:x.k.includes('ّ'),s:x.k.includes('ْ'),l:x.k.includes('ٰ')});
+  return String(w).normalize('NFC').split(/(\s+)/).map(wd=>{if(!wd.trim())return wd;
+    const a=[];for(const ch of wd.replace(/ـ/g,'')){if(/[ً-ْٰ]/.test(ch)&&a.length)a[a.length-1].k.push(ch);else a.push({c:ch,k:[]})}
+    let r='',i=0,pv='',skip=-1;const sk=a.map(x=>x.c).join('');
+    if(sk.startsWith('الله')){const h=info(a[3]);r='allāh'+h.v+h.t;pv=h.v;i=4}
+    else if(a.length>2&&a[0].c==='ا'&&a[1].c==='ل'&&!info(a[1]).v&&!info(a[1]).d){const n=a[2];if(SUN.includes(n.c)&&info(n).d){r='a'+(m[n.c]||n.c)+'-';skip=2}else r='al-';i=2}
+    for(;i<a.length;i++){const x=a[i],c=x.c,f=info(x),pt=i>0&&info(a[i-1]).t,lng=()=>{if(pv==='a')r=r.slice(0,-1);r+='ā';pv=''};
+      if(c==='آ'){r+='ʾā';pv='';continue}
+      if('أإؤئء'.includes(c)){r+='ʾ'+(f.v||(c==='إ'&&!f.t&&!f.s?'i':''))+f.t;pv=f.v||(c==='إ'&&!f.t&&!f.s?'i':'');continue}
+      if(c==='ا'){if(i===0){r+=f.v||f.t||'a';pv=f.v;continue}if(pt)continue;if(f.t){r+=f.t;pv='';continue}lng();continue}
+      if(c==='ى'){if(f.t){r+=f.t;pv='';continue}lng();continue}
+      if(c==='ة'){if(f.v||f.t)r+='t'+(f.v||f.t);else if(pv!=='a')r+='a';pv=f.v;continue}
+      if((c==='و'||c==='ي')&&!f.v&&!f.t&&!f.d&&!f.s&&pv===(c==='و'?'u':'i')){r=r.slice(0,-1)+(c==='و'?'ū':'ī');pv='';continue}
+      const t=m[c];if(t==null){r+=c;pv='';continue}
+      r+=(f.d&&i!==skip?t+t:t)+f.v+f.t+(f.l?'ā':'');pv=f.t||f.l?'':f.v}
+    return r}).join('')}
 function sciTr(w,L){
   const sysk=trCfg[L];if(!TRS[L]||!sysk||sysk==='off')return '';const sys=TRS[L][sysk];if(!sys)return '';
   let s=String(w);
@@ -561,10 +578,9 @@ function sciTr(w,L){
   if(L==='syr'){const SP={'ܒ':'ḇ','ܓ':'ḡ','ܕ':'ḏ','ܟ':'ḵ','ܦ':'p̄','ܬ':'ṯ'};let r='';const a=[...s.normalize('NFD')];
     for(let i=0;i<a.length;i++){const c=a[i];if(/\p{M}/u.test(c))continue;let j=i+1,rk=false;while(j<a.length&&/\p{M}/u.test(a[j])){if(a[j]==='\u0742')rk=true;j++}r+=rk&&SP[c]?SP[c]:(sys.m[c]??c)}
     return r}
-  if(L==='ar')s=s.normalize('NFD').replace(/\p{M}/gu,'');
+  if(L==='ar')return arTr(s,sys.m);
   if(L==='hy')s=s.toLowerCase().replace(/ու/g,'u');
   if(L==='cop')s=s.normalize('NFD').replace(/\p{M}/gu,'').toLowerCase();
-  if(L==='ar')s=s.replace(/(^|\s)ا/g,'$1a');
   return [...s].map(c=>sys.m[c]??c).join('');
 }
 const trTag=(w,L)=>{const t=sciTr(w,L);return t?`<span class="tr">${esc(t)}</span>`:''};
@@ -726,7 +742,7 @@ function renderSug(){
 }
 function sugMove(n){if($('#sug').hidden)return;const c=sugItems.length;sugIdx+=n;if(sugIdx>=c)sugIdx=-1;else if(sugIdx<-1)sugIdx=c-1;
   $('#sug').querySelectorAll('li').forEach((li,j)=>{li.classList.toggle('act',j===sugIdx);li.setAttribute('aria-selected',j===sugIdx)});const a=$('#sg'+sugIdx);if(a)a.scrollIntoView({block:'nearest'});$('#q').setAttribute('aria-activedescendant',sugIdx>=0?'sg'+sugIdx:'')}
-function sugPick(j){const it=sugItems[j];if(!it)return;$('#q').value=it.w;$('#clr').hidden=false;sugOff=true;sugHide();clearTimeout(tmr);search();$('#q').blur();cmpUpd()}
+function sugPick(j){const it=sugItems[j];if(!it)return;$('#q').value=it.w;$('#clr').hidden=false;sugOff=true;sugHide();if(!$('#kb').hidden){$('#kb').hidden=true;$('#kbB').setAttribute('aria-expanded','false')}clearTimeout(tmr);search();$('#q').blur();cmpUpd()}
 function nmap(t,fn){let K='';const S=[],E=[],R=/\P{M}\p{M}*/gsu;let m;while((m=R.exec(t))){const c=m[0],k=/^\s+$/.test(c)?' ':fn(c);for(let j=0;j<k.length;j++){S.push(m.index);E.push(m.index+c.length)}K+=k}return {K,S,E}}
 const hlw=x=>`<mark class="hl">${x}</mark>`;
 function hlHead(w,s,L){
@@ -766,7 +782,9 @@ function more(){
 }
 
 /* ---------- entry formatting ---------- */
-function formatDef(raw,L,hw,noRoot){
+function arForms(raw){return String(raw).split('\n').map(ln=>{let d=0,o='';const P=/[؀-ۿ]+(?:[ \t]+[؀-ۿ]+)*/g;let last=0,m;while((m=P.exec(ln))){const pre=ln.slice(last,m.index);for(const ch of pre){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}const b=ln.slice(0,m.index),skip=d>0||/\x02v\.\x03\s*$/.test(b)||/\bpost\s+$/.test(b)||/\bafter\s+$/.test(b);o+=pre+(skip?m[0]:''+m[0]+'');last=m.index+m[0].length}return o+ln.slice(last)}).join('\n')}
+function formatDef(raw,L,hw,noRoot){if(L!=='ar')return formatDef0(raw,L,hw,noRoot);return formatDef0(raw&&arForms(raw),L,hw,noRoot).replace(//g,'<b class="fm">').replace(//g,'</b>')}
+function formatDef0(raw,L,hw,noRoot){
   if(!raw)return '—';
   const lines=[];let src=String(raw);
   if(L==='ka'&&hw){const nl=src.indexOf('\n'),f=(nl<0?src:src.slice(0,nl)).replace(/[\x02-\x07]/g,'').trim(),k=x=>x.replace(/[()\-\s]/g,'');if(k(f)===k(hw))src=nl<0?'':src.slice(nl+1)}
