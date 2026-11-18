@@ -297,7 +297,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v1.65 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.0 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
   </div>
 </footer>
 
@@ -939,8 +939,8 @@ function showLat(w){
 const FRESH=/[?&]fresh=/.test(location.search);
 async function hardUpdate(){
   const b=$('#upd');b.classList.add('busy');b.disabled=true;
-  try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}}catch(e){}
-  try{if(window.caches){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}}catch(e){}
+  try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations(),me=new URL('./',location.href).href;await Promise.all(rs.filter(r=>r.scope===me).map(r=>r.unregister()))}}catch(e){}
+  try{if(window.caches){const ks=await caches.keys();await Promise.all(ks.filter(k=>k.startsWith('lexeikon-v')).map(k=>caches.delete(k)))}}catch(e){}
   try{if(idb.db)idb.db.close()}catch(e){}
   try{await new Promise(res=>{const r=indexedDB.deleteDatabase('lexicon');r.onsuccess=r.onerror=r.onblocked=()=>res()})}catch(e){}
   try{Object.keys(localStorage).filter(k=>k.startsWith('lex_')).forEach(k=>localStorage.removeItem(k))}catch(e){}
