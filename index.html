@@ -782,7 +782,7 @@ function more(){
 }
 
 /* ---------- entry formatting ---------- */
-function arForms(raw){return String(raw).split('\n').map(ln=>{let d=0,o='';const P=/[؀-ۿ]+(?:[ \t]+[؀-ۿ]+)*/g;let last=0,m;while((m=P.exec(ln))){const pre=ln.slice(last,m.index);for(const ch of pre){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}const b=ln.slice(0,m.index),skip=d>0||/\x02v\.\x03\s*$/.test(b)||/\bpost\s+$/.test(b)||/\bafter\s+$/.test(b);o+=pre+(skip?m[0]:''+m[0]+'');last=m.index+m[0].length}return o+ln.slice(last)}).join('\n')}
+function arForms(raw){const W='[\\u0600-\\u06FF]+(?:[ \\t]+[\\u0600-\\u06FF]+)*',R=new RegExp('^'+W+'(?:(?:\\s*,\\s*|\\s+\\x02(?:et|and)\\x03\\s+)'+W+')*');return String(raw).split('\n').map(ln=>ln.replace(R,m=>m.replace(new RegExp(W,'g'),'$&'))).join('\n')}
 function formatDef(raw,L,hw,noRoot){if(L!=='ar')return formatDef0(raw,L,hw,noRoot);return formatDef0(raw&&arForms(raw),L,hw,noRoot).replace(//g,'<b class="fm">').replace(//g,'</b>')}
 function formatDef0(raw,L,hw,noRoot){
   if(!raw)return '—';
