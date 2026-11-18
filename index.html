@@ -624,7 +624,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','cos','ka','kac','agwb','grc','dil','gez','rai','la','hy','mis','cop','che'],BVER=17;
+const BUILTIN=['syr','cos','ka','kac','agwb','grc','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=18;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -759,7 +759,7 @@ function formatDef(raw,L,hw,noRoot){
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
-const GLOSS={'b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
+const GLOSS={'b-kun':'de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-gez','b-dil','b-mis','b-che']);
 const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c]/g,'');
 
@@ -769,9 +769,9 @@ function renderChips(){}
 const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'A',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ع'};
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;(by[d.lang]=by[d.lang]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
-const INTERIM=new Set(['b-che','b-cos','b-ka','b-rai','b-mis']);
+const INTERIM=new Set(['b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
 const INL=new Set(['b-agwb']);
-const CPY={'b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–420','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'R. Costaz, Dictionnaire syriaque-français · © Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
+const CPY={'b-kun':()=>'© Künzle · OCR LexEikôn: p. 1–2','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–420','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'R. Costaz, Dictionnaire syriaque-français · © Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 function renderLib(){
   const HIDE=new Set(['b-hy']);renderLgb();const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
   $('#dl').innerHTML=vis.length?vis.map(d=>`<li><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><span><span class="nm">${esc(d.name)}</span>${INL.has(d.id)?`<span class="cpy inl">${esc(CPY[d.id]())}</span>`:''}<span class="mt">${d.lang==='mix'?'7 языков':esc((LANGS[d.lang]||LANGS.xx)[0])} · ${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]&&!INL.has(d.id)?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}${INTERIM.has(d.id)?`<span class="cpy itm">⚠ ${esc(I.interim)}</span>`:''}</span></li>`).join(''):'';
