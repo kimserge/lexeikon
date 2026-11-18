@@ -303,7 +303,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.4 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.5 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
   </div>
 </footer>
 
@@ -624,7 +624,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','cos','ka','kac','agwb','grc','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=19;
+const BUILTIN=['syr','cos','ka','kac','agwb','grc','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=20;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -685,7 +685,7 @@ function markHits(html){
   const ok=w=>{const n=norm(w);return mode==='ex'?n===qd:mode==='in'?n.includes(qd):n.startsWith(qd)};
   return html.split(/(<[^>]+>)/).map(t=>t.startsWith('<')?t:t.replace(/[\p{L}\p{M}]+/gu,w=>ok(w)?`<mark class="hl">${w}</mark>`:w)).join('');
 }
-const trOf=e=>(e[3]&&e[3][UIL])||null,trBtn=()=>{const a='Lat',b=UIL[0].toUpperCase()+UIL.slice(1);return `<button class="trb" type="button" aria-label="${a} / ${b}"><span class="a">${a}</span>/<span class="b">${b}</span></button>`};
+const trLang=e=>{const t=e[3];return !t?null:t[UIL]?UIL:t.en?'en':null},trOf=e=>{const l=trLang(e);return l?e[3][l]:null},trBtn=e=>{const l=trLang(e),a='Lat',b=l[0].toUpperCase()+l.slice(1);return `<button class="trb" type="button" aria-label="${a} / ${b}"><span class="a">${a}</span>/<span class="b">${b}</span></button>`};
 function defHtml(d,e,l){
   const base=x=>LATDEF.has(d.id)?linkLat(x):x,la=base(formatDef(e[1],l,e[0])),r=trOf(e);if(!r)return la;
   const a=e[1].split('\n'),b=r.split('\n');
@@ -697,7 +697,7 @@ function more(){
   const part=results.slice(shown,shown+PAGE);shown+=part.length;
   $('#res').insertAdjacentHTML('beforeend',part.map(([s,_,d,i])=>{const e=d.entries[i],l=elang(d,i);
     let sep='';if(s===3&&!inbHead){inbHead=true;sep=`<li class="sep">${I.inbody} · ${results.filter(r=>r[0]===3).length.toLocaleString(UIL)}</li>`}
-    return sep+`<li class="${s===3?'inb':''}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hl"><span class="hw" dir="auto">${s<3?`<mark class="hl">${esc(e[0])}</mark>`:esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn():''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}).join(''));
+    return sep+`<li class="${s===3?'inb':''}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hl"><span class="hw" dir="auto">${s<3?`<mark class="hl">${esc(e[0])}</mark>`:esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn(e):''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}).join(''));
   $('#more').hidden=shown>=results.length;
   requestAnimationFrame(()=>{for(const h of $('#res').querySelectorAll('.hit:not([data-m])')){h.dataset.m=1;const d=h.querySelector('.def');if(d.scrollHeight>d.getBoundingClientRect().height*0+(d.querySelector('.tv')?18:7.6)*parseFloat(getComputedStyle(d).fontSize)+4)h.classList.add('long')}});
 }
