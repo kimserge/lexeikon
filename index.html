@@ -132,9 +132,9 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
 .res li.inb{background:var(--card);border-radius:12px;border-bottom:0;margin:6px 0;padding:0 12px}
 span.mo{color:light-dark(#7d828b,#8f959f)}
 li.sep{border:0;margin:22px 0 4px;font:600 14px 'Noto Sans',sans-serif;color:color-mix(in srgb,var(--rub) 70%,var(--bg));letter-spacing:.01em}
-mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#f9cfdc,#6e2f45);border-radius:2px}
+mark.hl{background:light-dark(#ffe45c,#8a7200);color:inherit;border-radius:2px}
 .hit{padding:14px 2px}
-.hd{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}.hl{flex:1 1 auto;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 4px}.hl .hw{min-width:0;overflow-wrap:anywhere}.hb{flex:none;display:inline-flex;align-items:center;gap:2px;margin-inline-start:auto;min-height:29px}
+.hd{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}.hlf{flex:1 1 auto;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 4px}.hlf .hw{min-width:0;overflow-wrap:anywhere}.hb{flex:none;display:inline-flex;align-items:center;gap:2px;margin-inline-start:auto;min-height:29px}
 :root{--trg:light-dark(#2e7d4f,#86d6a2)}
 .tv{display:none}body[data-trm=la] .tla,body[data-trm=ru] .tru,body[data-trm=both] .tbo{display:block}
 .pla+.pru{margin-top:3px}.pru{color:var(--trg);margin-inline-start:1.25em;padding-inline-end:10px;border-inline-end:2px solid var(--trg);margin-bottom:8px}
@@ -303,7 +303,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.5 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.6 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
   </div>
 </footer>
 
@@ -655,7 +655,7 @@ function search(){
   const lat=!re&&isLatinQ(q),RX={};
   if(lat)for(const L in CL)RX[L]=buildRx(q,L);
   const qv=lat&&/[aeiouə]/.test(prep(q));
-  const qh=norm(q),qd=words(qh).trim();HL={qd,mode};inbHead=false;
+  const qh=norm(q),qd=words(qh).trim();HL={qd,qh,mode,re,lat,rx:RX};inbHead=false;
   for(const d of act){
     keys(d);const E=d.entries;
     for(let i=0;i<E.length;i++){
@@ -679,11 +679,27 @@ function search(){
   $('#stat').textContent=results.length?I.found+results.length.toLocaleString(UIL):I.none;
   $('#res').innerHTML='';more();
 }
-let HL={qd:'',mode:'pre'},inbHead=false;
+let HL={qd:'',qh:'',mode:'pre',re:null,lat:false,rx:{}},inbHead=false;
+function nmap(t,fn){let K='';const S=[],E=[],R=/\P{M}\p{M}*/gsu;let m;while((m=R.exec(t))){const c=m[0],k=/^\s+$/.test(c)?' ':fn(c);for(let j=0;j<k.length;j++){S.push(m.index);E.push(m.index+c.length)}K+=k}return {K,S,E}}
+const hlw=x=>`<mark class="hl">${x}</mark>`;
+function hlHead(w,s,L){
+  const {re,lat,rx,qh}=HL;let a=-1,b=-1;
+  if(re){const m=re.exec(w);if(m&&m[0]){a=m.index;b=a+m[0].length}}
+  else{const R=lat&&rx[L];
+    if(R&&R.ok){const sem=CL[L].sem,{K,S,E}=nmap(w,c=>sem?semKey(c,L):norm(c)),m=(s===0?R.ex:s===1?R.pre:R.in).exec(K);if(m&&m[0]){a=S[m.index];b=E[m.index+m[0].length-1]}}
+    else if(qh){const {K,S,E}=nmap(w,norm),i=s===2?K.indexOf(qh):K.startsWith(qh)?0:-1;if(i>=0){a=S[i];b=E[i+qh.length-1]}}}
+  return a<0?hlw(esc(w)):esc(w.slice(0,a))+hlw(esc(w.slice(a,b)))+esc(w.slice(b));
+}
+function markText(t){
+  const {qd,mode,re}=HL;
+  if(re){const g=new RegExp(re.source,'giu');return t.replace(g,m=>m?hlw(m):m)}
+  const {K,S,E}=nmap(t,norm),isL=c=>!!c&&/[\p{L}\p{N}]/u.test(c);let out='',last=0,from=0,i;
+  while((i=K.indexOf(qd,from))>=0){const p=K[i-1],n=K[i+qd.length];if((mode!=='in'&&isL(p))||(mode==='ex'&&isL(n))){from=i+1;continue}const a=S[i],b=E[i+qd.length-1];out+=t.slice(last,a)+hlw(t.slice(a,b));last=b;from=i+qd.length}
+  return out+t.slice(last);
+}
 function markHits(html){
-  const {qd,mode}=HL;if(!qd||qd.includes(' '))return html;
-  const ok=w=>{const n=norm(w);return mode==='ex'?n===qd:mode==='in'?n.includes(qd):n.startsWith(qd)};
-  return html.split(/(<[^>]+>)/).map(t=>t.startsWith('<')?t:t.replace(/[\p{L}\p{M}]+/gu,w=>ok(w)?`<mark class="hl">${w}</mark>`:w)).join('');
+  if(!HL.qd&&!HL.re)return html;
+  return html.split(/(<[^>]+>|&(?:#\d+|\w+);)/).map((t,i)=>i%2?t:markText(t)).join('');
 }
 const trLang=e=>{const t=e[3];return !t?null:t[UIL]?UIL:t.en?'en':null},trOf=e=>{const l=trLang(e);return l?e[3][l]:null},trBtn=e=>{const l=trLang(e),a='Lat',b=l[0].toUpperCase()+l.slice(1);return `<button class="trb" type="button" aria-label="${a} / ${b}"><span class="a">${a}</span>/<span class="b">${b}</span></button>`};
 function defHtml(d,e,l){
@@ -697,7 +713,7 @@ function more(){
   const part=results.slice(shown,shown+PAGE);shown+=part.length;
   $('#res').insertAdjacentHTML('beforeend',part.map(([s,_,d,i])=>{const e=d.entries[i],l=elang(d,i);
     let sep='';if(s===3&&!inbHead){inbHead=true;sep=`<li class="sep">${I.inbody} · ${results.filter(r=>r[0]===3).length.toLocaleString(UIL)}</li>`}
-    return sep+`<li class="${s===3?'inb':''}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hl"><span class="hw" dir="auto">${s<3?`<mark class="hl">${esc(e[0])}</mark>`:esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn(e):''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}).join(''));
+    return sep+`<li class="${s===3?'inb':''}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hlf"><span class="hw" dir="auto">${s<3?hlHead(e[0],s,l):esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn(e):''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}).join(''));
   $('#more').hidden=shown>=results.length;
   requestAnimationFrame(()=>{for(const h of $('#res').querySelectorAll('.hit:not([data-m])')){h.dataset.m=1;const d=h.querySelector('.def');if(d.scrollHeight>d.getBoundingClientRect().height*0+(d.querySelector('.tv')?18:7.6)*parseFloat(getComputedStyle(d).fontSize)+4)h.classList.add('long')}});
 }
