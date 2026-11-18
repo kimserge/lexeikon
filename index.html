@@ -36,7 +36,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Noto Sans',s
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .top{background:var(--band);color:var(--bandink);padding-bottom:18px;padding-top:calc(clamp(22px,4vw,48px) + var(--sat))}
 .hrow{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-.tgrow{display:flex;align-items:center;gap:10px}
 .uil{font:600 14px 'Noto Sans',sans-serif;min-height:40px;padding:0 6px;border-radius:10px;border:1px solid rgb(255 255 255/.5);background:rgb(255 255 255/.12);color:var(--bandink);flex:0 0 auto;cursor:pointer}
 .uil option{color:#17191e}
 .hdr{position:sticky;top:0;z-index:8;transform:translateY(var(--vvo,0px))}
@@ -255,7 +254,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
 <header class="band top">
   <div class="tin">
     <div>
-      <div class="hrow"><h1>LexEikôn</h1><div class="tgrow"><select id="uil" class="uil" data-i18n-aria="uilang"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select><span class="tg" data-i18n="tagline"></span></div></div>
+      <div class="hrow"><select id="uil" class="uil" data-i18n-aria="uilang"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select><h1>LexEikôn</h1><span class="tg" data-i18n="tagline"></span></div>
     </div>
   </div>
   <div class="lgb" id="lgb" role="group" data-i18n-aria="langgrp"></div>
