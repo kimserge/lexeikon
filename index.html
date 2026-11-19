@@ -1171,6 +1171,9 @@ async function hardUpdate(){
 $('#upd').addEventListener('click',hardUpdate);
 /* ---------- events ---------- */
 $('#q').addEventListener('input',debounced);
+document.addEventListener('keydown',e=>{if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.isComposing||[...e.key].length!==1||/\s/.test(e.key))return;
+  const t=e.target;if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
+  const q=$('#q');e.preventDefault();q.focus({preventScroll:true});q.value=e.key;q.setSelectionRange(q.value.length,q.value.length);$('#clr').hidden=false;q.dispatchEvent(new Event('input',{bubbles:true}))});
 $('#clr').addEventListener('click',()=>{$('#q').value='';$('#clr').hidden=true;search();window.scrollTo({top:0,behavior:'instant'});$('#q').focus({preventScroll:true})});
 $('#q').addEventListener('keydown',e=>{
   if(e.key==='ArrowDown'&&$('#sug').hidden&&$('#q').value.trim()){sugOff=false;renderSug();return}
