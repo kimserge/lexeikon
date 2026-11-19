@@ -215,7 +215,8 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
  #lnav button:hover,#lnav button:focus-visible{background:var(--lap);color:var(--bg)}
  #lnav button b{font-weight:600}#lnav button span{color:inherit;opacity:.75;font-weight:400}
  #lnav .lh{font:600 11px/1.25 'Noto Sans',sans-serif;color:color-mix(in srgb,var(--rub) 70%,var(--bg));margin:6px 2px 0}
- #lnav .up{justify-content:center;margin-top:6px}}
+ #lnav .up{justify-content:flex-start;margin-top:6px}}
+@media(min-width:900px){aside.lib{position:sticky;top:var(--lnt,200px);align-self:start;max-height:calc(100vh - var(--lnt,200px) - 12px);overflow:auto;overscroll-behavior:contain}}
 .lib h2{font:700 24px/1.2 'Noto Serif',serif;margin:0;display:inline}
 .lib .set>summary{font-weight:600;min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer}
 .trl{border-top:1px solid var(--line);padding:4px 0}
@@ -1155,7 +1156,7 @@ $('#q').addEventListener('blur',()=>setTimeout(cmpUpd,160));
 $('#scope').addEventListener('change',search);
 $('#mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;mode=b.dataset.m;$('#mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));search()});
 $('#more').addEventListener('click',more);
-$('#lnav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)lnavGo(b.dataset.g)});addEventListener('resize',lnavPos);addEventListener('scroll',()=>{if(document.body.classList.contains('lnv'))lnavPos()},{passive:true});
+$('#lnav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)lnavGo(b.dataset.g)});addEventListener('resize',lnavPos);addEventListener('scroll',lnavPos,{passive:true});lnavPos();
 document.body.dataset.trm=LS.get('trm','la');
 $('#res').addEventListener('click',async e=>{
   if(e.target.closest('.trb')){const o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset.trm)+1)%3];document.body.dataset.trm=m;LS.set('trm',m);return}
