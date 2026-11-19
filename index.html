@@ -829,7 +829,7 @@ function markHits(html){
   return html.split(/(<[^>]+>|&(?:#\d+|\w+);)/).map((t,i)=>i%2?t:markText(t)).join('');
 }
 const trLang=e=>{const t=e[3];return !t?null:t.pair?'de':t[UIL]?UIL:t.en?'en':null},trOf=e=>{const l=trLang(e);return l?e[3][l]:null},trBtn=e=>{const l=trLang(e),p=e[3].pair,a=p?p[0]:'Lat',b=p?p[1]:l[0].toUpperCase()+l.slice(1);return `<button class="trb" type="button" aria-label="${a} / ${b}"><span class="a">${a}</span>/<span class="b">${b}</span></button>`};
-function defHtml(d,e,l){const h=defHtml0(d,e,l);return h.includes('↗')?linkXr(h,d):h}
+function defHtml(d,e,l){if(!JSON.stringify(e).includes('↗'))return defHtml0(d,e,l);const t=e[3]&&typeof e[3]==='object'?Object.fromEntries(Object.entries(e[3]).map(([k,v])=>[k,typeof v==='string'?markXr(v):v])):e[3];return linkXr(defHtml0(d,[e[0],markXr(e[1]),e[2],t],l),d)}
 function defHtml0(d,e,l){
   if(e[3]&&e[3].pair){const f=x=>formatDef(x,l,e[0]).replace(/\uE002/g,'<span class="dege">').replace(/\uE003/g,'</span>');return `<div class="tv tla">${f(e[1])}</div><div class="tv tru">${f(e[3].de)}</div><div class="tv tbo">${f(e[3].bo)}</div>`}
   const base=x=>LATDEF.has(d.id)?linkLat(x):x,la=base(formatDef(e[1],l,e[0])),r=trOf(e);if(!r)return la;
@@ -1122,14 +1122,14 @@ function showLat(w){
 }
 
 /* ---------- cross-references (↗) ---------- */
-const XA='Ա-Ֆա-և',XW=new RegExp(`[\\d.]*[${XA}][${XA}\\-]*`,'gu');
-function linkXr(html,d){
-  const mk=w=>{const k=w.replace(/^[\d.]+/,'');return `${encodeURIComponent(k)}${w}`};
-  return html.split(/(<[^>]+>)/).map(t=>{if(t.startsWith('<')||!t.includes('↗'))return t;
-    t=t.replace(new RegExp(`([\\d.]*[${XA}][${XA}\\-]*)(?=[,;.]?\\s*↗)`,'gu'),mk);
-    t=t.replace(new RegExp(`↗((?:\\s*(?:[^]*|[\\d.]*[${XA}][${XA}\\-]*)[,;]?)+)`,'gu'),(m,l)=>'↗'+l.replace(/[^]*|[\d.]*[Ա-Ֆա-և][Ա-Ֆա-և\-]*/gu,w=>w[0]===''?w:mk(w)));
-    return t.replace(/([^]*)([^]*)/g,(m,k,w)=>`<span class="xr" data-x="${esc(decodeURIComponent(k))}" data-d="${d.id}">${w}</span>`)}).join('');
-}
+const XA='Ա-Ֆա-և',XWS=`-?[\\d.]*[${XA}][${XA}\\-]*`;
+const XB=new RegExp(`(${XWS})(?=[,;.]?\\s*↗(?![\\s\\x02-\\x07\\u2060]*[\\d.]*[${XA}]))`,'gu'),XL=new RegExp(`↗((?:[\\s\\x02-\\x07\\x0b\\x0c\\u2060]*(?:${XWS})(?:\\s*\\([^()\\n]*\\))?\\s*[,;/]?)+)`,'gu'),XW1=new RegExp(XWS,'gu');
+function markXr(raw){if(!raw||!raw.includes('↗'))return raw;
+  const mk=w=>''+w+'';
+  return raw.split('\n').map(l=>{if(!l.includes('↗'))return l;
+    l=l.replace(XB,mk);
+    return l.replace(XL,(m,li)=>'↗'+li.replace(/\([^()\n]*\)/g,x=>''+encodeURIComponent(x)+'').replace(new RegExp(`\\uE020[^\\uE021]*\\uE021|${XWS}`,'gu'),w=>w[0]===''?w:mk(w)).replace(/([^]*)/g,(x,y)=>decodeURIComponent(y)))}).join('\n')}
+function linkXr(html,d){return html.replace(/((?:[^<]|<[^>]*>)*)/g,(m,w)=>{const t=w.replace(/<[^>]*>/g,'').replace(/^-?[\d.]+/,'');return `<span class="xr" data-x="${esc(t)}" data-d="${d.id}">${w}</span>`})}
 function xrFind(w,did){const n=x=>norm(String(x).replace(/^[\d.]+/,'').replace(/[-‐()]/g,'')),k=n(w);
   const hit=d=>d.entries.map((e,i)=>i).filter(i=>n(d.entries[i][0])===k).map(i=>[d,i]);
   const d0=dicts.find(x=>x.id===did);let r=d0?hit(d0):[];
