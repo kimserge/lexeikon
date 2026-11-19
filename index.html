@@ -208,6 +208,9 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .empty{padding:28px 0;color:var(--mut);max-width:60ch}
 .empty b{color:var(--ink)}
 #more{margin-top:14px}
+.jmp{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;display:flex;flex-direction:column;gap:8px}.jmp[hidden]{display:none}
+.jmp button{all:unset;cursor:pointer;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:var(--bg);color:var(--lap);border:1px solid var(--line);box-shadow:0 4px 12px rgb(0 0 0/.15);font:800 19px/1 'Noto Sans',sans-serif}
+.jmp button:hover,.jmp button:focus-visible{background:var(--lap);color:var(--bg)}
 #lnav{display:none}
 html{scrollbar-gutter:stable}
 @media(min-width:1000px){.wrap{padding-left:max(5vw,118px)}.qin{margin-left:calc(max(5vw,118px) - max(5vw,16px))}
@@ -350,6 +353,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
 </footer>
 
 <div id="ov" class="ov" hidden><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dt" id="dlg"></div></div>
+<div id="jmp" class="jmp" hidden><button type="button" data-j="top" aria-label="↑" title="↑">↑</button><button type="button" data-j="end" aria-label="↓" title="↓">↓</button></div>
 <div id="pop" class="pop" role="dialog" data-i18n-aria="poptitle" hidden></div>
 <div id="toast" class="toast" role="status"></div>
 
@@ -733,7 +737,7 @@ function search(){
   const total=act.reduce((n,d)=>n+d.entries.length,0);
   results=[];shown=0;
   if(!q.trim()){
-    $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();results=[];GF=new Map();lnavRender();
+    $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();results=[];GF=new Map();lnavRender();$('#jmp').hidden=true;
     $('#res').insertAdjacentHTML('beforeend',`<li class="empty">${dicts.length?I.empty(total.toLocaleString(UIL),act.length,dicts.length):I.loading}</li>`);
     return;
   }
@@ -768,7 +772,7 @@ function search(){
    results=results.map((r,k)=>[r,k]).sort((a,b)=>sec(a[0])-sec(b[0])||first.get(gk(a[0]))-first.get(gk(b[0]))||a[1]-b[1]).map(x=>x[0])}
   $('#stat').textContent=results.length?I.found+results.length.toLocaleString(UIL):I.none;
   GF=new Map();results.forEach((r,k)=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);if(!GF.has(g))GF.set(g,k)});
-  $('#res').innerHTML='';more();renderSug();lnavRender();
+  $('#res').innerHTML='';more();renderSug();lnavRender();requestAnimationFrame(jmpUpd);
 }
 let GF=new Map();
 function lnavRender(){
@@ -1156,6 +1160,13 @@ function libSync(force){
   const a=$('aside.lib'),li=$('#dl').querySelector(`li.dlg[data-lg="${L}"]`);if(!li)return;
   a.scrollTo({top:li.getBoundingClientRect().top-a.getBoundingClientRect().top+a.scrollTop-8,behavior:force?'instant':'smooth'});
 }
+
+/* ---------- jump to start / end of results ---------- */
+function jmpUpd(){const j=$('#jmp');j.hidden=!results.length||document.documentElement.scrollHeight<=innerHeight+40}
+$('#jmp').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if(!b)return;
+  if(b.dataset.j==='top'){scrollTo({top:0,behavior:'smooth'});return}
+  while(shown<results.length)more();requestAnimationFrame(()=>{const l=$('#res').lastElementChild;(l||$('#res')).scrollIntoView({block:'end',behavior:'smooth'})})});
+addEventListener('resize',jmpUpd);
 
 /* ---------- update to latest version ---------- */
 const FRESH=/[?&]fresh=/.test(location.search);
