@@ -19,7 +19,7 @@ async function init(db) {
       created TEXT NOT NULL, updated TEXT NOT NULL)`),
   ]);
   for (const q of ['ALTER TABLE users ADD COLUMN sig TEXT', 'ALTER TABLE projects ADD COLUMN la TEXT', 'ALTER TABLE projects ADD COLUMN lb TEXT', 'ALTER TABLE projects ADD COLUMN sig TEXT',
-    'ALTER TABLE projects ADD COLUMN status TEXT', 'ALTER TABLE projects ADD COLUMN accepted TEXT', 'ALTER TABLE projects ADD COLUMN anote TEXT', 'ALTER TABLE projects ADD COLUMN deleted TEXT'])
+    'ALTER TABLE projects ADD COLUMN status TEXT', 'ALTER TABLE projects ADD COLUMN accepted TEXT', 'ALTER TABLE projects ADD COLUMN anote TEXT', 'ALTER TABLE projects ADD COLUMN deleted TEXT', 'ALTER TABLE projects ADD COLUMN pubs INTEGER'])
     try { await db.prepare(q).run(); } catch (e) { /* column exists */ }
   ready = true;
 }
@@ -39,6 +39,8 @@ async function pbkdf2(pass, salt) {
 }
 const slugify = (s) => s.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'dict';
 const clean = (s, n = 2000) => String(s ?? '').replace(/[\u0000-\u0008\u000b-\u001f]/g, '').trim().slice(0, n);
+// dictionary version: 1.0 at the first submission, then 1.01, 1.02, …
+const verOf = (n) => { if (!n) return ''; n -= 1; const a = 1 + Math.floor(n / 100), b = n % 100; return b ? a + '.' + String(b).padStart(2, '0') : a + '.0'; };
 const LANGS = ['syr', 'gez', 'ka', 'grc', 'la', 'hy', 'ar', 'cop'];
 const side = (x) => ({ f: clean(x && x.f, 200), l: clean(x && x.l, 200), s: clean(x && x.s, 500), t: clean(x && x.t, 500) });
 // card: {a:{f,l,s,t}, b:[{f,l,s,t}] (≤3)}; older cards {gf,gl,ar:[{f,r,t}],ref} are converted
@@ -64,7 +66,7 @@ function toDict(user, p, cards) {
     if (d.a.f) E.push([d.a.f, [ownLine(d.a), ...d.b.filter((x) => x.f).map(otherLine)].filter(Boolean).join('\n'), la]);
     for (const x of d.b) if (x.f) E.push([x.f, [ownLine(x), d.a.f ? otherLine(d.a) : ''].filter(Boolean).join('\n'), lb]);
   }
-  return { id: 'u-' + user.nick + '-' + p.slug, name: p.name, sig: p.sig || '', author: user.sig || user.nick, la, lb, tl: p.tl, note: p.note || '', updated: p.updated, lang: la,
+  return { id: 'u-' + user.nick + '-' + p.slug, name: p.name, sig: p.sig || '', ver: verOf(p.pubs), author: user.sig || user.nick, la, lb, tl: p.tl, note: p.note || '', updated: p.updated, lang: la,
     entries: E, cards: cards.map((c) => cardData(JSON.parse(c.data))) };
 }
 async function gh(env, path, opt = {}) {
@@ -192,7 +194,7 @@ export default {
         if (request.method === 'POST' && P[3] === 'accept') {
           const file = 'data/u/' + dict.id + '.json';
           await pushFile(env, file, JSON.stringify(dict) + '\n', `accept: ${owner.nick}/${p.slug} (${cards.length} cards)`, 'main');
-          await setIndex(env, dict.id, { id: dict.id, file: dict.id + '.json', name: dict.name, sig: dict.sig, author: dict.author, la: dict.la, lb: dict.lb, tl: dict.tl, n: dict.entries.length, accepted: t }, 'index: + ' + dict.id);
+          await setIndex(env, dict.id, { id: dict.id, file: dict.id + '.json', name: dict.name, sig: dict.sig, ver: dict.ver, author: dict.author, la: dict.la, lb: dict.lb, tl: dict.tl, n: dict.entries.length, accepted: t }, 'index: + ' + dict.id);
           await db.prepare("UPDATE projects SET status='accepted', accepted=?1, anote=?2 WHERE id=?3").bind(t, note, p.id).run();
           await mail(env, owner.email, 'LexEikôn: ' + p.name, msg(owner, 'acc', p.name, note));
           return reply({ ok: true, status: 'accepted', accepted: t });
@@ -255,12 +257,13 @@ export default {
         if (P[2] === 'publish' && request.method === 'POST') {
           const cards = (await db.prepare('SELECT * FROM cards WHERE project_id=?1 ORDER BY id').bind(p.id).all()).results;
           const file = 'contrib/' + user.nick + '/' + p.slug + '.json', t = now();
-          const link = await pushFile(env, file, JSON.stringify(toDict(user, { ...p, updated: t }, cards), null, 1) + '\n', `contrib: ${user.nick}/${p.slug} (${cards.length} cards)`);
-          await db.prepare("UPDATE projects SET pushed=?1, status='pending' WHERE id=?2").bind(t, p.id).run();
-          const txt = `«${p.name}» (${cards.length}) → ${link}`;
-          const sent = await mail(env, user.email, 'LexEikôn: ' + p.name, msg(user, 'sub', p.name));
+          const pubs = (p.pubs || 0) + 1, ver = verOf(pubs);
+          const link = await pushFile(env, file, JSON.stringify(toDict(user, { ...p, updated: t, pubs }, cards), null, 1) + '\n', `contrib: ${user.nick}/${p.slug} v${ver} (${cards.length} cards)`);
+          await db.prepare("UPDATE projects SET pushed=?1, status='pending', pubs=?2 WHERE id=?3").bind(t, pubs, p.id).run();
+          const txt = `«${p.name}» v${ver} (${cards.length}) → ${link}`;
+          const sent = await mail(env, user.email, 'LexEikôn: ' + p.name, msg(user, 'sub', p.name + ' v' + ver));
           await mail(env, await adminMail(env), 'LexEikôn: ' + (user.sig || user.nick) + ' — ' + p.name + ' (' + cards.length + ')', txt + '\n\nhttps://kimserge.github.io/lexeikon/admin.html');
-          return reply({ ok: true, link, pushed: t, mailed: sent });
+          return reply({ ok: true, link, pushed: t, mailed: sent, pubs, ver });
         }
       }
       // all own dictionaries (for the main app)
