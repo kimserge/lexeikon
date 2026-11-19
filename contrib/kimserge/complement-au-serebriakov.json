@@ -1,0 +1,35 @@
+{
+ "id": "u-kimserge-complement-au-serebriakov",
+ "name": "Complément au Serebriakov",
+ "author": "kimserge",
+ "tl": "fr",
+ "note": "",
+ "updated": "2026-11-19T14:43:57.452Z",
+ "lang": "grc",
+ "entries": [
+  [
+   "εχομεν",
+   "→ ἔχω\nأَمِيرُ المُؤْمِنِينَ (\u0002rad.\u0003 أَمَرَ) — fidelium princeps, titulus Chalifarum\n\u000bCheikho p. 485\f",
+   "grc"
+  ],
+  [
+   "أَمِيرُ المُؤْمِنِينَ",
+   "εχομεν (→ ἔχω)\n\u0002rad.\u0003 أَمَرَ\nfidelium princeps, titulus Chalifarum\n\u000bCheikho p. 485\f",
+   "ar"
+  ]
+ ],
+ "cards": [
+  {
+   "gf": "εχομεν",
+   "gl": "ἔχω",
+   "ar": [
+    {
+     "f": "أَمِيرُ المُؤْمِنِينَ",
+     "r": "أَمَرَ",
+     "t": "fidelium princeps, titulus Chalifarum"
+    }
+   ],
+   "ref": "Cheikho p. 485"
+  }
+ ]
+}
