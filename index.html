@@ -218,7 +218,14 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
  #lnav .up{justify-content:center;margin-top:6px}}
 .lib h2{font:700 24px/1.2 'Noto Serif',serif;margin:0;display:inline}
 .lib .set>summary{font-weight:600;min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer}
-.trl{border-top:1px solid var(--line);padding:10px 0}
+.trl{border-top:1px solid var(--line);padding:4px 0}
+.trl>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:42px;padding:4px 8px;border-radius:8px;flex-wrap:wrap}
+.trl>summary .tn{font-weight:600}.trl>summary .note{margin:0;font-size:13px}
+.trl>summary::-webkit-details-marker,.libd>summary::-webkit-details-marker,.set>summary::-webkit-details-marker{display:none}
+.trl>summary::after,.libd>summary::after,.lib .set>summary::after{content:'';flex:none;width:8px;height:8px;margin-left:auto;border-right:2px solid var(--lap);border-bottom:2px solid var(--lap);transform:rotate(-45deg);transition:transform .2s}
+.trl[open]>summary::after,.libd[open]>summary::after,.lib .set[open]>summary::after{transform:rotate(45deg)}
+.trl>summary:hover,.lib .set>summary:hover{background:color-mix(in srgb,var(--lap) 8%,var(--bg))}
+.trl[open]>summary{margin-bottom:6px}
 .trh{display:grid;gap:4px;font-weight:600}
 .trh select{font:15px 'Noto Sans',sans-serif;min-height:42px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);max-width:100%}
 .trt{margin-top:8px}
@@ -228,7 +235,10 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .trt .lg{margin:8px 0 2px;font-size:13px;color:var(--mut);font-weight:600}
 #setD{margin-top:18px}
 .lib .set{border-top:1px solid var(--line);padding-top:4px;margin-top:6px}
-.libd>summary{cursor:pointer;min-height:44px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.libd>summary{list-style:none;cursor:pointer;min-height:52px;display:flex;gap:12px;align-items:center;flex-wrap:nowrap;padding:4px 16px;border:1px solid var(--line);border-radius:12px;background:var(--bg);box-shadow:0 1px 2px rgb(0 0 0/.08);transition:box-shadow .15s,border-color .15s,background .15s}
+.libd>summary h2{margin:0}.libd>summary::after{width:11px;height:11px;border-width:0 3px 3px 0}
+.libd>summary:hover,.libd>summary:focus-visible{border-color:var(--lap);background:color-mix(in srgb,var(--lap) 6%,var(--bg));box-shadow:0 4px 12px rgb(0 0 0/.16)}
+.libd[open]>summary{margin-bottom:10px}
 .drop{border:2px dashed var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;justify-items:start;color:var(--mut);font-size:14px}
 .drop.over{border-color:var(--lap);background:var(--card)}
 .dl{list-style:none;padding:0;margin:16px 0}
@@ -628,7 +638,8 @@ function trTable(L){
   return `<div class="sch">${Object.entries(sys.m).map(([c,v])=>`<span><b>${esc(c)}</b> ${esc(v)}${keysFor(L,c)}</span>`).join('')}</div>`+(L==='hy'?'<p class="note">ու → u</p>':'')+(L==='syr'?'<p class="note">'+I.syrsp+'</p>':'')+(L==='grc'?'<p class="note">'+I.grcn+'</p>':'');
 }
 function renderTrSec(){
-  $('#trsec').innerHTML=Object.keys(TRS).map(L=>`<div class="trl"><label class="trh"><span>${LANGS[L][0]}</span><select data-tl="${L}">${Object.entries(TRS[L]).map(([k,v])=>`<option value="${k}" ${trCfg[L]===k?'selected':''}>${esc(I.sys[v.n]||v.n)}</option>`).join('')}<option value="off" ${trCfg[L]==='off'?'selected':''}>${I.off}</option></select></label><div class="trt">${trTable(L)}</div></div>`).join('');
+  const op=new Set([...document.querySelectorAll('#trsec details[open]')].map(d=>d.dataset.l));
+  $('#trsec').innerHTML=Object.keys(TRS).map(L=>{const cur=trCfg[L]==='off'?I.off:(I.sys[(TRS[L][trCfg[L]]||{}).n]||'');return `<details class="trl" data-l="${L}" ${op.has(L)?'open':''}><summary><span class="tn">${esc((I.lang&&I.lang[L])||LANGS[L][0])}</span><span class="note">${esc(cur)}</span></summary><label class="trh"><select data-tl="${L}">${Object.entries(TRS[L]).map(([k,v])=>`<option value="${k}" ${trCfg[L]===k?'selected':''}>${esc(I.sys[v.n]||v.n)}</option>`).join('')}<option value="off" ${trCfg[L]==='off'?'selected':''}>${I.off}</option></select></label><div class="trt">${trTable(L)}</div></details>`}).join('');
 }
 function cheatHtml(){
   const rows=[[')','ʾ ʔ ʼ \' — алеф'],['(','ʿ ʕ ` — айн'],['h','ḥ ḫ'],['x','ḫ, kh'],['s','ṣ ś š'],['t','ṭ ṯ θ'],['d','ḍ ḏ'],['z','ẓ ž ʒ'],['g','ġ ǧ'],['k','ḳ kʻ'],['q','q q̇'],['c','č c̣ ç'],['p','ṗ p̣ pʻ φ'],['e','ē η'],['o','ō ω']];
@@ -697,7 +708,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','kun'],BVER=30;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','kun'],BVER=32;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
