@@ -4,12 +4,12 @@
   "file": "u-andreas-oktateuch.json",
   "name": "Oktateuch",
   "sig": "*Oktat",
+  "ver": "1.0",
   "author": "andreas",
   "la": "grc",
   "lb": "ar",
   "tl": "de",
-  "n": 2,
-  "accepted": "2026-11-19T18:28:43.248Z",
-  "ver": "1.0"
+  "n": 12,
+  "accepted": "2026-11-19T21:49:12.885Z"
  }
 ]
