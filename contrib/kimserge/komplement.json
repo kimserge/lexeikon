@@ -1,0 +1,42 @@
+{
+ "id": "u-kimserge-komplement",
+ "name": "Komplement",
+ "sig": "*Kompl",
+ "author": "kimserge",
+ "la": "grc",
+ "lb": "ar",
+ "tl": "de",
+ "note": "",
+ "updated": "2026-11-19T15:53:53.937Z",
+ "lang": "grc",
+ "entries": [
+  [
+   "ἀρχομένων",
+   "(→ ⁨ἄρχω⁩), \u000bAK VIII 1.19\f: die geherrscht werden\n= ⁨مرؤوسين⁩ (→ ⁨رَأَسَ⁩), \u000bOctAr VI, 8\f: die geherrscht werden",
+   "grc"
+  ],
+  [
+   "مرؤوسين",
+   "(→ ⁨رَأَسَ⁩), \u000bOctAr VI, 8\f: die geherrscht werden\n= ⁨ἀρχομένων⁩ (→ ⁨ἄρχω⁩), \u000bAK VIII 1.19\f: die geherrscht werden",
+   "ar"
+  ]
+ ],
+ "cards": [
+  {
+   "a": {
+    "f": "ἀρχομένων",
+    "l": "ἄρχω",
+    "s": "AK VIII 1.19",
+    "t": "die geherrscht werden"
+   },
+   "b": [
+    {
+     "f": "مرؤوسين",
+     "l": "رَأَسَ",
+     "s": "OctAr VI, 8",
+     "t": "die geherrscht werden"
+    }
+   ]
+  }
+ ]
+}
