@@ -208,6 +208,9 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .empty{padding:28px 0;color:var(--mut);max-width:60ch}
 .empty b{color:var(--ink)}
 #more{margin-top:14px}
+.jmp{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;display:flex;flex-direction:column;gap:8px}.jmp[hidden]{display:none}
+.jmp button{all:unset;cursor:pointer;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:var(--bg);color:var(--lap);border:1px solid var(--line);box-shadow:0 4px 12px rgb(0 0 0/.15);font:800 19px/1 'Noto Sans',sans-serif}
+.jmp button:hover,.jmp button:focus-visible{background:var(--lap);color:var(--bg)}
 #lnav{display:none}
 html{scrollbar-gutter:stable}
 @media(min-width:1000px){.wrap{padding-left:max(5vw,118px)}.qin{margin-left:calc(max(5vw,118px) - max(5vw,16px))}
@@ -344,12 +347,13 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.17.2 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.17.3 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
 
 <div id="ov" class="ov" hidden><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dt" id="dlg"></div></div>
+<div id="jmp" class="jmp" hidden><button type="button" data-j="top" aria-label="↑" title="↑">↑</button><button type="button" data-j="end" aria-label="↓" title="↓">↓</button></div>
 <div id="pop" class="pop" role="dialog" data-i18n-aria="poptitle" hidden></div>
 <div id="toast" class="toast" role="status"></div>
 
@@ -368,7 +372,7 @@ const I18N={
   search:'Поиск',clear:'Очистить',alphabet:'Алфавит',more:'Показать ещё',copy:'копировать',expand:'развернуть',close:'Закрыть',
   all:'Все',langgrp:'Язык',modegrp:'Режим поиска',pre:'Начало',in:'Содержит',ex:'Точно',scope:'и в переводах',
   sec_tr:'Транслитерация',tr_note:'Выберите систему для каждого языка: она показывается рядом с заглавными словами. Ниже — полная таблица выбранной системы. Красным — что набирать в поиске.',
-  updfail:'Сервер недоступен. Попробуйте позже',vis_tab:'Посещения',vis_today:'Посещений сегодня',vis_total:'За всё время',vis_c:'Стран сегодня',vis_err:'Нет данных',sec_set:'Выбрать словари',latnote:'Нажмите на латинское толкование, чтобы его перевести.',cr_mail:'Написать письмо',cr_title:'Об инструменте',cp_unk:'права не указаны',cp_auth:'автор и издатель',cr_author:'Концепция',cr_course:'Курс',cr_cname:'Методология цифрового издания',cr_pub:'Издательство',cr_contact:'Контакт',cr_src:'Словари',credit:'Инструмент создан Sergey Kim (UNIL, FTSR, IRSB) в рамках курса «Методология цифрового издания».',inbody:'Найдено внутри статей',lnin:'Внутри статей',dicts:'Словари',uilang:'Язык интерфейса',
+  updfail:'Сервер недоступен. Попробуйте позже',vis_tab:'Посещения',vis_today:'Посещений сегодня',vis_total:'За всё время',vis_c:'Стран сегодня',vis_err:'Нет данных',sec_set:'Выбрать словари',latnote:'Нажмите на латинское объяснение, чтобы его перевести.',cr_mail:'Написать письмо',cr_title:'Об инструменте',cp_unk:'права не указаны',cp_auth:'автор и издатель',cr_author:'Концепция',cr_course:'Курс',cr_cname:'Методология цифрового издания',cr_pub:'Издательство',cr_contact:'Контакт',cr_src:'Словари',credit:'Инструмент создан Sergey Kim (UNIL, FTSR, IRSB) в рамках курса «Методология цифрового издания».',inbody:'Найдено внутри статей',lnin:'Внутри статей',dicts:'Словари',uilang:'Язык интерфейса',
   attrib:'Lexicon Linguae Aethiopicae: цифровое издание TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt и др.), лицензия CC BY-NC-SA 4.0.',
   found:'Найдено: ',none:'Ничего не найдено. Попробуйте режим «Содержит» или другой язык.',rxerr:'Ошибка в регулярном выражении',
   empty:(tot,a,n)=>`<b>${tot}</b> статей в ${a} из ${n} словар${n==1?'я':'ей'}${a?'':' — включите хотя бы один в списке словарей'}. Например: ${EX}. Транслитерация и выбор словарей — внизу.`,
@@ -733,7 +737,7 @@ function search(){
   const total=act.reduce((n,d)=>n+d.entries.length,0);
   results=[];shown=0;
   if(!q.trim()){
-    $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();results=[];GF=new Map();lnavRender();
+    $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();results=[];GF=new Map();lnavRender();$('#jmp').hidden=true;
     $('#res').insertAdjacentHTML('beforeend',`<li class="empty">${dicts.length?I.empty(total.toLocaleString(UIL),act.length,dicts.length):I.loading}</li>`);
     return;
   }
@@ -768,7 +772,7 @@ function search(){
    results=results.map((r,k)=>[r,k]).sort((a,b)=>sec(a[0])-sec(b[0])||first.get(gk(a[0]))-first.get(gk(b[0]))||a[1]-b[1]).map(x=>x[0])}
   $('#stat').textContent=results.length?I.found+results.length.toLocaleString(UIL):I.none;
   GF=new Map();results.forEach((r,k)=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);if(!GF.has(g))GF.set(g,k)});
-  $('#res').innerHTML='';more();renderSug();lnavRender();
+  $('#res').innerHTML='';more();renderSug();lnavRender();requestAnimationFrame(jmpUpd);
 }
 let GF=new Map();
 function lnavRender(){
@@ -1156,6 +1160,13 @@ function libSync(force){
   const a=$('aside.lib'),li=$('#dl').querySelector(`li.dlg[data-lg="${L}"]`);if(!li)return;
   a.scrollTo({top:li.getBoundingClientRect().top-a.getBoundingClientRect().top+a.scrollTop-8,behavior:force?'instant':'smooth'});
 }
+
+/* ---------- jump to start / end of results ---------- */
+function jmpUpd(){const j=$('#jmp');j.hidden=!results.length||document.documentElement.scrollHeight<=innerHeight+40}
+$('#jmp').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if(!b)return;
+  if(b.dataset.j==='top'){scrollTo({top:0,behavior:'smooth'});return}
+  while(shown<results.length)more();requestAnimationFrame(()=>{const l=$('#res').lastElementChild;(l||$('#res')).scrollIntoView({block:'end',behavior:'smooth'})})});
+addEventListener('resize',jmpUpd);
 
 /* ---------- update to latest version ---------- */
 const FRESH=/[?&]fresh=/.test(location.search);
