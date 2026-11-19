@@ -126,11 +126,11 @@ async function mail(env, to, subject, text) {
 }
 // messages to authors in their interface language
 const MSG = {
-  ru: { sub: 'Словарь {n} отправлен на проверку. Вы получите письмо, когда администратор его рассмотрит.', acc: 'Ваш словарь {n} принят и теперь виден всем пользователям LexEikôn.', rej: 'Ваш словарь {n} пока не принят.', note: 'Комментарий администратора:' },
-  en: { sub: 'Your dictionary {n} has been submitted for review. You will receive an e-mail once the administrator has reviewed it.', acc: 'Your dictionary {n} has been accepted and is now visible to all users of LexEikôn.', rej: 'Your dictionary {n} has not been accepted yet.', note: 'Comment from the administrator:' },
-  de: { sub: 'Ihr Wörterbuch {n} wurde zur Prüfung eingereicht. Sie erhalten eine E-Mail, sobald der Administrator es geprüft hat.', acc: 'Ihr Wörterbuch {n} wurde angenommen und ist jetzt für alle Nutzer von LexEikôn sichtbar.', rej: 'Ihr Wörterbuch {n} wurde noch nicht angenommen.', note: 'Kommentar des Administrators:' },
-  fr: { sub: 'Votre dictionnaire {n} a été soumis pour vérification. Vous recevrez un courriel dès que l’administrateur l’aura examiné.', acc: 'Votre dictionnaire {n} a été accepté et est désormais visible par tous les utilisateurs de LexEikôn.', rej: 'Votre dictionnaire {n} n’a pas encore été accepté.', note: 'Commentaire de l’administrateur :' },
-  it: { sub: 'Il vostro dizionario {n} è stato inviato per la revisione. Riceverete un’e-mail quando l’amministratore lo avrà esaminato.', acc: 'Il vostro dizionario {n} è stato accettato ed è ora visibile a tutti gli utenti di LexEikôn.', rej: 'Il vostro dizionario {n} non è stato ancora accettato.', note: 'Commento dell’amministratore:' },
+  ru: { del: 'Ваш словарь {n} удалён. Он не был опубликован в LexEikôn.', sub: 'Словарь {n} отправлен на проверку. Вы получите письмо, когда администратор его рассмотрит.', acc: 'Ваш словарь {n} принят и теперь виден всем пользователям LexEikôn.', rej: 'Ваш словарь {n} пока не принят.', note: 'Комментарий администратора:' },
+  en: { del: 'Your dictionary {n} has been deleted. It had not been published in LexEikôn.', sub: 'Your dictionary {n} has been submitted for review. You will receive an e-mail once the administrator has reviewed it.', acc: 'Your dictionary {n} has been accepted and is now visible to all users of LexEikôn.', rej: 'Your dictionary {n} has not been accepted yet.', note: 'Comment from the administrator:' },
+  de: { del: 'Ihr Wörterbuch {n} wurde gelöscht. Es war in LexEikôn nicht veröffentlicht.', sub: 'Ihr Wörterbuch {n} wurde zur Prüfung eingereicht. Sie erhalten eine E-Mail, sobald der Administrator es geprüft hat.', acc: 'Ihr Wörterbuch {n} wurde angenommen und ist jetzt für alle Nutzer von LexEikôn sichtbar.', rej: 'Ihr Wörterbuch {n} wurde noch nicht angenommen.', note: 'Kommentar des Administrators:' },
+  fr: { del: 'Votre dictionnaire {n} a été supprimé. Il n’avait pas été publié dans LexEikôn.', sub: 'Votre dictionnaire {n} a été soumis pour vérification. Vous recevrez un courriel dès que l’administrateur l’aura examiné.', acc: 'Votre dictionnaire {n} a été accepté et est désormais visible par tous les utilisateurs de LexEikôn.', rej: 'Votre dictionnaire {n} n’a pas encore été accepté.', note: 'Commentaire de l’administrateur :' },
+  it: { del: 'Il vostro dizionario {n} è stato eliminato. Non era stato pubblicato in LexEikôn.', sub: 'Il vostro dizionario {n} è stato inviato per la revisione. Riceverete un’e-mail quando l’amministratore lo avrà esaminato.', acc: 'Il vostro dizionario {n} è stato accettato ed è ora visibile a tutti gli utenti di LexEikôn.', rej: 'Il vostro dizionario {n} non è stato ancora accettato.', note: 'Commento dell’amministratore:' },
 };
 const msg = (u, k, name, note) => { const M = MSG[u && u.lang] || MSG.en; return M[k].replace('{n}', '«' + name + '»') + (note ? '\n\n' + M.note + '\n' + note : '') + '\n\n— LexEikôn\nhttps://kimserge.github.io/lexeikon/proj.html'; };
 
@@ -237,7 +237,11 @@ export default {
           if (p.status === 'accepted') { await db.prepare('UPDATE projects SET deleted=?1 WHERE id=?2').bind(now(), p.id).run();
             await mail(env, await adminMail(env), 'LexEikôn: ' + user.nick + ' deleted accepted dictionary ' + p.name, 'The project was removed by its author; the accepted version is still on the site. Withdraw it in the administration page if needed.');
             return reply({ ok: true, kept: true }); }
-          await db.batch([db.prepare('DELETE FROM cards WHERE project_id=?1').bind(p.id), db.prepare('DELETE FROM projects WHERE id=?1').bind(p.id)]); return reply({ ok: true }); }
+          const n = (await db.prepare('SELECT count(*) n FROM cards WHERE project_id=?1').bind(p.id).first()).n;
+          await db.batch([db.prepare('DELETE FROM cards WHERE project_id=?1').bind(p.id), db.prepare('DELETE FROM projects WHERE id=?1').bind(p.id)]);
+          await mail(env, user.email, 'LexEikôn: ' + p.name, msg(user, 'del', p.name));
+          await mail(env, await adminMail(env), 'LexEikôn: ' + (user.sig || user.nick) + ' deleted ' + p.name + ' (' + n + ')', (user.sig || user.nick) + ' (' + user.nick + ', ' + user.email + ') deleted the unpublished dictionary «' + p.name + '» ' + (p.sig || '') + ', ' + n + ' cards' + (p.pushed ? ', last submitted ' + p.pushed.slice(0, 10) + ' (copy in the contrib branch)' : ', never submitted') + '.');
+          return reply({ ok: true }); }
         if (P[2] === 'cards' && request.method === 'GET') return reply((await db.prepare('SELECT * FROM cards WHERE project_id=?1 ORDER BY id').bind(p.id).all()).results.map((c) => ({ ...c, data: cardData(JSON.parse(c.data)) })));
         if (P[2] === 'cards' && request.method === 'POST') { const t = now(), d = JSON.stringify(cardData(await body()));
           const c = await db.prepare('INSERT INTO cards (project_id,data,created,updated) VALUES (?1,?2,?3,?3) RETURNING *').bind(p.id, d, t).first();
