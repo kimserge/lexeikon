@@ -179,7 +179,7 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .def .l.f:first-child{margin-top:0}
 .def .l.s{margin-top:.45em}
 .def .l.s:first-child{margin-top:0}
-.def .l.s2{padding-inline-start:1.2em;margin-top:.2em}
+.def .l.s2{padding-inline-start:1.2em;margin-top:.2em}.l.s2.sa{margin-top:.45em}
 .def .l.s3{padding-inline-start:2.4em;margin-top:.15em}
 .def .l.q{padding-inline-start:.9em;border-inline-start:2px solid var(--line);margin-top:.3em}
 .def .l.x{padding-inline-start:.9em;margin-top:.45em;border-inline-start:2px solid var(--line)}
@@ -886,7 +886,8 @@ function formatDef0(raw,L,hw,noRoot){
   return lines.filter(l=>l.trim()!=='@').map((l,li)=>{
     let lv=-1;l=l.replace(/^\uE010([0-2])([^\uE013]*)\uE013/,(m,a,b)=>{lv=+a;return '<b class="sn">'+b+'</b>'});
     let cls=(ex||/^\s*\x04/.test(l))?' x':(/^<b class="sn">/.test(l)?' s':'');if(lv>=0)cls=[' s',' s2',' s3'][lv];
-    if(!cls&&/^[a-p]\)\s/.test(l)){cls=' s2';l=l.replace(/^([a-p]\))\s/,'<b class="sn">$1</b> ')}
+    if(!cls&&/^\d{1,2}[a-z]\)\s/.test(l)){cls=' s2 sa';l=l.replace(/^(\d{1,2}[a-z]\))\s/,'<b class="sn">$1</b> ')}
+    else if(!cls&&/^[a-p]\)\s/.test(l)){cls=' s2';l=l.replace(/^([a-p]\))\s/,'<b class="sn">$1</b> ')}
     else if(!cls&&/^[α-ω]\)\s/.test(l)){cls=' s3';l=l.replace(/^([α-ω]\))\s/,'<b class="sn">$1</b> ')}
     else if(!cls&&/^[A-H]\)\s/.test(l)){cls=' s';l=l.replace(/^([A-H]\))\s/,'<b class="sn">$1</b> ')}
     if(L==='gez'&&!noRoot&&li===0&&l.length<40&&!/[ሀ-፿\x02-\x07]/.test(l)&&/[a-zʾʿḥḫṣśṭḍ']/.test(l)){return ''}
