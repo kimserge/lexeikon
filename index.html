@@ -161,7 +161,7 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .trb+.cp{margin-inline-start:8px}
 .cp{background:none;border:0;color:var(--rub);cursor:pointer;width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:8px}.cp:hover{background:color-mix(in srgb,var(--rub) 12%,transparent)}.cp svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .lw{cursor:pointer;text-decoration:underline dotted color-mix(in srgb,var(--lap) 55%,transparent);text-underline-offset:3px}
-.lw:hover,.xr:hover{color:var(--lap)}.xr{cursor:pointer;text-decoration:underline dotted color-mix(in srgb,var(--lap) 55%,transparent);text-underline-offset:3px}.pop .xs{margin-top:8px}body[data-trm=both] .tbo .lw{text-decoration:none}
+.lw:hover,.xr:hover{color:var(--lap)}.lw.pmk,.xr.pmk{color:var(--rub);font-weight:inherit}.xr{cursor:pointer;text-decoration:underline dotted color-mix(in srgb,var(--lap) 55%,transparent);text-underline-offset:3px}.pop .xs{margin-top:8px}body[data-trm=both] .tbo .lw{text-decoration:none}
 .pop{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);box-shadow:0 -10px 30px rgb(0 0 0/.18);max-height:33.3vh;max-height:33.3dvh;overflow:auto;padding:14px max(5vw,16px) 22px;border-radius:16px 16px 0 0}
 .pop .ph{display:flex;align-items:baseline;gap:10px;justify-content:space-between;position:sticky;top:-14px;background:var(--bg);padding:6px 0}
 .pop .pt{font-size:14px;color:var(--mut)}
@@ -354,7 +354,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.17.4 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.18 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -723,7 +723,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','kun'],BVER=34;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','kun'],BVER=35;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -938,7 +938,7 @@ const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'L',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ع'}
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;(by[d.lang]=by[d.lang]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
 const INTERIM=new Set(['b-graf','b-brk','b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
-const RANGE={'b-graf':['آب','ابستيخون'],'b-brk':['ܫܡܫ','ܫܢܕܐ'],'b-kun':['ա','ածեաց'],'b-che':['ا','بَانَ'],'b-cos':['ܫܡܫ','ܫܢܕ'],'b-mis':['ա','աքաղաղ']};
+const RANGE={'b-graf':['آب','ابستيخون'],'b-brk':['ܫܡܫ','ܫܢܕܐ'],'b-kun':['ա','ածեաց'],'b-che':['ا','خَرَبَ'],'b-cos':['ܫܡܫ','ܫܢܕ'],'b-mis':['ա','աքաղաղ']};
 const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-cos':['Costaz','Louis Costaz, Dictionnaire syriaque-français / Syriac-English Dictionary / Qāmūs suryānī-ʿarabī, Beyrouth 1963'],
  'b-ka':['Serebr','Серебряков, Древнегрузинско-русский словарь'],
@@ -1180,6 +1180,10 @@ $('#jmp').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if(!
   while(shown<results.length)more();requestAnimationFrame(()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'}))});
 addEventListener('resize',jmpUpd);
 
+/* mark the word whose popup is open */
+function popMark(el){document.querySelectorAll('#res .pmk').forEach(x=>x.classList.remove('pmk'));if(el)el.classList.add('pmk')}
+new MutationObserver(()=>{if($('#pop').hidden)popMark(null)}).observe($('#pop'),{attributes:true,attributeFilter:['hidden']});
+
 /* ---------- update to latest version ---------- */
 const FRESH=/[?&]fresh=/.test(location.search);
 async function hardUpdate(){
@@ -1226,8 +1230,8 @@ document.body.dataset.trm=LS.get('trm','la');document.body.dataset.trp=LS.get('t
 $('#res').addEventListener('click',async e=>{
   {const tb=e.target.closest('.trb');if(tb){const k=tb.classList.contains('pp')?'trp':'trm',o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset[k])+1)%3];document.body.dataset[k]=m;LS.set(k,m);return}}
   const c0=e.target.closest('.cp');const h=e.target.closest('.hit');
-  const xr=e.target.closest('.xr');if(xr&&(!h.classList.contains('long')||h.classList.contains('open'))){showXr(xr.dataset.x,xr.dataset.d);return}
-  const w=e.target.closest('.lw');if(w&&(!h.classList.contains('long')||h.classList.contains('open'))){showLat(w.dataset.w);return}
+  const xr=e.target.closest('.xr');if(xr&&(!h.classList.contains('long')||h.classList.contains('open'))){popMark(xr);showXr(xr.dataset.x,xr.dataset.d);return}
+  const w=e.target.closest('.lw');if(w&&(!h.classList.contains('long')||h.classList.contains('open'))){popMark(w);showLat(w.dataset.w);return}
   if(h&&!c0){if(h.classList.contains('long')){if(getSelection().toString())return;h.classList.toggle('open')}return}
   const c=c0;if(c){const b=c.closest('.hit'),d=dicts.find(x=>x.id===b.dataset.d),en=d&&d.entries[+b.dataset.i];
     try{const m=en[3]&&en[3].pair?document.body.dataset.trp:document.body.dataset.trm,sw=pSw(en),ru=sw?en[1]:trOf(en),la=sw?trOf(en):en[1];await navigator.clipboard.writeText((en[0]+' — '+(ru&&m==='ru'?plain(ru):ru&&m==='both'?(en[3].bo?plain(en[3].bo):plain(la)+'\n'+plain(ru)):plain(la))).replace(/[\uE002\uE003]/g,''));toast(I.copied)}catch(err){toast(I.copyfail)}}
