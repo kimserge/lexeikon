@@ -938,7 +938,7 @@ const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'L',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ع'}
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;(by[d.lang]=by[d.lang]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
 const INTERIM=new Set(['b-graf','b-brk','b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
-const RANGE={'b-graf':['آب','ابستيخون'],'b-brk':['ܫܡܫ','ܫܢܕܐ'],'b-kun':['ա','ածեաց'],'b-che':['ا','جَاءَ'],'b-cos':['ܫܡܫ','ܫܢܕ'],'b-mis':['ա','աքաղաղ']};
+const RANGE={'b-graf':['آب','ابستيخون'],'b-brk':['ܫܡܫ','ܫܢܕܐ'],'b-kun':['ա','ածեաց'],'b-che':['ا','خَرَبَ'],'b-cos':['ܫܡܫ','ܫܢܕ'],'b-mis':['ա','աքաղաղ']};
 const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-cos':['Costaz','Louis Costaz, Dictionnaire syriaque-français / Syriac-English Dictionary / Qāmūs suryānī-ʿarabī, Beyrouth 1963'],
  'b-ka':['Serebr','Серебряков, Древнегрузинско-русский словарь'],
