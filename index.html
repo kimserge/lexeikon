@@ -208,6 +208,12 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .empty{padding:28px 0;color:var(--mut);max-width:60ch}
 .empty b{color:var(--ink)}
 #more{margin-top:14px}
+.ljmp{position:fixed;left:max(6px,env(safe-area-inset-left));bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;display:flex;flex-direction:column;gap:5px;max-height:calc(100dvh - var(--lnt,200px) - 24px);overflow:auto;scrollbar-width:none;padding:2px}.ljmp[hidden]{display:none}
+.ljmp button{all:unset;cursor:pointer;flex:none;width:38px;height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:12px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);color:var(--lap);border:1px solid var(--line);box-shadow:0 3px 10px rgb(0 0 0/.13)}
+.ljmp button .s{font:400 17px/1 var(--lex)}.ljmp button .n{font:600 9.5px/1 'Noto Sans',sans-serif;opacity:.75}
+.ljmp button.in{border-style:dashed}.ljmp button.in .s{font:700 16px/1 'Noto Sans',sans-serif;color:var(--rub)}
+.ljmp button:hover,.ljmp button:focus-visible{background:var(--lap);color:var(--bg)}.ljmp button:hover .s{color:inherit}
+@media(min-width:1000px){.ljmp{display:none}}
 .jmp{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;display:flex;flex-direction:column;gap:8px}.jmp[hidden]{display:none}
 .jmp button{all:unset;cursor:pointer;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:var(--bg);color:var(--lap);border:1px solid var(--line);box-shadow:0 4px 12px rgb(0 0 0/.15);font:800 19px/1 'Noto Sans',sans-serif}
 .jmp button:hover,.jmp button:focus-visible{background:var(--lap);color:var(--bg)}
@@ -347,12 +353,13 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.17.3 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.17.4 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
 
 <div id="ov" class="ov" hidden><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dt" id="dlg"></div></div>
+<div id="ljmp" class="ljmp" hidden></div>
 <div id="jmp" class="jmp" hidden><button type="button" data-j="top" aria-label="↑" title="↑">↑</button><button type="button" data-j="end" aria-label="↓" title="↓">↓</button></div>
 <div id="pop" class="pop" role="dialog" data-i18n-aria="poptitle" hidden></div>
 <div id="toast" class="toast" role="status"></div>
@@ -777,12 +784,16 @@ function search(){
 let GF=new Map();
 function lnavRender(){
   const n=$('#lnav'),cnt={};results.forEach(r=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);cnt[g]=(cnt[g]||0)+1});
-  const gs=[...GF.keys()];if(gs.length<2&&!results.length){n.innerHTML='';document.body.classList.remove('lnv');return}
+  const gs=[...GF.keys()];if(gs.length<2&&!results.length){n.innerHTML='';$('#ljmp').hidden=true;document.body.classList.remove('lnv');return}
   const lab=L=>(I.chip&&I.chip[L])||(LANGS[L]?LANGS[L][1]:L);
   let h='',inb=false;
   for(const g of gs){if(g[0]==='b'&&!inb){inb=true;h+=`<div class="lh">${esc(I.lnin||I.inbody)}</div>`}h+=`<button data-g="${g}" title="${esc(((I.lang&&I.lang[g.slice(1)])||lab(g.slice(1)))+' · '+cnt[g])}"><b>${esc(lab(g.slice(1)))}</b><span>(${cnt[g].toLocaleString(UIL)})</span></button>`}
   h+=`<button class="up" data-g="top" title="↑">↑</button>`;
   n.innerHTML=h;document.body.classList.toggle('lnv',results.length>0);lnavPos();
+  {const hs=gs.filter(g=>g[0]==='h'),bs=gs.filter(g=>g[0]==='b'),nb=bs.reduce((a,g)=>a+cnt[g],0),f=x=>x>999?Math.round(x/100)/10+'k':x;
+   $('#ljmp').innerHTML=hs.map(g=>{const L=g.slice(1),t=((I.lang&&I.lang[L])||lab(L))+' · '+cnt[g];return `<button type="button" data-g="${g}" title="${esc(t)}" aria-label="${esc(t)}"><span class="s" lang="${L}">${GLY[L]||esc(lab(L))}</span><span class="n">${f(cnt[g])}</span></button>`}).join('')+
+     (bs.length?`<button type="button" class="in" data-g="${bs[0]}" title="${esc((I.lnin||I.inbody)+' · '+nb)}" aria-label="${esc((I.lnin||I.inbody)+' · '+nb)}"><span class="s">¶</span><span class="n">${f(nb)}</span></button>`:'');
+   $('#ljmp').hidden=hs.length+bs.length<2}
 }
 function lnavPos(){const s=$('#stat');if(!s)return;const t=Math.max(document.querySelector('.qsticky').getBoundingClientRect().bottom+12,90);document.documentElement.style.setProperty('--lnt',t+'px')}
 function lnavGo(g){
@@ -1165,7 +1176,7 @@ function libSync(force){
 function jmpUpd(){const j=$('#jmp');j.hidden=!results.length||document.documentElement.scrollHeight<=innerHeight+40}
 $('#jmp').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if(!b)return;
   if(b.dataset.j==='top'){scrollTo({top:0,behavior:'smooth'});return}
-  while(shown<results.length)more();requestAnimationFrame(()=>{const l=$('#res').lastElementChild;(l||$('#res')).scrollIntoView({block:'end',behavior:'smooth'})})});
+  while(shown<results.length)more();requestAnimationFrame(()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'}))});
 addEventListener('resize',jmpUpd);
 
 /* ---------- update to latest version ---------- */
@@ -1209,7 +1220,7 @@ $('#q').addEventListener('blur',()=>setTimeout(cmpUpd,160));
 $('#scope').addEventListener('change',search);
 $('#mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;mode=b.dataset.m;$('#mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));search()});
 $('#more').addEventListener('click',more);
-$('#lnav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)lnavGo(b.dataset.g)});addEventListener('resize',lnavPos);addEventListener('scroll',lnavPos,{passive:true});addEventListener('scroll',()=>libSync(),{passive:true});$('#setD').addEventListener('toggle',()=>{if($('#setD').open){libL='';requestAnimationFrame(()=>libSync(true))}});lnavPos();
+$('#lnav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)lnavGo(b.dataset.g)});$('#ljmp').addEventListener('click',e=>{const b=e.target.closest('button');if(b)lnavGo(b.dataset.g)});addEventListener('resize',lnavPos);addEventListener('scroll',lnavPos,{passive:true});addEventListener('scroll',()=>libSync(),{passive:true});$('#setD').addEventListener('toggle',()=>{if($('#setD').open){libL='';requestAnimationFrame(()=>libSync(true))}});lnavPos();
 document.body.dataset.trm=LS.get('trm','la');
 $('#res').addEventListener('click',async e=>{
   if(e.target.closest('.trb')){const o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset.trm)+1)%3];document.body.dataset.trm=m;LS.set('trm',m);return}
