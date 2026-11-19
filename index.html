@@ -209,8 +209,10 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .empty b{color:var(--ink)}
 #more{margin-top:14px}
 #lnav{display:none}
-@media(min-width:1000px){body.lnv #lnav{display:flex;flex-direction:column;gap:4px;position:fixed;z-index:6;left:10px;top:var(--lnt,200px);width:92px;max-height:calc(100vh - var(--lnt,200px) - 16px);overflow:auto;font:13px/1.25 'Noto Sans',sans-serif}
- body.lnv .wrap{padding-left:max(5vw,118px)} body.lnv .qin{margin-left:calc(max(5vw,118px) - max(5vw,16px))}
+html{scrollbar-gutter:stable}
+@media(min-width:1000px){.wrap{padding-left:max(5vw,118px)}.qin{margin-left:calc(max(5vw,118px) - max(5vw,16px))}
+ body.lnv #lnav{display:flex;flex-direction:column;gap:4px;position:fixed;z-index:6;left:10px;top:var(--lnt,200px);width:92px;max-height:calc(100vh - var(--lnt,200px) - 16px);overflow:auto;font:13px/1.25 'Noto Sans',sans-serif}
+
  #lnav button{all:unset;cursor:pointer;display:flex;justify-content:flex-start;gap:5px;padding:5px 8px;border-radius:8px;color:var(--lap);background:var(--bg)}
  #lnav button:hover,#lnav button:focus-visible{background:var(--lap);color:var(--bg)}
  #lnav button b{font-weight:600}#lnav button span{color:inherit;opacity:.75;font-weight:400}
