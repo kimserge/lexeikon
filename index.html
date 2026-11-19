@@ -58,7 +58,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;height:var(--sat);ba
 .sub2{margin:6px 0 0;font-size:14px;opacity:.82;max-width:62ch}
 .credit{margin:8px 0 0;font-size:13px;opacity:.7;max-width:62ch}
 .foot{background:var(--card);border-top:1px solid var(--line);margin-top:20px;padding-top:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));font-size:12px;line-height:1.45}
-.fin{max-width:1240px;margin:auto}@media(min-width:900px){.foot .fin{max-width:none;margin:0}}@media(min-width:1000px){.foot{padding-left:max(5vw,118px)}}
+.fin{max-width:1240px;margin:auto}
 .foot h2{font:700 14px/1.2 'Noto Serif',serif;margin:0 0 8px}
 .foot h3{font:600 12px 'Noto Sans',sans-serif;margin:12px 0 4px;color:var(--mut)}
 .cr{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;margin:0}
@@ -355,7 +355,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v3.4 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <b>v3</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v3.3 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <b>v3</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>

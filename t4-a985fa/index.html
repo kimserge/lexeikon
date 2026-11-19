@@ -74,7 +74,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;height:var(--sat);ba
 .foot{padding-bottom:34px}
 .yrs{margin:10px 0 0;font-size:11px;color:var(--mut);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
 .upd{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 10px;border:1px solid var(--lap);border-radius:999px;background:var(--bg);color:var(--lap);font:600 11px 'Noto Sans',sans-serif;cursor:pointer}
-.frow{display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;align-items:flex-start}.fpj{text-align:right}.pjb{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1.5px solid var(--lap);border-radius:999px;color:var(--lap);text-decoration:none;font:600 13px 'Noto Sans',sans-serif;background:var(--bg)}.pjn{margin:8px 0 0;font-size:11px;color:var(--mut);max-width:300px;margin-left:auto}@media(max-width:699px){.pjn{margin-left:0}}.pjb:hover{background:var(--lap);color:var(--bg)}@media(max-width:699px){.fpj{text-align:left}}.upd:active{background:var(--lap);color:var(--bg)}
+.lemh{list-style:none;margin:4px 0 6px;font:600 13px 'Noto Sans',sans-serif;color:var(--rub)}.lemh b{font:400 18px var(--lex);color:var(--ink);margin-inline-start:4px}.lemend{border-bottom:1.5px solid var(--line);margin:0 0 14px}.lmw.pmk{color:var(--rub)}.frow{display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;align-items:flex-start}.fpj{text-align:right}.pjb{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1.5px solid var(--lap);border-radius:999px;color:var(--lap);text-decoration:none;font:600 13px 'Noto Sans',sans-serif;background:var(--bg)}.pjn{margin:8px 0 0;font-size:11px;color:var(--mut);max-width:300px;margin-left:auto}@media(max-width:699px){.pjn{margin-left:0}}.pjb:hover{background:var(--lap);color:var(--bg)}@media(max-width:699px){.fpj{text-align:left}}.upd:active{background:var(--lap);color:var(--bg)}
 .upd.busy svg{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .tin{max-width:1240px;margin:auto;display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
 h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:balance}
@@ -357,7 +357,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.1 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="../v1.64/">v1</a> · <a href="../v2/">v2</a> · <a href="../">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.2 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="../v1.64/">v1</a> · <a href="../v2/">v2</a> · <a href="../">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -378,7 +378,7 @@ const LANGS={syr:['Сирийский','сир.'],ka:['Древнегрузин�
 /* ---------- interface languages ---------- */
 const EX='<b>mlk</b> → <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> → <span class="sc">ነግሠ</span>, <b>gmerti</b> → <span class="sc">ღმერთი</span>, <b>tagavor</b> → <span class="sc">թագաւոր</span>';
 const I18N={
- ru:{pj_h:'Создать свой древний словарь',pj_b:'Мой словарный проект',pj_n:'Словарь появится в программе после одобрения администратором.',upd:'Последняя версия',lgbnote:'включить или выключить все словари языка',tagline:'учебные словари древних языков',interim:'Распознавание промежуточное, не окончательное',name:'Русский',
+ ru:{pj_h:'Создать свой древний словарь',pj_b:'Мой словарный проект',pj_n:'Словарь появится в программе после одобрения администратором.',lemof:'Форма от',upd:'Последняя версия',lgbnote:'включить или выключить все словари языка',tagline:'учебные словари древних языков',interim:'Распознавание промежуточное, не окончательное',name:'Русский',
   sub:'Набирайте транслитерацией без диакритики: <b>mlk</b> найдёт <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Можно и в оригинальном письме.',
   search:'Поиск',clear:'Очистить',alphabet:'Алфавит',more:'Показать ещё',copy:'копировать',expand:'развернуть',close:'Закрыть',
   all:'Все',langgrp:'Язык',modegrp:'Режим поиска',pre:'Начало',in:'Содержит',ex:'Точно',scope:'и в переводах',
@@ -395,7 +395,7 @@ const I18N={
   chip:{syr:'Сир.',ka:'Груз.',grc:'Греч.',la:'Лат.',hy:'Арм.',gez:'Эфиоп.',ar:'Араб.',cop:'Копт.',xx:'Др.'},
   tag:{syr:'сир.',ka:'груз.',grc:'греч.',la:'лат.',hy:'арм.',gez:'эфиоп.',ar:'араб.',xx:'—'},
   sys:{syr_sci:'Научная (консонантная)',syr_alt:'Научная с ʔ и ʕ',ka_sci:'Картвелологическая: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Национальная 2002: k’ t’ ts’ ch’ gh',hy_hm:'Хюбшман — Мейе: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Традиционная (Дилльман — Ламбдин): a, ā',gez_ham:'Гамбургская (Encyclopaedia Aethiopica): ä, a',grc_sci:'Научная',ar_din:'DIN 31635',ar_alt:'Научная с ʔ и ʕ',cop_sci:'Научная (Лейтон): š j c ti',cop_simple:'Упрощённая: sh j ky ti'}},
- en:{pj_h:'Create your own ancient dictionary',pj_b:'My dictionary project',pj_n:'The dictionary will appear in the program once approved by the administrator.',upd:'Get latest version',lgbnote:'turn all dictionaries of a language on or off',tagline:'study dictionaries of ancient languages',interim:'Intermediate recognition, not final',name:'English',
+ en:{pj_h:'Create your own ancient dictionary',pj_b:'My dictionary project',pj_n:'The dictionary will appear in the program once approved by the administrator.',lemof:'Form of',upd:'Get latest version',lgbnote:'turn all dictionaries of a language on or off',tagline:'study dictionaries of ancient languages',interim:'Intermediate recognition, not final',name:'English',
   sub:'Type in transliteration, without diacritics: <b>mlk</b> finds <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Original scripts work too.',
   search:'Search',clear:'Clear',alphabet:'Alphabet',more:'Show more',copy:'copy',expand:'expand',close:'Close',
   all:'All',langgrp:'Language',modegrp:'Search mode',pre:'Starts with',in:'Contains',ex:'Exact',scope:'in translations',
@@ -412,7 +412,7 @@ const I18N={
   chip:{syr:'Syr.',ka:'Geo.',grc:'Grk.',la:'Lat.',hy:'Arm.',gez:'Eth.',ar:'Arab.',cop:'Copt.',xx:'Oth.'},
   tag:{syr:'syr.',ka:'geo.',grc:'grk.',la:'lat.',hy:'arm.',gez:'eth.',ar:'arab.',xx:'—'},
   sys:{syr_sci:'Scientific (consonantal)',syr_alt:'Scientific with ʔ and ʕ',ka_sci:'Kartvelological: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditional (Dillmann–Lambdin): a, ā',gez_ham:'Hamburg (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientific',ar_din:'DIN 31635',ar_alt:'Scientific with ʔ and ʕ',cop_sci:'Scientific (Layton): š j c ti',cop_simple:'Simplified: sh j ky ti'}},
- de:{pj_h:'Ein eigenes altsprachliches Wörterbuch anlegen',pj_b:'Mein Wörterbuchprojekt',pj_n:'Das Wörterbuch erscheint im Programm nach Freigabe durch den Administrator.',upd:'Neueste Version',lgbnote:'alle Wörterbücher einer Sprache ein- oder ausschalten',tagline:'Studienwörterbücher alter Sprachen',interim:'Vorläufige Texterkennung, nicht endgültig',name:'Deutsch',
+ de:{pj_h:'Ein eigenes altsprachliches Wörterbuch anlegen',pj_b:'Mein Wörterbuchprojekt',pj_n:'Das Wörterbuch erscheint im Programm nach Freigabe durch den Administrator.',lemof:'Form von',upd:'Neueste Version',lgbnote:'alle Wörterbücher einer Sprache ein- oder ausschalten',tagline:'Studienwörterbücher alter Sprachen',interim:'Vorläufige Texterkennung, nicht endgültig',name:'Deutsch',
   sub:'In Umschrift tippen, ohne Diakritika: <b>mlk</b> findet <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Die Originalschrift geht auch.',
   search:'Suche',clear:'Löschen',alphabet:'Alphabet',more:'Mehr anzeigen',copy:'kopieren',expand:'aufklappen',close:'Schließen',
   all:'Alle',langgrp:'Sprache',modegrp:'Suchmodus',pre:'Anfang',in:'Enthält',ex:'Genau',scope:'in Übersetzungen',
@@ -429,7 +429,7 @@ const I18N={
   chip:{syr:'Syr.',ka:'Georg.',grc:'Griech.',la:'Lat.',hy:'Arm.',gez:'Äth.',ar:'Arab.',cop:'Kopt.',xx:'And.'},
   tag:{syr:'syr.',ka:'georg.',grc:'griech.',la:'lat.',hy:'arm.',gez:'äth.',ar:'arab.',xx:'—'},
   sys:{syr_sci:'Wissenschaftlich (konsonantisch)',syr_alt:'Wissenschaftlich mit ʔ und ʕ',ka_sci:'Kartvelologisch: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditionell (Dillmann–Lambdin): a, ā',gez_ham:'Hamburger System (Encyclopaedia Aethiopica): ä, a',grc_sci:'Wissenschaftlich',ar_din:'DIN 31635',ar_alt:'Wissenschaftlich mit ʔ und ʕ',cop_sci:'Wissenschaftlich (Layton): š j c ti',cop_simple:'Vereinfacht: sh j ky ti'}},
- fr:{pj_h:'Créer son propre dictionnaire ancien',pj_b:'Mon projet de dictionnaire',pj_n:'Le dictionnaire apparaîtra dans le programme après validation par l’administrateur.',upd:'Dernière version',lgbnote:'activer ou désactiver tous les dictionnaires d’une langue',tagline:'dictionnaires d’étude des langues anciennes',interim:'Reconnaissance intermédiaire, non définitive',name:'Français',
+ fr:{pj_h:'Créer son propre dictionnaire ancien',pj_b:'Mon projet de dictionnaire',pj_n:'Le dictionnaire apparaîtra dans le programme après validation par l’administrateur.',lemof:'Forme de',upd:'Dernière version',lgbnote:'activer ou désactiver tous les dictionnaires d’une langue',tagline:'dictionnaires d’étude des langues anciennes',interim:'Reconnaissance intermédiaire, non définitive',name:'Français',
   sub:'Tapez en translittération, sans diacritiques : <b>mlk</b> trouve <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. L’écriture originale fonctionne aussi.',
   search:'Recherche',clear:'Effacer',alphabet:'Alphabet',more:'Afficher plus',copy:'copier',expand:'déplier',close:'Fermer',
   all:'Tous',langgrp:'Langue',modegrp:'Mode de recherche',pre:'Début',in:'Contient',ex:'Exact',scope:'dans les traductions',
@@ -446,7 +446,7 @@ const I18N={
   chip:{syr:'Syr.',ka:'Géo.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Éth.',ar:'Arab.',cop:'Copte',xx:'Aut.'},
   tag:{syr:'syr.',ka:'géo.',grc:'gr.',la:'lat.',hy:'arm.',gez:'éth.',ar:'arab.',xx:'—'},
   sys:{syr_sci:'Scientifique (consonantique)',syr_alt:'Scientifique avec ʔ et ʕ',ka_sci:'Kartvélologique : ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nationale 2002 : k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet : tʻ c č ł',hy_lc:'ALA-LC : tʻ ts ch gh',gez_trad:'Traditionnelle (Dillmann–Lambdin) : a, ā',gez_ham:'Hambourg (Encyclopaedia Aethiopica) : ä, a',grc_sci:'Scientifique',ar_din:'DIN 31635',ar_alt:'Scientifique avec ʔ et ʕ',cop_sci:'Scientifique (Layton) : š j c ti',cop_simple:'Simplifiée : sh j ky ti'}},
- it:{pj_h:'Crea il tuo dizionario antico',pj_b:'Il mio progetto di dizionario',pj_n:'Il dizionario apparirà nel programma dopo l’approvazione dell’amministratore.',upd:'Ultima versione',lgbnote:'attivare o disattivare tutti i dizionari di una lingua',tagline:'dizionari di studio delle lingue antiche',interim:'Riconoscimento intermedio, non definitivo',name:'Italiano',
+ it:{pj_h:'Crea il tuo dizionario antico',pj_b:'Il mio progetto di dizionario',pj_n:'Il dizionario apparirà nel programma dopo l’approvazione dell’amministratore.',lemof:'Forma di',upd:'Ultima versione',lgbnote:'attivare o disattivare tutti i dizionari di una lingua',tagline:'dizionari di studio delle lingue antiche',interim:'Riconoscimento intermedio, non definitivo',name:'Italiano',
   sub:'Digitate in traslitterazione, senza diacritici: <b>mlk</b> trova <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Funziona anche la scrittura originale.',
   search:'Ricerca',clear:'Cancella',alphabet:'Alfabeto',more:'Mostra altri',copy:'copia',expand:'espandi',close:'Chiudi',
   all:'Tutti',langgrp:'Lingua',modegrp:'Modalità di ricerca',pre:'Inizio',in:'Contiene',ex:'Esatto',scope:'nelle traduzioni',
@@ -792,6 +792,7 @@ function search(){
   const q=$('#q').value,scope=$('#scope').checked,act=dicts.filter(d=>!off.has(d.id));
   const total=act.reduce((n,d)=>n+d.entries.length,0);
   results=[];shown=0;
+  lemBanner(q);
   if(!q.trim()){
     $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();results=[];GF=new Map();lnavRender();$('#jmp').hidden=true;
     $('#res').insertAdjacentHTML('beforeend',`<li class="empty">${dicts.length?I.empty(total.toLocaleString(UIL),act.length,dicts.length):I.loading}</li>`);
@@ -1245,6 +1246,40 @@ function xrFind(w,did){const n=x=>norm(String(x).replace(/^[\d.]+/,'').replace(/
   if(!r.length){const L=d0&&d0.lang;for(const d of dicts)if(d!==d0&&!off.has(d.id)&&(!L||d.lang===L))r.push(...hit(d))}
   return r}
 function scriptLang(w){const c=[...String(w)].find(x=>/\p{L}/u.test(x))||'',u=c.codePointAt(0)||0;return u>=0x700&&u<0x750?'syr':u>=0x1200&&u<0x13a0?'gez':(u>=0x10a0&&u<0x1100)||(u>=0x2d00&&u<0x2d30)?'ka':(u>=0x370&&u<0x400)||(u>=0x1f00&&u<0x2000)?'grc':u>=0x530&&u<0x590?'hy':u>=0x600&&u<0x700?'ar':(u>=0x2c80&&u<0x2d00)||(u>=0x3e2&&u<0x3f0)?'cop':'la'}
+
+/* ---------- morphology: Greek (CLTK lemmata) and Arabic (Arramooz) ---------- */
+const MC={};const mget=(u,t)=>MC[u]||(MC[u]=fetch(u).then(r=>r.ok?(t?r.text():r.json()):null).catch(()=>null));
+const gkey=s=>String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().replace(/ς/g,'σ').replace(/[^α-ω]/g,'');
+const akey=s=>String(s||'').replace(/[ً-ْٰـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/ء/g,'');
+async function grcLem(w){const k=gkey(w);if(!k)return [];const t=await mget('../data/lem/grc/'+k.slice(0,3)+'.txt',1);if(!t)return [];
+  const suf=k.slice(3),line=t.split('\n').find(l=>l.slice(0,l.indexOf('\t'))===suf);if(!line)return [];
+  const L=(await mget('../data/lem/grc/_lemmata.txt',1)||'').split('\n');return line.split('\t')[1].split(',').map(i=>L[+i]).filter(Boolean)}
+const AP=['وال','فال','بال','كال','ولل','لل','ال','و','ف','ب','ك','ل','س'],AS=['هما','كما','ات','ون','ين','ان','ية','ها','هم','هن','كم','كن','نا','وا','تم','تن','ه','ك','ي','ة','ت','ن','ا'];
+async function arLem(w){const A=await mget('../data/lem/ar.json');if(!A)return [];const k=akey(w),out=[],seen=new Set();
+  const add=(x,sc)=>{if(!seen.has(x)){seen.add(x);out.push([x,sc])}};
+  const pre=[''],suf=[''];for(const p of AP)if(k.startsWith(p)&&k.length-p.length>=2)pre.push(p);for(const s of AS)if(k.endsWith(s)&&k.length-s.length>=2)suf.push(s);
+  for(const p of pre)for(const s of suf){const st=k.slice(p.length,k.length-s.length);if(st.length<2)continue;for(const x of [st,st+'ه',st.replace(/ت$/,'ه')]){const r=A.w[x];if(r)r.forEach(([l,rt])=>{add(l,st.length);if(A.r[rt])add(A.r[rt],st.length-.5)})}}
+  return out.sort((a,b)=>b[1]-a[1]).map(x=>x[0]).slice(0,6)}
+async function lemmas(w){const L=scriptLang(w);return L==='grc'?grcLem(w):L==='ar'?arLem(w):[]}
+function lemHits(lem,L){const k=norm(lem),r=[];for(const d of dicts){if(off.has(d.id)||d.user)continue;if(d.lang!==L&&d.lang!=='mix')continue;keys(d);d.hk.forEach((h,i)=>{if(h===k&&elang(d,i)===L)r.push([d,i])})}return r}
+let lemTok=0;
+async function lemBanner(q){const t=++lemTok,w=q.trim();if(!w||/\s/.test(w)&&scriptLang(w)!=='ar')return;const L=scriptLang(w);if(L!=='grc'&&L!=='ar')return;
+  const ws=w.split(/\s+/).slice(0,3),ls=[];for(const x of ws)for(const l of await lemmas(x))if(norm(l)!==norm(x)&&!ls.includes(l))ls.push(l);
+  if(t!==lemTok||$('#q').value!==q||!ls.length)return;
+  let html='',n=0;for(const l of ls){const hs=lemHits(l,L);if(!hs.length)continue;html+=hs.map(([d,i])=>hitHtml([1,0,d,i],'m'+(n++))).join('')}
+  if(!html)return;
+  if(!results.length)$('#stat').textContent='';
+  const head=`<li class="lemh">${esc(I.lemof||'Form of')} ${ls.map(l=>`<b dir="auto">${esc(l)}</b>`).join(', ')}</li>`;
+  $('#res').insertAdjacentHTML('afterbegin',head+html.replace(/<li class="" data-k="m/g,'<li class="lemx" data-k="m')+'<li class="lemh lemend"></li>');
+  requestAnimationFrame(()=>{for(const h of $('#res').querySelectorAll('.hit:not([data-m])')){h.dataset.m=1;const d=h.querySelector('.def');if(d.scrollHeight>(d.querySelector('.tv')?18:7.6)*parseFloat(getComputedStyle(d).fontSize)+4)h.classList.add('long')}})}
+function wordAt(e){let r=null;if(document.caretRangeFromPoint)r=document.caretRangeFromPoint(e.clientX,e.clientY);else if(document.caretPositionFromPoint){const p=document.caretPositionFromPoint(e.clientX,e.clientY);if(p){r=document.createRange();r.setStart(p.offsetNode,p.offset)}}
+  if(!r)return null;const n=r.startContainer;if(!n||n.nodeType!==3)return null;const t=n.data,o=r.startOffset,re=/[\p{L}\p{M}ـ]/u;let a=o,b=o;while(a>0&&re.test(t[a-1]))a--;while(b<t.length&&re.test(t[b]))b++;if(a===b)return null;return {n,a,b,w:t.slice(a,b)}}
+async function showLem(w){const L=scriptLang(w),ls=[w,...(await lemmas(w)).filter(l=>norm(l)!==norm(w))],seen=new Set(),r=[];
+  for(const l of ls)for(const x of lemHits(l,L)){const id=x[0].id+'|'+x[1];if(!seen.has(id)){seen.add(id);r.push(x)}}
+  $('#pop').innerHTML=`<div class="ph"><span class="pt"><b dir="auto">${esc(w)}</b>${ls.length>1?` → ${ls.slice(1).map(l=>`<span dir="auto">${esc(l)}</span>`).join(', ')}`:''}</span><button class="btn ghost" id="popX">${I.close}</button></div>`+
+    (r.length?r.map(([d,i])=>{const e=d.entries[i];return `<article><div class="hd"><span class="hw" dir="auto">${esc(e[0])}</span>${trTag(e[0],elang(d,i))} <span class="tag"><abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="def" dir="${L==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${defHtml(d,e,elang(d,i))}</div></article>`}).join(''):'<p class="note">—</p>')+
+    `<p class="xs"><button type="button" class="btn ghost" data-xs="${esc(ls[1]||w)}">${I.search||'Search'} → ${esc(ls[1]||w)}</button></p>`;
+  $('#pop').hidden=false;$('#pop').scrollTop=0}
 function showXr(w,did){
   const r=xrFind(w,did);
   $('#pop').innerHTML=`<div class="ph"><span class="pt"><b>${esc(w)}</b></span><button class="btn ghost" id="popX">${I.close}</button></div>`+
@@ -1325,6 +1360,7 @@ $('#res').addEventListener('click',async e=>{
   const c0=e.target.closest('.cp');const h=e.target.closest('.hit');
   const xr=e.target.closest('.xr');if(xr&&(!h.classList.contains('long')||h.classList.contains('open'))){popMark(xr);showXr(xr.dataset.x,xr.dataset.d);return}
   const w=e.target.closest('.lw');if(w&&(!h.classList.contains('long')||h.classList.contains('open'))){popMark(w);w.dataset.g?showGer(w.dataset.g):showLat(w.dataset.w);return}
+  if(h&&!c0&&!getSelection().toString()&&e.target.closest('.def')&&(!h.classList.contains('long')||h.classList.contains('open'))){const x=wordAt(e);if(x&&['grc','ar'].includes(scriptLang(x.w))&&x.w.length>1){try{const rg=document.createRange();rg.setStart(x.n,x.a);rg.setEnd(x.n,x.b);const sp=document.createElement('span');sp.className='lmw';rg.surroundContents(sp);popMark(sp)}catch(err){}showLem(x.w);return}}
   if(h&&!c0){if(h.classList.contains('long')){if(getSelection().toString())return;h.classList.toggle('open')}return}
   const c=c0;if(c){const b=c.closest('.hit'),d=dicts.find(x=>x.id===b.dataset.d),en=d&&d.entries[+b.dataset.i];
     try{const m=en[3]&&en[3].pair?document.body.dataset.trp:document.body.dataset.trm,sw=pSw(en),ru=sw?en[1]:trOf(en),la=sw?trOf(en):en[1];await navigator.clipboard.writeText((en[0]+' — '+(ru&&m==='ru'?plain(ru):ru&&m==='both'?(en[3].bo?plain(en[3].bo):plain(la)+'\n'+plain(ru)):plain(la))).replace(/[\uE002\uE003]/g,''));toast(I.copied)}catch(err){toast(I.copyfail)}}
@@ -1332,7 +1368,7 @@ $('#res').addEventListener('click',async e=>{
 $('#pop').addEventListener('click',async e=>{const gb=e.target.closest('[data-gt]');if(gb){e.stopPropagation();LS.set('gerT',gb.dataset.gt);await gerLoad(gb.dataset.gt);showGer(lastGer);return}const lb=e.target.closest('[data-lt]');if(lb){e.stopPropagation();LS.set('latT',lb.dataset.lt);laIdx=null;showLat(lastLat);await laLoad(LATD[lb.dataset.lt]);laIdx=null;showLat(lastLat);return}
   if(e.target.id==='popX')$('#pop').hidden=true;const xs=e.target.closest('[data-xs]');if(xs){xrSearch(xs.dataset.xs);return}const xr=e.target.closest('.xr');if(xr){showXr(xr.dataset.x,xr.dataset.d);return}{const tb=e.target.closest('.trb');if(tb){const k=tb.classList.contains('pp')?'trp':'trm',o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset[k])+1)%3];document.body.dataset[k]=m;LS.set(k,m);return}}const w=e.target.closest('.lw');if(w)w.dataset.g?showGer(w.dataset.g):showLat(w.dataset.w)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#pop').hidden=true});
-document.addEventListener('click',e=>{if(!$('#pop').hidden&&!e.target.closest('#pop')&&!e.target.closest('.lw')&&!e.target.closest('.xr'))$('#pop').hidden=true});
+document.addEventListener('click',e=>{if(!$('#pop').hidden&&!e.target.closest('#pop')&&!e.target.closest('.lw')&&!e.target.closest('.xr')&&!e.target.closest('.lmw')&&!e.target.closest('.hit .def'))$('#pop').hidden=true});
 $('#mail').addEventListener('click',e=>{e.preventDefault();location.href='mailto:'+['sergey.kim','unil.ch'].join('@')});
 $('#syms').addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault()});
 $('#syms').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;insert(b.dataset.s);$('#q').focus()});
