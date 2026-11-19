@@ -119,13 +119,13 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
 .seg button.on{background:var(--lap);color:var(--bg)}
 .chk{display:inline-flex;gap:8px;align-items:center;min-height:40px;cursor:pointer}
 .chk input{width:20px;height:20px;accent-color:var(--lap)}.opts{flex-wrap:nowrap;gap:4px 8px}.opts .seg{flex:0 1 auto;min-width:0}.opts .seg button{padding:0 clamp(4px,1.7vw,10px);font-size:clamp(11px,3.2vw,13px);white-space:nowrap}.opts .chk{flex:1 1 0;min-width:0;gap:6px;min-height:32px;font-size:clamp(10.5px,2.9vw,12px);line-height:1.15;overflow-wrap:anywhere}.opts .chk input{flex:none;width:18px;height:18px}@media(max-width:340px){.opts{gap:4px}.opts .chk{gap:4px;font-size:10px}.opts .chk input{width:16px;height:16px}.opts .seg button{padding:0 3px}}
-.kb{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
-.kb .kl{display:flex;flex-wrap:nowrap;gap:4px;margin-bottom:10px;direction:ltr}
-.kb .kl button{flex:1 1 auto;min-width:0;white-space:nowrap;min-height:34px;padding:0 3px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--mut);cursor:pointer;font-size:clamp(11px,3vw,13px)}
+.kb{margin-top:4px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.kb .kl{display:flex;flex-wrap:nowrap;gap:4px;margin-bottom:6px;direction:ltr}
+.kb .kl button{flex:1 1 auto;min-width:0;white-space:nowrap;min-height:28px;padding:0 3px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--mut);cursor:pointer;font-size:clamp(11px,3vw,13px)}
 .kb .kl button.on{color:var(--ink);border-color:var(--ink)}
-.keys{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px}
+.keys{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:4px}
 .keys.forms{display:flex;flex-wrap:wrap}.keys.forms button{min-width:44px}
-.keys button{min-width:0;min-height:44px;padding:0;font:22px/1 var(--lex);border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+.keys button{min-width:0;min-height:36px;padding:0;font:19px/1 var(--lex);border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
 .keys button.fn{font:13px 'Noto Sans',sans-serif;padding:0 4px;color:var(--mut);white-space:nowrap;overflow:hidden}
 .bsi{display:inline-block;font-size:16px;line-height:1}.kb[dir=rtl] .bsi{transform:scaleX(-1)}
 .keys.forms{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
@@ -208,12 +208,13 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .empty{padding:28px 0;color:var(--mut);max-width:60ch}
 .empty b{color:var(--ink)}
 #more{margin-top:14px}
+.gmore{list-style:none;margin:2px 0 18px}.gmore button{all:unset;cursor:pointer;font:600 14px/1.3 'Noto Sans',sans-serif;color:var(--lap);padding:6px 12px;border:1px dashed var(--line);border-radius:10px}.gmore button:hover{border-style:solid}
 .ljmp{padding:2px 2px 2px 0 !important;position:fixed;left:calc(env(safe-area-inset-left,0px) - 5px);bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;display:flex;flex-direction:column;gap:5px;max-height:calc(100dvh - var(--lnt,200px) - 24px);overflow:auto;scrollbar-width:none;padding:2px}.ljmp[hidden]{display:none}
 .ljmp button{all:unset;cursor:pointer;flex:none;width:35px;height:40px;padding-left:5px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:0 12px 12px 0;border-left:0 !important;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);color:var(--lap);border:1px solid var(--line);box-shadow:0 3px 10px rgb(0 0 0/.13)}
 .ljmp button .s{font:400 17px/1 var(--lex)}.ljmp button .n{font:600 9.5px/1 'Noto Sans',sans-serif;opacity:.75}
 .ljmp button.in{border-style:dashed}.ljmp button.in .s{font:700 16px/1 'Noto Sans',sans-serif;color:var(--rub)}
 .ljmp button:hover,.ljmp button:focus-visible{background:var(--lap);color:var(--bg)}.ljmp button:hover .s{color:inherit}
-@media(max-width:999px){body.ljv .wrap{padding-left:calc(max(5vw,16px) + 18px)}}
+@media(max-width:999px){body.ljv .wrap{padding-left:calc(max(5vw,16px) + 18px)}body.ljv #kb{margin-left:-18px}}
 @media(min-width:1000px){.ljmp{display:none}}
 .jmp{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;display:flex;flex-direction:column;gap:8px}.jmp[hidden]{display:none}
 .jmp button{all:unset;cursor:pointer;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:var(--bg);color:var(--lap);border:1px solid var(--line);box-shadow:0 4px 12px rgb(0 0 0/.15);font:800 19px/1 'Noto Sans',sans-serif}
@@ -259,7 +260,7 @@ html{scrollbar-gutter:stable}
 .dl .sg{font-weight:700;color:var(--rub)}.dl .nm{font-weight:500;overflow-wrap:anywhere}.sgt{text-decoration:none;font-weight:600}
 .dl .cpy{display:block;font-size:12px;color:var(--mut);opacity:.85}
 .dl .cpy.inl{display:inline;margin-inline-start:8px;font-weight:400}
-@media(min-width:900px){.top{padding-inline:clamp(24px,2.5vw,48px)}.top .tin{max-width:none;margin:0}.top .tin>div{flex:1 1 auto}.top .lgb{max-width:none;margin-inline:0;justify-content:flex-start}.top .sub,.top .sub2,.top .credit{max-width:none}}
+@media(min-width:900px){.top{padding-inline:max(5vw,16px)}}@media(min-width:1000px){.top{padding-left:max(5vw,118px)}}@media(min-width:900px){.top .tin{max-width:none;margin:0}.top .tin>div{flex:1 1 auto}.top .lgb{max-width:none;margin-inline:0;justify-content:flex-start}.top .sub,.top .sub2,.top .credit{max-width:none}}
 @media(display-mode:standalone){:root{--sat:max(env(safe-area-inset-top,0px),12px)}}
 html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
 .dl .mt{display:block;font-size:13px;color:var(--mut)}
@@ -354,7 +355,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v3.1 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <b>v3</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v3.2 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <b>v3</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -380,7 +381,7 @@ const I18N={
   search:'Поиск',clear:'Очистить',alphabet:'Алфавит',more:'Показать ещё',copy:'копировать',expand:'развернуть',close:'Закрыть',
   all:'Все',langgrp:'Язык',modegrp:'Режим поиска',pre:'Начало',in:'Содержит',ex:'Точно',scope:'и в переводах',
   sec_tr:'Транслитерация',tr_note:'Выберите систему для каждого языка: она показывается рядом с заглавными словами. Ниже — полная таблица выбранной системы. Красным — что набирать в поиске.',
-  updfail:'Сервер недоступен. Попробуйте позже',vis_tab:'Посещения',vis_today:'Посещений сегодня',vis_total:'За всё время',vis_c:'Стран сегодня',vis_err:'Нет данных',sec_set:'Выбрать словари',latnote:'Нажмите на латинское объяснение, чтобы его перевести.',cr_mail:'Написать письмо',cr_title:'Об инструменте',cp_unk:'права не указаны',cp_auth:'автор и издатель',cr_author:'Концепция',cr_course:'Курс',cr_cname:'Методология цифрового издания',cr_pub:'Издательство',cr_contact:'Контакт',cr_src:'Словари',credit:'Инструмент создан Sergey Kim (UNIL, FTSR, IRSB) в рамках курса «Методология цифрового издания».',inbody:'Найдено внутри статей',lnin:'Внутри статей',dicts:'Словари',uilang:'Язык интерфейса',
+  updfail:'Сервер недоступен. Попробуйте позже',vis_tab:'Посещения',vis_today:'Посещений сегодня',vis_total:'За всё время',vis_c:'Стран сегодня',vis_err:'Нет данных',sec_set:'Выбрать словари',latnote:'Нажмите на латинское объяснение, чтобы его перевести.',cr_mail:'Написать письмо',cr_title:'Об инструменте',cp_unk:'права не указаны',cp_auth:'автор и издатель',cr_author:'Концепция',cr_course:'Курс',cr_cname:'Методология цифрового издания',cr_pub:'Издательство',cr_contact:'Контакт',cr_src:'Словари',credit:'Инструмент создан Sergey Kim (UNIL, FTSR, IRSB) в рамках курса «Методология цифрового издания».',inbody:'Найдено внутри статей',gall:'Показать все',lnin:'Внутри статей',dicts:'Словари',uilang:'Язык интерфейса',
   attrib:'Lexicon Linguae Aethiopicae: цифровое издание TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt и др.), лицензия CC BY-NC-SA 4.0.',
   found:'Найдено: ',none:'Ничего не найдено. Попробуйте режим «Содержит» или другой язык.',rxerr:'Ошибка в регулярном выражении',
   empty:(tot,a,n)=>`<b>${tot}</b> статей в ${a} из ${n} словар${n==1?'я':'ей'}${a?'':' — включите хотя бы один в списке словарей'}. Например: ${EX}. Транслитерация и выбор словарей — внизу.`,
@@ -397,7 +398,7 @@ const I18N={
   search:'Search',clear:'Clear',alphabet:'Alphabet',more:'Show more',copy:'copy',expand:'expand',close:'Close',
   all:'All',langgrp:'Language',modegrp:'Search mode',pre:'Starts with',in:'Contains',ex:'Exact',scope:'in translations',
   sec_tr:'Transliteration',tr_note:'Choose a system for each language: it is shown next to headwords. The full table of the selected system is below. In red: what to type in the search.',
-  updfail:'Server unavailable. Please try again later',vis_tab:'Visits',vis_today:'Visits today',vis_total:'All time',vis_c:'Countries today',vis_err:'No data',sec_set:'Choose dictionaries',latnote:'Tap a Latin definition to translate it.',cp_unk:'rights not stated',cp_auth:'author and publisher',cr_mail:'Send an e-mail',cr_title:'Credits',cr_author:'Concept',cr_course:'Course',cr_cname:'Methodology of Digital Edition',cr_pub:'Publisher',cr_contact:'Contact',cr_src:'Dictionaries',credit:'Tool created by Sergey Kim (UNIL, FTSR, IRSB) as part of the course “Methodology of Digital Edition”.',inbody:'Found inside entries',lnin:'Inside entries',dicts:'Dictionaries',uilang:'Interface language',
+  updfail:'Server unavailable. Please try again later',vis_tab:'Visits',vis_today:'Visits today',vis_total:'All time',vis_c:'Countries today',vis_err:'No data',sec_set:'Choose dictionaries',latnote:'Tap a Latin definition to translate it.',cp_unk:'rights not stated',cp_auth:'author and publisher',cr_mail:'Send an e-mail',cr_title:'Credits',cr_author:'Concept',cr_course:'Course',cr_cname:'Methodology of Digital Edition',cr_pub:'Publisher',cr_contact:'Contact',cr_src:'Dictionaries',credit:'Tool created by Sergey Kim (UNIL, FTSR, IRSB) as part of the course “Methodology of Digital Edition”.',inbody:'Found inside entries',gall:'Show all',lnin:'Inside entries',dicts:'Dictionaries',uilang:'Interface language',
   attrib:'Lexicon Linguae Aethiopicae: digital edition by TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt et al.), licence CC BY-NC-SA 4.0.',
   found:'Found: ',none:'Nothing found. Try “Contains” mode or another language.',rxerr:'Error in regular expression',
   empty:(tot,a,n)=>`<b>${tot}</b> entries in ${a} of ${n} dictionaries${a?'':' — enable at least one in the list'}. For example: ${EX}. Transliteration and dictionary choice are at the bottom.`,
@@ -414,7 +415,7 @@ const I18N={
   search:'Suche',clear:'Löschen',alphabet:'Alphabet',more:'Mehr anzeigen',copy:'kopieren',expand:'aufklappen',close:'Schließen',
   all:'Alle',langgrp:'Sprache',modegrp:'Suchmodus',pre:'Anfang',in:'Enthält',ex:'Genau',scope:'in Übersetzungen',
   sec_tr:'Transliteration',tr_note:'Wählen Sie für jede Sprache ein System: Es erscheint neben den Lemmata. Darunter steht die vollständige Tabelle. Rot: was Sie in der Suche tippen.',
-  updfail:'Server nicht erreichbar. Bitte später erneut versuchen',vis_tab:'Besuche',vis_today:'Besuche heute',vis_total:'Insgesamt',vis_c:'Länder heute',vis_err:'Keine Daten',sec_set:'Wörterbücher auswählen',latnote:'Eine lateinische Erklärung antippen, um sie zu übersetzen.',cp_unk:'Rechte nicht angegeben',cp_auth:'Autor und Verlag',cr_mail:'E-Mail schreiben',cr_title:'Credits',cr_author:'Konzept',cr_course:'Kurs',cr_cname:'Methodik der digitalen Edition',cr_pub:'Verlag',cr_contact:'Kontakt',cr_src:'Wörterbücher',credit:'Werkzeug erstellt von Sergey Kim (UNIL, FTSR, IRSB) im Rahmen des Kurses „Methodik der digitalen Edition“.',inbody:'Innerhalb der Einträge gefunden',lnin:'Innerhalb der Einträge',dicts:'Wörterbücher',uilang:'Sprache der Oberfläche',
+  updfail:'Server nicht erreichbar. Bitte später erneut versuchen',vis_tab:'Besuche',vis_today:'Besuche heute',vis_total:'Insgesamt',vis_c:'Länder heute',vis_err:'Keine Daten',sec_set:'Wörterbücher auswählen',latnote:'Eine lateinische Erklärung antippen, um sie zu übersetzen.',cp_unk:'Rechte nicht angegeben',cp_auth:'Autor und Verlag',cr_mail:'E-Mail schreiben',cr_title:'Credits',cr_author:'Konzept',cr_course:'Kurs',cr_cname:'Methodik der digitalen Edition',cr_pub:'Verlag',cr_contact:'Kontakt',cr_src:'Wörterbücher',credit:'Werkzeug erstellt von Sergey Kim (UNIL, FTSR, IRSB) im Rahmen des Kurses „Methodik der digitalen Edition“.',inbody:'Innerhalb der Einträge gefunden',gall:'Alle anzeigen',lnin:'Innerhalb der Einträge',dicts:'Wörterbücher',uilang:'Sprache der Oberfläche',
   attrib:'Lexicon Linguae Aethiopicae: digitale Edition TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt u. a.), Lizenz CC BY-NC-SA 4.0.',
   found:'Gefunden: ',none:'Nichts gefunden. Versuchen Sie „Enthält“ oder eine andere Sprache.',rxerr:'Fehler im regulären Ausdruck',
   empty:(tot,a,n)=>`<b>${tot}</b> Einträge in ${a} von ${n} Wörterbüchern${a?'':' — aktivieren Sie mindestens eines in der Liste'}. Zum Beispiel: ${EX}. Transliteration und Wörterbücher finden Sie unten.`,
@@ -431,7 +432,7 @@ const I18N={
   search:'Recherche',clear:'Effacer',alphabet:'Alphabet',more:'Afficher plus',copy:'copier',expand:'déplier',close:'Fermer',
   all:'Tous',langgrp:'Langue',modegrp:'Mode de recherche',pre:'Début',in:'Contient',ex:'Exact',scope:'dans les traductions',
   sec_tr:'Translittération',tr_note:'Choisissez un système pour chaque langue : il s’affiche à côté des lemmes. La table complète du système choisi figure ci-dessous. En rouge : ce qu’il faut taper dans la recherche.',
-  updfail:'Serveur indisponible. Réessayez plus tard',vis_tab:'Visites',vis_today:'Visites aujourd’hui',vis_total:'Depuis le début',vis_c:'Pays aujourd’hui',vis_err:'Pas de données',sec_set:'Choisir les dictionnaires',latnote:'Touchez une définition latine pour la traduire.',cr_mail:'Écrire un courriel',cr_title:'Crédits',cp_unk:'droits non précisés',cp_auth:'auteur et éditeur',cr_author:'Conception',cr_course:'Cours',cr_cname:'Ecdotique numérique',cr_pub:'Éditeur',cr_contact:'Contact',cr_src:'Dictionnaires',credit:'Outil créé par Sergey Kim (UNIL, FTSR, IRSB) dans le cadre du cours « Ecdotique numérique ».',inbody:'Trouvé dans le corps des articles',lnin:'Dans les articles',dicts:'Dictionnaires',uilang:'Langue de l’interface',
+  updfail:'Serveur indisponible. Réessayez plus tard',vis_tab:'Visites',vis_today:'Visites aujourd’hui',vis_total:'Depuis le début',vis_c:'Pays aujourd’hui',vis_err:'Pas de données',sec_set:'Choisir les dictionnaires',latnote:'Touchez une définition latine pour la traduire.',cr_mail:'Écrire un courriel',cr_title:'Crédits',cp_unk:'droits non précisés',cp_auth:'auteur et éditeur',cr_author:'Conception',cr_course:'Cours',cr_cname:'Ecdotique numérique',cr_pub:'Éditeur',cr_contact:'Contact',cr_src:'Dictionnaires',credit:'Outil créé par Sergey Kim (UNIL, FTSR, IRSB) dans le cadre du cours « Ecdotique numérique ».',inbody:'Trouvé dans le corps des articles',gall:'Tout afficher',lnin:'Dans les articles',dicts:'Dictionnaires',uilang:'Langue de l’interface',
   attrib:'Lexicon Linguae Aethiopicae : édition numérique TraCES / Hiob-Ludolf-Zentrum, Hambourg (A. Bausi, A. Ellwardt et al.), licence CC BY-NC-SA 4.0.',
   found:'Résultats : ',none:'Aucun résultat. Essayez le mode « Contient » ou une autre langue.',rxerr:'Erreur dans l’expression régulière',
   empty:(tot,a,n)=>`<b>${tot}</b> articles dans ${a} dictionnaire${a>1?'s':''} sur ${n}${a?'':' — activez-en au moins un dans la liste'}. Par exemple : ${EX}. Translittération et dictionnaires en bas de page.`,
@@ -448,7 +449,7 @@ const I18N={
   search:'Ricerca',clear:'Cancella',alphabet:'Alfabeto',more:'Mostra altri',copy:'copia',expand:'espandi',close:'Chiudi',
   all:'Tutti',langgrp:'Lingua',modegrp:'Modalità di ricerca',pre:'Inizio',in:'Contiene',ex:'Esatto',scope:'nelle traduzioni',
   sec_tr:'Traslitterazione',tr_note:'Scegliete un sistema per ogni lingua: compare accanto ai lemmi. Sotto, la tabella completa del sistema scelto. In rosso: cosa digitare nella ricerca.',
-  updfail:'Server non disponibile. Riprova più tardi',vis_tab:'Visite',vis_today:'Visite oggi',vis_total:'In totale',vis_c:'Paesi oggi',vis_err:'Nessun dato',sec_set:'Scegli i dizionari',latnote:'Toccate una definizione latina per tradurla.',cr_mail:'Scrivere un’e-mail',cr_title:'Crediti',cp_unk:'diritti non indicati',cp_auth:'autore ed editore',cr_author:'Ideazione',cr_course:'Corso',cr_cname:'Metodologia dell’edizione digitale',cr_pub:'Editore',cr_contact:'Contatto',cr_src:'Dizionari',credit:'Strumento creato da Sergey Kim (UNIL, FTSR, IRSB) nell’ambito del corso «Metodologia dell’edizione digitale».',inbody:'Trovato all’interno delle voci',lnin:'All’interno delle voci',dicts:'Dizionari',uilang:'Lingua dell’interfaccia',
+  updfail:'Server non disponibile. Riprova più tardi',vis_tab:'Visite',vis_today:'Visite oggi',vis_total:'In totale',vis_c:'Paesi oggi',vis_err:'Nessun dato',sec_set:'Scegli i dizionari',latnote:'Toccate una definizione latina per tradurla.',cr_mail:'Scrivere un’e-mail',cr_title:'Crediti',cp_unk:'diritti non indicati',cp_auth:'autore ed editore',cr_author:'Ideazione',cr_course:'Corso',cr_cname:'Metodologia dell’edizione digitale',cr_pub:'Editore',cr_contact:'Contatto',cr_src:'Dizionari',credit:'Strumento creato da Sergey Kim (UNIL, FTSR, IRSB) nell’ambito del corso «Metodologia dell’edizione digitale».',inbody:'Trovato all’interno delle voci',gall:'Mostra tutti',lnin:'All’interno delle voci',dicts:'Dizionari',uilang:'Lingua dell’interfaccia',
   attrib:'Lexicon Linguae Aethiopicae: edizione digitale TraCES / Hiob-Ludolf-Zentrum, Amburgo (A. Bausi, A. Ellwardt et al.), licenza CC BY-NC-SA 4.0.',
   found:'Trovati: ',none:'Nessun risultato. Provate la modalità «Contiene» o un’altra lingua.',rxerr:'Errore nell’espressione regolare',
   empty:(tot,a,n)=>`<b>${tot}</b> voci in ${a} dizionari${a==1?'o':''} su ${n}${a?'':' — attivatene almeno uno nell’elenco'}. Per esempio: ${EX}. Traslitterazione e dizionari in fondo alla pagina.`,
@@ -567,6 +568,47 @@ function buildVoc(q){
   }
   if(!toks.length)return null;const body=toks.join('');
   return {ex:new RegExp('^'+body+'$','u'),pre:new RegExp('^'+body,'u'),in:new RegExp(body,'u')};
+}
+
+/* Arabic: vocalized queries match only identically vocalized forms (headwords and words inside entries) */
+const AH=/[ً-ْٰ]/,AWD=/[ء-يٱً-ْٰ]+/g;
+const vn=s=>String(s).normalize('NFC').replace(/ـ/g,'').replace(/ٱ/g,'ا').replace(/َ?ٰ/g,'َا').normalize('NFC');
+function arWords(d){if(d.av)return d.av;d.av=d.entries.map((e,i)=>{const t=String(e[1]||'');if(!AH.test(t)&&!AH.test(e[0]))return '';return ' '+(String(e[0])+' '+t.replace(/[\x00-\x1f-]/g,' ')).match(AWD)?.filter(w=>AH.test(w)).map(vn).join(' ')+' '});return d.av}
+const ARC={b:'ب',t:'تة',th:'ث',ṯ:'ث',j:'ج',ǧ:'ج',g:'ج',ḥ:'ح',h:'هحة',x:'خ',ḫ:'خ',kh:'خ',d:'د',ḏ:'ذ',dh:'ذ',r:'ر',z:'ز',s:'س',š:'ش',sh:'ش',ṣ:'ص',ḍ:'ض',ṭ:'ط',ẓ:'ظ','(':'ع',ġ:'غ',gh:'غ',f:'ف',q:'ق',k:'ك',l:'ل',m:'م',n:'ن',w:'و',y:'ي',')':'ءأإؤئا'};
+const ARV={a:'َ',i:'ِ',u:'ُ'};
+function buildArVoc(q){
+  let src=q.normalize('NFC').toLowerCase().replace(/[ʾ’'ʼʔ]/g,')').replace(/[ʿ‘`ʻʕ]/g,'(').replace(/[âàá]/g,'ā').replace(/[îìí]/g,'ī').replace(/[ûùú]/g,'ū');
+  src=src.replace(/(^|\s)al-/g,'$1\x01');
+  const toks=[];let i=0;const cls=c=>'['+[...c].map(reEsc).join('')+']';
+  while(i<src.length){
+    const ch=src[i];
+    if(ch===' '){toks.push(' ');i++;continue}
+    if(ch==='\x01'){toks.push('[اأ]َ?لْ?');i++;continue}
+    if(ch==='-'){i++;continue}
+    let C=null,lead=false,sp='';const two=src.substr(i,2);
+    if(two.length===2&&ARC[two]&&!'aiuāīū'.includes(two[1])){C=ARC[two];sp=two;i+=2}
+    else if(ARC[ch]){C=ARC[ch];sp=ch;i++}
+    else if('aiuāīū'.includes(ch)){C='اأإ';lead=true}
+    else return null;
+    let dbl=false;
+    if(!lead&&src.substr(i,sp.length)===sp){dbl=true;i+=sp.length}
+    let v=src[i]||'',long=false;
+    if(v==='a'||v==='i'||v==='u'){if(src[i+1]===v){long=true;i+=2}else i++}
+    else if(v==='ā'||v==='ī'||v==='ū'){long=true;v={ā:'a',ī:'i',ū:'u'}[v];i++}
+    else v='';
+    const end=i>=src.length||src[i]===' '||src[i]==='-';
+    let p;
+    if(C===ARC[')']&&v==='a'&&long){p='(?:آ|[أاء]َ[اى])';}
+    else{
+      p=cls(C)+(v?ARV[v]:'')+(dbl?'ّ':'')+(v?'':'ْ?');
+      if(long)p+=v==='a'?'[اى]':v==='i'?'يْ?':'وْ?';
+      if(v&&!long&&src[i]==='n'&&(i+1>=src.length||src[i+1]===' ')){p=cls(C)+(dbl?'':'')+'(?:'+ARV[v]+(dbl?'ّ':'')+'نْ?|'+({a:'ً',u:'ٌ',i:'ٍ'})[v]+(dbl?'ّ':'')+'[اى]?)';i++}
+      else if(v==='a'&&!long&&end)p+='(?:[ةه][ً-ِ]?)?';
+    }
+    toks.push(p);
+  }
+  if(!toks.length)return null;const body=toks.join('');
+  try{return {ex:new RegExp('^'+body+'$','u'),pre:new RegExp('^'+body,'u'),in:new RegExp(body,'u'),wex:new RegExp('(?:^| )'+body+'(?= |$)','u'),wpre:new RegExp('(?:^| )'+body,'u'),win:new RegExp(body,'u')}}catch(e){return null}
 }
 const RTM={
  ka:{'ა':'a','ბ':'b','გ':'g','დ':'d','ე':'e','ვ':'v','ზ':'z','ჱ':'ē','თ':'t','ი':'i','კ':'ḳ','ლ':'l','მ':'m','ნ':'n','ჲ':'y','ო':'o','პ':'ṗ','ჟ':'ž','რ':'r','ს':'s','ტ':'ṭ','ჳ':'w','უ':'u','ფ':'p','ქ':'k','ღ':'ġ','ყ':'q̇','შ':'š','ჩ':'č','ც':'c','ძ':'ʒ','წ':'c̣','ჭ':'č̣','ხ':'x','ჴ':'q','ჯ':'ǯ','ჰ':'h','ჵ':'ō','ჶ':'f'},
@@ -753,7 +795,9 @@ function search(){
   if(mode==='re'){try{re=new RegExp(q,'iu')}catch(e){$('#stat').textContent=I.rxerr;$('#res').innerHTML='';$('#more').hidden=true;sugHide();return}}
   const lat=!re&&isLatinQ(q),RX={};
   if(lat)for(const L in CL)RX[L]=buildRx(q,L);
-  const qv=lat&&/[aeiouə]/.test(prep(q)),VX=lat&&RX.gez&&RX.gez.ok?buildVoc(q):null;
+  const qv=lat&&/[aeiouə]/.test(prep(q)),VX=lat&&RX.gez&&RX.gez.ok?buildVoc(q):null,AV=lat&&qv?buildArVoc(q):null;
+  const qa=!re&&!lat&&/[\u0621-\u064A]/.test(q)&&AH.test(q)?vn(q.trim()):'';
+  const qaR=qa?{ex:new RegExp('^'+reEsc(qa)+'$','u'),pre:new RegExp('^'+reEsc(qa),'u'),in:new RegExp(reEsc(qa),'u'),wex:new RegExp('(?:^| )'+reEsc(qa)+'(?= |$)','u'),wpre:new RegExp('(?:^| )'+reEsc(qa),'u'),win:new RegExp(reEsc(qa),'u')}:null,AR=AV||qaR;
   const qh=norm(q),qd=words(qh).trim();HL={qd,qh,mode,re,lat,rx:RX};inbHead=false;
   for(const d of act){
     keys(d);const E=d.entries;
@@ -765,9 +809,12 @@ function search(){
       else{
         const rx=lat&&RX[L];
         if(rx&&L==='gez'&&VX){const h=d.hk[i];if(VX.ex.test(h))s=0;else if(mode!=='ex'&&VX.pre.test(h))s=1;else if(mode==='in'&&VX.in.test(h))s=2;if(s>=0)voc=1}
-        if(rx&&s<0&&!(L==='gez'&&qv)){if(rx.ok){const k=CL[L].sem?d.sk[i]:d.hk[i];if(rx.ex.test(k))s=0;else if(mode!=='ex'&&rx.pre.test(k))s=1;else if(mode==='in'&&rx.in.test(k))s=2}}
+        if(AR&&L==='ar'){const h=vn(E[i][0]);if(AR.ex.test(h))s=0;else if(mode!=='ex'&&AR.pre.test(h))s=1;else if(mode==='in'&&AR.in.test(h))s=2;if(s>=0)voc=1}
+        if(AR&&s<0&&scope){const w=arWords(d)[i];if(w){const m=(mode==='ex'?AR.wex:mode==='pre'?AR.wpre:AR.win).exec(w);if(m){s=3;pos=m.index}}}
+        if(AR&&L==='ar'){}
+        else if(rx&&s<0&&!(L==='gez'&&qv)){if(rx.ok){const k=CL[L].sem?d.sk[i]:d.hk[i];if(rx.ex.test(k))s=0;else if(mode!=='ex'&&rx.pre.test(k))s=1;else if(mode==='in'&&rx.in.test(k))s=2}}
         else if(!rx){const h=d.hk[i];if(h===qh)s=0;else if(mode!=='ex'&&h.startsWith(qh))s=1;else if(mode==='in'&&h.includes(qh))s=2}
-        if(s<0&&scope&&qd){const k=d.dk[i],x=mode==='ex'?k.indexOf(' '+qd+' '):mode==='pre'?k.indexOf(' '+qd):k.indexOf(qd);if(x>=0){s=3;pos=x}}
+        if(s<0&&scope&&qd&&!qa){const k=d.dk[i],x=mode==='ex'?k.indexOf(' '+qd+' '):mode==='pre'?k.indexOf(' '+qd):k.indexOf(qd);if(x>=0){s=3;pos=x}}
       }
       if(s>=0)results.push([s,s===3?pos*4+Math.min(E[i][1].length,400)/100:E[i][0].length+(voc?0:lat&&RX[L]?30+(qv&&CL[L].sem?40:0):0),d,i]);
     }
@@ -780,7 +827,7 @@ function search(){
    results=results.map((r,k)=>[r,k]).sort((a,b)=>sec(a[0])-sec(b[0])||first.get(gk(a[0]))-first.get(gk(b[0]))||a[1]-b[1]).map(x=>x[0])}
   $('#stat').textContent=results.length?I.found+results.length.toLocaleString(UIL):I.none;
   GF=new Map();results.forEach((r,k)=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);if(!GF.has(g))GF.set(g,k)});
-  $('#res').innerHTML='';more();renderSug();lnavRender();requestAnimationFrame(jmpUpd);
+  gOpen=new Set();gPrep();$('#res').innerHTML='';more();renderSug();lnavRender();requestAnimationFrame(jmpUpd);
 }
 let GF=new Map();
 function lnavRender(){
@@ -854,14 +901,20 @@ function defHtml0(d,e,l){
   const both=a.length===b.length?a.map((x,i)=>pair(x,b[i],i)).join(''):`<div class="pla">${la}</div><div class="pru">${formatDef(r,l,e[0])}</div>`;
   return `<div class="tv tla">${la}</div><div class="tv tru"><div class="pru">${formatDef(r,l,e[0])}</div></div><div class="tv tbo">${both}</div>`;
 }
+const GMAX=10;let gOpen=new Set(),gInfo=new Map();
+function gPrep(){gInfo=new Map();const c={};results.forEach((r,k)=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);c[g]=(c[g]||0)+1;gInfo.set(k,[g,c[g]])});gInfo.tot=c}
 function more(){
-  const part=results.slice(shown,shown+PAGE);shown+=part.length;
-  const k0=shown-part.length;$('#res').insertAdjacentHTML('beforeend',part.map(([s,_,d,i],j)=>{const e=d.entries[i],l=elang(d,i);
-    let sep='';if(s===3&&!inbHead){inbHead=true;sep=`<li class="sep">${I.inbody} · ${results.filter(r=>r[0]===3).length.toLocaleString(UIL)}</li>`}
-    return sep+`<li class="${s===3?'inb':''}" data-k="${k0+j}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hlf"><span class="hw" dir="auto">${s<3?hlHead(e[0],s,l):esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn(e):''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}).join(''));
+  let vis=0,html='';
+  while(shown<results.length&&vis<PAGE){const k=shown++,[g,n]=gInfo.get(k)||['',0];if(n>GMAX&&!gOpen.has(g))continue;vis++;
+    html+=hitHtml(results[k],k);if(n===GMAX&&gInfo.tot[g]>GMAX&&!gOpen.has(g))html+=`<li class="gmore"><button type="button" data-gm="${g}">${esc(I.gall||'Show all')} · ${gInfo.tot[g].toLocaleString(UIL)}</button></li>`}
+  $('#res').insertAdjacentHTML('beforeend',html);
   $('#more').hidden=shown>=results.length;
   requestAnimationFrame(()=>{for(const h of $('#res').querySelectorAll('.hit:not([data-m])')){h.dataset.m=1;const d=h.querySelector('.def');if(d.scrollHeight>d.getBoundingClientRect().height*0+(d.querySelector('.tv')?18:7.6)*parseFloat(getComputedStyle(d).fontSize)+4)h.classList.add('long')}});
 }
+function gExpand(g){const y=scrollY,n=shown;gOpen.add(g);$('#res').innerHTML='';shown=0;inbHead=false;while(shown<n&&shown<results.length)more();scrollTo({top:y})}
+function hitHtml([s,_,d,i],kk){{const j=0,k0=kk;const e=d.entries[i],l=elang(d,i);
+    let sep='';if(s===3&&!inbHead){inbHead=true;sep=`<li class="sep">${I.inbody} · ${results.filter(r=>r[0]===3).length.toLocaleString(UIL)}</li>`}
+    return sep+`<li class="${s===3?'inb':''}" data-k="${k0+j}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hlf"><span class="hw" dir="auto">${s<3?hlHead(e[0],s,l):esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn(e):''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}}
 
 /* ---------- entry formatting ---------- */
 function arForms(raw){const W='[\\u0600-\\u06FF]+(?:[ \\t]+[\\u0600-\\u06FF]+)*',R=new RegExp('^'+W+'(?:(?:\\s*,\\s*|\\s+\\x02(?:et|and)\\x03\\s+)'+W+')*');return String(raw).split('\n').map(ln=>ln.replace(R,m=>m.replace(new RegExp(W,'g'),'$&'))).join('\n')}
@@ -934,7 +987,7 @@ const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\u2060\uE000-\uE013]/g,'
 /* ---------- UI rendering ---------- */
 function langsPresent(){const s=new Set();for(const d of dicts){if(d.lang==='mix')d.entries.forEach(e=>s.add(e[2]));else s.add(d.lang)}return Object.keys(LANGS).filter(k=>s.has(k))}
 function renderChips(){}
-const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'L',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ع'};
+const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'L',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ظ'};
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;(by[d.lang]=by[d.lang]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
 const INTERIM=new Set(['b-graf','b-brk','b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
@@ -976,7 +1029,7 @@ let kbLang=LS.get('kb','syr'),gezBase=null;
 function kbAuto(){const B=[...$('#lgb').querySelectorAll('button[data-g]')],A=B.filter(b=>!b.classList.contains('off')).map(b=>b.dataset.g);if(!A.length||A.length===B.length)return;const l=A.find(x=>KEYS[x]);if(l&&l!==kbLang){kbLang=l;gezBase=null;renderKb()}}
 function renderKb(){
   const k=$('#kb');if(k.hidden)return;
-  const L=Object.keys(KEYS);if(langF&&KEYS[langF])kbLang=langF;
+  const L=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>KEYS[k]);if(langF&&KEYS[langF])kbLang=langF;
   let h=`<div class="kl">${L.map(l=>`<button data-k="${l}" class="${l===kbLang?'on':''}" title="${esc((I.lang&&I.lang[l])||LANGS[l][0])}">${esc((I.chip&&I.chip[l]||l).replace(/\.$/,''))}</button>`).join('')}</div>`;
   if(kbLang==='gez'&&gezBase!=null)h+=`<div class="keys forms">${[0,1,2,3,4,5,6].map(o=>`<button data-c="${String.fromCharCode(gezBase+o)}">${String.fromCharCode(gezBase+o)}</button>`).join('')}</div>`;
   h+=`<div class="keys">${KEYS[kbLang].split(' ').map(c=>`<button ${kbLang==='gez'?'data-g':'data-c'}="${c}">${c}</button>`).join('')}<button class="fn" data-c=" " aria-label="${esc(I.space)}" title="${esc(I.space)}">${I.space}</button><button class="fn" data-bs="1" aria-label="${esc(I.bksp.replace('⌫','').trim())}" title="${esc(I.bksp.replace('⌫','').trim())}"><span class="bsi">⌫</span> ${esc(I.bksp.replace('⌫','').trim())}</button></div>`;
@@ -984,7 +1037,7 @@ function renderKb(){
 }
 function layoutKeys(){
   const g=$('#kb').querySelector('.keys:not(.forms)');if(!g||!g.clientWidth)return;
-  const n=g.querySelectorAll('button:not(.fn)').length,w=g.clientWidth,gap=6,base=Math.max(5,Math.floor((w+gap)/50)),ok=c=>c>=5&&(w-gap*(c-1))/c>=34;
+  const n=g.querySelectorAll('button:not(.fn)').length,w=g.clientWidth,gap=4,base=Math.max(5,Math.floor((w+gap)/44)),ok=c=>c>=5&&(w-gap*(c-1))/c>=30;
   let cols=base,free=base-n%base;
   for(const c of [base,base+1,base-1,base+2,base-2,base+3,base-3,base+4]){const f=c-n%c;if(ok(c)&&f>=2&&f<c){cols=c;free=f;break}}
   if(free<2){cols++;free=cols-n%cols}
@@ -1207,9 +1260,10 @@ function libSync(force){
 
 /* ---------- jump to start / end of results ---------- */
 function jmpUpd(){const j=$('#jmp');j.hidden=!results.length||document.documentElement.scrollHeight<=innerHeight+40}
+$('#res').addEventListener('click',e=>{const b=e.target.closest('[data-gm]');if(b){e.stopPropagation();gExpand(b.dataset.gm)}},true);
 $('#jmp').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if(!b)return;
   if(b.dataset.j==='top'){scrollTo({top:0,behavior:'smooth'});return}
-  while(shown<results.length)more();requestAnimationFrame(()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'}))});
+  scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'})});
 addEventListener('resize',jmpUpd);
 
 /* mark the word whose popup is open */
@@ -1275,7 +1329,7 @@ document.addEventListener('click',e=>{if(!$('#pop').hidden&&!e.target.closest('#
 $('#mail').addEventListener('click',e=>{e.preventDefault();location.href='mailto:'+['sergey.kim','unil.ch'].join('@')});
 $('#syms').addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault()});
 $('#syms').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;insert(b.dataset.s);$('#q').focus()});
-$('#kbB').addEventListener('click',()=>{const k=$('#kb');k.hidden=!k.hidden;$('#kbB').setAttribute('aria-expanded',!k.hidden);renderKb();kbAuto();cmpUpd();renderSug()});
+$('#kbB').addEventListener('click',()=>{const k=$('#kb');k.hidden=!k.hidden;$('#kbB').setAttribute('aria-expanded',!k.hidden);renderKb();kbAuto();cmpUpd();renderSug();if(k.hidden)$('#q').focus({preventScroll:true})});
 $('#kb').addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault()});
 $('#kb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
   if(b.dataset.k){kbLang=b.dataset.k;gezBase=null;LS.set('kb',kbLang);renderKb();return}
