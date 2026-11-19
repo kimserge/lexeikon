@@ -152,7 +152,7 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#ffe
 .hit{padding:14px 2px}
 .hd{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}.hlf{flex:1 1 auto;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 4px}.hlf .hw{min-width:0;overflow-wrap:anywhere}.hb{flex:none;display:inline-flex;align-items:center;gap:2px;margin-inline-start:auto;min-height:29px}
 :root{--trg:light-dark(#2e7d4f,#86d6a2)}
-.dege{color:var(--trg)}.tv{display:none}body[data-trm=la] .tla,body[data-trm=ru] .tru,body[data-trm=both] .tbo{display:block}
+.dege{color:var(--trg)}.tb{font-weight:600}.tv{display:none}body[data-trm=la] .tla,body[data-trm=ru] .tru,body[data-trm=both] .tbo{display:block}
 .pla+.pru{margin-top:3px}.pru{color:var(--trg);margin-inline-start:1.25em;padding-inline-end:10px;border-inline-end:2px solid var(--trg);margin-bottom:8px}
 .tru .pru{margin-inline-start:0;margin-bottom:0}
 .pru .ex,.pru .l.x .ex{color:color-mix(in srgb,var(--trg) 68%,var(--bg))}
@@ -195,7 +195,7 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .acts .btn{min-height:38px}
 .tro{background:var(--card);border-radius:10px;padding:10px 14px;margin:0 0 14px;white-space:pre-line;font:16px/1.55 var(--lex)}
 .tro:empty{display:none}
-.gr{font-style:italic;font-weight:300;color:light-dark(#2e7d4f,#86d6a2)}
+.gr{font-style:italic;font-weight:300;color:light-dark(#1f5fbf,#8ab8ff)}
 .cpy.itm{color:var(--rub)}
 .def .et{color:var(--mut);font:italic 300 .86em/1.5 'Noto Sans',sans-serif}
 .def .et .ex{font-style:italic}
@@ -668,7 +668,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','cos','ka','kac','agwb','grc','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=21;
+const BUILTIN=['syr','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=23;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -784,7 +784,8 @@ function more(){
 
 /* ---------- entry formatting ---------- */
 function arForms(raw){const W='[\\u0600-\\u06FF]+(?:[ \\t]+[\\u0600-\\u06FF]+)*',R=new RegExp('^'+W+'(?:(?:\\s*,\\s*|\\s+\\x02(?:et|and)\\x03\\s+)'+W+')*');return String(raw).split('\n').map(ln=>ln.replace(R,m=>m.replace(new RegExp(W,'g'),'$&'))).join('\n')}
-function formatDef(raw,L,hw,noRoot){if(L!=='ar')return formatDef0(raw,L,hw,noRoot);return formatDef0(raw&&arForms(raw),L,hw,noRoot).replace(//g,'<b class="fm">').replace(//g,'</b>')}
+const pua=h=>h.replace(/\uE004/g,'<b class="tb">').replace(/\uE005/g,'</b>').replace(/\uE002/g,'<span class="dege">').replace(/\uE003/g,'</span>');
+function formatDef(raw,L,hw,noRoot){if(L!=='ar')return pua(formatDef0(raw,L,hw,noRoot));return formatDef0(raw&&arForms(raw),L,hw,noRoot).replace(//g,'<b class="fm">').replace(//g,'</b>')}
 function formatDef0(raw,L,hw,noRoot){
   if(!raw)return '—';
   const lines=[];let src=String(raw);
@@ -842,9 +843,9 @@ function formatDef0(raw,L,hw,noRoot){
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
-const GLOSS={'b-kun':'de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
+const GLOSS={'b-ml':'en','b-kun':'de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-gez','b-dil','b-mis','b-che']);
-const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c]/g,'');
+const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\uE000-\uE005]/g,'');
 
 /* ---------- UI rendering ---------- */
 function langsPresent(){const s=new Set();for(const d of dicts){if(d.lang==='mix')d.entries.forEach(e=>s.add(e[2]));else s.add(d.lang)}return Object.keys(LANGS).filter(k=>s.has(k))}
@@ -869,10 +870,11 @@ const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-mis':['Misk','Joannes Miskgian, Manuale lexicon armeno-latinum ad usum scholarum, Romae 1887'],
  'b-cop':['SahGl','Sahidic Coptic–English glossary'],
  'b-che':['Cheikho','Louis Cheikho, Lexicon Chrestomathiæ Arabicæ, in: Chrestomathia Arabica cum lexico variisque notis, Beryti: Typographia Patrum Societatis Jesu'],
- 'b-kun':['Künzle','Beda O. Künzle, Das altarmenische Evangelium: Lexikon, Bern: Peter Lang 1984']};
+ 'b-kun':['Künzle','Beda O. Künzle, Das altarmenische Evangelium: Lexikon, Bern: Peter Lang 1984'],
+ 'b-ml':['MLS','H. G. Liddell, R. Scott, An Intermediate Greek-English Lexicon, Oxford: Clarendon Press 1889']};
 const sgl=d=>SIG[d.id]?SIG[d.id][0]:d.name,fullN=d=>SIG[d.id]?SIG[d.id][1]:d.name;
 const INL=new Set();
-const CPY={'b-kun':()=>'© B. O. Künzle · OCR LexEikôn: p. 1–2','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–421, 485','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'© Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
+const CPY={'b-ml':()=>'Perseus Digital Library (perseus.tufts.edu) · CC BY-SA 3.0 US','b-kun':()=>'© B. O. Künzle · OCR LexEikôn: p. 1–5','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–424, 485','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'© Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 function renderLib(){
   const HIDE=new Set(['b-hy']);renderLgb();const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
   const lo=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')],lg=[...new Set(vis.map(d=>d.lang))].sort((a,b)=>(lo.indexOf(a)+1||99)-(lo.indexOf(b)+1||99));
