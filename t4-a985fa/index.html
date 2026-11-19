@@ -721,7 +721,7 @@ const idb={db:null,
   put(o){const {hk,dk,...c}=o;return this.tx('readwrite',s=>s.put(c))},
   del(id){return this.tx('readwrite',s=>s.delete(id))}
 };
-let dicts=[];const off=new Set(LS.get('off',[]));
+let dicts=[];const off=new Set(LS.get('offv',[]));
 let cloud=null;
 function setSync(t){$('#sync').textContent=t}
 function keys(d){if(!d.hk){d.hk=d.entries.map(e=>norm(e[0]));d.dk=d.entries.map(e=>words(norm((e[1]||'')+(e[3]&&e[3].pair?' '+e[3].de.replace(/[\uE002\uE003]/g,''):''))));d.sk=d.entries.map((e,i)=>{const L=elang(d,i);return CL[L]&&CL[L].sem?semKey(e[0],L):null})}}
@@ -1391,12 +1391,12 @@ $('#kb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
   if(b.dataset.bs){backspace();return}
   if(b.dataset.c!=null)insert(b.dataset.c);
 });
-$('#dl').addEventListener('change',e=>{const t=e.target.dataset.t;if(!t)return;e.target.checked?off.delete(t):off.add(t);LS.set('off',[...off]);renderLgb();search()});
-$('#lgb').addEventListener('click',e=>{const b=e.target.closest('button[data-g]');if(!b)return;const ids=dicts.filter(d=>d.lang===b.dataset.g||(d.user&&d.lb===b.dataset.g)).map(d=>d.id),on=ids.some(id=>!off.has(id));ids.forEach(id=>on?off.add(id):off.delete(id));LS.set('off',[...off]);refresh();if(!$('#kb').hidden)kbAuto()});
+$('#dl').addEventListener('change',e=>{const t=e.target.dataset.t;if(!t)return;e.target.checked?off.delete(t):off.add(t);if(!VIEW)LS.set('offv',[...off]);renderLgb();search()});
+$('#lgb').addEventListener('click',e=>{const b=e.target.closest('button[data-g]');if(!b)return;const ids=dicts.filter(d=>d.lang===b.dataset.g||(d.user&&d.lb===b.dataset.g)).map(d=>d.id),on=ids.some(id=>!off.has(id));ids.forEach(id=>on?off.add(id):off.delete(id));if(!VIEW)LS.set('offv',[...off]);refresh();if(!$('#kb').hidden)kbAuto()});
 $('#dl').addEventListener('click',async e=>{const b=e.target.closest('.del');if(!b)return;
   if(!b.classList.contains('sure')){b.classList.add('sure');b.textContent='Точно?';setTimeout(()=>{b.classList.remove('sure');b.textContent='Удалить'},3000);return}
   const id=b.dataset.x,d0=dicts.find(d=>d.id===id);dicts=dicts.filter(d=>d.id!==id);await idb.del(id);if(d0&&d0.demo)LS.set('gone',[...LS.get('gone',[]),id]);else unload(id);
-  off.delete(id);LS.set('off',[...off]);refresh();toast('Словарь удалён')});
+  off.delete(id);if(!VIEW)LS.set('offv',[...off]);refresh();toast('Словарь удалён')});
 document.querySelectorAll('[data-o]').forEach(c=>{c.checked=!!opt[c.dataset.o];c.addEventListener('change',()=>{opt[c.dataset.o]=c.checked;LS.set('opt',opt);dicts.forEach(d=>{d.hk=d.dk=d.sk=null});search()})});
 $('#ov').addEventListener('change',e=>{const t=e.target;
   if(t.id==='iE'){cur.enc=t.value;cur.dname=$('#iN').value;reparse(true);renderDlg()}
