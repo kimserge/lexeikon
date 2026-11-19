@@ -1,1 +1,14 @@
-[]
+[
+ {
+  "id": "u-kimserge-test",
+  "file": "u-kimserge-test.json",
+  "name": "Test",
+  "sig": "*Test",
+  "author": "Sergey Kim",
+  "la": "grc",
+  "lb": "ar",
+  "tl": "de",
+  "n": 2,
+  "accepted": "2026-11-19T18:11:53.844Z"
+ }
+]
