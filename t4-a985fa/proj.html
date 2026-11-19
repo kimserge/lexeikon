@@ -13,10 +13,10 @@
  --lex:'Noto Serif','Noto Serif Georgian','Noto Serif Armenian','Noto Naskh Arabic','Noto Sans Syriac','Noto Sans Ethiopic','Noto Sans Coptic',serif}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Noto Sans',sans-serif}
 .top{background:var(--band);color:var(--bandink);padding:22px max(5vw,16px) 18px}
-.top .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.top h1{margin:0;font:700 26px/1.15 'Noto Serif',serif;flex:1 1 auto}.top h1 a{color:inherit;text-decoration:none}
+.hrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.top h1{margin:0;font:700 26px/1.15 'Noto Serif',serif}.top h1 a{color:inherit;text-decoration:none}
 .top .sub{opacity:.85;margin-top:6px;font-size:14px}
-.tnav{display:flex;gap:4px 18px;flex-wrap:wrap;margin-top:12px}.tnav a{color:#fff;opacity:.8;text-decoration:none;font-weight:600;font-size:14px;padding:4px 0;border-bottom:2px solid transparent}.tnav a:hover{opacity:1}.tnav a.on{opacity:1;border-bottom-color:#fff}
+.tnav{display:flex;gap:4px 18px;flex-wrap:wrap;margin-top:12px}.tnav a{color:#fff;opacity:.8;text-decoration:none;font-weight:600;font-size:14px;padding:4px 0;border-bottom:2px solid transparent}.tnav a:hover{opacity:1}.tnav a.on{opacity:1;border-bottom-color:#fff}.tnav .tlog{margin-left:auto;all:unset;margin-left:auto;cursor:pointer;color:#fff;opacity:.8;font-weight:600;font-size:14px;padding:4px 0}.tnav .tlog:hover{opacity:1;text-decoration:underline}
 select,input,textarea,button{font:inherit;color:inherit}
 .hupd{display:inline-flex;align-items:center;gap:6px;cursor:pointer;background:rgb(255 255 255/.12);color:#fff;border:1px solid rgb(255 255 255/.5);border-radius:999px;padding:4px 12px;font:600 13px 'Noto Sans',sans-serif}.hupd:hover{background:rgb(255 255 255/.22)}.hupd.busy svg{animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}.uil{background:rgb(255 255 255/.15);color:#fff;border:1px solid rgb(255 255 255/.5);border-radius:10px;padding:4px 8px}.uil option{color:#000}
 main{max-width:1200px;margin:0 auto;padding:20px max(5vw,16px) 80px}
@@ -78,10 +78,10 @@ a{color:var(--lap)}.hidden{display:none!important}
 </style>
 </head>
 <body>
-<header class="top"><div class="row"><h1><a href="./">LexEikôn</a> · <span data-t="title"></span></h1>
-<button type="button" class="hupd" id="hupd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-t="upd"></span></button><select class="uil" id="uil" aria-label="Language"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select></div>
+<header class="top"><h1><a href="./">LexEikôn</a> · <span data-t="title"></span></h1>
+<div class="hrow"><select class="uil" id="uil" aria-label="Language"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select><button type="button" class="hupd" id="hupd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-t="upd"></span></button></div>
 <div class="sub" data-t="sub"></div><div class="sub" id="who"></div>
-<nav class="tnav" id="tnav"><a href="./">LexEikôn</a><a href="#" data-nav="list" data-t="nav_m"></a><a href="#profile" data-nav="profile" data-t="profile"></a><a href="admin.html" data-nav="admin" class="hidden" data-t="admin"></a></nav></header>
+<nav class="tnav" id="tnav"><a href="./">LexEikôn</a><a href="#" data-nav="list" data-t="nav_m"></a><a href="#profile" data-nav="profile" data-t="profile"></a><a href="admin.html" data-nav="admin" class="hidden" data-t="admin"></a><button type="button" class="tlog" id="logout" data-t="logout"></button></nav></header>
 <main>
 <section id="vAuth" class="hidden"><div class="card" style="max-width:480px">
  <div class="tabs"><button class="btn pri" id="tLogin" data-t="login"></button><button class="btn" id="tReg" data-t="register"></button></div>
@@ -94,7 +94,7 @@ a{color:var(--lap)}.hidden{display:none!important}
  </form></div></section>
 
 <section id="vList" class="hidden">
- <div class="head2"><h2 data-t="projects"></h2><button class="btn" id="logout" data-t="logout"></button></div>
+ <div class="head2"><h2 data-t="projects"></h2></div>
  <div class="card hidden" id="prof"><label for="pSig" data-t="sign"></label><input type="text" id="pSig" maxlength="80" data-tp="signPh">
   <div class="prev" id="pSigPrev"></div><div class="btns"><button class="btn pri" id="pSigGo" data-t="save"></button><button class="lnk" id="pSigX" data-t="cancel"></button></div><div class="msg" id="pSigMsg"></div></div>
  <ul class="list" id="plist"></ul><p class="msg" id="pEmpty" data-t="noproj"></p>
