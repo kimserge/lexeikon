@@ -152,12 +152,12 @@ mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#ffe
 .hit{padding:14px 2px}
 .hd{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px}.hlf{flex:1 1 auto;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 4px}.hlf .hw{min-width:0;overflow-wrap:anywhere}.hb{flex:none;display:inline-flex;align-items:center;gap:2px;margin-inline-start:auto;min-height:29px}
 :root{--trg:light-dark(#2e7d4f,#86d6a2)}
-.dege{color:var(--trg)}.tb{font-weight:600}.tv{display:none}body[data-trm=la] .tla,body[data-trm=ru] .tru,body[data-trm=both] .tbo{display:block}
+.dege{color:var(--trg)}.tb{font-weight:600}.tv{display:none}body[data-trm=la] .tla,body[data-trm=ru] .tru,body[data-trm=both] .tbo{display:block}body .pp .tv{display:none}body[data-trp=la] .pp .tla,body[data-trp=ru] .pp .tru,body[data-trp=both] .pp .tbo{display:block}
 .pla+.pru{margin-top:3px}.pru{color:var(--trg);margin-inline-start:1.25em;padding-inline-end:10px;border-inline-end:2px solid var(--trg);margin-bottom:8px}
 .tru .pru{margin-inline-start:0;margin-bottom:0}
 .pru .ex,.pru .l.x .ex{color:color-mix(in srgb,var(--trg) 68%,var(--bg))}
 .trb{margin-inline-start:auto;min-height:32px;padding:0 10px;background:none;border:1px solid var(--trg);border-radius:8px;color:var(--mut);font:400 13px 'Noto Sans',sans-serif;cursor:pointer}
-body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,body[data-trm=both] .trb .b{color:var(--trg);font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,body[data-trm=both] .trb .b{color:var(--trg);font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}body .trb.pp .a,body .trb.pp .b{color:inherit;font-weight:inherit;text-decoration:none}body[data-trp=la] .trb.pp .a,body[data-trp=ru] .trb.pp .b,body[data-trp=both] .trb.pp .a,body[data-trp=both] .trb.pp .b{color:var(--trg);font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
 .trb+.cp{margin-inline-start:8px}
 .cp{background:none;border:0;color:var(--rub);cursor:pointer;width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:8px}.cp:hover{background:color-mix(in srgb,var(--rub) 12%,transparent)}.cp svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .lw{cursor:pointer;text-decoration:underline dotted color-mix(in srgb,var(--lap) 55%,transparent);text-underline-offset:3px}
@@ -208,6 +208,13 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .empty{padding:28px 0;color:var(--mut);max-width:60ch}
 .empty b{color:var(--ink)}
 #more{margin-top:14px}
+.ljmp{padding:2px 2px 2px 0 !important;position:fixed;left:calc(env(safe-area-inset-left,0px) - 5px);bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;display:flex;flex-direction:column;gap:5px;max-height:calc(100dvh - var(--lnt,200px) - 24px);overflow:auto;scrollbar-width:none;padding:2px}.ljmp[hidden]{display:none}
+.ljmp button{all:unset;cursor:pointer;flex:none;width:35px;height:40px;padding-left:5px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:0 12px 12px 0;border-left:0 !important;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);color:var(--lap);border:1px solid var(--line);box-shadow:0 3px 10px rgb(0 0 0/.13)}
+.ljmp button .s{font:400 17px/1 var(--lex)}.ljmp button .n{font:600 9.5px/1 'Noto Sans',sans-serif;opacity:.75}
+.ljmp button.in{border-style:dashed}.ljmp button.in .s{font:700 16px/1 'Noto Sans',sans-serif;color:var(--rub)}
+.ljmp button:hover,.ljmp button:focus-visible{background:var(--lap);color:var(--bg)}.ljmp button:hover .s{color:inherit}
+@media(max-width:999px){body.ljv .wrap{padding-left:calc(max(5vw,16px) + 18px)}}
+@media(min-width:1000px){.ljmp{display:none}}
 .jmp{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;display:flex;flex-direction:column;gap:8px}.jmp[hidden]{display:none}
 .jmp button{all:unset;cursor:pointer;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:var(--bg);color:var(--lap);border:1px solid var(--line);box-shadow:0 4px 12px rgb(0 0 0/.15);font:800 19px/1 'Noto Sans',sans-serif}
 .jmp button:hover,.jmp button:focus-visible{background:var(--lap);color:var(--bg)}
@@ -347,12 +354,13 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.17.3 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.17.4 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
 
 <div id="ov" class="ov" hidden><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dt" id="dlg"></div></div>
+<div id="ljmp" class="ljmp" hidden></div>
 <div id="jmp" class="jmp" hidden><button type="button" data-j="top" aria-label="↑" title="↑">↑</button><button type="button" data-j="end" aria-label="↓" title="↓">↓</button></div>
 <div id="pop" class="pop" role="dialog" data-i18n-aria="poptitle" hidden></div>
 <div id="toast" class="toast" role="status"></div>
@@ -777,12 +785,16 @@ function search(){
 let GF=new Map();
 function lnavRender(){
   const n=$('#lnav'),cnt={};results.forEach(r=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);cnt[g]=(cnt[g]||0)+1});
-  const gs=[...GF.keys()];if(gs.length<2&&!results.length){n.innerHTML='';document.body.classList.remove('lnv');return}
+  const gs=[...GF.keys()];if(gs.length<2&&!results.length){n.innerHTML='';$('#ljmp').hidden=true;document.body.classList.remove('ljv');document.body.classList.remove('lnv');return}
   const lab=L=>(I.chip&&I.chip[L])||(LANGS[L]?LANGS[L][1]:L);
   let h='',inb=false;
   for(const g of gs){if(g[0]==='b'&&!inb){inb=true;h+=`<div class="lh">${esc(I.lnin||I.inbody)}</div>`}h+=`<button data-g="${g}" title="${esc(((I.lang&&I.lang[g.slice(1)])||lab(g.slice(1)))+' · '+cnt[g])}"><b>${esc(lab(g.slice(1)))}</b><span>(${cnt[g].toLocaleString(UIL)})</span></button>`}
   h+=`<button class="up" data-g="top" title="↑">↑</button>`;
   n.innerHTML=h;document.body.classList.toggle('lnv',results.length>0);lnavPos();
+  {const hs=gs.filter(g=>g[0]==='h'),bs=gs.filter(g=>g[0]==='b'),nb=bs.reduce((a,g)=>a+cnt[g],0),f=x=>x>999?Math.round(x/100)/10+'k':x;
+   $('#ljmp').innerHTML=hs.map(g=>{const L=g.slice(1),t=((I.lang&&I.lang[L])||lab(L))+' · '+cnt[g];return `<button type="button" data-g="${g}" title="${esc(t)}" aria-label="${esc(t)}"><span class="s" lang="${L}">${GLY[L]||esc(lab(L))}</span><span class="n">${f(cnt[g])}</span></button>`}).join('')+
+     (bs.length?`<button type="button" class="in" data-g="${bs[0]}" title="${esc((I.lnin||I.inbody)+' · '+nb)}" aria-label="${esc((I.lnin||I.inbody)+' · '+nb)}"><span class="s">¶</span><span class="n">${f(nb)}</span></button>`:'');
+   $('#ljmp').hidden=hs.length+bs.length<2;document.body.classList.toggle('ljv',!$('#ljmp').hidden)}
 }
 function lnavPos(){const s=$('#stat');if(!s)return;const t=Math.max(document.querySelector('.qsticky').getBoundingClientRect().bottom+12,90);document.documentElement.style.setProperty('--lnt',t+'px')}
 function lnavGo(g){
@@ -832,10 +844,10 @@ function markHits(html){
   if(!HL.qd&&!HL.re)return html;
   return html.split(/(<[^>]+>|&(?:#\d+|\w+);)/).map((t,i)=>i%2?t:markText(t)).join('');
 }
-const trLang=e=>{const t=e[3];return !t?null:t.pair?'de':t[UIL]?UIL:t.en?'en':null},trOf=e=>{const l=trLang(e);return l?e[3][l]:null},pSw=e=>!!(e[3]&&e[3].pair&&UIL==='de'),trBtn=e=>{const l=trLang(e),p=e[3].pair,a=p?p[pSw(e)?1:0]:'Lat',b=p?p[pSw(e)?0:1]:l[0].toUpperCase()+l.slice(1);return `<button class="trb" type="button" aria-label="${a} / ${b}"><span class="a">${a}</span>/<span class="b">${b}</span></button>`};
+const trLang=e=>{const t=e[3];return !t?null:t.pair?'de':t[UIL]?UIL:t.en?'en':null},trOf=e=>{const l=trLang(e);return l?e[3][l]:null},pSw=e=>!!(e[3]&&e[3].pair&&UIL==='de'),trBtn=e=>{const l=trLang(e),p=e[3].pair,a=p?p[pSw(e)?1:0]:'Lat',b=p?p[pSw(e)?0:1]:l[0].toUpperCase()+l.slice(1);return `<button class="trb${p?' pp':''}" type="button" aria-label="${a} / ${b}"><span class="a">${a}</span>/<span class="b">${b}</span></button>`};
 function defHtml(d,e,l){if(!JSON.stringify(e).includes('↗'))return defHtml0(d,e,l);const t=e[3]&&typeof e[3]==='object'?Object.fromEntries(Object.entries(e[3]).map(([k,v])=>[k,typeof v==='string'?markXr(v):v])):e[3];return linkXr(defHtml0(d,[e[0],markXr(e[1]),e[2],t],l),d)}
 function defHtml0(d,e,l){
-  if(e[3]&&e[3].pair){const f=x=>formatDef(x,l,e[0]).replace(/\uE002/g,'<span class="dege">').replace(/\uE003/g,'</span>');const A=pSw(e)?e[3].de:e[1],B=pSw(e)?e[1]:e[3].de;return `<div class="tv tla">${f(A)}</div><div class="tv tru">${f(B)}</div><div class="tv tbo">${f(e[3].bo)}</div>`}
+  if(e[3]&&e[3].pair){const f=x=>formatDef(x,l,e[0]).replace(/\uE002/g,'<span class="dege">').replace(/\uE003/g,'</span>');const A=pSw(e)?e[3].de:e[1],B=pSw(e)?e[1]:e[3].de;return `<div class="pp"><div class="tv tla">${f(A)}</div><div class="tv tru">${f(B)}</div><div class="tv tbo">${f(e[3].bo)}</div></div>`}
   const base=x=>LATDEF.has(d.id)?linkLat(x):x,la=base(formatDef(e[1],l,e[0])),r=trOf(e);if(!r)return la;
   const a=e[1].split('\n'),b=r.split('\n');
   const pair=(x,y,i)=>{const lh=formatDef(x,l,i?'':e[0],i>0);if(x===y)return lh;return `<div class="pla">${base(lh)}</div><div class="pru">${formatDef(y,l,i?'':e[0],i>0)}</div>`};
@@ -922,7 +934,7 @@ const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\u2060\uE000-\uE013]/g,'
 /* ---------- UI rendering ---------- */
 function langsPresent(){const s=new Set();for(const d of dicts){if(d.lang==='mix')d.entries.forEach(e=>s.add(e[2]));else s.add(d.lang)}return Object.keys(LANGS).filter(k=>s.has(k))}
 function renderChips(){}
-const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'A',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ع'};
+const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'L',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ع'};
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;(by[d.lang]=by[d.lang]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
 const INTERIM=new Set(['b-graf','b-brk','b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
@@ -1165,7 +1177,7 @@ function libSync(force){
 function jmpUpd(){const j=$('#jmp');j.hidden=!results.length||document.documentElement.scrollHeight<=innerHeight+40}
 $('#jmp').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if(!b)return;
   if(b.dataset.j==='top'){scrollTo({top:0,behavior:'smooth'});return}
-  while(shown<results.length)more();requestAnimationFrame(()=>{const l=$('#res').lastElementChild;(l||$('#res')).scrollIntoView({block:'end',behavior:'smooth'})})});
+  while(shown<results.length)more();requestAnimationFrame(()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'}))});
 addEventListener('resize',jmpUpd);
 
 /* ---------- update to latest version ---------- */
@@ -1209,19 +1221,19 @@ $('#q').addEventListener('blur',()=>setTimeout(cmpUpd,160));
 $('#scope').addEventListener('change',search);
 $('#mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;mode=b.dataset.m;$('#mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));search()});
 $('#more').addEventListener('click',more);
-$('#lnav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)lnavGo(b.dataset.g)});addEventListener('resize',lnavPos);addEventListener('scroll',lnavPos,{passive:true});addEventListener('scroll',()=>libSync(),{passive:true});$('#setD').addEventListener('toggle',()=>{if($('#setD').open){libL='';requestAnimationFrame(()=>libSync(true))}});lnavPos();
-document.body.dataset.trm=LS.get('trm','la');
+$('#lnav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)lnavGo(b.dataset.g)});$('#ljmp').addEventListener('click',e=>{const b=e.target.closest('button');if(b)lnavGo(b.dataset.g)});addEventListener('resize',lnavPos);addEventListener('scroll',lnavPos,{passive:true});addEventListener('scroll',()=>libSync(),{passive:true});$('#setD').addEventListener('toggle',()=>{if($('#setD').open){libL='';requestAnimationFrame(()=>libSync(true))}});lnavPos();
+document.body.dataset.trm=LS.get('trm','la');document.body.dataset.trp=LS.get('trp','la');
 $('#res').addEventListener('click',async e=>{
-  if(e.target.closest('.trb')){const o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset.trm)+1)%3];document.body.dataset.trm=m;LS.set('trm',m);return}
+  {const tb=e.target.closest('.trb');if(tb){const k=tb.classList.contains('pp')?'trp':'trm',o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset[k])+1)%3];document.body.dataset[k]=m;LS.set(k,m);return}}
   const c0=e.target.closest('.cp');const h=e.target.closest('.hit');
   const xr=e.target.closest('.xr');if(xr&&(!h.classList.contains('long')||h.classList.contains('open'))){showXr(xr.dataset.x,xr.dataset.d);return}
   const w=e.target.closest('.lw');if(w&&(!h.classList.contains('long')||h.classList.contains('open'))){showLat(w.dataset.w);return}
   if(h&&!c0){if(h.classList.contains('long')){if(getSelection().toString())return;h.classList.toggle('open')}return}
   const c=c0;if(c){const b=c.closest('.hit'),d=dicts.find(x=>x.id===b.dataset.d),en=d&&d.entries[+b.dataset.i];
-    try{const m=document.body.dataset.trm,sw=pSw(en),ru=sw?en[1]:trOf(en),la=sw?trOf(en):en[1];await navigator.clipboard.writeText((en[0]+' — '+(ru&&m==='ru'?plain(ru):ru&&m==='both'?(en[3].bo?plain(en[3].bo):plain(la)+'\n'+plain(ru)):plain(la))).replace(/[\uE002\uE003]/g,''));toast(I.copied)}catch(err){toast(I.copyfail)}}
+    try{const m=en[3]&&en[3].pair?document.body.dataset.trp:document.body.dataset.trm,sw=pSw(en),ru=sw?en[1]:trOf(en),la=sw?trOf(en):en[1];await navigator.clipboard.writeText((en[0]+' — '+(ru&&m==='ru'?plain(ru):ru&&m==='both'?(en[3].bo?plain(en[3].bo):plain(la)+'\n'+plain(ru)):plain(la))).replace(/[\uE002\uE003]/g,''));toast(I.copied)}catch(err){toast(I.copyfail)}}
 });
 $('#pop').addEventListener('click',async e=>{const lb=e.target.closest('[data-lt]');if(lb){e.stopPropagation();LS.set('latT',lb.dataset.lt);laIdx=null;showLat(lastLat);await laLoad(LATD[lb.dataset.lt]);laIdx=null;showLat(lastLat);return}
-  if(e.target.id==='popX')$('#pop').hidden=true;const xs=e.target.closest('[data-xs]');if(xs){xrSearch(xs.dataset.xs);return}const xr=e.target.closest('.xr');if(xr){showXr(xr.dataset.x,xr.dataset.d);return}if(e.target.closest('.trb')){const o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset.trm)+1)%3];document.body.dataset.trm=m;LS.set('trm',m);return}const w=e.target.closest('.lw');if(w)showLat(w.dataset.w)});
+  if(e.target.id==='popX')$('#pop').hidden=true;const xs=e.target.closest('[data-xs]');if(xs){xrSearch(xs.dataset.xs);return}const xr=e.target.closest('.xr');if(xr){showXr(xr.dataset.x,xr.dataset.d);return}{const tb=e.target.closest('.trb');if(tb){const k=tb.classList.contains('pp')?'trp':'trm',o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset[k])+1)%3];document.body.dataset[k]=m;LS.set(k,m);return}}const w=e.target.closest('.lw');if(w)showLat(w.dataset.w)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#pop').hidden=true});
 document.addEventListener('click',e=>{if(!$('#pop').hidden&&!e.target.closest('#pop')&&!e.target.closest('.lw')&&!e.target.closest('.xr'))$('#pop').hidden=true});
 $('#mail').addEventListener('click',e=>{e.preventDefault();location.href='mailto:'+['sergey.kim','unil.ch'].join('@')});
