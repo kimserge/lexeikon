@@ -17,6 +17,8 @@ async function init(db) {
     db.prepare(`CREATE TABLE IF NOT EXISTS cards (id INTEGER PRIMARY KEY, project_id INTEGER NOT NULL, data TEXT NOT NULL,
       created TEXT NOT NULL, updated TEXT NOT NULL)`),
   ]);
+  for (const q of ['ALTER TABLE users ADD COLUMN sig TEXT', 'ALTER TABLE projects ADD COLUMN la TEXT', 'ALTER TABLE projects ADD COLUMN lb TEXT', 'ALTER TABLE projects ADD COLUMN sig TEXT'])
+    try { await db.prepare(q).run(); } catch (e) { /* column exists */ }
   ready = true;
 }
 const now = () => new Date().toISOString();
@@ -28,33 +30,33 @@ async function pbkdf2(pass, salt) {
 }
 const slugify = (s) => s.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'dict';
 const clean = (s, n = 2000) => String(s ?? '').replace(/[\u0000-\u0008\u000b-\u001f]/g, '').trim().slice(0, n);
+const LANGS = ['syr', 'gez', 'ka', 'grc', 'la', 'hy', 'ar', 'cop'];
+const side = (x) => ({ f: clean(x && x.f, 200), l: clean(x && x.l, 200), s: clean(x && x.s, 500), t: clean(x && x.t, 500) });
+// card: {a:{f,l,s,t}, b:[{f,l,s,t}] (≤3)}; older cards {gf,gl,ar:[{f,r,t}],ref} are converted
 function cardData(d) {
-  const ar = (Array.isArray(d.ar) ? d.ar : []).slice(0, 3).map((a) => ({ f: clean(a.f, 200), r: clean(a.r, 50), t: clean(a.t, 500) }))
-    .filter((a) => a.f || a.r || a.t);
-  return { gf: clean(d.gf, 200), gl: clean(d.gl, 200), ar, ref: clean(d.ref, 2000) };
+  if (d && !d.a && (d.gf || d.ar)) d = { a: { f: d.gf, l: d.gl, s: d.ref, t: '' }, b: (d.ar || []).map((x) => ({ f: x.f, l: x.r, s: '', t: x.t })) };
+  return { a: side(d && d.a), b: (Array.isArray(d && d.b) ? d.b : []).slice(0, 3).map(side).filter((x) => x.f || x.l || x.s || x.t) };
 }
-// Dictionary file in LexEikôn format: Greek entries and Arabic entries cross-referencing each other
+// Dictionary file in LexEikôn format. Each side gets its own entry:
+//   form
+//   (→ lemma), source: translation          (lemma is a link … opening its own language; source grey \x0b…\x0c)
+//   = other form (→ other lemma), source: translation
+const XR = (w) => '\u2068\uE020' + w + '\uE021\u2069', ISO = (w) => '\u2068' + w + '\u2069';
+function tail(x) {
+  const g = x.s ? '\u000b' + x.s + '\u000c' : '';
+  return g && x.t ? g + ': ' + x.t : g || x.t;
+}
+function ownLine(x) { const l = x.l && x.l !== x.f ? '(→ ' + XR(x.l) + ')' : '', t = tail(x); return [l, t].filter(Boolean).join(l && t ? ', ' : ''); }
+function otherLine(x) { const l = x.l && x.l !== x.f ? ' (→ ' + XR(x.l) + ')' : '', t = tail(x); return '= ' + ISO(x.f) + l + (t ? ', ' + t : ''); }
 function toDict(user, p, cards) {
-  const E = [];
+  const E = [], la = p.la || 'grc', lb = p.lb || 'ar';
   for (const c of cards) {
-    const d = JSON.parse(c.data);
-    if (d.gf) {
-      const lines = [];
-      if (d.gl && d.gl !== d.gf) lines.push('→ ' + d.gl);
-      for (const a of d.ar) lines.push([a.f, a.r ? '(\u0002' + 'rad.' + '\u0003 ' + a.r + ')' : '', a.t ? '— ' + a.t : ''].filter(Boolean).join(' '));
-      if (d.ref) lines.push('\u000b' + d.ref + '\u000c');
-      E.push([d.gf, lines.join('\n'), 'grc']);
-    }
-    for (const a of d.ar) if (a.f) {
-      const lines = [[d.gf, d.gl && d.gl !== d.gf ? '(→ ' + d.gl + ')' : ''].filter(Boolean).join(' ')];
-      if (a.r) lines.push('\u0002rad.\u0003 ' + a.r);
-      if (a.t) lines.push(a.t);
-      if (d.ref) lines.push('\u000b' + d.ref + '\u000c');
-      E.push([a.f, lines.join('\n'), 'ar']);
-    }
+    const d = cardData(JSON.parse(c.data));
+    if (d.a.f) E.push([d.a.f, [ownLine(d.a), ...d.b.filter((x) => x.f).map(otherLine)].filter(Boolean).join('\n'), la]);
+    for (const x of d.b) if (x.f) E.push([x.f, [ownLine(x), d.a.f ? otherLine(d.a) : ''].filter(Boolean).join('\n'), lb]);
   }
-  return { id: 'u-' + user.nick + '-' + p.slug, name: p.name, author: user.nick, tl: p.tl, note: p.note || '', updated: p.updated, lang: 'grc',
-    entries: E, cards: cards.map((c) => JSON.parse(c.data)) };
+  return { id: 'u-' + user.nick + '-' + p.slug, name: p.name, sig: p.sig || '', author: user.sig || user.nick, la, lb, tl: p.tl, note: p.note || '', updated: p.updated, lang: la,
+    entries: E, cards: cards.map((c) => cardData(JSON.parse(c.data))) };
 }
 async function gh(env, path, opt = {}) {
   const r = await fetch('https://api.github.com/repos/' + REPO + path, { ...opt, headers: { Authorization: 'Bearer ' + env.GITHUB_TOKEN,
@@ -97,30 +99,32 @@ export default {
       await init(db);
       // ---- accounts ----
       if (request.method === 'POST' && P[0] === 'register') {
-        const b = await body(), nick = clean(b.nick, 24).toLowerCase(), email = clean(b.email, 200), pass = String(b.password || '');
+        const b = await body(), nick = clean(b.nick, 24).toLowerCase(), email = clean(b.email, 200), pass = String(b.password || ''), sig = clean(b.sig, 80);
         if (!/^[a-z0-9][a-z0-9_-]{2,23}$/.test(nick)) return reply({ error: 'nick' }, 400);
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return reply({ error: 'email' }, 400);
         if (pass.length < 8) return reply({ error: 'password' }, 400);
         if (await db.prepare('SELECT 1 FROM users WHERE nick=?1').bind(nick).first()) return reply({ error: 'taken' }, 409);
         const salt = rand(16), hash = await pbkdf2(pass, salt);
-        const u = await db.prepare('INSERT INTO users (nick,email,salt,hash,lang,created) VALUES (?1,?2,?3,?4,?5,?6) RETURNING id')
-          .bind(nick, email, salt, hash, clean(b.lang, 5), now()).first();
+        const u = await db.prepare('INSERT INTO users (nick,email,salt,hash,lang,created,sig) VALUES (?1,?2,?3,?4,?5,?6,?7) RETURNING id')
+          .bind(nick, email, salt, hash, clean(b.lang, 5), now(), sig).first();
         const token = rand(40); await db.prepare('INSERT INTO sessions VALUES (?1,?2,?3)').bind(token, u.id, now()).run();
         await mail(env, env.ADMIN_EMAIL, 'LexEikôn: new contributor ' + nick, nick + ' <' + email + '> registered.');
-        return reply({ token, nick, email });
+        return reply({ token, nick, email, sig });
       }
       if (request.method === 'POST' && P[0] === 'login') {
         const b = await body(), nick = clean(b.nick, 200).toLowerCase();
         const u = await db.prepare('SELECT * FROM users WHERE nick=?1 OR lower(email)=?1').bind(nick).first();
         if (!u || (await pbkdf2(String(b.password || ''), u.salt)) !== u.hash) return reply({ error: 'login' }, 401);
         const token = rand(40); await db.prepare('INSERT INTO sessions VALUES (?1,?2,?3)').bind(token, u.id, now()).run();
-        return reply({ token, nick: u.nick, email: u.email });
+        return reply({ token, nick: u.nick, email: u.email, sig: u.sig || '' });
       }
       const tok = (request.headers.get('Authorization') || '').replace(/^Bearer\s+/, '');
       const user = tok ? await db.prepare('SELECT u.* FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token=?1').bind(tok).first() : null;
       if (!user) return reply({ error: 'auth' }, 401);
       if (request.method === 'POST' && P[0] === 'logout') { await db.prepare('DELETE FROM sessions WHERE token=?1').bind(tok).run(); return reply({ ok: true }); }
-      if (request.method === 'GET' && P[0] === 'me') return reply({ nick: user.nick, email: user.email });
+      if (request.method === 'GET' && P[0] === 'me') return reply({ nick: user.nick, email: user.email, sig: user.sig || '' });
+      if (request.method === 'PUT' && P[0] === 'me') { const b = await body(), sig = clean(b.sig, 80);
+        await db.prepare('UPDATE users SET sig=?1 WHERE id=?2').bind(sig, user.id).run(); return reply({ nick: user.nick, email: user.email, sig }); }
       // ---- projects ----
       const own = async (id) => db.prepare('SELECT * FROM projects WHERE id=?1 AND user_id=?2').bind(id, user.id).first();
       if (P[0] === 'projects' && P.length === 1) {
@@ -131,18 +135,19 @@ export default {
         if (request.method === 'POST') {
           const b = await body(), name = clean(b.name, 120); if (!name) return reply({ error: 'name' }, 400);
           let slug = slugify(name), k = 1; while (await db.prepare('SELECT 1 FROM projects WHERE user_id=?1 AND slug=?2').bind(user.id, slug).first()) slug = slugify(name) + '-' + (++k);
-          const t = now(), p = await db.prepare('INSERT INTO projects (user_id,name,slug,tl,note,created,updated) VALUES (?1,?2,?3,?4,?5,?6,?6) RETURNING *')
-            .bind(user.id, name, slug, clean(b.tl, 5) || 'de', clean(b.note, 1000), t).first();
+          const t = now(), lg = (x, d) => (LANGS.includes(x) ? x : d), p = await db.prepare('INSERT INTO projects (user_id,name,slug,tl,note,created,updated,la,lb,sig) VALUES (?1,?2,?3,?4,?5,?6,?6,?7,?8,?9) RETURNING *')
+            .bind(user.id, name, slug, clean(b.tl, 5) || 'de', clean(b.note, 1000), t, lg(b.la, 'grc'), lg(b.lb, 'ar'), clean(b.sig, 16)).first();
           return reply(p);
         }
       }
       if (P[0] === 'projects' && P[1]) {
         const p = await own(+P[1]); if (!p) return reply({ error: 'not found' }, 404);
         if (P.length === 2 && request.method === 'PUT') { const b = await body();
-          await db.prepare('UPDATE projects SET name=?1, tl=?2, note=?3, updated=?4 WHERE id=?5').bind(clean(b.name, 120) || p.name, clean(b.tl, 5) || p.tl, clean(b.note, 1000), now(), p.id).run();
+          const lg = (x, d) => (LANGS.includes(x) ? x : d);
+          await db.prepare('UPDATE projects SET name=?1, tl=?2, note=?3, updated=?4, la=?5, lb=?6, sig=?7 WHERE id=?8').bind(clean(b.name, 120) || p.name, clean(b.tl, 5) || p.tl, clean(b.note, 1000), now(), lg(b.la, p.la || 'grc'), lg(b.lb, p.lb || 'ar'), clean(b.sig, 16) || p.sig || '', p.id).run();
           return reply(await own(p.id)); }
         if (P.length === 2 && request.method === 'DELETE') { await db.batch([db.prepare('DELETE FROM cards WHERE project_id=?1').bind(p.id), db.prepare('DELETE FROM projects WHERE id=?1').bind(p.id)]); return reply({ ok: true }); }
-        if (P[2] === 'cards' && request.method === 'GET') return reply((await db.prepare('SELECT * FROM cards WHERE project_id=?1 ORDER BY id').bind(p.id).all()).results.map((c) => ({ ...c, data: JSON.parse(c.data) })));
+        if (P[2] === 'cards' && request.method === 'GET') return reply((await db.prepare('SELECT * FROM cards WHERE project_id=?1 ORDER BY id').bind(p.id).all()).results.map((c) => ({ ...c, data: cardData(JSON.parse(c.data)) })));
         if (P[2] === 'cards' && request.method === 'POST') { const t = now(), d = JSON.stringify(cardData(await body()));
           const c = await db.prepare('INSERT INTO cards (project_id,data,created,updated) VALUES (?1,?2,?3,?3) RETURNING *').bind(p.id, d, t).first();
           await db.prepare('UPDATE projects SET updated=?1 WHERE id=?2').bind(t, p.id).run(); return reply({ ...c, data: JSON.parse(c.data) }); }
