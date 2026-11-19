@@ -208,7 +208,10 @@ export default {
           const lg = (x, d) => (LANGS.includes(x) ? x : d);
           await db.prepare('UPDATE projects SET name=?1, tl=?2, note=?3, updated=?4, la=?5, lb=?6, sig=?7 WHERE id=?8').bind(clean(b.name, 120) || p.name, clean(b.tl, 5) || p.tl, clean(b.note, 1000), now(), lg(b.la, p.la || 'grc'), lg(b.lb, p.lb || 'ar'), clean(b.sig, 16) || p.sig || '', p.id).run();
           return reply(await own(p.id)); }
-        if (P.length === 2 && request.method === 'DELETE') { await db.batch([db.prepare('DELETE FROM cards WHERE project_id=?1').bind(p.id), db.prepare('DELETE FROM projects WHERE id=?1').bind(p.id)]); return reply({ ok: true }); }
+        if (P.length === 2 && request.method === 'DELETE') {
+          // an accepted dictionary is also taken off the site
+          if (p.status === 'accepted') { const id = 'u-' + user.nick + '-' + p.slug; await delFile(env, 'data/u/' + id + '.json', 'withdraw (deleted by author): ' + id, 'main'); await setIndex(env, id, null, 'index: - ' + id); }
+          await db.batch([db.prepare('DELETE FROM cards WHERE project_id=?1').bind(p.id), db.prepare('DELETE FROM projects WHERE id=?1').bind(p.id)]); return reply({ ok: true }); }
         if (P[2] === 'cards' && request.method === 'GET') return reply((await db.prepare('SELECT * FROM cards WHERE project_id=?1 ORDER BY id').bind(p.id).all()).results.map((c) => ({ ...c, data: cardData(JSON.parse(c.data)) })));
         if (P[2] === 'cards' && request.method === 'POST') { const t = now(), d = JSON.stringify(cardData(await body()));
           const c = await db.prepare('INSERT INTO cards (project_id,data,created,updated) VALUES (?1,?2,?3,?3) RETURNING *').bind(p.id, d, t).first();
