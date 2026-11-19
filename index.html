@@ -211,9 +211,9 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 #lnav{display:none}
 @media(min-width:1000px){body.lnv #lnav{display:flex;flex-direction:column;gap:4px;position:fixed;z-index:6;left:calc(max(0px,(100vw - 1240px)/2) + 10px);top:var(--lnt,200px);width:92px;max-height:calc(100vh - var(--lnt,200px) - 16px);overflow:auto;font:13px/1.25 'Noto Sans',sans-serif}
  body.lnv .wrap{padding-left:max(5vw,118px)}
- #lnav button{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:6px;padding:5px 8px;border-radius:8px;color:var(--lap);background:var(--bg)}
+ #lnav button{all:unset;cursor:pointer;display:flex;justify-content:flex-start;gap:5px;padding:5px 8px;border-radius:8px;color:var(--lap);background:var(--bg)}
  #lnav button:hover,#lnav button:focus-visible{background:var(--lap);color:var(--bg)}
- #lnav button b{font-weight:600}#lnav button span{color:inherit;opacity:.7}
+ #lnav button b{font-weight:600}#lnav button span{color:inherit;opacity:.75;font-weight:400}
  #lnav .lh{font-size:11px;color:var(--mut);margin:6px 2px 0}
  #lnav .up{justify-content:center;margin-top:6px}}
 .lib h2{font:700 24px/1.2 'Noto Serif',serif;margin:0;display:inline}
@@ -773,7 +773,7 @@ function lnavRender(){
   const gs=[...GF.keys()];if(gs.length<2&&!results.length){n.innerHTML='';document.body.classList.remove('lnv');return}
   const lab=L=>(I.chip&&I.chip[L])||(LANGS[L]?LANGS[L][1]:L);
   let h='',inb=false;
-  for(const g of gs){if(g[0]==='b'&&!inb){inb=true;h+=`<div class="lh">${esc(I.inbody)}</div>`}h+=`<button data-g="${g}" title="${esc(((I.lang&&I.lang[g.slice(1)])||lab(g.slice(1)))+' · '+cnt[g])}"><b>${esc(lab(g.slice(1)))}</b><span>${cnt[g].toLocaleString(UIL)}</span></button>`}
+  for(const g of gs){if(g[0]==='b'&&!inb){inb=true;h+=`<div class="lh">${esc(I.inbody)}</div>`}h+=`<button data-g="${g}" title="${esc(((I.lang&&I.lang[g.slice(1)])||lab(g.slice(1)))+' · '+cnt[g])}"><b>${esc(lab(g.slice(1)))}</b><span>(${cnt[g].toLocaleString(UIL)})</span></button>`}
   h+=`<button class="up" data-g="top" title="↑">↑</button>`;
   n.innerHTML=h;document.body.classList.toggle('lnv',results.length>0);lnavPos();
 }
