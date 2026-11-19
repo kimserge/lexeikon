@@ -686,7 +686,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=24;
+const BUILTIN=['syr','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=25;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -728,7 +728,7 @@ function search(){
       else{
         const rx=lat&&RX[L];
         if(rx&&L==='gez'&&VX){const h=d.hk[i];if(VX.ex.test(h))s=0;else if(mode!=='ex'&&VX.pre.test(h))s=1;else if(mode==='in'&&VX.in.test(h))s=2;if(s>=0)voc=1}
-        if(rx&&s<0){if(rx.ok){const k=CL[L].sem?d.sk[i]:d.hk[i];if(rx.ex.test(k))s=0;else if(mode!=='ex'&&rx.pre.test(k))s=1;else if(mode==='in'&&rx.in.test(k))s=2}}
+        if(rx&&s<0&&!(L==='gez'&&qv)){if(rx.ok){const k=CL[L].sem?d.sk[i]:d.hk[i];if(rx.ex.test(k))s=0;else if(mode!=='ex'&&rx.pre.test(k))s=1;else if(mode==='in'&&rx.in.test(k))s=2}}
         else if(!rx){const h=d.hk[i];if(h===qh)s=0;else if(mode!=='ex'&&h.startsWith(qh))s=1;else if(mode==='in'&&h.includes(qh))s=2}
         if(s<0&&scope&&qd){const k=d.dk[i],x=mode==='ex'?k.indexOf(' '+qd+' '):mode==='pre'?k.indexOf(' '+qd):k.indexOf(qd);if(x>=0){s=3;pos=x}}
       }
@@ -739,6 +739,8 @@ function search(){
   results.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
   {const slots={};results.forEach((r,k)=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);(slots[g]=slots[g]||[]).push(k)});
    const old=results.slice();for(const g in slots){const ks=slots[g],it=ks.map(k=>old[k]);it.sort((a,b)=>loc(a[2])-loc(b[2]));ks.forEach((k,n)=>results[k]=it[n])}}
+  {const sec=r=>r[0]===3?1:0,gk=r=>sec(r)+':'+elang(r[2],r[3]),first=new Map();results.forEach((r,k)=>{const g=gk(r);if(!first.has(g))first.set(g,k)});
+   results=results.map((r,k)=>[r,k]).sort((a,b)=>sec(a[0])-sec(b[0])||first.get(gk(a[0]))-first.get(gk(b[0]))||a[1]-b[1]).map(x=>x[0])}
   $('#stat').textContent=results.length?I.found+results.length.toLocaleString(UIL):I.none;
   $('#res').innerHTML='';more();renderSug();
 }
@@ -754,7 +756,7 @@ function sugPos(){const s=$('#sug');if(s.hidden)return;const v=window.visualView
 function renderSug(){
   const q=$('#q');if(sugOff||!q.value.trim()){sugHide();return}
   const m=new Map();
-  for(const r of results){if(r[0]>2)break;const d=r[2],e=d.entries[r[3]],L=elang(d,r[3]),k=e[0]+'\u0001'+L;if(!m.has(k)){if(m.size>=30)continue;m.set(k,{w:e[0],L,s:r[0],ds:new Set()})}m.get(k).ds.add(sgl(d))}
+  for(const r of results){if(r[0]>2)continue;const d=r[2],e=d.entries[r[3]],L=elang(d,r[3]),k=e[0]+'\u0001'+L;if(!m.has(k)){if(m.size>=30)continue;m.set(k,{w:e[0],L,s:r[0],ds:new Set()})}m.get(k).ds.add(sgl(d))}
   sugItems=[...m.values()];if(!sugItems.length){sugHide();return}
   $('#sug').innerHTML=`<li class="sx" role="presentation"><button type="button" id="sugX" aria-label="${esc(I.close)}" title="${esc(I.close)}">×</button></li>`+sugItems.map((it,j)=>`<li role="option" id="sg${j}" data-j="${j}" aria-selected="${j===sugIdx}" class="${j===sugIdx?'act':''}"><span class="w" dir="auto">${hlHead(it.w,it.s,it.L)}</span>${trTag(it.w,it.L)}<span class="m">${esc(LANGS[it.L]?LANGS[it.L][1]:'')} · ${esc([...it.ds].join(', '))}</span></li>`).join('');
   $('#sug').hidden=false;document.body.classList.add('sugo');q.setAttribute('aria-expanded','true');sugPos();
@@ -820,7 +822,7 @@ function formatDef0(raw,L,hw,noRoot){
   if(L==='gez')src=src.split('\n').map(ln=>ln.replace(/([\p{L}:.;\]])\s+((?:[a-p]|[α-ω])\)\s)/gu,(m,p,mk,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='('||ch==='[')d++;else if(ch===')'||ch===']')d=Math.max(0,d-1)}return d?m:p+'\n'+mk})).join('\n');
   if(L==='gez')src=src.replace(/([;:])((?:\x05)?)[ \t]+(?=[\u1200-\u137F])/g,(m,p,x,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='('||ch==='[')d++;else if(ch===')'||ch===']')d=Math.max(0,d-1)}if(d)return m;if(/^[\u1200-\u137F]+፡\s*(?:,|\x02|$)/.test(str.slice(o+m.length)))return /^\s*$/.test(str.slice(0,o))?'':p+x+'\n';return p+x+'\n\x01'});
   if(L==='syr')src=src.replace(/(\.)((?:[ \t]|\x05)+)((?:\x02[^\x03]*\x03\s*)*)(?=[\u0710-\u074F])/g,(m,a,w,b,o,str)=>{let d=0;for(const ch of str.slice(0,o)){if(ch==='(')d++;else if(ch===')')d=Math.max(0,d-1)}return d?m:a+(w.includes('\x05')?'\x05':'')+'\n'+b});
-  if(L==='ka'||L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>{let r='',gap='';for(const part of t.split(/(\x06[^\x07]*\x07)/)){if(part.startsWith('\x06')){if(r&&/[A-Za-zА-Яа-яЁё]/.test(gap))r=r.replace(/\s+$/,'')+'\n';r+=part;gap=''}else{r+=part;gap+=part}}return '\x04'+r+'\x05'});
+  if(L==='ka'||L==='hy')src=src.replace(/\x04([^\x05]*)\x05/g,(m,t)=>{if(t.includes('\u2060'))return m;let r='',gap='';for(const part of t.split(/(\x06[^\x07]*\x07)/)){if(part.startsWith('\x06')){if(r&&/[A-Za-zА-Яа-яЁё]/.test(gap.replace(/\x02[^\x03]*\x03/g,'')))r=r.replace(/\s+$/,'')+'\n';r+=part;gap=''}else{r+=part;gap+=part}}return '\x04'+r+'\x05'});
   for(const line of src.split('\n')){
     let h=esc(line),out='',dep=0,last=0,m,n=0;
     const re=/(^|\s)(?:-\s+)?(\d{1,2})([).])(?=\s|$)/g;
@@ -865,7 +867,7 @@ function formatDef0(raw,L,hw,noRoot){
 }
 const GLOSS={'b-ml':'en','b-kun':'de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-gez','b-dil','b-mis','b-che']);
-const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\uE000-\uE013]/g,'');
+const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\u2060\uE000-\uE013]/g,'');
 
 /* ---------- UI rendering ---------- */
 function langsPresent(){const s=new Set();for(const d of dicts){if(d.lang==='mix')d.entries.forEach(e=>s.add(e[2]));else s.add(d.lang)}return Object.keys(LANGS).filter(k=>s.has(k))}
