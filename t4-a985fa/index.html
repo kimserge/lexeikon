@@ -222,7 +222,7 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 #lnav{display:none}
 html{scrollbar-gutter:stable}
 @media(min-width:1000px){.wrap{padding-left:max(5vw,118px)}.qin{margin-left:calc(max(5vw,118px) - max(5vw,16px))}
- body.lnv #lnav{display:flex;flex-direction:column;gap:4px;position:fixed;z-index:6;left:10px;top:var(--lnt,200px);width:92px;max-height:calc(100vh - var(--lnt,200px) - 16px);overflow:auto;font:13px/1.25 'Noto Sans',sans-serif}
+ body.lnv #lnav{display:flex;flex-direction:column;gap:4px;position:fixed;z-index:6;left:10px;top:var(--lnt,200px);width:92px;max-height:calc(100vh - var(--lnt,200px) - var(--lnb,16px));overflow:auto;font:13px/1.25 'Noto Sans',sans-serif}
 
  #lnav button{all:unset;cursor:pointer;display:flex;justify-content:flex-start;gap:5px;padding:5px 8px;border-radius:8px;color:var(--lap);background:var(--bg)}
  #lnav button:hover,#lnav button:focus-visible{background:var(--lap);color:var(--bg)}
@@ -357,7 +357,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.6 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="../v1.64/">v1</a> · <a href="../v2/">v2</a> · <a href="../">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.7 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="../v1.64/">v1</a> · <a href="../v2/">v2</a> · <a href="../">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -1067,6 +1067,7 @@ function layoutKeys(){
   if(bs.scrollWidth>bs.clientWidth)bs.innerHTML='<span class="bsi">⌫</span>';
 }
 addEventListener('resize',layoutKeys);
+{const fb=()=>{const f=document.querySelector('.foot');if(!f)return;const t=f.getBoundingClientRect().top;document.documentElement.style.setProperty('--lnb',Math.max(16,innerHeight-t+12)+'px')};addEventListener('scroll',fb,{passive:true});addEventListener('resize',fb);setTimeout(fb,500)}
 function insert(c){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;q.value=q.value.slice(0,a)+c+q.value.slice(b);q.setSelectionRange(a+c.length,a+c.length);debounced()}
 function backspace(){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b){q.value=q.value.slice(0,a)+q.value.slice(b);q.setSelectionRange(a,a)}else if(a>0){const s=[...q.value.slice(0,a)];s.pop();const p=s.join('');q.value=p+q.value.slice(a);q.setSelectionRange(p.length,p.length)}debounced()}
 
