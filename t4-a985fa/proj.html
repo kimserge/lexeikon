@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>LexEikôn · Projects</title>
+<link rel="icon" href="../icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#fff,#14161c);--card:light-dark(#f5f6f9,#1c1f27);--ink:light-dark(#16181d,#e9ebf0);--mut:light-dark(#5b6170,#a2a8b6);--line:light-dark(#dfe2e8,#343845);--band:light-dark(#152a6b,#0f1d4b);--bandink:#fff;--lap:light-dark(#1f3fbf,#8ab0ff);--rub:light-dark(#b0281f,#ff8a7a);--ok:light-dark(#1d7a3c,#7fd69a)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Noto Sans',sans-serif}
+.top{background:var(--band);color:var(--bandink);padding:22px max(5vw,16px) 18px}
+.top .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.top h1{margin:0;font:700 26px/1.1 'Noto Serif',serif;flex:1 1 auto}.top h1 a{color:inherit;text-decoration:none}
+.top .sub{opacity:.85;margin-top:6px;font-size:14px}
+select,input,textarea,button{font:inherit;color:inherit}
+.uil{background:rgb(255 255 255/.15);color:#fff;border:1px solid rgb(255 255 255/.5);border-radius:10px;padding:4px 8px}
+.uil option{color:#000}
+main{max-width:980px;margin:0 auto;padding:20px max(5vw,16px) 80px}
+h2{font:700 22px/1.2 'Noto Serif',serif;margin:24px 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
+label{display:block;font-size:13px;color:var(--mut);margin:10px 0 4px}
+input[type=text],input[type=email],input[type=password],textarea,select.f{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg)}
+input:focus,textarea:focus{outline:2px solid var(--lap);outline-offset:0;border-color:transparent}
+textarea{min-height:70px;resize:vertical}
+.btn{cursor:pointer;border:1.5px solid var(--lap);background:transparent;color:var(--lap);border-radius:10px;padding:8px 14px;font-weight:600}
+.btn.pri{background:var(--lap);color:var(--bg)}.btn.red{border-color:var(--rub);color:var(--rub)}.btn:disabled{opacity:.4;cursor:default}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center}
+.tabs{display:flex;gap:6px;margin-bottom:6px}.tabs button{flex:1}
+.list{list-style:none;padding:0;margin:0}.list li{display:flex;gap:10px;align-items:center;padding:12px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.list li:hover{background:var(--card)}.list .nm{flex:1;font-weight:600}.list .meta{color:var(--mut);font-size:13px}
+.gr{font-family:'Noto Serif',serif;font-size:18px}.ar{font-family:'Noto Naskh Arabic',serif;font-size:20px;direction:rtl}
+.grp{border:1px dashed var(--line);border-radius:12px;padding:6px 12px 12px;margin-top:10px}
+.grp .gh{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--mut)}
+.g3{display:grid;grid-template-columns:1fr 1fr;gap:8px}.g3 .full{grid-column:1/-1}
+@media(max-width:560px){.g3{grid-template-columns:1fr}}
+.sugs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.sugs button{cursor:pointer;border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:4px 9px;text-align:left}
+.sugs button b{font-family:'Noto Serif',serif;font-size:17px;font-weight:400}.sugs button span{color:var(--mut);font-size:12px;margin-left:6px}
+.sugs button.on{border-color:var(--lap);outline:1px solid var(--lap)}
+.msg{margin-top:10px;font-size:14px}.msg.err{color:var(--rub)}.msg.ok{color:var(--ok)}
+.pill{font-size:12px;border-radius:999px;padding:2px 8px;border:1px solid var(--line);color:var(--mut)}
+.pill.new{border-color:var(--rub);color:var(--rub)}
+.ov{position:fixed;inset:0;background:rgb(0 0 0/.35);display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:4vh 10px;z-index:9}
+.ov[hidden]{display:none}.ov .card{max-width:760px;width:100%;background:var(--bg);box-shadow:0 20px 50px rgb(0 0 0/.25)}
+a{color:var(--lap)}.hidden{display:none!important}
+.head2{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}.head2 h2{flex:1}
+</style>
+</head>
+<body>
+<header class="top"><div class="row"><h1><a href="./">LexEikôn</a> · <span data-t="title"></span></h1>
+<select class="uil" id="uil" aria-label="Language"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select></div>
+<div class="sub" data-t="sub"></div><div class="sub" id="who"></div></header>
+<main>
+<section id="vAuth" class="hidden"><div class="card" style="max-width:460px">
+ <div class="tabs"><button class="btn pri" id="tLogin" data-t="login"></button><button class="btn" id="tReg" data-t="register"></button></div>
+ <form id="fAuth" autocomplete="on">
+  <label for="aNick" data-t="nick"></label><input type="text" id="aNick" autocomplete="username" required>
+  <div id="regOnly" class="hidden"><label for="aMail" data-t="email"></label><input type="email" id="aMail" autocomplete="email"></div>
+  <label for="aPass" data-t="password"></label><input type="password" id="aPass" autocomplete="current-password" required minlength="8">
+  <div class="btns"><button class="btn pri" type="submit" id="aGo"></button></div><div class="msg" id="aMsg"></div>
+ </form></div></section>
+
+<section id="vList" class="hidden">
+ <div class="head2"><h2 data-t="projects"></h2><button class="btn" id="logout" data-t="logout"></button></div>
+ <ul class="list" id="plist"></ul><p class="msg" id="pEmpty" data-t="noproj"></p>
+ <div class="card"><h2 style="margin-top:0" data-t="create"></h2>
+  <label for="nName" data-t="pname"></label><input type="text" id="nName" maxlength="120">
+  <label for="nTl" data-t="tl"></label><select class="f" id="nTl"></select>
+  <label for="nNote" data-t="pnote"></label><textarea id="nNote" maxlength="1000"></textarea>
+  <div class="btns"><button class="btn pri" id="nGo" data-t="create"></button></div><div class="msg" id="nMsg"></div></div>
+</section>
+
+<section id="vProj" class="hidden">
+ <p><a href="#" id="back" data-t="back"></a></p>
+ <div class="head2"><h2 id="pTitle"></h2><span class="pill" id="pState"></span></div>
+ <div class="btns"><button class="btn pri" id="addCard" data-t="newcard"></button><button class="btn pri hidden" id="publish" data-t="publish"></button>
+  <button class="btn" id="editProj" data-t="editp"></button><button class="btn red" id="delProj" data-t="delp"></button></div>
+ <div class="msg" id="pMsg"></div>
+ <ul class="list" id="clist"></ul><p class="msg" id="cEmpty" data-t="nocards"></p>
+</section>
+</main>
+
+<div class="ov" id="ed" hidden><div class="card" role="dialog" aria-modal="true" aria-labelledby="edT">
+ <div class="head2"><h2 id="edT" data-t="card" style="margin-top:0"></h2></div>
+ <div class="g3">
+  <div><label for="fGf">1 · <span data-t="gf"></span></label><input type="text" id="fGf" class="gr" lang="grc" autocomplete="off"></div>
+  <div><label for="fGl">2 · <span data-t="gl"></span></label><input type="text" id="fGl" class="gr" lang="grc" autocomplete="off"></div>
+  <div class="full"><div class="sugs" id="glSug"></div></div>
+ </div>
+ <div id="arGroups"></div>
+ <div class="btns"><button class="btn" id="addAr" data-t="addar"></button></div>
+ <label for="fRef">6 · <span data-t="ref"></span></label><textarea id="fRef" maxlength="2000"></textarea>
+ <div class="btns"><button class="btn pri" id="edClose" data-t="close"></button><button class="btn red" id="edDel" data-t="delc"></button><span class="msg" id="edMsg"></span></div>
+</div></div>
+
+<script>
+const API='https://lexeikon-projects.revsergeykim.workers.dev';
+const T={
+ ru:{title:'Словарные проекты',sub:'Собственные словари: греческое слово, корень по Лидделлу–Скотту, арабские соответствия, перевод, ссылка.',login:'Вход',register:'Регистрация',nick:'Имя пользователя (никнейм)',email:'Электронная почта',password:'Пароль (не меньше 8 знаков)',doLogin:'Войти',doReg:'Зарегистрироваться',projects:'Мои словари',noproj:'Пока нет ни одного словаря.',create:'Создать словарь',pname:'Название словаря',tl:'Язык перевода',pnote:'Описание (необязательно)',logout:'Выйти',back:'← Все словари',newcard:'+ Новая карточка',publish:'Обновить словарь',editp:'Изменить',delp:'Удалить словарь',nocards:'Карточек пока нет.',card:'Карточка',gf:'Греческая форма',gl:'Греческий корень (Лидделл–Скотт)',ar:'Арабское соответствие',af:'Арабская форма',ar_r:'Арабский корень',tr:'Перевод',addar:'+ Ещё арабское соответствие',ref:'Ссылка или комментарий',close:'Закрыть',delc:'Удалить карточку',saved:'Сохранено',saving:'Сохраняю…',pushed:'Опубликовано для проверки',pending:'Есть изменения',never:'Не опубликован',cards:'карт.',sure:'Удалить? Это нельзя отменить.',sent:'Файл помещён на GitHub для проверки. Уведомление отправлено на почту.',sentNoMail:'Файл помещён на GitHub для проверки.',err:'Ошибка: ',e_nick:'Никнейм: 3–24 знака, латинские буквы, цифры, - _',e_email:'Проверьте адрес почты',e_password:'Пароль слишком короткий',e_taken:'Такой никнейм уже занят',e_login:'Неверное имя или пароль',e_net:'Сервер недоступен',e_auth:'Войдите снова',who:'Вы вошли как ',nogl:'Варианты появятся после ввода греческой формы',rem:'убрать'},
+ en:{title:'Dictionary projects',sub:'Your own dictionaries: Greek word, Liddell–Scott lemma, Arabic equivalents, translation, reference.',login:'Sign in',register:'Register',nick:'Username (nickname)',email:'E-mail',password:'Password (at least 8 characters)',doLogin:'Sign in',doReg:'Create account',projects:'My dictionaries',noproj:'No dictionaries yet.',create:'Create dictionary',pname:'Dictionary name',tl:'Translation language',pnote:'Description (optional)',logout:'Sign out',back:'← All dictionaries',newcard:'+ New card',publish:'Update dictionary',editp:'Edit',delp:'Delete dictionary',nocards:'No cards yet.',card:'Card',gf:'Greek form',gl:'Greek lemma (Liddell–Scott)',ar:'Arabic equivalent',af:'Arabic form',ar_r:'Arabic root',tr:'Translation',addar:'+ Another Arabic equivalent',ref:'Reference or comment',close:'Close',delc:'Delete card',saved:'Saved',saving:'Saving…',pushed:'Submitted for review',pending:'Unsubmitted changes',never:'Not submitted',cards:'cards',sure:'Delete? This cannot be undone.',sent:'The file has been placed on GitHub for review. A notification has been e-mailed.',sentNoMail:'The file has been placed on GitHub for review.',err:'Error: ',e_nick:'Nickname: 3–24 characters, Latin letters, digits, - _',e_email:'Please check the e-mail address',e_password:'Password too short',e_taken:'This nickname is taken',e_login:'Wrong name or password',e_net:'Server unavailable',e_auth:'Please sign in again',who:'Signed in as ',nogl:'Suggestions appear once the Greek form is entered',rem:'remove'},
+ de:{title:'Wörterbuchprojekte',sub:'Eigene Wörterbücher: griechisches Wort, Lemma nach Liddell–Scott, arabische Entsprechungen, Übersetzung, Fundstelle.',login:'Anmelden',register:'Registrieren',nick:'Benutzername (Nickname)',email:'E-Mail',password:'Passwort (mindestens 8 Zeichen)',doLogin:'Anmelden',doReg:'Konto anlegen',projects:'Meine Wörterbücher',noproj:'Noch keine Wörterbücher.',create:'Wörterbuch anlegen',pname:'Name des Wörterbuchs',tl:'Übersetzungssprache',pnote:'Beschreibung (optional)',logout:'Abmelden',back:'← Alle Wörterbücher',newcard:'+ Neue Karte',publish:'Wörterbuch aktualisieren',editp:'Bearbeiten',delp:'Wörterbuch löschen',nocards:'Noch keine Karten.',card:'Karte',gf:'Griechische Form',gl:'Griechisches Lemma (Liddell–Scott)',ar:'Arabische Entsprechung',af:'Arabische Form',ar_r:'Arabische Wurzel',tr:'Übersetzung',addar:'+ Weitere arabische Entsprechung',ref:'Fundstelle oder Kommentar',close:'Schließen',delc:'Karte löschen',saved:'Gespeichert',saving:'Speichere…',pushed:'Zur Prüfung eingereicht',pending:'Nicht eingereichte Änderungen',never:'Nicht eingereicht',cards:'Karten',sure:'Löschen? Das kann nicht rückgängig gemacht werden.',sent:'Die Datei liegt zur Prüfung auf GitHub. Eine Benachrichtigung wurde per E-Mail verschickt.',sentNoMail:'Die Datei liegt zur Prüfung auf GitHub.',err:'Fehler: ',e_nick:'Nickname: 3–24 Zeichen, lateinische Buchstaben, Ziffern, - _',e_email:'Bitte E-Mail-Adresse prüfen',e_password:'Passwort zu kurz',e_taken:'Dieser Nickname ist vergeben',e_login:'Falscher Name oder falsches Passwort',e_net:'Server nicht erreichbar',e_auth:'Bitte erneut anmelden',who:'Angemeldet als ',nogl:'Vorschläge erscheinen nach Eingabe der griechischen Form',rem:'entfernen'},
+ fr:{title:'Projets de dictionnaires',sub:'Vos propres dictionnaires : mot grec, lemme selon Liddell–Scott, équivalents arabes, traduction, référence.',login:'Connexion',register:'Inscription',nick:'Nom d’utilisateur (pseudo)',email:'Courriel',password:'Mot de passe (8 caractères au moins)',doLogin:'Se connecter',doReg:'Créer un compte',projects:'Mes dictionnaires',noproj:'Aucun dictionnaire pour l’instant.',create:'Créer un dictionnaire',pname:'Nom du dictionnaire',tl:'Langue de traduction',pnote:'Description (facultatif)',logout:'Se déconnecter',back:'← Tous les dictionnaires',newcard:'+ Nouvelle fiche',publish:'Mettre à jour le dictionnaire',editp:'Modifier',delp:'Supprimer le dictionnaire',nocards:'Aucune fiche pour l’instant.',card:'Fiche',gf:'Forme grecque',gl:'Lemme grec (Liddell–Scott)',ar:'Équivalent arabe',af:'Forme arabe',ar_r:'Racine arabe',tr:'Traduction',addar:'+ Autre équivalent arabe',ref:'Référence ou commentaire',close:'Fermer',delc:'Supprimer la fiche',saved:'Enregistré',saving:'Enregistrement…',pushed:'Soumis pour vérification',pending:'Modifications non soumises',never:'Non soumis',cards:'fiches',sure:'Supprimer ? Cette action est irréversible.',sent:'Le fichier a été déposé sur GitHub pour vérification. Une notification a été envoyée par courriel.',sentNoMail:'Le fichier a été déposé sur GitHub pour vérification.',err:'Erreur : ',e_nick:'Pseudo : 3 à 24 caractères, lettres latines, chiffres, - _',e_email:'Vérifiez l’adresse électronique',e_password:'Mot de passe trop court',e_taken:'Ce pseudo est déjà pris',e_login:'Nom ou mot de passe incorrect',e_net:'Serveur indisponible',e_auth:'Veuillez vous reconnecter',who:'Connecté en tant que ',nogl:'Les propositions apparaissent après la saisie de la forme grecque',rem:'retirer'},
+ it:{title:'Progetti di dizionario',sub:'Dizionari propri: parola greca, lemma secondo Liddell–Scott, equivalenti arabi, traduzione, riferimento.',login:'Accesso',register:'Registrazione',nick:'Nome utente (nickname)',email:'E-mail',password:'Password (almeno 8 caratteri)',doLogin:'Accedi',doReg:'Crea account',projects:'I miei dizionari',noproj:'Ancora nessun dizionario.',create:'Crea dizionario',pname:'Nome del dizionario',tl:'Lingua della traduzione',pnote:'Descrizione (facoltativa)',logout:'Esci',back:'← Tutti i dizionari',newcard:'+ Nuova scheda',publish:'Aggiorna dizionario',editp:'Modifica',delp:'Elimina dizionario',nocards:'Ancora nessuna scheda.',card:'Scheda',gf:'Forma greca',gl:'Lemma greco (Liddell–Scott)',ar:'Equivalente arabo',af:'Forma araba',ar_r:'Radice araba',tr:'Traduzione',addar:'+ Altro equivalente arabo',ref:'Riferimento o commento',close:'Chiudi',delc:'Elimina scheda',saved:'Salvato',saving:'Salvataggio…',pushed:'Inviato per la revisione',pending:'Modifiche non inviate',never:'Non inviato',cards:'schede',sure:'Eliminare? L’operazione è irreversibile.',sent:'Il file è stato caricato su GitHub per la revisione. Una notifica è stata inviata per e-mail.',sentNoMail:'Il file è stato caricato su GitHub per la revisione.',err:'Errore: ',e_nick:'Nickname: 3–24 caratteri, lettere latine, cifre, - _',e_email:'Controlla l’indirizzo e-mail',e_password:'Password troppo corta',e_taken:'Questo nickname è già in uso',e_login:'Nome o password errati',e_net:'Server non raggiungibile',e_auth:'Accedi di nuovo',who:'Accesso come ',nogl:'I suggerimenti compaiono dopo aver inserito la forma greca',rem:'rimuovi'}
+};
+const TLN={de:'Deutsch',fr:'Français',en:'English',ru:'Русский',it:'Italiano'};
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ls={get:(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del:k=>{try{localStorage.removeItem(k)}catch(e){}}};
+let UIL=ls.get('lex4_ui',null)||((navigator.language||'en').slice(0,2));if(!T[UIL])UIL='en';
+let I=T[UIL],auth=ls.get('lexp_auth',null),regMode=false,projs=[],cur=null,cards=[],edCard=null;
+function i18n(){I=T[UIL];document.documentElement.lang=UIL;document.querySelectorAll('[data-t]').forEach(e=>e.textContent=I[e.dataset.t]||'');$('#uil').value=UIL;
+  $('#aGo').textContent=regMode?I.doReg:I.doLogin;$('#nTl').innerHTML=Object.keys(TLN).map(k=>`<option value="${k}">${TLN[k]}</option>`).join('');$('#nTl').value=UIL==='ru'?'ru':UIL;
+  $('#who').textContent=auth?I.who+auth.nick:'';document.title='LexEikôn · '+I.title;if(cur)renderProj();if(!$('#ed').hidden)renderAr()}
+$('#uil').onchange=()=>{UIL=$('#uil').value;ls.set('lex4_ui',UIL);i18n();if(!$('#vList').classList.contains('hidden'))renderList()};
+async function api(path,opt={}){
+  let r;try{r=await fetch(API+path,{...opt,headers:{'Content-Type':'application/json',...(auth?{Authorization:'Bearer '+auth.token}:{})},body:opt.body?JSON.stringify(opt.body):undefined})}catch(e){throw new Error(I.e_net)}
+  const j=await r.json().catch(()=>({}));
+  if(r.status===401&&auth&&path!=='/login'){auth=null;ls.del('lexp_auth');show('auth');throw new Error(I.e_auth)}
+  if(!r.ok)throw new Error(I['e_'+j.error]||(I.err+(j.error||r.status)));return j}
+function show(v){for(const k of ['Auth','List','Proj'])$('#v'+k).classList.toggle('hidden',k.toLowerCase()!==v);$('#who').textContent=auth?I.who+auth.nick:''}
+/* ---- auth ---- */
+function setMode(r){regMode=r;$('#tLogin').classList.toggle('pri',!r);$('#tReg').classList.toggle('pri',r);$('#regOnly').classList.toggle('hidden',!r);$('#aMail').required=r;$('#aPass').autocomplete=r?'new-password':'current-password';$('#aGo').textContent=r?I.doReg:I.doLogin;$('#aMsg').textContent=''}
+$('#tLogin').onclick=()=>setMode(false);$('#tReg').onclick=()=>setMode(true);
+$('#fAuth').onsubmit=async e=>{e.preventDefault();$('#aMsg').className='msg';$('#aMsg').textContent='…';
+  try{const j=await api(regMode?'/register':'/login',{method:'POST',body:{nick:$('#aNick').value.trim(),email:$('#aMail').value.trim(),password:$('#aPass').value,lang:UIL}});
+    auth={token:j.token,nick:j.nick};ls.set('lexp_auth',auth);$('#aPass').value='';$('#aMsg').textContent='';await loadList()}
+  catch(err){$('#aMsg').className='msg err';$('#aMsg').textContent=err.message}};
+$('#logout').onclick=async()=>{try{await api('/logout',{method:'POST'})}catch(e){}auth=null;ls.del('lexp_auth');show('auth')};
+/* ---- projects ---- */
+const fmtD=s=>s?new Date(s).toLocaleDateString(UIL,{day:'numeric',month:'short',year:'numeric'}):'';
+const state=p=>!p.pushed?(p.n?['new',I.never]:['',I.never]):(p.updated>p.pushed?['new',I.pending]:['',I.pushed+' · '+fmtD(p.pushed)]);
+function renderList(){$('#plist').innerHTML=projs.map(p=>{const[c,t]=state(p);return `<li data-p="${p.id}"><span class="nm">${esc(p.name)}</span><span class="meta">${p.n} ${I.cards} · ${TLN[p.tl]||p.tl}</span><span class="pill ${c}">${esc(t)}</span></li>`}).join('');$('#pEmpty').classList.toggle('hidden',projs.length>0)}
+async function loadList(){show('list');try{projs=await api('/projects');renderList()}catch(e){$('#pEmpty').textContent=e.message}}
+$('#plist').onclick=e=>{const li=e.target.closest('[data-p]');if(li)openProj(+li.dataset.p)};
+$('#nGo').onclick=async()=>{const name=$('#nName').value.trim();if(!name){$('#nName').focus();return}
+  try{const p=await api('/projects',{method:'POST',body:{name,tl:$('#nTl').value,note:$('#nNote').value}});$('#nName').value=$('#nNote').value='';p.n=0;projs.unshift(p);renderList();openProj(p.id)}catch(e){$('#nMsg').className='msg err';$('#nMsg').textContent=e.message}};
+async function openProj(id){cur=projs.find(p=>p.id===id);if(!cur)return;show('proj');$('#pMsg').textContent='';renderProj();try{cards=await api('/projects/'+id+'/cards');cur.n=cards.length;renderProj()}catch(e){$('#pMsg').className='msg err';$('#pMsg').textContent=e.message}}
+function renderProj(){if(!cur)return;$('#pTitle').textContent=cur.name;const[c,t]=state(cur);$('#pState').className='pill '+c;$('#pState').textContent=t+' · '+(TLN[cur.tl]||cur.tl);
+  $('#publish').classList.toggle('hidden',!(cards.length&&(!cur.pushed||cur.updated>cur.pushed)));
+  $('#clist').innerHTML=cards.map(k=>{const d=k.data;return `<li data-c="${k.id}"><span class="nm"><span class="gr">${esc(d.gf)}</span>${d.gl?` <span class="meta">→ <span class="gr">${esc(d.gl)}</span></span>`:''}</span><span class="ar">${esc(d.ar.map(a=>a.f).filter(Boolean).join('، '))}</span></li>`}).join('');
+  $('#cEmpty').classList.toggle('hidden',cards.length>0)}
+$('#back').onclick=e=>{e.preventDefault();cur=null;loadList()};
+$('#editProj').onclick=async()=>{const name=prompt(I.pname,cur.name);if(name==null)return;const tl=prompt(I.tl+' (de, fr, en, ru, it)',cur.tl);if(tl==null)return;
+  try{Object.assign(cur,await api('/projects/'+cur.id,{method:'PUT',body:{name,tl:TLN[tl.trim()]?tl.trim():cur.tl,note:cur.note}}));renderProj()}catch(e){$('#pMsg').className='msg err';$('#pMsg').textContent=e.message}};
+$('#delProj').onclick=async()=>{if(!confirm(I.sure))return;try{await api('/projects/'+cur.id,{method:'DELETE'});cur=null;loadList()}catch(e){$('#pMsg').className='msg err';$('#pMsg').textContent=e.message}};
+$('#publish').onclick=async()=>{$('#publish').disabled=true;$('#pMsg').className='msg';$('#pMsg').textContent='…';
+  try{const j=await api('/projects/'+cur.id+'/publish',{method:'POST'});cur.pushed=j.pushed;$('#pMsg').className='msg ok';$('#pMsg').innerHTML=esc(j.mailed?I.sent:I.sentNoMail);renderProj()}
+  catch(e){$('#pMsg').className='msg err';$('#pMsg').textContent=e.message}finally{$('#publish').disabled=false}};
+/* ---- card editor ---- */
+let ML=null,MLK=null;
+const gk=s=>String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().replace(/ς/g,'σ').replace(/[^α-ω]/g,'');
+async function mlLoad(){if(ML)return;try{ML=await (await fetch('../data/mlhw.json')).json();MLK=ML.map(x=>gk(x[0]))}catch(e){ML=[];MLK=[]}}
+function glSuggest(){const box=$('#glSug'),f=gk($('#fGf').value),g=gk($('#fGl').value);
+  if(!ML||(!f&&!g)){box.innerHTML=`<span class="meta">${esc(I.nogl)}</span>`;return}
+  const out=[];
+  if(g&&g!==gk(edCard&&edCard.data.gl)){for(let i=0;i<MLK.length&&out.length<12;i++)if(MLK[i].startsWith(g))out.push([0,i])}
+  else{const lcp=(a,b)=>{let n=0;while(n<a.length&&n<b.length&&a[n]===b[n])n++;return n};const min=Math.min(3,f.length);
+    for(let i=0;i<MLK.length;i++){const n=lcp(f,MLK[i]);if(n>=min)out.push([-(n*10)+Math.abs(MLK[i].length-n),i])}
+    out.sort((a,b)=>a[0]-b[0]);out.length=Math.min(out.length,12)}
+  box.innerHTML=out.map(([,i])=>`<button type="button" data-l="${esc(ML[i][0])}" class="${ML[i][0]===$('#fGl').value?'on':''}"><b>${esc(ML[i][0])}</b><span>${esc(ML[i][1])}</span></button>`).join('')}
+$('#glSug').onclick=e=>{const b=e.target.closest('[data-l]');if(b){$('#fGl').value=b.dataset.l;glSuggest()}};
+$('#fGf').oninput=glSuggest;$('#fGl').oninput=glSuggest;
+const arSkel=s=>String(s||'').normalize('NFC').replace(/[ً-ْٰـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/^ال/,'');
+function renderAr(){const list=edCard.data.ar.length?edCard.data.ar:[{f:'',r:'',t:''}];edCard.data.ar=list;
+  $('#arGroups').innerHTML=list.map((a,k)=>`<div class="grp" data-k="${k}"><div class="gh"><span>${esc(I.ar)} ${k+1}</span>${list.length>1?`<button type="button" class="btn red" data-rm="${k}" style="padding:2px 8px">${esc(I.rem)}</button>`:''}</div>
+   <div class="g3"><div><label>3 · ${esc(I.af)}</label><input type="text" class="ar" lang="ar" dir="rtl" data-f="f" value="${esc(a.f)}"></div>
+   <div><label>4 · ${esc(I.ar_r)}</label><input type="text" class="ar" lang="ar" dir="rtl" data-f="r" value="${esc(a.r)}" placeholder="${esc(arSkel(a.f))}"></div>
+   <div class="full"><label>5 · ${esc(I.tr)} (${esc(TLN[cur.tl]||cur.tl)})</label><input type="text" data-f="t" lang="${esc(cur.tl)}" value="${esc(a.t)}"></div></div></div>`).join('');
+  $('#addAr').disabled=list.length>=3}
+$('#arGroups').oninput=e=>{const i=e.target.closest('[data-f]'),g=e.target.closest('[data-k]');if(!i||!g)return;edCard.data.ar[+g.dataset.k][i.dataset.f]=i.value;
+  if(i.dataset.f==='f'){const r=g.querySelector('[data-f=r]');r.placeholder=arSkel(i.value)}};
+$('#arGroups').onclick=e=>{const b=e.target.closest('[data-rm]');if(b){edCard.data.ar.splice(+b.dataset.rm,1);renderAr()}};
+$('#addAr').onclick=()=>{if(edCard.data.ar.length<3){edCard.data.ar.push({f:'',r:'',t:''});renderAr();$('#arGroups').lastElementChild.querySelector('input').focus()}};
+function openCard(c){edCard=c?{id:c.id,data:JSON.parse(JSON.stringify(c.data))}:{id:null,data:{gf:'',gl:'',ar:[],ref:''}};
+  $('#fGf').value=edCard.data.gf;$('#fGl').value=edCard.data.gl;$('#fRef').value=edCard.data.ref;$('#edMsg').textContent='';$('#edDel').classList.toggle('hidden',!c);
+  renderAr();$('#ed').hidden=false;$('#fGf').focus();mlLoad().then(glSuggest);glSuggest()}
+$('#addCard').onclick=()=>openCard(null);
+$('#clist').onclick=e=>{const li=e.target.closest('[data-c]');if(li)openCard(cards.find(k=>k.id===+li.dataset.c))};
+async function closeCard(){const d=edCard.data;d.gf=$('#fGf').value.trim();d.gl=$('#fGl').value.trim();d.ref=$('#fRef').value.trim();
+  d.ar=d.ar.map(a=>({f:(a.f||'').trim(),r:(a.r||'').trim()||arSkel(a.f),t:(a.t||'').trim()})).filter(a=>a.f||a.r||a.t);
+  const empty=!d.gf&&!d.gl&&!d.ar.length&&!d.ref;
+  if(empty&&!edCard.id){$('#ed').hidden=true;return}
+  $('#edMsg').textContent=I.saving;
+  try{const k=edCard.id?await api(`/projects/${cur.id}/cards/${edCard.id}`,{method:'PUT',body:d}):await api(`/projects/${cur.id}/cards`,{method:'POST',body:d});
+    const i=cards.findIndex(x=>x.id===k.id);if(i>=0)cards[i]=k;else cards.push(k);cur.updated=new Date().toISOString();cur.n=cards.length;$('#ed').hidden=true;renderProj()}
+  catch(e){$('#edMsg').className='msg err';$('#edMsg').textContent=e.message}}
+$('#edClose').onclick=closeCard;
+$('#ed').onclick=e=>{if(e.target.id==='ed')closeCard()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#ed').hidden)closeCard()});
+$('#edDel').onclick=async()=>{if(!confirm(I.sure))return;try{await api(`/projects/${cur.id}/cards/${edCard.id}`,{method:'DELETE'});cards=cards.filter(k=>k.id!==edCard.id);cur.updated=new Date().toISOString();cur.n=cards.length;$('#ed').hidden=true;renderProj()}catch(e){$('#edMsg').textContent=e.message}};
+/* ---- start ---- */
+setMode(false);i18n();if(auth)loadList();else show('auth');
+</script>
+</body>
+</html>
