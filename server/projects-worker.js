@@ -1,7 +1,8 @@
 // LexEikôn — dictionary projects (accounts, projects, cards, publishing to GitHub).
 // Bindings: D1 database as DB.
 // Secrets (Settings → Variables and Secrets): GITHUB_TOKEN (fine-grained, Contents: read & write on kimserge/lexeikon),
-//   RESEND_API_KEY (optional, for e-mail), MAIL_FROM (e.g. "LexEikôn <noreply@your-domain>"), ADMIN_EMAIL.
+//   RESEND_API_KEY (optional, for e-mail), MAIL_FROM (e.g. "LexEikôn <noreply@your-domain>"),
+//   ADMIN_EMAIL: administrator e-mail(s) and/or nickname(s), comma-separated (e.g. "kimserge" or "kimserge, me@unil.ch").
 const ORIGINS = new Set(['https://kimserge.github.io']);
 const REPO = 'kimserge/lexeikon', BRANCH = 'contrib';
 let ready = false;
@@ -23,6 +24,10 @@ async function init(db) {
   ready = true;
 }
 const now = () => new Date().toISOString();
+// administrator: ADMIN_EMAIL may hold e-mail addresses and/or nicknames, separated by commas
+const admins = (env) => String(env.ADMIN_EMAIL || '').split(',').map((x) => x.trim().toLowerCase()).filter(Boolean);
+const isAdmin = (env, u) => !!u && admins(env).some((a) => a === String(u.email || '').toLowerCase() || a === String(u.nick || '').toLowerCase());
+const adminMail = (env) => admins(env).find((a) => a.includes('@')) || '';
 const b64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
 const rand = (n) => b64(crypto.getRandomValues(new Uint8Array(n))).replace(/[+/=]/g, '').slice(0, n);
 async function pbkdf2(pass, salt) {
@@ -130,7 +135,7 @@ export default {
         const u = await db.prepare('INSERT INTO users (nick,email,salt,hash,lang,created,sig) VALUES (?1,?2,?3,?4,?5,?6,?7) RETURNING id')
           .bind(nick, email, salt, hash, clean(b.lang, 5), now(), sig).first();
         const token = rand(40); await db.prepare('INSERT INTO sessions VALUES (?1,?2,?3)').bind(token, u.id, now()).run();
-        await mail(env, env.ADMIN_EMAIL, 'LexEikôn: new contributor ' + nick, nick + ' <' + email + '> registered.');
+        await mail(env, adminMail(env), 'LexEikôn: new contributor ' + nick, nick + ' <' + email + '> registered.');
         return reply({ token, nick, email, sig });
       }
       if (request.method === 'POST' && P[0] === 'login') {
@@ -138,13 +143,13 @@ export default {
         const u = await db.prepare('SELECT * FROM users WHERE nick=?1 OR lower(email)=?1').bind(nick).first();
         if (!u || (await pbkdf2(String(b.password || ''), u.salt)) !== u.hash) return reply({ error: 'login' }, 401);
         const token = rand(40); await db.prepare('INSERT INTO sessions VALUES (?1,?2,?3)').bind(token, u.id, now()).run();
-        return reply({ token, nick: u.nick, email: u.email, sig: u.sig || '', admin: !!(env.ADMIN_EMAIL && u.email.toLowerCase() === String(env.ADMIN_EMAIL).trim().toLowerCase()) });
+        return reply({ token, nick: u.nick, email: u.email, sig: u.sig || '', admin: isAdmin(env, u) });
       }
       const tok = (request.headers.get('Authorization') || '').replace(/^Bearer\s+/, '');
       const user = tok ? await db.prepare('SELECT u.* FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token=?1').bind(tok).first() : null;
       if (!user) return reply({ error: 'auth' }, 401);
       if (request.method === 'POST' && P[0] === 'logout') { await db.prepare('DELETE FROM sessions WHERE token=?1').bind(tok).run(); return reply({ ok: true }); }
-      const admin = !!(env.ADMIN_EMAIL && user.email && user.email.toLowerCase() === String(env.ADMIN_EMAIL).trim().toLowerCase());
+      const admin = isAdmin(env, user);
       if (request.method === 'GET' && P[0] === 'me') return reply({ nick: user.nick, email: user.email, sig: user.sig || '', admin });
       if (request.method === 'PUT' && P[0] === 'me') { const b = await body(), sig = clean(b.sig, 80);
         await db.prepare('UPDATE users SET sig=?1 WHERE id=?2').bind(sig, user.id).run(); return reply({ nick: user.nick, email: user.email, sig }); }
@@ -221,7 +226,7 @@ export default {
           await db.prepare("UPDATE projects SET pushed=?1, status='pending' WHERE id=?2").bind(t, p.id).run();
           const txt = `«${p.name}» (${cards.length}) → ${link}`;
           const sent = await mail(env, user.email, 'LexEikôn: ' + p.name, 'Your dictionary update has been placed for review.\n' + txt);
-          await mail(env, env.ADMIN_EMAIL, 'LexEikôn update: ' + user.nick + '/' + p.slug, txt);
+          await mail(env, adminMail(env), 'LexEikôn update: ' + user.nick + '/' + p.slug, txt);
           return reply({ ok: true, link, pushed: t, mailed: sent });
         }
       }
