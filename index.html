@@ -776,7 +776,7 @@ function viewInit(){if(!VIEW)return;const d=dicts.find(x=>x.id===VIEW),b=documen
 async function loadUserDicts(){
   /* accepted dictionaries (visible to everyone) */
   try{const L=await (await fetch('data/u/index.json',{cache:'no-store'})).json();
-    for(const m of L){if(dicts.some(d=>d.id===m.id))continue;try{const d=await (await fetch('data/u/'+m.file,{cache:'no-store'})).json();if(dicts.some(x=>x.id===d.id))continue;d.user=true;d.demo=true;d.created=90;d.lang=d.la||d.lang;SIG[d.id]=[d.sig||('*'+d.name.slice(0,5)),d.name+' · '+d.author];dicts.push(d)}catch(e){}}refresh()}catch(e){}
+    for(const m of L){if(dicts.some(d=>d.id===m.id))continue;try{const d=await (await fetch('data/u/'+m.file,{cache:'no-store'})).json();if(dicts.some(x=>x.id===d.id))continue;d.user=true;d.demo=true;d.created=90;d.lang=d.la||d.lang;SIG[d.id]=[d.sig||('*'+d.name.slice(0,5)),d.name+' · '+d.author+(d.ver?' · v'+d.ver:'')];dicts.push(d)}catch(e){}}refresh()}catch(e){}
   /* own dictionaries of the signed-in contributor (latest drafts) */
   let a=null;try{a=JSON.parse(localStorage.getItem('lexp_auth'))}catch(e){}if(!a||!a.token)return;
   if(VPID)try{const r=await fetch(PAPI+'/admin/projects/'+encodeURIComponent(VPID),{headers:{Authorization:'Bearer '+a.token}});if(r.ok){const d=await r.json();if(d&&d.entries&&!dicts.some(x=>x.id===d.id)){d.user=true;d.demo=true;d.created=100;d.lang=d.la||d.lang;SIG[d.id]=[d.sig||('*'+d.name.slice(0,5)),d.name+' · '+d.author];dicts.push(d)}}}catch(e){}
