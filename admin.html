@@ -61,7 +61,7 @@ a{color:var(--lap)}.hidden{display:none!important}
   <dt data-t="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
   <dt data-t="cr_contact"></dt><dd><a id="mail" href="#" data-t="cr_mail"></a></dd>
  </dl>
- <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.8 <button type="button" class="upd" id="upd2"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-t="upd2"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="./">v4</a>)</span></p>
+ <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="./">v4</a>)</span></p>
 </div></footer>
 <script>
 const API='https://lexeikon-projects.revsergeykim.workers.dev';
@@ -106,7 +106,7 @@ $('#pv').onclick=async e=>{const b=e.target.closest('[data-act]');if(!b)return;c
   try{const j=await api(`/admin/projects/${cur.id}/${act}`,{method:'POST',body:{note:$('#note').value.trim()}});cur.status=j.status;if(j.accepted){cur.accepted=j.accepted}cur.anote=$('#note').value.trim();
     const m={accept:I.done_a,reject:I.done_r,withdraw:I.done_w}[act];render();await preview(cur.id,true);$('#amsg').className='msg ok';$('#amsg').textContent=m}
   catch(err){$('#amsg').className='msg err';$('#amsg').textContent=err.message;document.querySelectorAll('#pv [data-act]').forEach(x=>x.disabled=false)}};
-$('#hupd').onclick=$('#upd2').onclick=async()=>{$('#hupd').classList.add('busy');$('#upd2').classList.add('busy');try{if(window.caches){const ks=await caches.keys();await Promise.all(ks.filter(k=>k.startsWith('lexeikon-v')).map(k=>caches.delete(k)))}}catch(e){}try{const rs=navigator.serviceWorker?await navigator.serviceWorker.getRegistrations():[];await Promise.all(rs.map(r=>r.update().catch(()=>{})))}catch(e){}location.reload()};
+$('#hupd').onclick=async()=>{$('#hupd').classList.add('busy');try{if(window.caches){const ks=await caches.keys();await Promise.all(ks.filter(k=>k.startsWith('lexeikon-v')).map(k=>caches.delete(k)))}}catch(e){}try{const rs=navigator.serviceWorker?await navigator.serviceWorker.getRegistrations():[];await Promise.all(rs.map(r=>r.update().catch(()=>{})))}catch(e){}location.reload()};
 $('#logout').onclick=async()=>{try{await api('/logout',{method:'POST'})}catch(e){}try{localStorage.removeItem('lexp_auth')}catch(e){}location.href='proj.html'};
 (async()=>{i18n();if(!auth){$('#deny').classList.remove('hidden');return}
   try{all=await api('/admin/projects');$('#app').classList.remove('hidden');render();const first=all.find(p=>stOf(p)==='pending');}catch(e){$('#deny').classList.remove('hidden')}})();
