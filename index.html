@@ -179,7 +179,7 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .def .l.f:first-child{margin-top:0}
 .def .l.s{margin-top:.45em}
 .def .l.s:first-child{margin-top:0}
-.def .l.s2{padding-inline-start:1.2em;margin-top:.2em}.l.s2.sa{margin-top:.45em}
+.def .l.s2{padding-inline-start:1.2em;margin-top:.2em}.l.s2.sa{margin-top:.45em}.l.si{margin-inline-start:1.2em}
 .def .l.s3{padding-inline-start:2.4em;margin-top:.15em}
 .def .l.q{padding-inline-start:.9em;border-inline-start:2px solid var(--line);margin-top:.3em}
 .def .l.x{padding-inline-start:.9em;margin-top:.45em;border-inline-start:2px solid var(--line)}
@@ -711,7 +711,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','kun'],BVER=33;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','kun'],BVER=34;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -882,7 +882,7 @@ function formatDef0(raw,L,hw,noRoot){
     out+=h.slice(last);
     lines.push(...out.split('\n'));
   }
-  let g=false,ex=false,et=false;
+  let g=false,ex=false,et=false,sub=false;
   return lines.filter(l=>l.trim()!=='@').map((l,li)=>{
     let lv=-1;l=l.replace(/^\uE010([0-2])([^\uE013]*)\uE013/,(m,a,b)=>{lv=+a;return '<b class="sn">'+b+'</b>'});
     let cls=(ex||/^\s*\x04/.test(l))?' x':(/^<b class="sn">/.test(l)?' s':'');if(lv>=0)cls=[' s',' s2',' s3'][lv];
@@ -890,6 +890,7 @@ function formatDef0(raw,L,hw,noRoot){
     else if(!cls&&/^[a-p]\)\s/.test(l)){cls=' s2';l=l.replace(/^([a-p]\))\s/,'<b class="sn">$1</b> ')}
     else if(!cls&&/^[α-ω]\)\s/.test(l)){cls=' s3';l=l.replace(/^([α-ω]\))\s/,'<b class="sn">$1</b> ')}
     else if(!cls&&/^[A-H]\)\s/.test(l)){cls=' s';l=l.replace(/^([A-H]\))\s/,'<b class="sn">$1</b> ')}
+    if(cls===' s2 sa')sub=true;else if(cls===' s'||cls===' s2'||cls===' s3')sub=false;else if(sub&&!/^\x0b/.test(l))cls+=' si';
     if(L==='gez'&&!noRoot&&li===0&&l.length<40&&!/[ሀ-፿\x02-\x07]/.test(l)&&/[a-zʾʿḥḫṣśṭḍ']/.test(l)){return ''}
     if(l.startsWith('\x01')){l=l.slice(1);if(!ex&&!g){return `<span class="l x"><span class="ex">${l.replace(/[\u1200-\u137F][\u1200-\u137F፡\s]*[\u1200-\u137F፡]|[\u1200-\u137F]/g,'\x06$&\x07').replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>').replace(/\x0e/g,'<span class="et">').replace(/\x0f/g,'</span>').replace(/\x10/g,'<span class="nl">').replace(/\x11/g,'</span>')}</span></span>`}}
     if(/^@\s*/.test(l)){cls=' f';l=l.replace(/^@\s*(.*)$/,'<b class="fm">$1</b>')}
