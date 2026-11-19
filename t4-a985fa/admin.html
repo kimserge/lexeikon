@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>LexEikôn · Admin</title>
+<link rel="icon" href="../icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic&family=Noto+Sans+Syriac&family=Noto+Sans+Ethiopic&family=Noto+Serif+Georgian&family=Noto+Serif+Armenian&family=Noto+Sans+Coptic&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#fff,#14161c);--card:light-dark(#f5f6f9,#1c1f27);--ink:light-dark(#16181d,#e9ebf0);--mut:light-dark(#5b6170,#a2a8b6);--line:light-dark(#dfe2e8,#343845);--band:light-dark(#152a6b,#0f1d4b);--lap:light-dark(#1f3fbf,#8ab0ff);--rub:light-dark(#b0281f,#ff8a7a);--ok:light-dark(#1d7a3c,#7fd69a);--warn:light-dark(#9a5b00,#ffc46b);
+ --lex:'Noto Serif','Noto Serif Georgian','Noto Serif Armenian','Noto Naskh Arabic','Noto Sans Syriac','Noto Sans Ethiopic','Noto Sans Coptic',serif}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Noto Sans',sans-serif}
+.top{background:var(--band);color:#fff;padding:22px max(5vw,16px) 18px}.top .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.top h1{margin:0;font:700 26px/1.15 'Noto Serif',serif;flex:1 1 auto}.top h1 a{color:inherit;text-decoration:none}.top .sub{opacity:.85;margin-top:6px;font-size:14px}
+select,input,textarea,button{font:inherit;color:inherit}
+.uil{background:rgb(255 255 255/.15);color:#fff;border:1px solid rgb(255 255 255/.5);border-radius:10px;padding:4px 8px}.uil option{color:#000}
+main{max-width:1200px;margin:0 auto;padding:20px max(5vw,16px) 80px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 14px}.tabs button{cursor:pointer;border:1.5px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 12px;font-size:14px}
+.tabs button.on{border-color:var(--lap);color:var(--lap);font-weight:600}.tabs b{font-weight:600;color:var(--mut);margin-inline-start:4px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px;align-items:start}@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.list li{padding:10px 8px;border-bottom:1px solid var(--line);cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:2px 10px;align-items:baseline}
+.list li:hover,.list li.on{background:var(--card)}.list .nm{font-weight:600}.list .mt{grid-column:2/4;color:var(--mut);font-size:13px}
+.sg{font:italic 600 14px 'Noto Sans',sans-serif;color:var(--lap)}
+.pill{font-size:12px;border-radius:999px;padding:1px 8px;border:1px solid var(--line);color:var(--mut);white-space:nowrap}
+.pill.pending{border-color:var(--warn);color:var(--warn)}.pill.accepted{border-color:var(--ok);color:var(--ok)}.pill.rejected{border-color:var(--rub);color:var(--rub)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
+.card h2{font:700 20px/1.2 'Noto Serif',serif;margin:0 0 4px}
+.ent{padding:10px 0;border-bottom:1px solid var(--line)}.ent .hw{font:700 20px var(--lex);color:var(--rub)}.ent .tg{color:var(--mut);font-size:12px;margin-inline-start:8px}
+.ent .df{font:17px/1.5 var(--lex);white-space:pre-line}.ent .gr{color:var(--mut)}.ent .rt{text-decoration:underline dotted;text-underline-offset:3px}
+label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}textarea{width:100%;min-height:64px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg)}
+.btn{cursor:pointer;border:1.5px solid var(--lap);background:transparent;color:var(--lap);border-radius:10px;padding:8px 14px;font-weight:600}.btn.ok{background:var(--ok);border-color:var(--ok);color:var(--bg)}.btn.no{border-color:var(--rub);color:var(--rub)}.btn:disabled{opacity:.4;cursor:default}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}.msg{font-size:14px;margin-top:10px}.msg.err{color:var(--rub)}.msg.ok{color:var(--ok)}
+.meta{color:var(--mut);font-size:13px}a{color:var(--lap)}.hidden{display:none!important}
+</style>
+</head>
+<body>
+<header class="top"><div class="row"><h1><a href="./">LexEikôn</a> · <span data-t="title"></span></h1>
+<select class="uil" id="uil" aria-label="Language"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select></div>
+<div class="sub" data-t="sub"></div></header>
+<main>
+<p class="msg err hidden" id="deny"></p>
+<section id="app" class="hidden">
+ <div class="tabs" id="tabs"></div>
+ <div class="grid">
+  <div><ul class="list" id="list"></ul><p class="meta hidden" id="empty" data-t="empty"></p></div>
+  <div class="card hidden" id="pv"></div>
+ </div>
+</section>
+</main>
+<script>
+const API='https://lexeikon-projects.revsergeykim.workers.dev';
+const LN={ru:{syr:'сир.',gez:'эфиоп.',ka:'груз.',grc:'греч.',la:'лат.',hy:'арм.',ar:'араб.',cop:'копт.'},en:{syr:'Syr.',gez:'Eth.',ka:'Geo.',grc:'Gr.',la:'Lat.',hy:'Arm.',ar:'Arab.',cop:'Copt.'},de:{syr:'syr.',gez:'äth.',ka:'georg.',grc:'griech.',la:'lat.',hy:'arm.',ar:'arab.',cop:'kopt.'},fr:{syr:'syr.',gez:'éth.',ka:'géo.',grc:'gr.',la:'lat.',hy:'arm.',ar:'arab.',cop:'copte'},it:{syr:'sir.',gez:'et.',ka:'georg.',grc:'gr.',la:'lat.',hy:'arm.',ar:'arab.',cop:'copto'}};
+const T={
+ ru:{title:'Администрирование',sub:'Присланные словари: просмотр, одобрение, отклонение.',deny:'Эта страница доступна только администратору. Войдите в «Словарные проекты» с адресом администратора.',login:'Войти',pending:'На проверке',accepted:'Приняты',rejected:'Отклонены',all:'Все',st_pending:'На проверке',st_accepted:'Принят',st_rejected:'Отклонён',st_withdrawn:'Снят',st_:'Не прислан',changed:'изменён после отправки',empty:'Ничего нет.',cards:'карт.',sent:'прислан',note:'Комментарий автору (уйдёт письмом)',accept:'Принять',reject:'Отклонить',withdraw:'Снять с публикации',reaccept:'Принять новую версию',done_a:'Принят. Словарь появится у всех через 1–2 минуты, когда GitHub обновит сайт.',done_r:'Отклонён.',done_w:'Снят с публикации.',sure_w:'Снять словарь с публикации для всех?',email:'почта'},
+ en:{title:'Administration',sub:'Submitted dictionaries: review, accept, reject.',deny:'This page is for the administrator only. Sign in to “Dictionary projects” with the administrator address.',login:'Sign in',pending:'Under review',accepted:'Accepted',rejected:'Rejected',all:'All',st_pending:'Under review',st_accepted:'Accepted',st_rejected:'Rejected',st_withdrawn:'Withdrawn',st_:'Not submitted',changed:'changed after submission',empty:'Nothing here.',cards:'cards',sent:'submitted',note:'Comment to the author (sent by e-mail)',accept:'Accept',reject:'Reject',withdraw:'Withdraw',reaccept:'Accept new version',done_a:'Accepted. The dictionary will be visible to everyone in 1–2 minutes, once GitHub updates the site.',done_r:'Rejected.',done_w:'Withdrawn.',sure_w:'Withdraw this dictionary for everyone?',email:'e-mail'},
+ de:{title:'Administration',sub:'Eingereichte Wörterbücher: prüfen, annehmen, ablehnen.',deny:'Diese Seite ist nur für den Administrator. Bitte mit der Administratoradresse bei „Wörterbuchprojekte“ anmelden.',login:'Anmelden',pending:'In Prüfung',accepted:'Angenommen',rejected:'Abgelehnt',all:'Alle',st_pending:'In Prüfung',st_accepted:'Angenommen',st_rejected:'Abgelehnt',st_withdrawn:'Zurückgezogen',st_:'Nicht eingereicht',changed:'nach dem Einreichen geändert',empty:'Nichts vorhanden.',cards:'Karten',sent:'eingereicht',note:'Kommentar an den Autor (per E-Mail)',accept:'Annehmen',reject:'Ablehnen',withdraw:'Zurückziehen',reaccept:'Neue Version annehmen',done_a:'Angenommen. Das Wörterbuch ist in 1–2 Minuten für alle sichtbar, sobald GitHub die Seite aktualisiert.',done_r:'Abgelehnt.',done_w:'Zurückgezogen.',sure_w:'Dieses Wörterbuch für alle zurückziehen?',email:'E-Mail'},
+ fr:{title:'Administration',sub:'Dictionnaires soumis : examen, validation, refus.',deny:'Cette page est réservée à l’administrateur. Connectez-vous aux « Projets de dictionnaires » avec l’adresse de l’administrateur.',login:'Se connecter',pending:'En cours d’examen',accepted:'Acceptés',rejected:'Refusés',all:'Tous',st_pending:'En cours d’examen',st_accepted:'Accepté',st_rejected:'Refusé',st_withdrawn:'Retiré',st_:'Non soumis',changed:'modifié après soumission',empty:'Rien pour l’instant.',cards:'fiches',sent:'soumis',note:'Commentaire pour l’auteur (envoyé par courriel)',accept:'Accepter',reject:'Refuser',withdraw:'Retirer',reaccept:'Accepter la nouvelle version',done_a:'Accepté. Le dictionnaire sera visible par tous dans 1 à 2 minutes, après la mise à jour du site par GitHub.',done_r:'Refusé.',done_w:'Retiré.',sure_w:'Retirer ce dictionnaire pour tous ?',email:'courriel'},
+ it:{title:'Amministrazione',sub:'Dizionari inviati: revisione, approvazione, rifiuto.',deny:'Questa pagina è riservata all’amministratore. Accedete ai «Progetti di dizionario» con l’indirizzo dell’amministratore.',login:'Accedi',pending:'In revisione',accepted:'Accettati',rejected:'Respinti',all:'Tutti',st_pending:'In revisione',st_accepted:'Accettato',st_rejected:'Respinto',st_withdrawn:'Ritirato',st_:'Non inviato',changed:'modificato dopo l’invio',empty:'Niente per ora.',cards:'schede',sent:'inviato',note:'Commento per l’autore (inviato per e-mail)',accept:'Accetta',reject:'Respingi',withdraw:'Ritira',reaccept:'Accetta la nuova versione',done_a:'Accettato. Il dizionario sarà visibile a tutti tra 1–2 minuti, quando GitHub aggiornerà il sito.',done_r:'Respinto.',done_w:'Ritirato.',sure_w:'Ritirare questo dizionario per tutti?',email:'e-mail'}};
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ls={get:(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let UIL=ls.get('lex4_ui',null)||((navigator.language||'en').slice(0,2));if(!T[UIL])UIL='en';let I=T[UIL];
+const auth=ls.get('lexp_auth',null);let all=[],tab=ls.get('lexa_tab','pending'),cur=null;
+async function api(path,opt={}){const r=await fetch(API+path,{...opt,headers:{'Content-Type':'application/json',...(auth?{Authorization:'Bearer '+auth.token}:{})},body:opt.body?JSON.stringify(opt.body):undefined});const j=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(new Error(j.error||r.status),{status:r.status});return j}
+const fmtD=s=>s?new Date(s).toLocaleDateString(UIL,{day:'numeric',month:'short',year:'numeric'}):'';
+const stOf=p=>p.status||'';const changed=p=>p.pushed&&p.updated>p.pushed;
+const ln=l=>(LN[UIL]||LN.en)[l]||l;
+function i18n(){I=T[UIL];document.documentElement.lang=UIL;document.querySelectorAll('[data-t]').forEach(e=>e.textContent=I[e.dataset.t]||'');$('#uil').value=UIL;document.title='LexEikôn · '+I.title;$('#deny').innerHTML=esc(I.deny)+` <a href="proj.html">${esc(I.login)}</a>`;render();if(cur)preview(cur.id,true)}
+$('#uil').onchange=()=>{UIL=$('#uil').value;ls.set('lex4_ui',UIL);i18n()};
+function render(){if(!all)return;const f={pending:p=>stOf(p)==='pending',accepted:p=>stOf(p)==='accepted',rejected:p=>stOf(p)==='rejected'||stOf(p)==='withdrawn',all:p=>true};
+  $('#tabs').innerHTML=['pending','accepted','rejected','all'].map(k=>`<button data-tab="${k}" class="${k===tab?'on':''}">${esc(I[k])}<b>${all.filter(f[k]).length}</b></button>`).join('');
+  const L=all.filter(f[tab]);
+  $('#list').innerHTML=L.map(p=>`<li data-p="${p.id}" class="${cur&&cur.id===p.id?'on':''}"><span class="sg">${esc(p.sig||'')}</span><span class="nm">${esc(p.name)}</span><span class="pill ${esc(stOf(p))}">${esc(I['st_'+stOf(p)]||stOf(p))}</span>
+    <span class="mt">${esc(p.usig||p.nick)} (${esc(p.nick)}) · ${esc(ln(p.la||'grc'))}–${esc(ln(p.lb||'ar'))} · ${p.n} ${esc(I.cards)}${p.pushed?' · '+esc(I.sent)+' '+fmtD(p.pushed):''}${changed(p)?' · '+esc(I.changed):''}</span></li>`).join('');
+  $('#empty').classList.toggle('hidden',L.length>0)}
+$('#tabs').onclick=e=>{const b=e.target.closest('[data-tab]');if(b){tab=b.dataset.tab;ls.set('lexa_tab',tab);render()}};
+$('#list').onclick=e=>{const li=e.target.closest('[data-p]');if(li)preview(+li.dataset.p)};
+const defHtml=t=>esc(t).replace(/\u000b([\s\S]*?)\u000c/g,'<span class="gr">$1</span>').replace(/([\s\S]*?)/g,'<span class="rt">$1</span>').replace(/[⁨⁩]/g,m=>m);
+async function preview(id,keep){const p=all.find(x=>x.id===id);if(!p)return;cur=p;render();const pv=$('#pv');pv.classList.remove('hidden');if(!keep)pv.innerHTML='…';
+  let d;try{d=await api('/admin/projects/'+id)}catch(e){pv.innerHTML=`<p class="msg err">${esc(e.message)}</p>`;return}
+  const st=stOf(p);
+  pv.innerHTML=`<h2><span class="sg">${esc(p.sig||'')}</span> ${esc(p.name)}</h2>
+   <div class="meta">${esc(d.author)} · <a href="mailto:${esc(p.email)}">${esc(p.email)}</a> · ${esc(ln(d.la))}–${esc(ln(d.lb))} · ${esc(d.tl)} · ${d.entries.length} ${esc(I.cards)}</div>
+   ${p.note?`<p class="meta">${esc(p.note)}</p>`:''}${p.anote?`<p class="meta">✎ ${esc(p.anote)}</p>`:''}
+   <div>${d.entries.map(e=>`<div class="ent"><span class="hw" dir="auto">${esc(e[0])}</span><span class="tg">${esc(ln(e[2]))}</span><div class="df" dir="ltr">${defHtml(e[1])}</div></div>`).join('')||'<p class="meta">—</p>'}</div>
+   <label for="note">${esc(I.note)}</label><textarea id="note"></textarea>
+   <div class="btns"><button class="btn ok" data-act="accept">${esc(st==='accepted'?I.reaccept:I.accept)}</button>${st!=='rejected'?`<button class="btn no" data-act="reject">${esc(I.reject)}</button>`:''}${st==='accepted'?`<button class="btn no" data-act="withdraw">${esc(I.withdraw)}</button>`:''}</div><div class="msg" id="amsg"></div>`}
+$('#pv').onclick=async e=>{const b=e.target.closest('[data-act]');if(!b)return;const act=b.dataset.act;if(act==='withdraw'&&!confirm(I.sure_w))return;
+  document.querySelectorAll('#pv [data-act]').forEach(x=>x.disabled=true);$('#amsg').className='msg';$('#amsg').textContent='…';
+  try{const j=await api(`/admin/projects/${cur.id}/${act}`,{method:'POST',body:{note:$('#note').value.trim()}});cur.status=j.status;if(j.accepted){cur.accepted=j.accepted}cur.anote=$('#note').value.trim();
+    const m={accept:I.done_a,reject:I.done_r,withdraw:I.done_w}[act];render();await preview(cur.id,true);$('#amsg').className='msg ok';$('#amsg').textContent=m}
+  catch(err){$('#amsg').className='msg err';$('#amsg').textContent=err.message;document.querySelectorAll('#pv [data-act]').forEach(x=>x.disabled=false)}};
+(async()=>{i18n();if(!auth){$('#deny').classList.remove('hidden');return}
+  try{all=await api('/admin/projects');$('#app').classList.remove('hidden');render();const first=all.find(p=>stOf(p)==='pending');}catch(e){$('#deny').classList.remove('hidden')}})();
+</script>
+</body>
+</html>

@@ -17,7 +17,8 @@ async function init(db) {
     db.prepare(`CREATE TABLE IF NOT EXISTS cards (id INTEGER PRIMARY KEY, project_id INTEGER NOT NULL, data TEXT NOT NULL,
       created TEXT NOT NULL, updated TEXT NOT NULL)`),
   ]);
-  for (const q of ['ALTER TABLE users ADD COLUMN sig TEXT', 'ALTER TABLE projects ADD COLUMN la TEXT', 'ALTER TABLE projects ADD COLUMN lb TEXT', 'ALTER TABLE projects ADD COLUMN sig TEXT'])
+  for (const q of ['ALTER TABLE users ADD COLUMN sig TEXT', 'ALTER TABLE projects ADD COLUMN la TEXT', 'ALTER TABLE projects ADD COLUMN lb TEXT', 'ALTER TABLE projects ADD COLUMN sig TEXT',
+    'ALTER TABLE projects ADD COLUMN status TEXT', 'ALTER TABLE projects ADD COLUMN accepted TEXT', 'ALTER TABLE projects ADD COLUMN anote TEXT'])
     try { await db.prepare(q).run(); } catch (e) { /* column exists */ }
   ready = true;
 }
@@ -63,19 +64,40 @@ async function gh(env, path, opt = {}) {
     Accept: 'application/vnd.github+json', 'User-Agent': 'lexeikon-projects', 'Content-Type': 'application/json' } });
   return r;
 }
-async function pushFile(env, path, text, msg) {
-  let br = await gh(env, '/git/ref/heads/' + BRANCH);
-  if (br.status === 404) {
-    const main = await (await gh(env, '/git/ref/heads/main')).json();
-    br = await gh(env, '/git/refs', { method: 'POST', body: JSON.stringify({ ref: 'refs/heads/' + BRANCH, sha: main.object.sha }) });
-    if (!br.ok) throw new Error('branch');
-  }
-  const cur = await gh(env, '/contents/' + encodeURI(path) + '?ref=' + BRANCH);
-  const sha = cur.ok ? (await cur.json()).sha : undefined;
+async function ensureBranch(env, branch) {
+  if (branch === 'main') return;
+  const br = await gh(env, '/git/ref/heads/' + branch);
+  if (br.status !== 404) return;
+  const main = await (await gh(env, '/git/ref/heads/main')).json();
+  const r = await gh(env, '/git/refs', { method: 'POST', body: JSON.stringify({ ref: 'refs/heads/' + branch, sha: main.object.sha }) });
+  if (!r.ok) throw new Error('branch');
+}
+async function getFile(env, path, branch) {
+  const r = await gh(env, '/contents/' + encodeURI(path) + '?ref=' + branch);
+  if (!r.ok) return null;
+  const j = await r.json(), bin = atob(j.content.replace(/\n/g, ''));
+  return { sha: j.sha, text: new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0))) };
+}
+async function pushFile(env, path, text, msg, branch = BRANCH) {
+  await ensureBranch(env, branch);
+  const cur = await getFile(env, path, branch);
   const bytes = new TextEncoder().encode(text);let bin = '';for (const b of bytes) bin += String.fromCharCode(b);
-  const r = await gh(env, '/contents/' + encodeURI(path), { method: 'PUT', body: JSON.stringify({ message: msg, content: btoa(bin), branch: BRANCH, sha }) });
+  const r = await gh(env, '/contents/' + encodeURI(path), { method: 'PUT', body: JSON.stringify({ message: msg, content: btoa(bin), branch, sha: cur ? cur.sha : undefined }) });
   if (!r.ok) throw new Error('push ' + r.status);
   return (await r.json()).content.html_url;
+}
+async function delFile(env, path, msg, branch) {
+  const cur = await getFile(env, path, branch); if (!cur) return;
+  const r = await gh(env, '/contents/' + encodeURI(path), { method: 'DELETE', body: JSON.stringify({ message: msg, sha: cur.sha, branch }) });
+  if (!r.ok) throw new Error('delete ' + r.status);
+}
+// accepted dictionaries live on main: data/u/<id>.json, listed in data/u/index.json
+const UIDX = 'data/u/index.json';
+async function setIndex(env, id, meta, msg) {
+  const cur = await getFile(env, UIDX, 'main');
+  let L = []; try { L = cur ? JSON.parse(cur.text) : []; } catch (e) { L = []; }
+  L = L.filter((x) => x.id !== id); if (meta) L.push(meta);
+  await pushFile(env, UIDX, JSON.stringify(L, null, 1) + '\n', msg, 'main');
 }
 async function mail(env, to, subject, text) {
   if (!env.RESEND_API_KEY || !env.MAIL_FROM || !to) return false;
@@ -116,15 +138,50 @@ export default {
         const u = await db.prepare('SELECT * FROM users WHERE nick=?1 OR lower(email)=?1').bind(nick).first();
         if (!u || (await pbkdf2(String(b.password || ''), u.salt)) !== u.hash) return reply({ error: 'login' }, 401);
         const token = rand(40); await db.prepare('INSERT INTO sessions VALUES (?1,?2,?3)').bind(token, u.id, now()).run();
-        return reply({ token, nick: u.nick, email: u.email, sig: u.sig || '' });
+        return reply({ token, nick: u.nick, email: u.email, sig: u.sig || '', admin: !!(env.ADMIN_EMAIL && u.email.toLowerCase() === String(env.ADMIN_EMAIL).trim().toLowerCase()) });
       }
       const tok = (request.headers.get('Authorization') || '').replace(/^Bearer\s+/, '');
       const user = tok ? await db.prepare('SELECT u.* FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token=?1').bind(tok).first() : null;
       if (!user) return reply({ error: 'auth' }, 401);
       if (request.method === 'POST' && P[0] === 'logout') { await db.prepare('DELETE FROM sessions WHERE token=?1').bind(tok).run(); return reply({ ok: true }); }
-      if (request.method === 'GET' && P[0] === 'me') return reply({ nick: user.nick, email: user.email, sig: user.sig || '' });
+      const admin = !!(env.ADMIN_EMAIL && user.email && user.email.toLowerCase() === String(env.ADMIN_EMAIL).trim().toLowerCase());
+      if (request.method === 'GET' && P[0] === 'me') return reply({ nick: user.nick, email: user.email, sig: user.sig || '', admin });
       if (request.method === 'PUT' && P[0] === 'me') { const b = await body(), sig = clean(b.sig, 80);
         await db.prepare('UPDATE users SET sig=?1 WHERE id=?2').bind(sig, user.id).run(); return reply({ nick: user.nick, email: user.email, sig }); }
+      // ---- administrator ----
+      if (P[0] === 'admin') {
+        if (!admin) return reply({ error: 'forbidden' }, 403);
+        if (request.method === 'GET' && P[1] === 'projects' && !P[2]) {
+          const r = await db.prepare(`SELECT p.*, u.nick, u.sig usig, u.email, (SELECT count(*) FROM cards c WHERE c.project_id=p.id) n FROM projects p JOIN users u ON u.id=p.user_id ORDER BY p.pushed DESC, p.updated DESC`).all();
+          return reply(r.results);
+        }
+        const p = P[2] ? await db.prepare('SELECT * FROM projects WHERE id=?1').bind(+P[2]).first() : null;
+        if (!p) return reply({ error: 'not found' }, 404);
+        const owner = await db.prepare('SELECT * FROM users WHERE id=?1').bind(p.user_id).first();
+        const cards = (await db.prepare('SELECT * FROM cards WHERE project_id=?1 ORDER BY id').bind(p.id).all()).results, dict = toDict(owner, p, cards);
+        if (request.method === 'GET' && !P[3]) return reply(dict);
+        const t = now(), b = await body(), note = clean(b.note, 1000);
+        if (request.method === 'POST' && P[3] === 'accept') {
+          const file = 'data/u/' + dict.id + '.json';
+          await pushFile(env, file, JSON.stringify(dict) + '\n', `accept: ${owner.nick}/${p.slug} (${cards.length} cards)`, 'main');
+          await setIndex(env, dict.id, { id: dict.id, file: dict.id + '.json', name: dict.name, sig: dict.sig, author: dict.author, la: dict.la, lb: dict.lb, tl: dict.tl, n: dict.entries.length, accepted: t }, 'index: + ' + dict.id);
+          await db.prepare("UPDATE projects SET status='accepted', accepted=?1, anote=?2 WHERE id=?3").bind(t, note, p.id).run();
+          await mail(env, owner.email, 'LexEikôn: ' + p.name, 'Your dictionary has been accepted and is now visible to all users of LexEikôn.' + (note ? '\n\n' + note : ''));
+          return reply({ ok: true, status: 'accepted', accepted: t });
+        }
+        if (request.method === 'POST' && P[3] === 'reject') {
+          await db.prepare("UPDATE projects SET status='rejected', anote=?1 WHERE id=?2").bind(note, p.id).run();
+          await mail(env, owner.email, 'LexEikôn: ' + p.name, 'Your dictionary update has not been accepted yet.' + (note ? '\n\n' + note : ''));
+          return reply({ ok: true, status: 'rejected' });
+        }
+        if (request.method === 'POST' && P[3] === 'withdraw') {
+          await delFile(env, 'data/u/' + dict.id + '.json', 'withdraw: ' + dict.id, 'main');
+          await setIndex(env, dict.id, null, 'index: - ' + dict.id);
+          await db.prepare("UPDATE projects SET status='withdrawn', accepted=NULL, anote=?1 WHERE id=?2").bind(note, p.id).run();
+          return reply({ ok: true, status: 'withdrawn' });
+        }
+        return reply({ error: 'not found' }, 404);
+      }
       // ---- projects ----
       const own = async (id) => db.prepare('SELECT * FROM projects WHERE id=?1 AND user_id=?2').bind(id, user.id).first();
       if (P[0] === 'projects' && P.length === 1) {
@@ -161,7 +218,7 @@ export default {
           const cards = (await db.prepare('SELECT * FROM cards WHERE project_id=?1 ORDER BY id').bind(p.id).all()).results;
           const file = 'contrib/' + user.nick + '/' + p.slug + '.json', t = now();
           const link = await pushFile(env, file, JSON.stringify(toDict(user, { ...p, updated: t }, cards), null, 1) + '\n', `contrib: ${user.nick}/${p.slug} (${cards.length} cards)`);
-          await db.prepare('UPDATE projects SET pushed=?1 WHERE id=?2').bind(t, p.id).run();
+          await db.prepare("UPDATE projects SET pushed=?1, status='pending' WHERE id=?2").bind(t, p.id).run();
           const txt = `«${p.name}» (${cards.length}) → ${link}`;
           const sent = await mail(env, user.email, 'LexEikôn: ' + p.name, 'Your dictionary update has been placed for review.\n' + txt);
           await mail(env, env.ADMIN_EMAIL, 'LexEikôn update: ' + user.nick + '/' + p.slug, txt);
