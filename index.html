@@ -686,7 +686,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=25;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=27;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -865,7 +865,7 @@ function formatDef0(raw,L,hw,noRoot){
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
-const GLOSS={'b-ml':'en','b-kun':'de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
+const GLOSS={'b-brk':'la','b-ml':'en','b-kun':'de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-gez','b-dil','b-mis','b-che']);
 const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\u2060\uE000-\uE013]/g,'');
 
@@ -875,8 +875,8 @@ function renderChips(){}
 const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'A',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ع'};
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;(by[d.lang]=by[d.lang]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
-const INTERIM=new Set(['b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
-const RANGE={'b-kun':['ա','ածեաց'],'b-che':['ا','بَانَ'],'b-cos':['ܫܡܫ','ܫܢܕ'],'b-mis':['ա','աքաղաղ']};
+const INTERIM=new Set(['b-brk','b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
+const RANGE={'b-brk':['ܫܡܫ','ܫܢܕܐ'],'b-kun':['ա','ածեաց'],'b-che':['ا','بَانَ'],'b-cos':['ܫܡܫ','ܫܢܕ'],'b-mis':['ա','աքաղաղ']};
 const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-cos':['Costaz','Louis Costaz, Dictionnaire syriaque-français / Syriac-English Dictionary / Qāmūs suryānī-ʿarabī, Beyrouth 1963'],
  'b-ka':['Serebr','Серебряков, Древнегрузинско-русский словарь'],
@@ -894,10 +894,11 @@ const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-cop':['SahGl','Sahidic Coptic–English glossary'],
  'b-che':['Cheikho','Louis Cheikho, Lexicon Chrestomathiæ Arabicæ, in: Chrestomathia Arabica cum lexico variisque notis, Beryti: Typographia Patrum Societatis Jesu'],
  'b-kun':['Künzle','Beda O. Künzle, Das altarmenische Evangelium: Lexikon, Bern: Peter Lang 1984'],
+ 'b-brk':['Brockelmann','Carl Brockelmann, Lexicon Syriacum, ed. 2, Halis Saxonum: Max Niemeyer 1928'],
  'b-ml':['MLS','H. G. Liddell, R. Scott, An Intermediate Greek-English Lexicon, Oxford: Clarendon Press 1889']};
 const sgl=d=>SIG[d.id]?SIG[d.id][0]:d.name,fullN=d=>SIG[d.id]?SIG[d.id][1]:d.name;
 const INL=new Set();
-const CPY={'b-ml':()=>'Perseus Digital Library (perseus.tufts.edu) · CC BY-SA 3.0 US','b-kun':()=>'© B. O. Künzle · OCR LexEikôn: p. 1–5','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–424, 485','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'© Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
+const CPY={'b-brk':()=>'OCR LexEikôn: p. 789–790','b-ml':()=>'Perseus Digital Library (perseus.tufts.edu) · CC BY-SA 3.0 US','b-kun':()=>'© B. O. Künzle · OCR LexEikôn: p. 1–5','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–424, 485','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'© Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 function renderLib(){
   const HIDE=new Set(['b-hy']);renderLgb();const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
   const lo=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')],lg=[...new Set(vis.map(d=>d.lang))].sort((a,b)=>(lo.indexOf(a)+1||99)-(lo.indexOf(b)+1||99));
