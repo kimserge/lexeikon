@@ -10,5 +10,17 @@
   "tl": "de",
   "n": 2,
   "accepted": "2026-11-19T18:11:53.844Z"
+ },
+ {
+  "id": "u-andreas-oktateuch",
+  "file": "u-andreas-oktateuch.json",
+  "name": "Oktateuch",
+  "sig": "*Oktat",
+  "author": "andreas",
+  "la": "grc",
+  "lb": "ar",
+  "tl": "de",
+  "n": 2,
+  "accepted": "2026-11-19T18:28:43.248Z"
  }
 ]
