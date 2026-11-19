@@ -354,7 +354,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.19 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v3.0 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <b>v3</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -724,7 +724,7 @@ async function initCloud(){
 
 /* ---------- built-in dictionaries ---------- */
 const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','are','kun'],BVER=36;
-const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
+const latExtra=()=>({en:'laen',de:'lade',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
   for(const k of [...BUILTIN,latExtra()].filter(Boolean)){
@@ -927,7 +927,7 @@ function formatDef0(raw,L,hw,noRoot){
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
-const GLOSS={'b-are':'en','b-graf':'de','b-brk':'la','b-ml':'en','b-kun':'fr de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
+const GLOSS={'b-are':'en','b-graf':'de','b-brk':'la','b-ml':'en','b-kun':'fr de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-lade':'de','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-gez','b-dil','b-mis','b-che']);
 const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\u2060\uE000-\uE013]/g,'');
 
@@ -949,6 +949,7 @@ const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-gez':['DillChr','August Dillmann, Chrestomathia Aethiopica: glossarium, Lipsiae 1866'],
  'b-rai':['Rain','Osvaldo Raineri, Dizionario geʿez–italiano'],
  'b-la':['Tan','Тананушко, Латинско-русский словарь'],
+ 'b-lade':['FD Lat–Dt','FreeDict Latein–Deutsch (Sebastian Humenda)'],
  'b-laen':['Whit','William Whitaker, Latin–English dictionary (Words)'],
  'b-lafr':['LebQu','Lebaigue, Quicherat, Dictionnaire latin–français'],
  'b-hy':['Bedr','Matthias Bedrossian, New Dictionary Armenian–English, Venice 1875–1879'],
@@ -962,7 +963,7 @@ const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-ml':['MLS','H. G. Liddell, R. Scott, An Intermediate Greek-English Lexicon, Oxford: Clarendon Press 1889']};
 const sgl=d=>SIG[d.id]?SIG[d.id][0]:d.name,fullN=d=>SIG[d.id]?SIG[d.id][1]:d.name;
 const INL=new Set();
-const CPY={'b-are':()=>'Arabeyes · FreeDict · GNU GPL 2+','b-graf':()=>'© CSCO · OCR LexEikôn: p. 1–2','b-brk':()=>'OCR LexEikôn: p. 789–790','b-ml':()=>'Perseus Digital Library (perseus.tufts.edu) · CC BY-SA 3.0 US','b-kun':()=>'© B. O. Künzle · OCR LexEikôn: p. 1–5','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–424, 485','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'© Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
+const CPY={'b-are':()=>'Arabeyes · FreeDict · GNU GPL 2+','b-graf':()=>'© CSCO · OCR LexEikôn: p. 1–2','b-brk':()=>'OCR LexEikôn: p. 789–790','b-ml':()=>'Perseus Digital Library (perseus.tufts.edu) · CC BY-SA 3.0 US','b-kun':()=>'© B. O. Künzle · OCR LexEikôn: p. 1–5','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–424, 485','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'© Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lade':()=>'FreeDict · GNU GPL 3+','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 function renderLib(){
   const HIDE=new Set(['b-hy']);renderLgb();const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
   const lo=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')],lg=[...new Set(vis.map(d=>d.lang))].sort((a,b)=>(lo.indexOf(a)+1||99)-(lo.indexOf(b)+1||99));
@@ -1113,8 +1114,8 @@ async function doImport(){
 }
 
 let LATF={},laIdx=null;const LSTOP=new Set('et in ad cum est sunt sive seu vel aut de ex non nec qui quae quod quam ut sc id ab per pro sub si ac atque etiam vid cf ibid seq coll'.split(' '));
-const LATD={ru:'b-la',en:'b-laen',fr:'b-lafr'},laCache={};
-const latT=()=>{const t=LS.get('latT',null);return LATD[t]?t:({ru:'ru',fr:'fr'}[UIL]||'en')};
+const LATD={ru:'b-la',en:'b-laen',fr:'b-lafr',de:'b-lade'},laCache={};
+const latT=()=>{const t=LS.get('latT',null);return LATD[t]?t:({ru:'ru',fr:'fr',de:'de'}[UIL]||'en')};
 const laGet=id=>dicts.find(d=>d.id===id)||laCache[id];
 function laDict(){return laGet(LATD[latT()])||laGet('b-la')||laGet('b-laen')||laGet('b-lafr')}
 async function laLoad(id){if(laGet(id))return;try{laCache[id]=await (await fetch('data/'+id.slice(2)+'.json')).json()}catch(e){}}
@@ -1132,7 +1133,7 @@ function linkLat(html){
 }
 function showLat(w){
   lastLat=w;const d=laDict();if(!d)return;const ix=laLookup(w),t=latT(),want=LATD[t];
-  const lt=`<div class="lt" role="group">Lat <span aria-hidden="true">→</span> ${['fr','en','ru'].map(k=>`<button type="button" data-lt="${k}" class="${k===t?'on':''}" aria-pressed="${k===t}">${k[0].toUpperCase()+k[1]}</button>`).join('')}</div>`;
+  const lt=`<div class="lt" role="group">Lat <span aria-hidden="true">→</span> ${['fr','en','ru','de'].map(k=>`<button type="button" data-lt="${k}" class="${k===t?'on':''}" aria-pressed="${k===t}">${k[0].toUpperCase()+k[1]}</button>`).join('')}</div>`;
   const lem=[...new Set(ix.map(i=>d.entries[i][0]))].join(', ');
   $('#pop').innerHTML=`<div class="ph"><span class="pt"><b>${esc(w)}</b>${ix.length&&norm(lem)!==norm(w)?' → '+esc(lem):''} · ${esc(sgl(d))}</span><button class="btn ghost" id="popX">${I.close}</button></div>`+lt+
     (d.id!==want?`<p class="note">…</p>`:'')+
@@ -1141,7 +1142,7 @@ function showLat(w){
 }
 
 /* ---------- German glosses → UI language (FreeDict/WikDict, Portyannikov) ---------- */
-const GERDEF=new Set(['b-agwb','b-graf','b-kun']),GERD={fr:['f-deu-fra'],ru:['f-chlex','f-deu-rus']},geIdx={};
+const GERDEF=new Set(['b-agwb','b-graf','b-kun']),GERD={fr:['f-deu-fra'],ru:['f-chlex','f-deu-rus'],en:['f-deu-eng'],it:['f-deu-ita']},geIdx={};
 const GSTOP=new Set('der die das des dem den ein eine einer eines einem einen und oder aber auch nicht noch nur von vom mit für auf aus bei bis nach über unter vor zu zum zur im in an am ist sind war wird werden sein hat haben als wie wenn dass daß sich man er sie es wir ihr ich du so da hier dort etwa usw vgl bzw sog jmdn jmdm jmds etw sehr mehr dann denn doch schon'.split(' '));
 const gerT=()=>{const t=LS.get('gerT',null);return GERD[t]?t:(GERD[UIL]?UIL:'fr')};
 const gerDicts=t=>(GERD[t||gerT()]||[]).map(laGet).filter(Boolean);
