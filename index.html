@@ -146,7 +146,7 @@ h1{font:700 clamp(32px,5vw,48px)/1.05 'Noto Serif',serif;margin:0;text-wrap:bala
 .res{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .res li{border-bottom:1px solid var(--line)}
 .res li.inb{background:var(--card);border-radius:12px;border-bottom:0;margin:6px 0;padding:0 12px}
-span.mo{color:light-dark(#7d828b,#8f959f)}
+span.mo{color:light-dark(#7d828b,#8f959f)}.l.x .ex span.mo,.l.x .ex span.mo .ex{font-style:italic}
 li.sep{border:0;margin:22px 0 4px;font:600 14px 'Noto Sans',sans-serif;color:color-mix(in srgb,var(--rub) 70%,var(--bg));letter-spacing:.01em}
 mark.hl{background:none;color:inherit;box-shadow:inset 0 -.5em 0 light-dark(#ffe45c,#8a7200);border-radius:2px}
 .hit{padding:14px 2px}
@@ -208,9 +208,24 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .empty{padding:28px 0;color:var(--mut);max-width:60ch}
 .empty b{color:var(--ink)}
 #more{margin-top:14px}
+#lnav{display:none}
+@media(min-width:1000px){body.lnv #lnav{display:flex;flex-direction:column;gap:4px;position:fixed;z-index:6;left:calc(max(0px,(100vw - 1240px)/2) + 10px);top:var(--lnt,200px);width:92px;max-height:calc(100vh - var(--lnt,200px) - 16px);overflow:auto;font:13px/1.25 'Noto Sans',sans-serif}
+ body.lnv .wrap{padding-left:max(5vw,118px)}
+ #lnav button{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:6px;padding:5px 8px;border-radius:8px;color:var(--lap);background:var(--bg)}
+ #lnav button:hover,#lnav button:focus-visible{background:var(--lap);color:var(--bg)}
+ #lnav button b{font-weight:600}#lnav button span{color:inherit;opacity:.7}
+ #lnav .lh{font-size:11px;color:var(--mut);margin:6px 2px 0}
+ #lnav .up{justify-content:center;margin-top:6px}}
 .lib h2{font:700 24px/1.2 'Noto Serif',serif;margin:0;display:inline}
 .lib .set>summary{font-weight:600;min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer}
-.trl{border-top:1px solid var(--line);padding:10px 0}
+.trl{border-top:1px solid var(--line);padding:4px 0}
+.trl>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:42px;padding:4px 8px;border-radius:8px;flex-wrap:wrap}
+.trl>summary .tn{font-weight:600}.trl>summary .note{margin:0;font-size:13px}
+.trl>summary::-webkit-details-marker,.libd>summary::-webkit-details-marker,.set>summary::-webkit-details-marker{display:none}
+.trl>summary::after,.libd>summary::after,.lib .set>summary::after{content:'';flex:none;width:8px;height:8px;margin-left:auto;border-right:2px solid var(--lap);border-bottom:2px solid var(--lap);transform:rotate(-45deg);transition:transform .2s}
+.trl[open]>summary::after,.libd[open]>summary::after,.lib .set[open]>summary::after{transform:rotate(45deg)}
+.trl>summary:hover,.lib .set>summary:hover{background:color-mix(in srgb,var(--lap) 8%,var(--bg))}
+.trl[open]>summary{margin-bottom:6px}
 .trh{display:grid;gap:4px;font-weight:600}
 .trh select{font:15px 'Noto Sans',sans-serif;min-height:42px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);max-width:100%}
 .trt{margin-top:8px}
@@ -220,7 +235,10 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .trt .lg{margin:8px 0 2px;font-size:13px;color:var(--mut);font-weight:600}
 #setD{margin-top:18px}
 .lib .set{border-top:1px solid var(--line);padding-top:4px;margin-top:6px}
-.libd>summary{cursor:pointer;min-height:44px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.libd>summary{list-style:none;cursor:pointer;min-height:52px;display:flex;gap:12px;align-items:center;flex-wrap:nowrap;padding:4px 16px;border-radius:12px;transition:box-shadow .15s,background .15s}
+.libd>summary h2{margin:0}.libd>summary::after{width:11px;height:11px;border-width:0 3px 3px 0}
+.libd>summary:hover,.libd>summary:focus-visible{background:color-mix(in srgb,var(--lap) 6%,var(--bg));box-shadow:0 4px 12px rgb(0 0 0/.16)}
+.libd[open]>summary{margin-bottom:10px}
 .drop{border:2px dashed var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;justify-items:start;color:var(--mut);font-size:14px}
 .drop.over{border-color:var(--lap);background:var(--card)}
 .dl{list-style:none;padding:0;margin:16px 0}
@@ -287,6 +305,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
 <ul id="sug" class="sug" role="listbox" hidden></ul>
 </div>
 
+<nav id="lnav" aria-label="Languages"></nav>
 <main class="wrap">
   <section>
     <div id="kb" class="kb" hidden></div>
@@ -559,7 +578,9 @@ const TRS={
 let trCfg=Object.assign({syr:'sci',ka:'sci',hy:'hm',gez:'trad',grc:'sci',ar:'din',cop:'sci'},LS.get('trcfg',{}));
 function arTr(w,m){const V={'َ':'a','ِ':'i','ُ':'u'},T={'ً':'an','ٍ':'in','ٌ':'un'},SUN='تثدذرزسشصضطظلن';
   const info=x=>({v:x.k.map(k=>V[k]).find(Boolean)||'',t:x.k.map(k=>T[k]).find(Boolean)||'',d:x.k.includes('ّ'),s:x.k.includes('ْ'),l:x.k.includes('ٰ')});
+  const CN=wd=>[...wd.replace(/ـ/g,'')].map((c,i)=>c==='ا'?(i?'ā':'ʾ'):c==='آ'?'ʾā':'أإؤئء'.includes(c)?'ʾ':c==='ى'?'ā':c==='ة'?'a':c==='و'?'w':c==='ي'?'y':(m[c]!=null?m[c]:c)).join('');
   return String(w).normalize('NFC').split(/(\s+)/).map(wd=>{if(!wd.trim())return wd;
+    if(!/[ً-ْٰ]/.test(wd)&&/[ء-ي]/.test(wd))return CN(wd);
     const a=[];for(const ch of wd.replace(/ـ/g,'')){if(/[ً-ْٰ]/.test(ch)&&a.length)a[a.length-1].k.push(ch);else a.push({c:ch,k:[]})}
     let r='',i=0,pv='',skip=-1;const sk=a.map(x=>x.c).join('');
     if(sk.startsWith('الله')){const h=info(a[3]);r='allāh'+h.v+h.t;pv=h.v;i=4}
@@ -617,7 +638,8 @@ function trTable(L){
   return `<div class="sch">${Object.entries(sys.m).map(([c,v])=>`<span><b>${esc(c)}</b> ${esc(v)}${keysFor(L,c)}</span>`).join('')}</div>`+(L==='hy'?'<p class="note">ու → u</p>':'')+(L==='syr'?'<p class="note">'+I.syrsp+'</p>':'')+(L==='grc'?'<p class="note">'+I.grcn+'</p>':'');
 }
 function renderTrSec(){
-  $('#trsec').innerHTML=Object.keys(TRS).map(L=>`<div class="trl"><label class="trh"><span>${LANGS[L][0]}</span><select data-tl="${L}">${Object.entries(TRS[L]).map(([k,v])=>`<option value="${k}" ${trCfg[L]===k?'selected':''}>${esc(I.sys[v.n]||v.n)}</option>`).join('')}<option value="off" ${trCfg[L]==='off'?'selected':''}>${I.off}</option></select></label><div class="trt">${trTable(L)}</div></div>`).join('');
+  const op=new Set([...document.querySelectorAll('#trsec details[open]')].map(d=>d.dataset.l));
+  $('#trsec').innerHTML=Object.keys(TRS).map(L=>{const cur=trCfg[L]==='off'?I.off:(I.sys[(TRS[L][trCfg[L]]||{}).n]||'');return `<details class="trl" data-l="${L}" ${op.has(L)?'open':''}><summary><span class="tn">${esc((I.lang&&I.lang[L])||LANGS[L][0])}</span><span class="note">${esc(cur)}</span></summary><label class="trh"><select data-tl="${L}">${Object.entries(TRS[L]).map(([k,v])=>`<option value="${k}" ${trCfg[L]===k?'selected':''}>${esc(I.sys[v.n]||v.n)}</option>`).join('')}<option value="off" ${trCfg[L]==='off'?'selected':''}>${I.off}</option></select></label><div class="trt">${trTable(L)}</div></details>`}).join('');
 }
 function cheatHtml(){
   const rows=[[')','ʾ ʔ ʼ \' — алеф'],['(','ʿ ʕ ` — айн'],['h','ḥ ḫ'],['x','ḫ, kh'],['s','ṣ ś š'],['t','ṭ ṯ θ'],['d','ḍ ḏ'],['z','ẓ ž ʒ'],['g','ġ ǧ'],['k','ḳ kʻ'],['q','q q̇'],['c','č c̣ ç'],['p','ṗ p̣ pʻ φ'],['e','ē η'],['o','ō ω']];
@@ -686,7 +708,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','kun'],BVER=29;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','kun'],BVER=32;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -708,7 +730,7 @@ function search(){
   const total=act.reduce((n,d)=>n+d.entries.length,0);
   results=[];shown=0;
   if(!q.trim()){
-    $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();
+    $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();results=[];GF=new Map();lnavRender();
     $('#res').insertAdjacentHTML('beforeend',`<li class="empty">${dicts.length?I.empty(total.toLocaleString(UIL),act.length,dicts.length):I.loading}</li>`);
     return;
   }
@@ -742,8 +764,26 @@ function search(){
   {const sec=r=>r[0]===3?1:0,gk=r=>sec(r)+':'+elang(r[2],r[3]),first=new Map();results.forEach((r,k)=>{const g=gk(r);if(!first.has(g))first.set(g,k)});
    results=results.map((r,k)=>[r,k]).sort((a,b)=>sec(a[0])-sec(b[0])||first.get(gk(a[0]))-first.get(gk(b[0]))||a[1]-b[1]).map(x=>x[0])}
   $('#stat').textContent=results.length?I.found+results.length.toLocaleString(UIL):I.none;
-  $('#res').innerHTML='';more();renderSug();
+  GF=new Map();results.forEach((r,k)=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);if(!GF.has(g))GF.set(g,k)});
+  $('#res').innerHTML='';more();renderSug();lnavRender();
 }
+let GF=new Map();
+function lnavRender(){
+  const n=$('#lnav'),cnt={};results.forEach(r=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);cnt[g]=(cnt[g]||0)+1});
+  const gs=[...GF.keys()];if(gs.length<2&&!results.length){n.innerHTML='';document.body.classList.remove('lnv');return}
+  const lab=L=>(I.chip&&I.chip[L])||(LANGS[L]?LANGS[L][1]:L);
+  let h='',inb=false;
+  for(const g of gs){if(g[0]==='b'&&!inb){inb=true;h+=`<div class="lh">${esc(I.inbody)}</div>`}h+=`<button data-g="${g}" title="${esc(((I.lang&&I.lang[g.slice(1)])||lab(g.slice(1)))+' · '+cnt[g])}"><b>${esc(lab(g.slice(1)))}</b><span>${cnt[g].toLocaleString(UIL)}</span></button>`}
+  h+=`<button class="up" data-g="top" title="↑">↑</button>`;
+  n.innerHTML=h;document.body.classList.toggle('lnv',results.length>0);lnavPos();
+}
+function lnavPos(){const s=$('#stat');if(!s)return;const t=Math.max(document.querySelector('.qsticky').getBoundingClientRect().bottom+12,90);document.documentElement.style.setProperty('--lnt',t+'px')}
+function lnavGo(g){
+  if(g==='top'){scrollTo({top:0,behavior:'smooth'});return}
+  const k=GF.get(g);if(k==null)return;while(shown<=k&&shown<results.length)more();
+  const el=$('#res').querySelector(`[data-k="${k}"]`);if(!el)return;
+  const top=el.getBoundingClientRect().top+scrollY,cover=document.querySelector('.qsticky').getBoundingClientRect().bottom;
+  scrollTo({top:Math.max(0,top-Math.max(cover,0)-(el.previousElementSibling&&el.previousElementSibling.classList.contains('sep')?60:12)),behavior:'smooth'})}
 let HL={qd:'',qh:'',mode:'pre',re:null,lat:false,rx:{}},inbHead=false;
 let sugIdx=-1,sugOff=true,sugItems=[];
 function sugHide(){$('#sug').hidden=true;document.body.classList.remove('sugo');$('#q').setAttribute('aria-expanded','false');$('#q').removeAttribute('aria-activedescendant');sugIdx=-1}
@@ -796,9 +836,9 @@ function defHtml(d,e,l){
 }
 function more(){
   const part=results.slice(shown,shown+PAGE);shown+=part.length;
-  $('#res').insertAdjacentHTML('beforeend',part.map(([s,_,d,i])=>{const e=d.entries[i],l=elang(d,i);
+  const k0=shown-part.length;$('#res').insertAdjacentHTML('beforeend',part.map(([s,_,d,i],j)=>{const e=d.entries[i],l=elang(d,i);
     let sep='';if(s===3&&!inbHead){inbHead=true;sep=`<li class="sep">${I.inbody} · ${results.filter(r=>r[0]===3).length.toLocaleString(UIL)}</li>`}
-    return sep+`<li class="${s===3?'inb':''}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hlf"><span class="hw" dir="auto">${s<3?hlHead(e[0],s,l):esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn(e):''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}).join(''));
+    return sep+`<li class="${s===3?'inb':''}" data-k="${k0+j}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hlf"><span class="hw" dir="auto">${s<3?hlHead(e[0],s,l):esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn(e):''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}).join(''));
   $('#more').hidden=shown>=results.length;
   requestAnimationFrame(()=>{for(const h of $('#res').querySelectorAll('.hit:not([data-m])')){h.dataset.m=1;const d=h.querySelector('.def');if(d.scrollHeight>d.getBoundingClientRect().height*0+(d.querySelector('.tv')?18:7.6)*parseFloat(getComputedStyle(d).fontSize)+4)h.classList.add('long')}});
 }
@@ -1115,6 +1155,7 @@ $('#q').addEventListener('blur',()=>setTimeout(cmpUpd,160));
 $('#scope').addEventListener('change',search);
 $('#mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;mode=b.dataset.m;$('#mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));search()});
 $('#more').addEventListener('click',more);
+$('#lnav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)lnavGo(b.dataset.g)});addEventListener('resize',lnavPos);addEventListener('scroll',()=>{if(document.body.classList.contains('lnv'))lnavPos()},{passive:true});
 document.body.dataset.trm=LS.get('trm','la');
 $('#res').addEventListener('click',async e=>{
   if(e.target.closest('.trb')){const o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset.trm)+1)%3];document.body.dataset.trm=m;LS.set('trm',m);return}
