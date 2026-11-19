@@ -208,6 +208,14 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .empty{padding:28px 0;color:var(--mut);max-width:60ch}
 .empty b{color:var(--ink)}
 #more{margin-top:14px}
+#lnav{display:none}
+@media(min-width:1000px){body.lnv #lnav{display:flex;flex-direction:column;gap:4px;position:fixed;z-index:6;left:calc(max(0px,(100vw - 1240px)/2) + 10px);top:var(--lnt,200px);width:92px;max-height:calc(100vh - var(--lnt,200px) - 16px);overflow:auto;font:13px/1.25 'Noto Sans',sans-serif}
+ body.lnv .wrap{padding-left:max(5vw,118px)}
+ #lnav button{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:6px;padding:5px 8px;border-radius:8px;border:1px solid var(--line);color:var(--lap);background:var(--bg)}
+ #lnav button:hover,#lnav button:focus-visible{background:var(--lap);color:var(--bg)}
+ #lnav button b{font-weight:600}#lnav button span{color:inherit;opacity:.7}
+ #lnav .lh{font-size:11px;color:var(--mut);margin:6px 2px 0}
+ #lnav .up{justify-content:center;margin-top:6px}}
 .lib h2{font:700 24px/1.2 'Noto Serif',serif;margin:0;display:inline}
 .lib .set>summary{font-weight:600;min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer}
 .trl{border-top:1px solid var(--line);padding:10px 0}
@@ -287,6 +295,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
 <ul id="sug" class="sug" role="listbox" hidden></ul>
 </div>
 
+<nav id="lnav" aria-label="Languages"></nav>
 <main class="wrap">
   <section>
     <div id="kb" class="kb" hidden></div>
@@ -686,7 +695,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','kun'],BVER=29;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','kun'],BVER=30;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -708,7 +717,7 @@ function search(){
   const total=act.reduce((n,d)=>n+d.entries.length,0);
   results=[];shown=0;
   if(!q.trim()){
-    $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();
+    $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();results=[];GF=new Map();lnavRender();
     $('#res').insertAdjacentHTML('beforeend',`<li class="empty">${dicts.length?I.empty(total.toLocaleString(UIL),act.length,dicts.length):I.loading}</li>`);
     return;
   }
@@ -742,8 +751,26 @@ function search(){
   {const sec=r=>r[0]===3?1:0,gk=r=>sec(r)+':'+elang(r[2],r[3]),first=new Map();results.forEach((r,k)=>{const g=gk(r);if(!first.has(g))first.set(g,k)});
    results=results.map((r,k)=>[r,k]).sort((a,b)=>sec(a[0])-sec(b[0])||first.get(gk(a[0]))-first.get(gk(b[0]))||a[1]-b[1]).map(x=>x[0])}
   $('#stat').textContent=results.length?I.found+results.length.toLocaleString(UIL):I.none;
-  $('#res').innerHTML='';more();renderSug();
+  GF=new Map();results.forEach((r,k)=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);if(!GF.has(g))GF.set(g,k)});
+  $('#res').innerHTML='';more();renderSug();lnavRender();
 }
+let GF=new Map();
+function lnavRender(){
+  const n=$('#lnav'),cnt={};results.forEach(r=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);cnt[g]=(cnt[g]||0)+1});
+  const gs=[...GF.keys()];if(gs.length<2&&!results.length){n.innerHTML='';document.body.classList.remove('lnv');return}
+  const lab=L=>(I.chip&&I.chip[L])||(LANGS[L]?LANGS[L][1]:L);
+  let h='',inb=false;
+  for(const g of gs){if(g[0]==='b'&&!inb){inb=true;h+=`<div class="lh">${esc(I.inbody)}</div>`}h+=`<button data-g="${g}" title="${esc(((I.lang&&I.lang[g.slice(1)])||lab(g.slice(1)))+' · '+cnt[g])}"><b>${esc(lab(g.slice(1)))}</b><span>${cnt[g].toLocaleString(UIL)}</span></button>`}
+  h+=`<button class="up" data-g="top" title="↑">↑</button>`;
+  n.innerHTML=h;document.body.classList.toggle('lnv',results.length>0);lnavPos();
+}
+function lnavPos(){const s=$('#stat');if(!s)return;const t=Math.max(document.querySelector('.qsticky').getBoundingClientRect().bottom+12,90);document.documentElement.style.setProperty('--lnt',t+'px')}
+function lnavGo(g){
+  if(g==='top'){scrollTo({top:0,behavior:'smooth'});return}
+  const k=GF.get(g);if(k==null)return;while(shown<=k&&shown<results.length)more();
+  const el=$('#res').querySelector(`[data-k="${k}"]`);if(!el)return;
+  const top=el.getBoundingClientRect().top+scrollY,cover=document.querySelector('.qsticky').getBoundingClientRect().bottom;
+  scrollTo({top:Math.max(0,top-Math.max(cover,0)-(el.previousElementSibling&&el.previousElementSibling.classList.contains('sep')?60:12)),behavior:'smooth'})}
 let HL={qd:'',qh:'',mode:'pre',re:null,lat:false,rx:{}},inbHead=false;
 let sugIdx=-1,sugOff=true,sugItems=[];
 function sugHide(){$('#sug').hidden=true;document.body.classList.remove('sugo');$('#q').setAttribute('aria-expanded','false');$('#q').removeAttribute('aria-activedescendant');sugIdx=-1}
@@ -796,9 +823,9 @@ function defHtml(d,e,l){
 }
 function more(){
   const part=results.slice(shown,shown+PAGE);shown+=part.length;
-  $('#res').insertAdjacentHTML('beforeend',part.map(([s,_,d,i])=>{const e=d.entries[i],l=elang(d,i);
+  const k0=shown-part.length;$('#res').insertAdjacentHTML('beforeend',part.map(([s,_,d,i],j)=>{const e=d.entries[i],l=elang(d,i);
     let sep='';if(s===3&&!inbHead){inbHead=true;sep=`<li class="sep">${I.inbody} · ${results.filter(r=>r[0]===3).length.toLocaleString(UIL)}</li>`}
-    return sep+`<li class="${s===3?'inb':''}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hlf"><span class="hw" dir="auto">${s<3?hlHead(e[0],s,l):esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn(e):''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}).join(''));
+    return sep+`<li class="${s===3?'inb':''}" data-k="${k0+j}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hlf"><span class="hw" dir="auto">${s<3?hlHead(e[0],s,l):esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn(e):''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}).join(''));
   $('#more').hidden=shown>=results.length;
   requestAnimationFrame(()=>{for(const h of $('#res').querySelectorAll('.hit:not([data-m])')){h.dataset.m=1;const d=h.querySelector('.def');if(d.scrollHeight>d.getBoundingClientRect().height*0+(d.querySelector('.tv')?18:7.6)*parseFloat(getComputedStyle(d).fontSize)+4)h.classList.add('long')}});
 }
@@ -1115,6 +1142,7 @@ $('#q').addEventListener('blur',()=>setTimeout(cmpUpd,160));
 $('#scope').addEventListener('change',search);
 $('#mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;mode=b.dataset.m;$('#mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));search()});
 $('#more').addEventListener('click',more);
+$('#lnav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)lnavGo(b.dataset.g)});addEventListener('resize',lnavPos);addEventListener('scroll',()=>{if(document.body.classList.contains('lnv'))lnavPos()},{passive:true});
 document.body.dataset.trm=LS.get('trm','la');
 $('#res').addEventListener('click',async e=>{
   if(e.target.closest('.trb')){const o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset.trm)+1)%3];document.body.dataset.trm=m;LS.set('trm',m);return}
