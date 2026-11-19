@@ -686,7 +686,7 @@ async function initCloud(){
 }
 
 /* ---------- built-in dictionaries ---------- */
-const BUILTIN=['syr','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=23;
+const BUILTIN=['syr','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','kun'],BVER=24;
 const latExtra=()=>({en:'laen',de:'laen',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -735,7 +735,7 @@ function search(){
       if(s>=0)results.push([s,s===3?pos*4+Math.min(E[i][1].length,400)/100:E[i][0].length+(voc?0:lat&&RX[L]?30+(qv&&CL[L].sem?40:0):0),d,i]);
     }
   }
-  const loc=d=>GLOSS[d.id]===UIL?0:1;
+  const loc=d=>GLOSS[d.id]===UIL||(d.id==='b-ml'&&UIL!=='ru')?0:1;
   results.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
   {const slots={};results.forEach((r,k)=>{const g=(r[0]===3?'b':'h')+elang(r[2],r[3]);(slots[g]=slots[g]||[]).push(k)});
    const old=results.slice();for(const g in slots){const ks=slots[g],it=ks.map(k=>old[k]);it.sort((a,b)=>loc(a[2])-loc(b[2]));ks.forEach((k,n)=>results[k]=it[n])}}
@@ -838,7 +838,8 @@ function formatDef0(raw,L,hw,noRoot){
   }
   let g=false,ex=false,et=false;
   return lines.filter(l=>l.trim()!=='@').map((l,li)=>{
-    let cls=(ex||/^\s*\x04/.test(l))?' x':(/^<b class="sn">/.test(l)?' s':'');
+    let lv=-1;l=l.replace(/^\uE010([0-2])([^\uE013]*)\uE013/,(m,a,b)=>{lv=+a;return '<b class="sn">'+b+'</b>'});
+    let cls=(ex||/^\s*\x04/.test(l))?' x':(/^<b class="sn">/.test(l)?' s':'');if(lv>=0)cls=[' s',' s2',' s3'][lv];
     if(!cls&&/^[a-p]\)\s/.test(l)){cls=' s2';l=l.replace(/^([a-p]\))\s/,'<b class="sn">$1</b> ')}
     else if(!cls&&/^[α-ω]\)\s/.test(l)){cls=' s3';l=l.replace(/^([α-ω]\))\s/,'<b class="sn">$1</b> ')}
     else if(!cls&&/^[A-H]\)\s/.test(l)){cls=' s';l=l.replace(/^([A-H]\))\s/,'<b class="sn">$1</b> ')}
@@ -864,7 +865,7 @@ function formatDef0(raw,L,hw,noRoot){
 }
 const GLOSS={'b-ml':'en','b-kun':'de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-gez','b-dil','b-mis','b-che']);
-const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\uE000-\uE005]/g,'');
+const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\uE000-\uE013]/g,'');
 
 /* ---------- UI rendering ---------- */
 function langsPresent(){const s=new Set();for(const d of dicts){if(d.lang==='mix')d.entries.forEach(e=>s.add(e[2]));else s.add(d.lang)}return Object.keys(LANGS).filter(k=>s.has(k))}
@@ -873,7 +874,7 @@ const GLY={syr:'ܐ',ka:'ღ',grc:'Ω',la:'A',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ع'}
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;(by[d.lang]=by[d.lang]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
 const INTERIM=new Set(['b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
-const RANGE={'b-kun':['ա','ածեաց'],'b-che':['ا','بَانَ'],'b-cos':['ܫܡܫ','ܫܢܕ'],'b-ka':['ა','ჵსანა'],'b-rai':['ሀ','ፍጻሜ'],'b-mis':['ա','աքաղաղ']};
+const RANGE={'b-kun':['ա','ածեաց'],'b-che':['ا','بَانَ'],'b-cos':['ܫܡܫ','ܫܢܕ'],'b-mis':['ա','աքաղաղ']};
 const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-cos':['Costaz','Louis Costaz, Dictionnaire syriaque-français / Syriac-English Dictionary / Qāmūs suryānī-ʿarabī, Beyrouth 1963'],
  'b-ka':['Serebr','Серебряков, Древнегрузинско-русский словарь'],
