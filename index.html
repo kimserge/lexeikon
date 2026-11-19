@@ -568,7 +568,9 @@ const TRS={
 let trCfg=Object.assign({syr:'sci',ka:'sci',hy:'hm',gez:'trad',grc:'sci',ar:'din',cop:'sci'},LS.get('trcfg',{}));
 function arTr(w,m){const V={'َ':'a','ِ':'i','ُ':'u'},T={'ً':'an','ٍ':'in','ٌ':'un'},SUN='تثدذرزسشصضطظلن';
   const info=x=>({v:x.k.map(k=>V[k]).find(Boolean)||'',t:x.k.map(k=>T[k]).find(Boolean)||'',d:x.k.includes('ّ'),s:x.k.includes('ْ'),l:x.k.includes('ٰ')});
+  const CN=wd=>[...wd.replace(/ـ/g,'')].map((c,i)=>c==='ا'?(i?'ā':'ʾ'):c==='آ'?'ʾā':'أإؤئء'.includes(c)?'ʾ':c==='ى'?'ā':c==='ة'?'a':c==='و'?'w':c==='ي'?'y':(m[c]!=null?m[c]:c)).join('');
   return String(w).normalize('NFC').split(/(\s+)/).map(wd=>{if(!wd.trim())return wd;
+    if(!/[ً-ْٰ]/.test(wd)&&/[ء-ي]/.test(wd))return CN(wd);
     const a=[];for(const ch of wd.replace(/ـ/g,'')){if(/[ً-ْٰ]/.test(ch)&&a.length)a[a.length-1].k.push(ch);else a.push({c:ch,k:[]})}
     let r='',i=0,pv='',skip=-1;const sk=a.map(x=>x.c).join('');
     if(sk.startsWith('الله')){const h=info(a[3]);r='allāh'+h.v+h.t;pv=h.v;i=4}
