@@ -1,7 +1,7 @@
 // LexEikôn — dictionary projects (accounts, projects, cards, publishing to GitHub).
 // Bindings: D1 database as DB.
 // Secrets (Settings → Variables and Secrets): GITHUB_TOKEN (fine-grained, Contents: read & write on kimserge/lexeikon),
-//   RESEND_API_KEY (optional, for e-mail), MAIL_FROM (e.g. "LexEikôn <noreply@your-domain>"),
+//   e-mail: MAIL_SCRIPT_URL + MAIL_SECRET (Google Apps Script, see server/mail-apps-script.gs) or RESEND_API_KEY + MAIL_FROM,
 //   ADMIN_EMAIL: administrator e-mail(s) and/or nickname(s), comma-separated (e.g. "kimserge" or "kimserge, me@unil.ch").
 const ORIGINS = new Set(['https://kimserge.github.io']);
 const REPO = 'kimserge/lexeikon', BRANCH = 'contrib';
@@ -27,7 +27,10 @@ const now = () => new Date().toISOString();
 // administrator: ADMIN_EMAIL may hold e-mail addresses and/or nicknames, separated by commas
 const admins = (env) => String(env.ADMIN_EMAIL || '').split(',').map((x) => x.trim().toLowerCase()).filter(Boolean);
 const isAdmin = (env, u) => !!u && admins(env).some((a) => a === String(u.email || '').toLowerCase() || a === String(u.nick || '').toLowerCase());
-const adminMail = (env) => admins(env).find((a) => a.includes('@')) || '';
+let ADB = null;
+// administrator address: an e-mail listed in ADMIN_EMAIL, otherwise the e-mail of the administrator's account
+const adminMail = async (env) => { const m = admins(env).find((a) => a.includes('@')); if (m) return m;
+  const n = admins(env)[0]; if (!n || !ADB) return ''; const u = await ADB.prepare('SELECT email FROM users WHERE nick=?1').bind(n).first(); return u ? u.email : ''; };
 const b64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
 const rand = (n) => b64(crypto.getRandomValues(new Uint8Array(n))).replace(/[+/=]/g, '').slice(0, n);
 async function pbkdf2(pass, salt) {
@@ -104,12 +107,32 @@ async function setIndex(env, id, meta, msg) {
   L = L.filter((x) => x.id !== id); if (meta) L.push(meta);
   await pushFile(env, UIDX, JSON.stringify(L, null, 1) + '\n', msg, 'main');
 }
+// e-mail: Google Apps Script web app (MAIL_SCRIPT_URL + MAIL_SECRET), or Resend (RESEND_API_KEY + MAIL_FROM)
 async function mail(env, to, subject, text) {
-  if (!env.RESEND_API_KEY || !env.MAIL_FROM || !to) return false;
-  const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: env.MAIL_FROM, to: [to], subject, text }) });
-  return r.ok;
+  if (!to) return false;
+  try {
+    if (env.MAIL_SCRIPT_URL && env.MAIL_SECRET) {
+      const r = await fetch(env.MAIL_SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret: env.MAIL_SECRET, to, subject, text }) });
+      return r.ok;
+    }
+    if (env.RESEND_API_KEY && env.MAIL_FROM) {
+      const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { Authorization: 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ from: env.MAIL_FROM, to: [to], subject, text }) });
+      return r.ok;
+    }
+  } catch (e) {}
+  return false;
 }
+// messages to authors in their interface language
+const MSG = {
+  ru: { sub: 'Словарь {n} отправлен на проверку. Вы получите письмо, когда администратор его рассмотрит.', acc: 'Ваш словарь {n} принят и теперь виден всем пользователям LexEikôn.', rej: 'Ваш словарь {n} пока не принят.', note: 'Комментарий администратора:' },
+  en: { sub: 'Your dictionary {n} has been submitted for review. You will receive an e-mail once the administrator has reviewed it.', acc: 'Your dictionary {n} has been accepted and is now visible to all users of LexEikôn.', rej: 'Your dictionary {n} has not been accepted yet.', note: 'Comment from the administrator:' },
+  de: { sub: 'Ihr Wörterbuch {n} wurde zur Prüfung eingereicht. Sie erhalten eine E-Mail, sobald der Administrator es geprüft hat.', acc: 'Ihr Wörterbuch {n} wurde angenommen und ist jetzt für alle Nutzer von LexEikôn sichtbar.', rej: 'Ihr Wörterbuch {n} wurde noch nicht angenommen.', note: 'Kommentar des Administrators:' },
+  fr: { sub: 'Votre dictionnaire {n} a été soumis pour vérification. Vous recevrez un courriel dès que l’administrateur l’aura examiné.', acc: 'Votre dictionnaire {n} a été accepté et est désormais visible par tous les utilisateurs de LexEikôn.', rej: 'Votre dictionnaire {n} n’a pas encore été accepté.', note: 'Commentaire de l’administrateur :' },
+  it: { sub: 'Il vostro dizionario {n} è stato inviato per la revisione. Riceverete un’e-mail quando l’amministratore lo avrà esaminato.', acc: 'Il vostro dizionario {n} è stato accettato ed è ora visibile a tutti gli utenti di LexEikôn.', rej: 'Il vostro dizionario {n} non è stato ancora accettato.', note: 'Commento dell’amministratore:' },
+};
+const msg = (u, k, name, note) => { const M = MSG[u && u.lang] || MSG.en; return M[k].replace('{n}', '«' + name + '»') + (note ? '\n\n' + M.note + '\n' + note : '') + '\n\n— LexEikôn\nhttps://kimserge.github.io/lexeikon/proj.html'; };
 
 export default {
   async fetch(request, env) {
@@ -120,7 +143,7 @@ export default {
     const reply = (body, status = 200) => new Response(body === null ? null : JSON.stringify(body), { status, headers });
     if (!allowed) return reply({ error: 'forbidden' }, 403);
     if (request.method === 'OPTIONS') return reply(null, 204);
-    const db = env.DB, url = new URL(request.url), P = url.pathname.replace(/\/+$/, '').split('/').filter(Boolean);
+    const db = env.DB; ADB = db; const url = new URL(request.url), P = url.pathname.replace(/\/+$/, '').split('/').filter(Boolean);
     const body = async () => { try { return await request.json(); } catch { return {}; } };
     try {
       await init(db);
@@ -135,7 +158,7 @@ export default {
         const u = await db.prepare('INSERT INTO users (nick,email,salt,hash,lang,created,sig) VALUES (?1,?2,?3,?4,?5,?6,?7) RETURNING id')
           .bind(nick, email, salt, hash, clean(b.lang, 5), now(), sig).first();
         const token = rand(40); await db.prepare('INSERT INTO sessions VALUES (?1,?2,?3)').bind(token, u.id, now()).run();
-        await mail(env, adminMail(env), 'LexEikôn: new contributor ' + nick, nick + ' <' + email + '> registered.');
+        await mail(env, await adminMail(env), 'LexEikôn: new contributor ' + nick, nick + ' <' + email + '> registered.');
         return reply({ token, nick, email, sig });
       }
       if (request.method === 'POST' && P[0] === 'login') {
@@ -171,12 +194,12 @@ export default {
           await pushFile(env, file, JSON.stringify(dict) + '\n', `accept: ${owner.nick}/${p.slug} (${cards.length} cards)`, 'main');
           await setIndex(env, dict.id, { id: dict.id, file: dict.id + '.json', name: dict.name, sig: dict.sig, author: dict.author, la: dict.la, lb: dict.lb, tl: dict.tl, n: dict.entries.length, accepted: t }, 'index: + ' + dict.id);
           await db.prepare("UPDATE projects SET status='accepted', accepted=?1, anote=?2 WHERE id=?3").bind(t, note, p.id).run();
-          await mail(env, owner.email, 'LexEikôn: ' + p.name, 'Your dictionary has been accepted and is now visible to all users of LexEikôn.' + (note ? '\n\n' + note : ''));
+          await mail(env, owner.email, 'LexEikôn: ' + p.name, msg(owner, 'acc', p.name, note));
           return reply({ ok: true, status: 'accepted', accepted: t });
         }
         if (request.method === 'POST' && P[3] === 'reject') {
           await db.prepare("UPDATE projects SET status='rejected', anote=?1 WHERE id=?2").bind(note, p.id).run();
-          await mail(env, owner.email, 'LexEikôn: ' + p.name, 'Your dictionary update has not been accepted yet.' + (note ? '\n\n' + note : ''));
+          await mail(env, owner.email, 'LexEikôn: ' + p.name, msg(owner, 'rej', p.name, note));
           return reply({ ok: true, status: 'rejected' });
         }
         if (request.method === 'POST' && P[3] === 'withdraw') {
@@ -212,7 +235,7 @@ export default {
         if (P.length === 2 && request.method === 'DELETE') {
           // an accepted dictionary stays on the site: hide it from the author, keep it for the administrator
           if (p.status === 'accepted') { await db.prepare('UPDATE projects SET deleted=?1 WHERE id=?2').bind(now(), p.id).run();
-            await mail(env, adminMail(env), 'LexEikôn: ' + user.nick + ' deleted accepted dictionary ' + p.name, 'The project was removed by its author; the accepted version is still on the site. Withdraw it in the administration page if needed.');
+            await mail(env, await adminMail(env), 'LexEikôn: ' + user.nick + ' deleted accepted dictionary ' + p.name, 'The project was removed by its author; the accepted version is still on the site. Withdraw it in the administration page if needed.');
             return reply({ ok: true, kept: true }); }
           await db.batch([db.prepare('DELETE FROM cards WHERE project_id=?1').bind(p.id), db.prepare('DELETE FROM projects WHERE id=?1').bind(p.id)]); return reply({ ok: true }); }
         if (P[2] === 'cards' && request.method === 'GET') return reply((await db.prepare('SELECT * FROM cards WHERE project_id=?1 ORDER BY id').bind(p.id).all()).results.map((c) => ({ ...c, data: cardData(JSON.parse(c.data)) })));
@@ -231,8 +254,8 @@ export default {
           const link = await pushFile(env, file, JSON.stringify(toDict(user, { ...p, updated: t }, cards), null, 1) + '\n', `contrib: ${user.nick}/${p.slug} (${cards.length} cards)`);
           await db.prepare("UPDATE projects SET pushed=?1, status='pending' WHERE id=?2").bind(t, p.id).run();
           const txt = `«${p.name}» (${cards.length}) → ${link}`;
-          const sent = await mail(env, user.email, 'LexEikôn: ' + p.name, 'Your dictionary update has been placed for review.\n' + txt);
-          await mail(env, adminMail(env), 'LexEikôn update: ' + user.nick + '/' + p.slug, txt);
+          const sent = await mail(env, user.email, 'LexEikôn: ' + p.name, msg(user, 'sub', p.name));
+          await mail(env, await adminMail(env), 'LexEikôn: ' + (user.sig || user.nick) + ' — ' + p.name + ' (' + cards.length + ')', txt + '\n\nhttps://kimserge.github.io/lexeikon/admin.html');
           return reply({ ok: true, link, pushed: t, mailed: sent });
         }
       }
