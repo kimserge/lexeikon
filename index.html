@@ -195,7 +195,7 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .acts .btn{min-height:38px}
 .tro{background:var(--card);border-radius:10px;padding:10px 14px;margin:0 0 14px;white-space:pre-line;font:16px/1.55 var(--lex)}
 .tro:empty{display:none}
-.gr{font-style:italic;font-weight:300;color:light-dark(#1f5fbf,#8ab8ff)}
+.gr{font-family:'Noto Sans',sans-serif;font-size:.92em;font-style:italic;font-weight:300;color:light-dark(#1f5fbf,#8ab8ff)}
 .cpy.itm{color:var(--rub)}
 .def .et{color:var(--mut);font:italic 300 .86em/1.5 'Noto Sans',sans-serif}
 .def .et .ex{font-style:italic}
@@ -217,7 +217,7 @@ html{scrollbar-gutter:stable}
  #lnav button:hover,#lnav button:focus-visible{background:var(--lap);color:var(--bg)}
  #lnav button b{font-weight:600}#lnav button span{color:inherit;opacity:.75;font-weight:400}
  #lnav .lh{font:600 11px/1.25 'Noto Sans',sans-serif;color:color-mix(in srgb,var(--rub) 70%,var(--bg));margin:6px 2px 0}
- #lnav .up{justify-content:flex-start;margin-top:6px}}
+ #lnav .up{justify-content:flex-start;margin-top:6px;font-weight:800;font-size:17px}}
 @media(min-width:900px){aside.lib{position:sticky;top:var(--lnt,200px);align-self:start;max-height:calc(100vh - var(--lnt,200px) - 12px);overflow:auto;overscroll-behavior:contain}}
 .lib h2{font:700 24px/1.2 'Noto Serif',serif;margin:0;display:inline}
 .lib .set>summary{font-weight:600;min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer}
@@ -344,7 +344,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_pub"></dt><dd><a href="https://www.eikon-editions.fr/" target="_blank" rel="noopener">Éditions Eikon</a></dd>
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.17.1 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v2.17.2 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1.64</a>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
