@@ -19,7 +19,7 @@ async function init(db) {
       created TEXT NOT NULL, updated TEXT NOT NULL)`),
   ]);
   for (const q of ['ALTER TABLE users ADD COLUMN sig TEXT', 'ALTER TABLE projects ADD COLUMN la TEXT', 'ALTER TABLE projects ADD COLUMN lb TEXT', 'ALTER TABLE projects ADD COLUMN sig TEXT',
-    'ALTER TABLE projects ADD COLUMN status TEXT', 'ALTER TABLE projects ADD COLUMN accepted TEXT', 'ALTER TABLE projects ADD COLUMN anote TEXT'])
+    'ALTER TABLE projects ADD COLUMN status TEXT', 'ALTER TABLE projects ADD COLUMN accepted TEXT', 'ALTER TABLE projects ADD COLUMN anote TEXT', 'ALTER TABLE projects ADD COLUMN deleted TEXT'])
     try { await db.prepare(q).run(); } catch (e) { /* column exists */ }
   ready = true;
 }
@@ -182,16 +182,17 @@ export default {
         if (request.method === 'POST' && P[3] === 'withdraw') {
           await delFile(env, 'data/u/' + dict.id + '.json', 'withdraw: ' + dict.id, 'main');
           await setIndex(env, dict.id, null, 'index: - ' + dict.id);
-          await db.prepare("UPDATE projects SET status='withdrawn', accepted=NULL, anote=?1 WHERE id=?2").bind(note, p.id).run();
+          if (p.deleted) await db.batch([db.prepare('DELETE FROM cards WHERE project_id=?1').bind(p.id), db.prepare('DELETE FROM projects WHERE id=?1').bind(p.id)]);
+          else await db.prepare("UPDATE projects SET status='withdrawn', accepted=NULL, anote=?1 WHERE id=?2").bind(note, p.id).run();
           return reply({ ok: true, status: 'withdrawn' });
         }
         return reply({ error: 'not found' }, 404);
       }
       // ---- projects ----
-      const own = async (id) => db.prepare('SELECT * FROM projects WHERE id=?1 AND user_id=?2').bind(id, user.id).first();
+      const own = async (id) => db.prepare('SELECT * FROM projects WHERE id=?1 AND user_id=?2 AND deleted IS NULL').bind(id, user.id).first();
       if (P[0] === 'projects' && P.length === 1) {
         if (request.method === 'GET') {
-          const r = await db.prepare(`SELECT p.*, (SELECT count(*) FROM cards c WHERE c.project_id=p.id) n FROM projects p WHERE user_id=?1 ORDER BY updated DESC`).bind(user.id).all();
+          const r = await db.prepare(`SELECT p.*, (SELECT count(*) FROM cards c WHERE c.project_id=p.id) n FROM projects p WHERE user_id=?1 AND deleted IS NULL ORDER BY updated DESC`).bind(user.id).all();
           return reply(r.results);
         }
         if (request.method === 'POST') {
@@ -209,8 +210,10 @@ export default {
           await db.prepare('UPDATE projects SET name=?1, tl=?2, note=?3, updated=?4, la=?5, lb=?6, sig=?7 WHERE id=?8').bind(clean(b.name, 120) || p.name, clean(b.tl, 5) || p.tl, clean(b.note, 1000), now(), lg(b.la, p.la || 'grc'), lg(b.lb, p.lb || 'ar'), clean(b.sig, 16) || p.sig || '', p.id).run();
           return reply(await own(p.id)); }
         if (P.length === 2 && request.method === 'DELETE') {
-          // an accepted dictionary is also taken off the site
-          if (p.status === 'accepted') { const id = 'u-' + user.nick + '-' + p.slug; await delFile(env, 'data/u/' + id + '.json', 'withdraw (deleted by author): ' + id, 'main'); await setIndex(env, id, null, 'index: - ' + id); }
+          // an accepted dictionary stays on the site: hide it from the author, keep it for the administrator
+          if (p.status === 'accepted') { await db.prepare('UPDATE projects SET deleted=?1 WHERE id=?2').bind(now(), p.id).run();
+            await mail(env, adminMail(env), 'LexEikôn: ' + user.nick + ' deleted accepted dictionary ' + p.name, 'The project was removed by its author; the accepted version is still on the site. Withdraw it in the administration page if needed.');
+            return reply({ ok: true, kept: true }); }
           await db.batch([db.prepare('DELETE FROM cards WHERE project_id=?1').bind(p.id), db.prepare('DELETE FROM projects WHERE id=?1').bind(p.id)]); return reply({ ok: true }); }
         if (P[2] === 'cards' && request.method === 'GET') return reply((await db.prepare('SELECT * FROM cards WHERE project_id=?1 ORDER BY id').bind(p.id).all()).results.map((c) => ({ ...c, data: cardData(JSON.parse(c.data)) })));
         if (P[2] === 'cards' && request.method === 'POST') { const t = now(), d = JSON.stringify(cardData(await body()));
@@ -235,7 +238,7 @@ export default {
       }
       // all own dictionaries (for the main app)
       if (request.method === 'GET' && P[0] === 'dicts') {
-        const ps = (await db.prepare('SELECT * FROM projects WHERE user_id=?1').bind(user.id).all()).results, out = [];
+        const ps = (await db.prepare('SELECT * FROM projects WHERE user_id=?1 AND deleted IS NULL').bind(user.id).all()).results, out = [];
         for (const p of ps) out.push(toDict(user, p, (await db.prepare('SELECT * FROM cards WHERE project_id=?1 ORDER BY id').bind(p.id).all()).results));
         return reply(out);
       }
