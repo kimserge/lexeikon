@@ -208,12 +208,12 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .empty{padding:28px 0;color:var(--mut);max-width:60ch}
 .empty b{color:var(--ink)}
 #more{margin-top:14px}
-.ljmp{padding:2px 2px 2px 0 !important;position:fixed;left:env(safe-area-inset-left,0px);bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;display:flex;flex-direction:column;gap:5px;max-height:calc(100dvh - var(--lnt,200px) - 24px);overflow:auto;scrollbar-width:none;padding:2px}.ljmp[hidden]{display:none}
-.ljmp button{all:unset;cursor:pointer;flex:none;width:34px;height:40px;padding-left:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:0 12px 12px 0;border-left:0 !important;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);color:var(--lap);border:1px solid var(--line);box-shadow:0 3px 10px rgb(0 0 0/.13)}
+.ljmp{padding:2px 2px 2px 0 !important;position:fixed;left:calc(env(safe-area-inset-left,0px) - 5px);bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;display:flex;flex-direction:column;gap:5px;max-height:calc(100dvh - var(--lnt,200px) - 24px);overflow:auto;scrollbar-width:none;padding:2px}.ljmp[hidden]{display:none}
+.ljmp button{all:unset;cursor:pointer;flex:none;width:35px;height:40px;padding-left:5px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:0 12px 12px 0;border-left:0 !important;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);color:var(--lap);border:1px solid var(--line);box-shadow:0 3px 10px rgb(0 0 0/.13)}
 .ljmp button .s{font:400 17px/1 var(--lex)}.ljmp button .n{font:600 9.5px/1 'Noto Sans',sans-serif;opacity:.75}
 .ljmp button.in{border-style:dashed}.ljmp button.in .s{font:700 16px/1 'Noto Sans',sans-serif;color:var(--rub)}
 .ljmp button:hover,.ljmp button:focus-visible{background:var(--lap);color:var(--bg)}.ljmp button:hover .s{color:inherit}
-@media(max-width:999px){body.ljv .wrap{padding-left:calc(max(5vw,16px) + 30px)}}
+@media(max-width:999px){body.ljv .wrap{padding-left:calc(max(5vw,16px) + 18px)}}
 @media(min-width:1000px){.ljmp{display:none}}
 .jmp{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;display:flex;flex-direction:column;gap:8px}.jmp[hidden]{display:none}
 .jmp button{all:unset;cursor:pointer;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:var(--bg);color:var(--lap);border:1px solid var(--line);box-shadow:0 4px 12px rgb(0 0 0/.15);font:800 19px/1 'Noto Sans',sans-serif}
