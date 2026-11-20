@@ -256,7 +256,7 @@ html{scrollbar-gutter:stable}
 .drop{border:2px dashed var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;justify-items:start;color:var(--mut);font-size:14px}
 .drop.over{border-color:var(--lap);background:var(--card)}
 .dl{list-style:none;padding:0;margin:16px 0}
-.dl li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;padding:10px;border-bottom:1px solid var(--line)}.dl li.g0{background:var(--bg)}.dl li.g1{background:color-mix(in srgb,var(--lap) 9%,var(--bg))}.dl li.dlg{display:block;padding:8px 10px 4px;border-bottom:0;font:700 14px/1.3 'Noto Sans',sans-serif;color:var(--lap)}
+.dl li{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:10px;align-items:center;padding:10px;border-bottom:1px solid var(--line)}.dl li.g0{background:var(--bg)}.dl li.g1{background:color-mix(in srgb,var(--lap) 9%,var(--bg))}.dl li.dlg{display:block;padding:8px 10px 4px;border-bottom:0;font:700 14px/1.3 'Noto Sans',sans-serif;color:var(--lap)}
 .dl .sg{font-weight:700;color:var(--rub)}.dl .nm{font-weight:500;overflow-wrap:anywhere}.sgt{text-decoration:none;font-weight:600}
 .dl .cpy{display:block;font-size:12px;color:var(--mut);opacity:.85}
 .dl .cpy.inl{display:inline;margin-inline-start:8px;font-weight:400}
@@ -287,6 +287,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
 .toast.on{opacity:1}
 @media(prefers-reduced-motion:reduce){.toast{transition:none}}
 @media(max-width:600px){.tin{flex-wrap:nowrap;align-items:flex-start;gap:10px}.syms button.md{font-size:34px}.top{padding-top:calc(14px + var(--sat));padding-bottom:10px}h1{font-size:26px}.tg{font-size:15px}.uil{min-height:34px}.top .sub{font-size:13px;line-height:1.4;margin-top:6px}.sub2,.credit{font-size:12px;margin-top:4px}.lgb{margin-top:10px}.syms button{min-height:40px;font-size:21px}.syms{gap:clamp(3px,1.2vw,5px)}.hw{font-size:20px}.qrow{flex-wrap:wrap}.qbox{flex-basis:100%}.tin>div{min-width:0;width:100%}.lgb{gap:clamp(3px,1.2vw,6px)}.lgb button{flex:1 1 0;max-width:42px;height:46px;border-radius:10px;gap:2px}.lgb button .s{font-size:19px}.lgb button .a{font-size:clamp(7.5px,2.35vw,9px);letter-spacing:0}.lgb .lgn{font-size:11.5px;line-height:1.25}}
+.dl li input.only{appearance:none;-webkit-appearance:none;width:20px;height:20px;margin:0;border:2px solid var(--lap);border-radius:50%;cursor:pointer;display:grid;place-items:center}.dl li input.only:checked::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--lap)}
 </style>
 </head>
 <body>
@@ -357,7 +358,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.15 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.16 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -390,7 +391,7 @@ const I18N={
   loading:'Словари загружаются…',libn:(a,n,t)=>`${a} из ${n} включены · ${t} статей`,abbr:'ст.',
   space:'пробел',bksp:'⌫ стереть',off:'не показывать',cons:'Согласные',orders:'Порядки (на примере ለ)',
   sixth:'Шестой порядок: ə; в конце слова и перед слогом с полной гласной не пишется',
-  syrsp:'Спирантизация бгдкпт (ḇ ḡ ḏ ḵ p̄ ṯ) обозначается, только если в написании стоит рукаха (точка под буквой); в неогласованных словах её не видно.',grcn:'γγ → ng, αυ → au, ου → ou; густое придыхание → h, ῥ → rh',copied:'Скопировано',copyfail:'Не удалось скопировать',poptitle:'Латинский словарь',usearia:'Использовать в поиске',
+  syrsp:'Спирантизация бгдкпт (ḇ ḡ ḏ ḵ p̄ ṯ) обозначается, только если в написании стоит рукаха (точка под буквой); в неогласованных словах её не видно.',grcn:'γγ → ng, αυ → au, ου → ou; густое придыхание → h, ῥ → rh',copied:'Скопировано',copyfail:'Не удалось скопировать',poptitle:'Латинский словарь',usearia:'Использовать в поиске',onlyaria:'Только этот словарь (повторно — все словари)',
   lang:{syr:'Сирийский',ka:'Древнегрузинский',grc:'Древнегреческий',la:'Латынь',hy:'Армянский',gez:'Эфиопский (геэз)',ar:'Арабский',cop:'Коптский',xx:'Другой'},
   chip:{syr:'Сир.',ka:'Груз.',grc:'Греч.',la:'Лат.',hy:'Арм.',gez:'Эфиоп.',ar:'Араб.',cop:'Копт.',xx:'Др.'},
   tag:{syr:'сир.',ka:'груз.',grc:'греч.',la:'лат.',hy:'арм.',gez:'эфиоп.',ar:'араб.',xx:'—'},
@@ -407,7 +408,7 @@ const I18N={
   loading:'Loading dictionaries…',libn:(a,n,t)=>`${a} of ${n} enabled · ${t} entries`,abbr:'entries',
   space:'space',bksp:'⌫ delete',off:'do not show',cons:'Consonants',orders:'Orders (example ለ)',
   sixth:'Sixth order: ə; not written word-finally or before a syllable with a full vowel',
-  syrsp:'Spirantization of bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) is marked only where the spelling has rukkakha (dot below the letter); in unvocalized words it is not visible.',grcn:'γγ → ng, αυ → au, ου → ou; rough breathing → h, ῥ → rh',copied:'Copied',copyfail:'Could not copy',poptitle:'Latin dictionary',usearia:'Use in search',
+  syrsp:'Spirantization of bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) is marked only where the spelling has rukkakha (dot below the letter); in unvocalized words it is not visible.',grcn:'γγ → ng, αυ → au, ου → ou; rough breathing → h, ῥ → rh',copied:'Copied',copyfail:'Could not copy',poptitle:'Latin dictionary',usearia:'Use in search',onlyaria:'Only this dictionary (again — all dictionaries)',
   lang:{syr:'Syriac',ka:'Old Georgian',grc:'Ancient Greek',la:'Latin',hy:'Armenian',gez:'Ethiopic (Gəʿəz)',ar:'Arabic',cop:'Coptic',xx:'Other'},
   chip:{syr:'Syr.',ka:'Geo.',grc:'Grk.',la:'Lat.',hy:'Arm.',gez:'Eth.',ar:'Arab.',cop:'Copt.',xx:'Oth.'},
   tag:{syr:'syr.',ka:'geo.',grc:'grk.',la:'lat.',hy:'arm.',gez:'eth.',ar:'arab.',xx:'—'},
@@ -424,7 +425,7 @@ const I18N={
   loading:'Wörterbücher werden geladen…',libn:(a,n,t)=>`${a} von ${n} aktiv · ${t} Einträge`,abbr:'Einträge',
   space:'Leerzeichen',bksp:'⌫ löschen',off:'nicht anzeigen',cons:'Konsonanten',orders:'Ordnungen (Beispiel ለ)',
   sixth:'Sechste Ordnung: ə; im Wortauslaut und vor einer Silbe mit Vollvokal nicht geschrieben',
-  syrsp:'Die Spirantisierung von bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) wird nur angezeigt, wenn die Schreibung ein Rukkākhā (Punkt unter dem Buchstaben) hat; in unvokalisierten Wörtern ist sie nicht erkennbar.',grcn:'γγ → ng, αυ → au, ου → ou; Spiritus asper → h, ῥ → rh',copied:'Kopiert',copyfail:'Kopieren fehlgeschlagen',poptitle:'Lateinisches Wörterbuch',usearia:'In der Suche verwenden',
+  syrsp:'Die Spirantisierung von bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) wird nur angezeigt, wenn die Schreibung ein Rukkākhā (Punkt unter dem Buchstaben) hat; in unvokalisierten Wörtern ist sie nicht erkennbar.',grcn:'γγ → ng, αυ → au, ου → ou; Spiritus asper → h, ῥ → rh',copied:'Kopiert',copyfail:'Kopieren fehlgeschlagen',poptitle:'Lateinisches Wörterbuch',usearia:'In der Suche verwenden',onlyaria:'Nur dieses Wörterbuch (erneut — alle Wörterbücher)',
   lang:{syr:'Syrisch',ka:'Altgeorgisch',grc:'Altgriechisch',la:'Latein',hy:'Armenisch',gez:'Äthiopisch (Gəʿəz)',ar:'Arabisch',cop:'Koptisch',xx:'Andere'},
   chip:{syr:'Syr.',ka:'Georg.',grc:'Griech.',la:'Lat.',hy:'Arm.',gez:'Äth.',ar:'Arab.',cop:'Kopt.',xx:'And.'},
   tag:{syr:'syr.',ka:'georg.',grc:'griech.',la:'lat.',hy:'arm.',gez:'äth.',ar:'arab.',xx:'—'},
@@ -441,7 +442,7 @@ const I18N={
   loading:'Chargement des dictionnaires…',libn:(a,n,t)=>`${a} sur ${n} activés · ${t} articles`,abbr:'art.',
   space:'espace',bksp:'⌫ effacer',off:'ne pas afficher',cons:'Consonnes',orders:'Ordres (exemple ለ)',
   sixth:'Sixième ordre : ə ; non noté en fin de mot ni devant une syllabe à voyelle pleine',
-  syrsp:'La spirantisation de bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) n’est notée que si la graphie porte le rukkokho (point souscrit) ; dans les mots non vocalisés, elle n’est pas visible.',grcn:'γγ → ng, αυ → au, ου → ou ; esprit rude → h, ῥ → rh',copied:'Copié',copyfail:'Copie impossible',poptitle:'Dictionnaire latin',usearia:'Utiliser dans la recherche',
+  syrsp:'La spirantisation de bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) n’est notée que si la graphie porte le rukkokho (point souscrit) ; dans les mots non vocalisés, elle n’est pas visible.',grcn:'γγ → ng, αυ → au, ου → ou ; esprit rude → h, ῥ → rh',copied:'Copié',copyfail:'Copie impossible',poptitle:'Dictionnaire latin',usearia:'Utiliser dans la recherche',onlyaria:'Seulement ce dictionnaire (à nouveau — tous les dictionnaires)',
   lang:{syr:'Syriaque',ka:'Géorgien ancien',grc:'Grec ancien',la:'Latin',hy:'Arménien',gez:'Éthiopien (guèze)',ar:'Arabe',cop:'Copte',xx:'Autre'},
   chip:{syr:'Syr.',ka:'Géo.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Éth.',ar:'Arab.',cop:'Copte',xx:'Aut.'},
   tag:{syr:'syr.',ka:'géo.',grc:'gr.',la:'lat.',hy:'arm.',gez:'éth.',ar:'arab.',xx:'—'},
@@ -458,7 +459,7 @@ const I18N={
   loading:'Caricamento dei dizionari…',libn:(a,n,t)=>`${a} su ${n} attivi · ${t} voci`,abbr:'voci',
   space:'spazio',bksp:'⌫ cancella',off:'non mostrare',cons:'Consonanti',orders:'Ordini (esempio ለ)',
   sixth:'Sesto ordine: ə; non si scrive in fine di parola né davanti a sillaba con vocale piena',
-  syrsp:'La spirantizzazione di bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) è indicata solo se la grafia ha il rukkākhā (punto sotto la lettera); nelle parole non vocalizzate non è visibile.',grcn:'γγ → ng, αυ → au, ου → ou; spirito aspro → h, ῥ → rh',copied:'Copiato',copyfail:'Impossibile copiare',poptitle:'Dizionario latino',usearia:'Usa nella ricerca',
+  syrsp:'La spirantizzazione di bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) è indicata solo se la grafia ha il rukkākhā (punto sotto la lettera); nelle parole non vocalizzate non è visibile.',grcn:'γγ → ng, αυ → au, ου → ou; spirito aspro → h, ῥ → rh',copied:'Copiato',copyfail:'Impossibile copiare',poptitle:'Dizionario latino',usearia:'Usa nella ricerca',onlyaria:'Solo questo dizionario (di nuovo — tutti i dizionari)',
   lang:{syr:'Siriaco',ka:'Georgiano antico',grc:'Greco antico',la:'Latino',hy:'Armeno',gez:'Etiopico (geʿez)',ar:'Arabo',cop:'Copto',xx:'Altro'},
   chip:{syr:'Sir.',ka:'Georg.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Etiop.',ar:'Arab.',cop:'Copto',xx:'Altro'},
   tag:{syr:'sir.',ka:'georg.',grc:'gr.',la:'lat.',hy:'arm.',gez:'etiop.',ar:'arab.',xx:'—'},
@@ -1080,7 +1081,7 @@ const CPY={'b-are':()=>'Arabeyes · FreeDict · GNU GPL 2+','b-graf':()=>'© CSC
 function renderLib(){
   const HIDE=new Set(['b-hy']);renderLgb();const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
   const lo=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')],lg=[...new Set(vis.map(d=>d.lang))].sort((a,b)=>(lo.indexOf(a)+1||99)-(lo.indexOf(b)+1||99));
-  $('#dl').innerHTML=lg.map((g,n)=>`<li class="dlg g${n%2}" data-lg="${esc(g)}">${esc(g==='mix'?'7 языков':(LANGS[g]||LANGS.xx)[0])}</li>`+vis.filter(d=>d.lang===g).map(d=>`<li class="g${n%2}"><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><span>${SIG[d.id]?`<b class="sg">${esc(sgl(d))}</b> = `:''}<span class="nm">${esc(fullN(d))}</span>${INL.has(d.id)?`<span class="cpy inl">${esc(CPY[d.id]())}</span>`:''}<span class="mt">${d.lang==='mix'?'7 языков · ':''}${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]&&!INL.has(d.id)?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}${INTERIM.has(d.id)?`<span class="cpy itm">⚠ ${esc(I.interim)}${RANGE[d.id]?` (<bdi>${esc(RANGE[d.id][0])}</bdi> – <bdi>${esc(RANGE[d.id][1])}</bdi>)`:''}</span>`:''}</span></li>`).join('')).join('');
+  $('#dl').innerHTML=lg.map((g,n)=>`<li class="dlg g${n%2}" data-lg="${esc(g)}">${esc(g==='mix'?'7 языков':(LANGS[g]||LANGS.xx)[0])}</li>`+vis.filter(d=>d.lang===g).map(d=>`<li class="g${n%2}"><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="${I.usearia}" title="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><input type="checkbox" class="only" data-o="${esc(d.id)}" ${act.length===1&&!off.has(d.id)?'checked':''} aria-label="${I.onlyaria}" title="${I.onlyaria}"><span>${SIG[d.id]?`<b class="sg">${esc(sgl(d))}</b> = `:''}<span class="nm">${esc(fullN(d))}</span>${INL.has(d.id)?`<span class="cpy inl">${esc(CPY[d.id]())}</span>`:''}<span class="mt">${d.lang==='mix'?'7 языков · ':''}${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]&&!INL.has(d.id)?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}${INTERIM.has(d.id)?`<span class="cpy itm">⚠ ${esc(I.interim)}${RANGE[d.id]?` (<bdi>${esc(RANGE[d.id][0])}</bdi> – <bdi>${esc(RANGE[d.id][1])}</bdi>)`:''}</span>`:''}</span></li>`).join('')).join('');
 }
 function refresh(){renderLib();renderChips();renderKb();search()}
 
@@ -1458,7 +1459,7 @@ $('#kb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
   if(b.dataset.bs){backspace();return}
   if(b.dataset.c!=null)insert(b.dataset.c);
 });
-$('#dl').addEventListener('change',e=>{const t=e.target.dataset.t;if(!t)return;e.target.checked?off.delete(t):off.add(t);if(!VIEW)LS.set('offv',[...off]);renderLgb();search()});
+$('#dl').addEventListener('change',e=>{const o=e.target.dataset.o;if(o){const ids=dicts.filter(d=>d.id!=='b-hy').map(d=>d.id);if(e.target.checked)ids.forEach(i=>i===o?off.delete(i):off.add(i));else ids.forEach(i=>off.delete(i));if(!VIEW)LS.set('offv',[...off]);refresh();return}const t=e.target.dataset.t;if(!t)return;e.target.checked?off.delete(t):off.add(t);if(!VIEW)LS.set('offv',[...off]);{const A=dicts.filter(d=>d.id!=='b-hy'&&!off.has(d.id));$('#dl').querySelectorAll('input.only').forEach(x=>x.checked=A.length===1&&A[0].id===x.dataset.o)}renderLgb();search()});
 $('#lgb').addEventListener('click',e=>{const b=e.target.closest('button[data-g]');if(!b)return;const ids=dicts.filter(d=>d.lang===b.dataset.g||(d.user&&d.lb===b.dataset.g)).map(d=>d.id),on=ids.some(id=>!off.has(id));ids.forEach(id=>on?off.add(id):off.delete(id));if(!VIEW)LS.set('offv',[...off]);refresh();if(!$('#kb').hidden)kbAuto()});
 $('#dl').addEventListener('click',async e=>{const b=e.target.closest('.del');if(!b)return;
   if(!b.classList.contains('sure')){b.classList.add('sure');b.textContent='Точно?';setTimeout(()=>{b.classList.remove('sure');b.textContent='Удалить'},3000);return}
