@@ -1,6 +1,6 @@
-const V='lexeikon-v133';
+const V='lexeikon-v134';
 const PRE=['./','index.html','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png',
- 'data/syr.json','data/brk.json','data/cos.json','data/ka.json','data/kac.json','data/agwb.json','data/dil.json','data/gez.json','data/rai.json','data/la.json','data/hy.json','data/mis.json','data/cop.json','data/che.json','data/graf.json','data/are.json','data/deu-fra.json','data/deu-rus.json','data/chlex.json','data/deu-eng.json','data/deu-ita.json','data/lade.json','data/kun.json','data/latforms.json','data/grc.json','data/ml.json','data/laen.json','data/lafr.json'];
+ 'data/syr.json','data/brk.json','data/cos.json','data/ka.json','data/kac.json','data/agwb.json','data/dil.json','data/gez.json','data/rai.json','data/la.json','data/hy.json','data/mis.json','data/cop.json','data/che.json','data/graf.json','data/are.json','data/deu-fra.json','data/deu-rus.json','data/chlex.json','data/deu-eng.json','data/deu-ita.json','data/lade.json','data/kun.json','data/psm.json','data/latforms.json','data/grc.json','data/ml.json','data/laen.json','data/lafr.json'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(PRE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('lexeikon-v')&&k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{

@@ -161,7 +161,7 @@ body[data-trm=la] .trb .a,body[data-trm=ru] .trb .b,body[data-trm=both] .trb .a,
 .trb+.cp{margin-inline-start:8px}
 .cp{background:none;border:0;color:var(--rub);cursor:pointer;width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:8px}.cp:hover{background:color-mix(in srgb,var(--rub) 12%,transparent)}.cp svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .lw{cursor:pointer;text-decoration:underline dotted color-mix(in srgb,var(--lap) 55%,transparent);text-underline-offset:3px}
-.lw:hover,.xr:hover{color:var(--lap)}.lw.pmk,.xr.pmk{color:var(--rub);font-weight:inherit}.xr{cursor:pointer;text-decoration:underline dotted color-mix(in srgb,var(--lap) 55%,transparent);text-underline-offset:3px}.pop .xs{margin-top:8px}body[data-trm=both] .tbo .lw{text-decoration:none}
+.lw:hover,.xr:hover{color:var(--lap)}.lw.pmk,.xr.pmk{color:var(--rub);font-weight:inherit}.xr{unicode-bidi:isolate;cursor:pointer;text-decoration:underline dotted color-mix(in srgb,var(--lap) 55%,transparent);text-underline-offset:3px}.pop .xs{margin-top:8px}body[data-trm=both] .tbo .lw{text-decoration:none}
 .pop{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);box-shadow:0 -10px 30px rgb(0 0 0/.18);max-height:33.3vh;max-height:33.3dvh;overflow:auto;padding:14px max(5vw,16px) 22px;border-radius:16px 16px 0 0}
 .pop .popb{padding:4px 10px;font-size:13px;flex:none}.pop .ph{display:flex;align-items:baseline;gap:10px;justify-content:space-between;position:sticky;top:-14px;background:var(--bg);padding:6px 0}
 .pop .pt{font-size:14px;color:var(--mut)}
@@ -358,7 +358,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.17 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.18 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -820,7 +820,7 @@ async function loadUserDicts(){
   if(VPID)try{const r=await fetch(PAPI+'/admin/projects/'+encodeURIComponent(VPID),{headers:{Authorization:'Bearer '+a.token}});if(r.ok){const d=await r.json();if(d&&d.entries&&!dicts.some(x=>(x.base||x.id)===d.id))dicts.push(...userSplit(d,100,false))}}catch(e){}
   try{const r=await fetch(PAPI+'/dicts',{headers:{Authorization:'Bearer '+a.token}});if(!r.ok)return;const L=await r.json();
     for(const d of L){if(!d.entries||!d.entries.length)continue;dicts=dicts.filter(x=>(x.base||x.id)!==d.id);dicts.push(...userSplit(d,100,true))}refresh()}catch(e){}}
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','are','kun'],BVER=37;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','are','kun','psm'],BVER=38;
 const latExtra=()=>({en:'laen',de:'lade',it:'laen',fr:'lafr'})[UIL];
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
@@ -954,7 +954,8 @@ function markHits(html){
 }
 const trLang=e=>{const t=e[3];return !t?null:t.pair?'de':t[UIL]?UIL:t.en?'en':null},trOf=e=>{const l=trLang(e);return l?e[3][l]:null},pSw=e=>!!(e[3]&&e[3].pair&&UIL==='de'),trBtn=e=>{const l=trLang(e),p=e[3].pair,a=p?p[pSw(e)?1:0]:'Lat',b=p?p[pSw(e)?0:1]:l[0].toUpperCase()+l.slice(1);return `<button class="trb${p?' pp':''}" type="button" aria-label="${a} / ${b}"><span class="a">${a}</span>/<span class="b">${b}</span></button>`};
 function defHtml(d,e,l){if(d.user)return linkXr(defHtml0(d,e,l),d);if(!JSON.stringify(e).includes('↗'))return defHtml0(d,e,l);const t=e[3]&&typeof e[3]==='object'?Object.fromEntries(Object.entries(e[3]).map(([k,v])=>[k,typeof v==='string'?markXr(v):v])):e[3];return linkXr(defHtml0(d,[e[0],markXr(e[1]),e[2],t],l),d)}
-function defHtml0(d,e,l){
+let FMD='';
+function defHtml0(d,e,l){FMD=d.id;
   if(e[3]&&e[3].pair){const f=x=>formatDef(x,l,e[0]).replace(/\uE002/g,'<span class="dege">').replace(/\uE003/g,'</span>');const g=x=>GERDEF.has(d.id)?linkGer(x):x,A=pSw(e)?g(f(e[3].de)):f(e[1]),B=pSw(e)?f(e[1]):g(f(e[3].de));return `<div class="pp"><div class="tv tla">${A}</div><div class="tv tru">${B}</div><div class="tv tbo">${g(f(e[3].bo))}</div></div>`}
   const base=x=>LATDEF.has(d.id)?linkLat(x):GERDEF.has(d.id)?linkGer(x):x,la=base(formatDef(e[1],l,e[0])),r=trOf(e);if(!r)return la;
   const a=e[1].split('\n'),b=r.split('\n');
@@ -1026,7 +1027,9 @@ function formatDef0(raw,L,hw,noRoot){
     if(/^@\s*/.test(l)){cls=' f';l=l.replace(/^@\s*(.*)$/,'<b class="fm">$1</b>')}
     if(L==='syr'){const SY='[\\u0700-\\u074F\\u0300-\\u036F]+';
       const rx=new RegExp('^((?:\\x02[^\\x03]*\\x03\\s*)*)('+SY+'(?:\\s+(?:sive|et|vel|aut)\\s+'+SY+')*)');
-      if(rx.test(l)){if(li===0){cls=' f';l=l.replace(rx,(m,a,b)=>a+b.replace(new RegExp(SY,'g'),'<b class="fm">$&</b>'))}
+      if(FMD==='b-psm'&&/^\s*\x04/.test(l))l=l.replace(new RegExp(SY+'(?:\\s+'+SY+')*','g'),'<b class="exb">$&</b>');
+      else if(rx.test(l)){if(li===0){cls=' f';l=l.replace(rx,(m,a,b)=>a+b.replace(new RegExp(SY,'g'),'<b class="fm">$&</b>'))}
+        else if(FMD==='b-psm'){l=l.replace(rx,(m,a,b)=>a+'<b class="fm">'+b+'</b>')}
         else{cls=' x';l='<span class="ex">'+l.replace(new RegExp(SY,'g'),'<b class="exb">$&</b>')+'</span>'}}}
     if(L==='gez'){
       if(/^[ሀ-፿]+፡/.test(l)){cls=' f';l=l.replace(/^[ሀ-፿]+፡(?:,?\s+(?:et|vel|sive|seu|aut|nec non|et rarius)\s+[ሀ-፿]+፡)*/,m=>m.replace(/[ሀ-፿]+፡/g,'<b class="fm">$&</b>'))}
@@ -1041,7 +1044,7 @@ function formatDef0(raw,L,hw,noRoot){
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
-const GLOSS={'b-are':'en','b-graf':'de','b-brk':'la','b-ml':'en','b-kun':'fr de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-lade':'de','b-mis':'la','b-rai':'it','b-syr':'la'};
+const GLOSS={'b-psm':'en','b-are':'en','b-graf':'de','b-brk':'la','b-ml':'en','b-kun':'fr de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-lade':'de','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-brk','b-gez','b-dil','b-mis','b-che']);
 const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\u2060\uE000-\uE013]/g,'');
 
@@ -1051,8 +1054,8 @@ function renderChips(){}
 const GLY={syr:'ܐ',ka:'შ',grc:'Ω',la:'L',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ظ'};
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;for(const L of new Set([d.lang,...(d.user&&d.lb?[d.lb]:[])]))(by[L]=by[L]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
-const INTERIM=new Set(['b-graf','b-brk','b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
-const RANGE={'b-graf':['آب','ابستيخون'],'b-brk':['ܫܡܫ','ܫܢܕܐ'],'b-kun':['ա','ածեաց'],'b-che':['ا','دال'],'b-cos':['ܫܡܫ','ܫܢܕ'],'b-mis':['ա','աքաղաղ']};
+const INTERIM=new Set(['b-psm','b-graf','b-brk','b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
+const RANGE={'b-psm':['ܕܪܓܐ','ܘܝ'],'b-graf':['آب','ابستيخون'],'b-brk':['ܫܡܫ','ܫܢܕܐ'],'b-kun':['ա','ածեաց'],'b-che':['ا','دال'],'b-cos':['ܫܡܫ','ܫܢܕ'],'b-mis':['ա','աքաղաղ']};
 const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-cos':['Costaz','Louis Costaz, Dictionnaire syriaque-français / Syriac-English Dictionary / Qāmūs suryānī-ʿarabī, Beyrouth 1963'],
  'b-ka':['Serebr','Серебряков, Древнегрузинско-русский словарь'],
@@ -1072,12 +1075,13 @@ const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-che':['Cheikho','Louis Cheikho, Lexicon Chrestomathiæ Arabicæ, in: Chrestomathia Arabica cum lexico variisque notis, Beryti: Typographia Patrum Societatis Jesu'],
  'b-kun':['Künzle','Beda O. Künzle, Das altarmenische Evangelium: Lexikon, Bern: Peter Lang 1984'],
  'b-are':['Arabeyes','Arabeyes Wordlist, Arabic–English (FreeDict ara-eng)'],
+ 'b-psm':['Payne Smith','J. Payne Smith (Mrs. Margoliouth), A Compendious Syriac Dictionary, Oxford: Clarendon Press 1903'],
  'b-brk':['Brockelmann','Carl Brockelmann, Lexicon Syriacum, ed. 2, Halis Saxonum: Max Niemeyer 1928'],
  'b-graf':['Graf','Georg Graf, Verzeichnis arabischer kirchlicher Termini, CSCO 147, Subsidia 8, Louvain 1954'],
  'b-ml':['MLS','H. G. Liddell, R. Scott, An Intermediate Greek-English Lexicon, Oxford: Clarendon Press 1889']};
 const sgl=d=>SIG[d.id]?SIG[d.id][0]:d.name,fullN=d=>SIG[d.id]?SIG[d.id][1]:d.name;
 const INL=new Set();
-const CPY={'b-are':()=>'Arabeyes · FreeDict · GNU GPL 2+','b-graf':()=>'© CSCO · OCR LexEikôn: p. 1–2','b-brk':()=>'OCR LexEikôn: p. 789–790','b-ml':()=>'Perseus Digital Library (perseus.tufts.edu) · CC BY-SA 3.0 US','b-kun':()=>'© B. O. Künzle · OCR LexEikôn: p. 1–5','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–424, 485','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'© Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lade':()=>'FreeDict · GNU GPL 3+','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
+const CPY={'b-psm':()=>'Payne Smith 1903 · public domain · OCR LexEikôn: p. 98–107','b-are':()=>'Arabeyes · FreeDict · GNU GPL 2+','b-graf':()=>'© CSCO · OCR LexEikôn: p. 1–2','b-brk':()=>'OCR LexEikôn: p. 789–790','b-ml':()=>'Perseus Digital Library (perseus.tufts.edu) · CC BY-SA 3.0 US','b-kun':()=>'© B. O. Künzle · OCR LexEikôn: p. 1–5','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–424, 485','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'© Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lade':()=>'FreeDict · GNU GPL 3+','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 let onlyD=VIEW?null:LS.get('onlyd',null);
 function renderLib(){
   const HIDE=new Set(['b-hy']);renderLgb();const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
@@ -1301,7 +1305,7 @@ function showGer(w){
   $('#pop').hidden=false;$('#pop').scrollTop=0;
 }
 /* ---------- cross-references (↗) ---------- */
-const XA='Ա-Ֆա-և',XWS=`-?[\\d.]*[${XA}][${XA}\\-]*`;
+const XA='Ա-Ֆա-ևܐ-ܯ',XWS=`-?[\\d.]*[${XA}][${XA}\\u0730-\\u074A\\u0300-\\u036F\\-]*`;
 const XB=new RegExp(`(${XWS})(?=[,;.]?\\s*↗(?![\\s\\x02-\\x07\\u2060]*[\\d.]*[${XA}]))`,'gu'),XL=new RegExp(`↗((?:[\\s\\x02-\\x07\\x0b\\x0c\\u2060]*(?:${XWS})(?:\\s*\\([^()\\n]*\\))?\\s*[,;/]?)+)`,'gu'),XW1=new RegExp(XWS,'gu');
 function markXr(raw){if(!raw||!raw.includes('↗'))return raw;
   const mk=w=>''+w+'';
