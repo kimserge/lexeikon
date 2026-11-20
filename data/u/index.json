@@ -11,5 +11,18 @@
   "tl": "de",
   "n": 12,
   "accepted": "2026-11-19T22:39:52.375Z"
+ },
+ {
+  "id": "u-kimserge-test",
+  "file": "u-kimserge-test.json",
+  "name": "Test",
+  "sig": "*Test",
+  "ver": "1.0",
+  "author": "Sergey Kim",
+  "la": "grc",
+  "lb": "grc",
+  "tl": "fr",
+  "n": 1,
+  "accepted": "2026-11-20T10:06:38.896Z"
  }
 ]
