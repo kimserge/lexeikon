@@ -367,7 +367,7 @@ body.mkbo .qtools{display:none}body.mkbo{padding-bottom:var(--mkbh,240px)}body.m
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.36 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.37 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -517,7 +517,7 @@ const KBL={
  ar:['العربية',['\u064E \u064F ض ص ث ق ف غ ع ه خ ح','\u0652 \u0651 ش س ي ب ل ا ت ن م ك','\u064B \u064C ئ ء ؤ ر ى ة و ز ظ ط'],'ج د ذ',1],
  cop:['Ⲙⲉⲧⲣⲉⲙⲛⲭⲏⲙⲓ',['ⲁ ⲃ ⲅ ⲇ ⲉ ⲍ ⲏ ⲑ ⲓ ⲕ ⲗ','ⲙ ⲛ ⲝ ⲟ ⲡ ⲣ ⲥ ⲧ ⲩ ⲫ','ⲭ ⲯ ⲱ ϣ ϥ ϧ ϩ ϫ ϭ ϯ'],'']};
 const kbEx=l=>l==='tr'?(trCfg.syr==='alt'?'ł ʒ|ə ʔ ʕ':'ł ʒ|ə ʾ ʿ'):KBL[l][2];
-const KBO=['tr','syr','gez','ka','grc','la','hy','ar','cop'];
+const KBO=['tr','syr','gez','ka','grc','hy','ar','cop'];
 const KDIA={'᾿':'\u0313','῾':'\u0314','´':'\u0301','`':'\u0300','῀':'\u0342','ͺ':'\u0345','¨':'\u0308'};
 const kMark=c=>!!KDIA[c]||/^\p{M}$/u.test(c);
 const kLab=(c,l)=>KDIA[c]?c:/^\p{M}$/u.test(c)?(/[\u0600-\u074F]/.test(c)||l==='syr'?'\u0640'+c:'\u25CC'+c):c;
@@ -945,7 +945,7 @@ let HL={qd:'',qh:'',mode:'pre',re:null,lat:false,rx:{}},inbHead=false;
 let sugIdx=-1,sugOff=true,sugItems=[];
 function sugHide(){$('#sug').hidden=true;document.body.classList.remove('sugo');$('#q').setAttribute('aria-expanded','false');$('#q').removeAttribute('aria-activedescendant');sugIdx=-1}
 function sugClose(){sugOff=true;sugHide()}
-function sugPos(){const s=$('#sug');if(s.hidden)return;const v=window.visualViewport,vh=v?v.height:innerHeight,k=$('#kb'),q=$('#q'),h=$('.hdr').getBoundingClientRect(),r=q.getBoundingClientRect(),g=document.activeElement===q?5:0,wide=innerWidth>=900;
+function sugPos(){const s=$('#sug');if(s.hidden)return;const v=window.visualViewport,mk=$('#mkb'),vh=(v?v.height:innerHeight)-(mk&&!mk.hidden?mk.offsetHeight:0),k=$('#kb'),q=$('#q'),h=$('.hdr').getBoundingClientRect(),r=q.getBoundingClientRect(),g=document.activeElement===q?5:0,wide=innerWidth>=900;
   let t,l,w;
   if(wide){t=r.top-h.top-g;l=r.right-h.left+g;w=Math.min($('.lib').getBoundingClientRect().width,innerWidth-l-12)}
   else{t=r.bottom-h.top+g;if(!k.hidden)t=Math.max(t,k.getBoundingClientRect().bottom-h.top);l=innerWidth/2;w=r.right-h.left-l}
