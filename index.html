@@ -366,7 +366,7 @@ body.mkbo .qtools{display:none}body.mkbo{padding-bottom:var(--mkbh,240px)}body.m
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.31 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.32 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -506,7 +506,7 @@ const KEYS={
 };
 
 const KBL={
- tr:['Translit',['q w e r t y u i o p','a s d f g h j k l ł \u0304','z x c v b n m \u030C \u0307 \u0323 \u0331'],'ʾ ʿ ə'],
+ tr:['Translit',['q w e r t y u i o p','a s d f g h j k l \u0304 \u0308','z x c v b n m \u030C \u0307 \u0323 \u0331'],'ʾ ʿ ə'],
  syr:['ܣܘܪܝܝܐ',['\u0730 \u0733 ܐ ܒ ܓ ܕ ܗ ܘ ܙ ܚ','\u0736 \u073A ܛ ܝ ܟ ܠ ܡ ܢ ܣ','\u073D \u0748 \u0308 ܥ ܦ ܨ ܩ ܪ ܫ ܬ'],'',1],
  gez:['ግዕዝ',['ሀ ለ ሐ መ ሠ ረ ሰ ቀ በ','ተ ኀ ነ አ ከ ወ ዐ ዘ የ','ደ ገ ጠ ጰ ጸ ፀ ፈ ፐ'],''],
  ka:['ქართული',['ა ბ გ დ ე ვ ზ თ ი კ ლ','მ ნ ო პ ჟ რ ს ტ უ ფ ქ','ღ ყ შ ჩ ც ძ წ ჭ ხ ჯ ჰ'],''],
@@ -515,7 +515,7 @@ const KBL={
  hy:['Հայերեն',['ա բ գ դ ե զ է ը թ ժ ի','լ խ ծ կ հ ձ ղ ճ մ յ ն','շ ո չ պ ջ ռ ս վ տ ր ց'],'ւ փ ք օ ֆ'],
  ar:['العربية',['\u064E \u064F ض ص ث ق ف غ ع ه خ ح','\u0652 \u0651 ش س ي ب ل ا ت ن م ك','\u064B \u064C ئ ء ؤ ر ى ة و ز ظ ط'],'ج د ذ',1],
  cop:['Ⲙⲉⲧⲣⲉⲙⲛⲭⲏⲙⲓ',['ⲁ ⲃ ⲅ ⲇ ⲉ ⲍ ⲏ ⲑ ⲓ ⲕ ⲗ','ⲙ ⲛ ⲝ ⲟ ⲡ ⲣ ⲥ ⲧ ⲩ ⲫ','ⲭ ⲯ ⲱ ϣ ϥ ϧ ϩ ϫ ϭ ϯ'],'']};
-const kbEx=l=>l==='tr'?(trCfg.syr==='alt'?'\u0308|ə ʔ ʕ':'\u0308|ə ʾ ʿ'):KBL[l][2];
+const kbEx=l=>l==='tr'?(trCfg.syr==='alt'?'ł|ə ʔ ʕ':'ł|ə ʾ ʿ'):KBL[l][2];
 const KBO=['tr','syr','gez','ka','grc','la','hy','ar','cop'];
 const KDIA={'᾿':'\u0313','῾':'\u0314','´':'\u0301','`':'\u0300','῀':'\u0342','ͺ':'\u0345','¨':'\u0308'};
 const kMark=c=>!!KDIA[c]||/^\p{M}$/u.test(c);
