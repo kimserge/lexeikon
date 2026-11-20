@@ -367,7 +367,7 @@ body.coarse #sug{display:none!important}body.coarse .qtools{display:none!importa
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.59 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.60 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -402,7 +402,7 @@ const I18N={
   loading:'Словари загружаются…',libn:(a,n,t)=>`${a} из ${n} включены · ${t} статей`,abbr:'ст.',
   space:'пробел',bksp:'⌫ стереть',off:'не показывать',cons:'Согласные',orders:'Порядки (на примере ለ)',
   sixth:'Шестой порядок: ə; в конце слова и перед слогом с полной гласной не пишется',
-  syrsp:'Спирантизация бгдкпт (ḇ ḡ ḏ ḵ p̄ ṯ) обозначается, только если в написании стоит рукаха (точка под буквой); в неогласованных словах её не видно.',grcn:'γγ → ng, αυ → au, ου → ou; густое придыхание → h, ῥ → rh',copied:'Скопировано',copyfail:'Не удалось скопировать',poptitle:'Латинский словарь',usearia:'Использовать в поиске',onlyaria:'1 — только этот словарь, 2 — все словари, 3 — ни одного',
+  cun:'ъ и ь при наборе можно пропускать; ь можно также набрать как ’.',syrsp:'Спирантизация бгдкпт (ḇ ḡ ḏ ḵ p̄ ṯ) обозначается, только если в написании стоит рукаха (точка под буквой); в неогласованных словах её не видно.',grcn:'γγ → ng, αυ → au, ου → ou; густое придыхание → h, ῥ → rh',copied:'Скопировано',copyfail:'Не удалось скопировать',poptitle:'Латинский словарь',usearia:'Использовать в поиске',onlyaria:'1 — только этот словарь, 2 — все словари, 3 — ни одного',
   lang:{syr:'Сирийский',ka:'Древнегрузинский',grc:'Древнегреческий',la:'Латынь',hy:'Армянский',gez:'Эфиопский (геэз)',ar:'Арабский',cop:'Коптский',xx:'Другой',cu:'Древнеславянский (кириллица и глаголица)'},
   chip:{syr:'Сир.',ka:'Груз.',grc:'Греч.',la:'Лат.',hy:'Арм.',gez:'Эфиоп.',ar:'Араб.',cop:'Копт.',xx:'Др.'},
   tag:{syr:'сир.',ka:'груз.',grc:'греч.',la:'лат.',hy:'арм.',gez:'эфиоп.',ar:'араб.',xx:'—'},
@@ -419,7 +419,7 @@ const I18N={
   loading:'Loading dictionaries…',libn:(a,n,t)=>`${a} of ${n} enabled · ${t} entries`,abbr:'entries',
   space:'space',bksp:'⌫ delete',off:'do not show',cons:'Consonants',orders:'Orders (example ለ)',
   sixth:'Sixth order: ə; not written word-finally or before a syllable with a full vowel',
-  syrsp:'Spirantization of bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) is marked only where the spelling has rukkakha (dot below the letter); in unvocalized words it is not visible.',grcn:'γγ → ng, αυ → au, ου → ou; rough breathing → h, ῥ → rh',copied:'Copied',copyfail:'Could not copy',poptitle:'Latin dictionary',usearia:'Use in search',onlyaria:'1 — only this dictionary, 2 — all dictionaries, 3 — none',
+  cun:'ъ and ь may be omitted when typing; ь can also be typed as ’.',syrsp:'Spirantization of bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) is marked only where the spelling has rukkakha (dot below the letter); in unvocalized words it is not visible.',grcn:'γγ → ng, αυ → au, ου → ou; rough breathing → h, ῥ → rh',copied:'Copied',copyfail:'Could not copy',poptitle:'Latin dictionary',usearia:'Use in search',onlyaria:'1 — only this dictionary, 2 — all dictionaries, 3 — none',
   lang:{syr:'Syriac',ka:'Old Georgian',grc:'Ancient Greek',la:'Latin',hy:'Armenian',gez:'Ethiopic (Gəʿəz)',ar:'Arabic',cop:'Coptic',xx:'Other',cu:'Old Slavonic (Cyrillic and Glagolitic)'},
   chip:{syr:'Syr.',ka:'Geo.',grc:'Grk.',la:'Lat.',hy:'Arm.',gez:'Eth.',ar:'Arab.',cop:'Copt.',xx:'Oth.'},
   tag:{syr:'syr.',ka:'geo.',grc:'grk.',la:'lat.',hy:'arm.',gez:'eth.',ar:'arab.',xx:'—'},
@@ -436,7 +436,7 @@ const I18N={
   loading:'Wörterbücher werden geladen…',libn:(a,n,t)=>`${a} von ${n} aktiv · ${t} Einträge`,abbr:'Einträge',
   space:'Leerzeichen',bksp:'⌫ löschen',off:'nicht anzeigen',cons:'Konsonanten',orders:'Ordnungen (Beispiel ለ)',
   sixth:'Sechste Ordnung: ə; im Wortauslaut und vor einer Silbe mit Vollvokal nicht geschrieben',
-  syrsp:'Die Spirantisierung von bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) wird nur angezeigt, wenn die Schreibung ein Rukkākhā (Punkt unter dem Buchstaben) hat; in unvokalisierten Wörtern ist sie nicht erkennbar.',grcn:'γγ → ng, αυ → au, ου → ou; Spiritus asper → h, ῥ → rh',copied:'Kopiert',copyfail:'Kopieren fehlgeschlagen',poptitle:'Lateinisches Wörterbuch',usearia:'In der Suche verwenden',onlyaria:'1 — nur dieses Wörterbuch, 2 — alle Wörterbücher, 3 — keines',
+  cun:'ъ und ь können beim Tippen weggelassen werden; ь lässt sich auch als ’ eingeben.',syrsp:'Die Spirantisierung von bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) wird nur angezeigt, wenn die Schreibung ein Rukkākhā (Punkt unter dem Buchstaben) hat; in unvokalisierten Wörtern ist sie nicht erkennbar.',grcn:'γγ → ng, αυ → au, ου → ou; Spiritus asper → h, ῥ → rh',copied:'Kopiert',copyfail:'Kopieren fehlgeschlagen',poptitle:'Lateinisches Wörterbuch',usearia:'In der Suche verwenden',onlyaria:'1 — nur dieses Wörterbuch, 2 — alle Wörterbücher, 3 — keines',
   lang:{syr:'Syrisch',ka:'Altgeorgisch',grc:'Altgriechisch',la:'Latein',hy:'Armenisch',gez:'Äthiopisch (Gəʿəz)',ar:'Arabisch',cop:'Koptisch',xx:'Andere',cu:'Altslawisch (Kyrillisch und Glagolitisch)'},
   chip:{syr:'Syr.',ka:'Georg.',grc:'Griech.',la:'Lat.',hy:'Arm.',gez:'Äth.',ar:'Arab.',cop:'Kopt.',xx:'And.'},
   tag:{syr:'syr.',ka:'georg.',grc:'griech.',la:'lat.',hy:'arm.',gez:'äth.',ar:'arab.',xx:'—'},
@@ -453,7 +453,7 @@ const I18N={
   loading:'Chargement des dictionnaires…',libn:(a,n,t)=>`${a} sur ${n} activés · ${t} articles`,abbr:'art.',
   space:'espace',bksp:'⌫ effacer',off:'ne pas afficher',cons:'Consonnes',orders:'Ordres (exemple ለ)',
   sixth:'Sixième ordre : ə ; non noté en fin de mot ni devant une syllabe à voyelle pleine',
-  syrsp:'La spirantisation de bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) n’est notée que si la graphie porte le rukkokho (point souscrit) ; dans les mots non vocalisés, elle n’est pas visible.',grcn:'γγ → ng, αυ → au, ου → ou ; esprit rude → h, ῥ → rh',copied:'Copié',copyfail:'Copie impossible',poptitle:'Dictionnaire latin',usearia:'Utiliser dans la recherche',onlyaria:'1 — seulement ce dictionnaire, 2 — tous les dictionnaires, 3 — aucun',
+  cun:'ъ et ь peuvent être omis à la saisie ; ь peut aussi se taper ’.',syrsp:'La spirantisation de bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) n’est notée que si la graphie porte le rukkokho (point souscrit) ; dans les mots non vocalisés, elle n’est pas visible.',grcn:'γγ → ng, αυ → au, ου → ou ; esprit rude → h, ῥ → rh',copied:'Copié',copyfail:'Copie impossible',poptitle:'Dictionnaire latin',usearia:'Utiliser dans la recherche',onlyaria:'1 — seulement ce dictionnaire, 2 — tous les dictionnaires, 3 — aucun',
   lang:{syr:'Syriaque',ka:'Géorgien ancien',grc:'Grec ancien',la:'Latin',hy:'Arménien',gez:'Éthiopien (guèze)',ar:'Arabe',cop:'Copte',xx:'Autre',cu:'Vieux slave (cyrillique et glagolitique)'},
   chip:{syr:'Syr.',ka:'Géo.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Éth.',ar:'Arab.',cop:'Copte',xx:'Aut.'},
   tag:{syr:'syr.',ka:'géo.',grc:'gr.',la:'lat.',hy:'arm.',gez:'éth.',ar:'arab.',xx:'—'},
@@ -470,7 +470,7 @@ const I18N={
   loading:'Caricamento dei dizionari…',libn:(a,n,t)=>`${a} su ${n} attivi · ${t} voci`,abbr:'voci',
   space:'spazio',bksp:'⌫ cancella',off:'non mostrare',cons:'Consonanti',orders:'Ordini (esempio ለ)',
   sixth:'Sesto ordine: ə; non si scrive in fine di parola né davanti a sillaba con vocale piena',
-  syrsp:'La spirantizzazione di bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) è indicata solo se la grafia ha il rukkākhā (punto sotto la lettera); nelle parole non vocalizzate non è visibile.',grcn:'γγ → ng, αυ → au, ου → ou; spirito aspro → h, ῥ → rh',copied:'Copiato',copyfail:'Impossibile copiare',poptitle:'Dizionario latino',usearia:'Usa nella ricerca',onlyaria:'1 — solo questo dizionario, 2 — tutti i dizionari, 3 — nessuno',
+  cun:'ъ e ь si possono omettere nella digitazione; ь si può anche digitare come ’.',syrsp:'La spirantizzazione di bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) è indicata solo se la grafia ha il rukkākhā (punto sotto la lettera); nelle parole non vocalizzate non è visibile.',grcn:'γγ → ng, αυ → au, ου → ou; spirito aspro → h, ῥ → rh',copied:'Copiato',copyfail:'Impossibile copiare',poptitle:'Dizionario latino',usearia:'Usa nella ricerca',onlyaria:'1 — solo questo dizionario, 2 — tutti i dizionari, 3 — nessuno',
   lang:{syr:'Siriaco',ka:'Georgiano antico',grc:'Greco antico',la:'Latino',hy:'Armeno',gez:'Etiopico (geʿez)',ar:'Arabo',cop:'Copto',xx:'Altro',cu:'Antico slavo (cirillico e glagolitico)'},
   chip:{syr:'Sir.',ka:'Georg.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Etiop.',ar:'Arab.',cop:'Copto',xx:'Altro'},
   tag:{syr:'sir.',ka:'georg.',grc:'gr.',la:'lat.',hy:'arm.',gez:'etiop.',ar:'arab.',xx:'—'},
@@ -528,7 +528,7 @@ const KBL={
  cop2:['Ⲙⲉⲧⲣⲉⲙⲛⲭⲏⲙⲓ',['\u0300 \u0305 \u2CEF \u2CF0 \u2CF1 \u0304 \u0307 \u0308','⳹ ⳺ ⳻ ⳼ ⳽ ⳾ ⳿ ·',''],'',0,'cop','ⲁⲃ']};
 const gezE=()=>{const q=$('#q'),a=q.selectionStart??q.value.length,c=q.value.slice(0,a).slice(-1),x=c?c.charCodeAt(0):0;return String.fromCharCode(((x>=0x1200&&x<=0x137F)?x&~7:0x1200)+4)};
 const kBase=l=>l.replace(/[23]$/,'');
-const GLT={'ⰰ':'a','ⰱ':'b','ⰲ':'v','ⰳ':'g','ⰴ':'d','ⰵ':'e','ⰶ':'ž','ⰷ':'ʒ','ⰸ':'z','ⰹ':'ï','ⰻ':'i','ⰼ':'ǵ','ⰽ':'k','ⰾ':'l','ⰿ':'m','ⱀ':'n','ⱁ':'o','ⱂ':'p','ⱃ':'r','ⱄ':'s','ⱅ':'t','ⱆ':'u','ⱇ':'f','ⱈ':'x','ⱉ':'ō','ⱋ':'št','ⱌ':'c','ⱍ':'č','ⱎ':'š','ⱏ':'ъ','ⱐ':'ь','ⱑ':'ě','ⱓ':'ju','ⱔ':'ę','ⱘ':'ǫ','ⱚ':'θ','ⱛ':'ü','ⱗ':'ję','ⱙ':'jǫ'};
+const GLT={'ⰰ':'a','ⰱ':'b','ⰲ':'v','ⰳ':'g','ⰴ':'d','ⰵ':'e','ⰶ':'ž','ⰷ':'ʒ','ⰸ':'z','ⰹ':'ï','ⰻ':'i','ⰼ':'ǵ','ⰽ':'k','ⰾ':'l','ⰿ':'m','ⱀ':'n','ⱁ':'o','ⱂ':'p','ⱃ':'r','ⱄ':'s','ⱅ':'t','ⱆ':'u','ⱇ':'f','ⱈ':'x','ⱉ':'ō','ⱋ':'št','ⱌ':'c','ⱍ':'č','ⱎ':'š','ⱏ':'ŭ','ⱐ':'ĭ','ⱑ':'ě','ⱓ':'ju','ⱔ':'ę','ⱘ':'ǫ','ⱚ':'θ','ⱛ':'ü','ⱗ':'ję','ⱙ':'jǫ'};
 const kGl=c=>GLT[c]?`<span class="gl">${c}<small>${GLT[c]}</small></span>`:null;
 const gezForms=()=>{const q=$('#q'),a=q.selectionStart??q.value.length,c=q.value.slice(0,a).slice(-1),x=c?c.charCodeAt(0):0,b=(x>=0x1200&&x<=0x137F)?x&~7:0x1200;const o=[];for(let k=0;k<8;k++){const ch=String.fromCharCode(b+k);if(/\p{L}/u.test(ch))o.push(ch)}return o};
 
@@ -566,7 +566,7 @@ const CL={
  ka:{m:{a:'ა',b:'ბ',g:'გღ',d:'დ',e:'ეჱ',v:'ვ',z:'ზჟძ',t:'თტ',i:'იჲ',k:'კქ',l:'ლ',m:'მ',n:'ნ',o:'ოჵ',p:'პფ',f:'ფჶ',r:'რ',s:'სშ',u:'უჳ',w:'ჳ',y:'ჲ',q:'ყჴ',x:'ხ',c:'ცწჩჭ',j:'ჯძ',h:'ჰ',sh:'შ',zh:'ჟ',gh:'ღ',kh:'ხ',ch:'ჩჭ',ts:'ცწ',dz:'ძ','ʒ':'ძ',th:'თ',ph:'ფ'}},
  hy:{m:{a:'ա',b:'բ',g:'գղ',d:'դ',e:'եէը',z:'զժձ',t:'տթ',i:'ի',l:'լղ',x:'խ',c:'ծցճչ',k:'կք',q:'ք',h:'հ',j:'ձջ',m:'մ',y:'յ',n:'ն',s:'սշ',o:'ոօ',p:'պփ',f:'ֆ',r:'րռ',v:{re:'վ|ու|ւ',show:'վւ'},w:'ւ',ew:'և',u:{re:'ու|ւ',show:'ու'},'ə':'ը','@':'ը',sh:'շ',zh:'ժ',gh:'ղ',kh:'խ',ch:'ճչ',ts:'ծց',dz:'ձ','ʒ':'ձ','ł':'ղ',th:'թ',ph:'փ'}},
  cop:{m:{a:'ⲁ',b:'ⲃ',g:'ⲅϭ',d:'ⲇ',e:'ⲉⲏ',z:'ⲍ',h:'ϩϧ',t:'ⲧⲑϯ',i:'ⲓ',k:'ⲕϭⲭ',l:'ⲗ',m:'ⲙ',n:'ⲛ',x:'ϧⲝⲭ',o:'ⲟⲱ',p:'ⲡⲫ',f:'ϥ',r:'ⲣ',s:'ⲥϣ',u:{re:'ⲟⲩ|ⲩ',show:'ⲟⲩ'},y:'ⲩ',w:{re:'ⲱ|ⲟⲩ',show:'ⲱⲟⲩ'},j:'ϫ',c:'ϭϫ',q:'ϭ',sh:'ϣ',kh:'ϧⲭ',ch:'ⲭϭ',ky:'ϭ',th:'ⲑ',ph:'ⲫ',ps:'ⲯ',ks:'ⲝ',ti:'ϯ'}},
- cu:{m:{a:'аⰰ',b:'бⰱ',v:'вⰲ',g:'гⰳ',d:'дⰴ',e:'еєѣэѧⰵⱑⱔ',en:'ѧⱔ',on:'ѫⱘ',ot:'ѿ',jo:'ѭⱙ',z:'зꙁѕжⰸⰷⰶ',zh:'жⰶ',dz:'ѕⰷ',i:'иіїꙇйⰹⰺⰻ',j:'й',k:'кⰽ',l:'лⰾ',m:'мⰿ',n:'нⱀ',o:'оѻѡꙍѫⱁⱉⱘ',p:'пⱂ',r:'рⱃ',s:'сⱄ',sh:'шⱎ',sht:'щⱋ',t:'тⱅ',u:'уꙋѹⱆ',f:'фѳⱇⱚ',th:'ѳⱚ',x:'хѯⱈ',h:'хⱈ',c:'цⱌ',ts:'цⱌ',ch:'чⱍ',y:'ыꙑѵⱛ',ja:'яꙗ',ju:'юⱓ',je:'ѥѩⱗ',ps:'ѱ',ks:'ѯ'}},
+ cu:{skip:'ъьⱏⱐ',m:{')':'ьⱐ',a:'аⰰ',b:'бⰱ',v:'вⰲ',g:'гⰳ',d:'дⰴ',e:'еєѣэѧⰵⱑⱔ',en:'ѧⱔ',on:'ѫⱘ',ot:'ѿ',jo:'ѭⱙ',z:'зꙁѕжⰸⰷⰶ',zh:'жⰶ',dz:'ѕⰷ',i:'иіїꙇйⰹⰺⰻ',j:'й',k:'кⰽ',l:'лⰾ',m:'мⰿ',n:'нⱀ',o:'оѻѡꙍѫⱁⱉⱘ',p:'пⱂ',r:'рⱃ',s:'сⱄ',sh:'шⱎ',sht:'щⱋ',t:'тⱅ',u:'уꙋѹⱆ',f:'фѳⱇⱚ',th:'ѳⱚ',x:'хѯⱈ',h:'хⱈ',c:'цⱌ',ts:'цⱌ',ch:'чⱍ',y:'ыꙑѵⱛ',ja:'яꙗ',ju:'юⱓ',je:'ѥѩⱗ',ps:'ѱ',ks:'ѯ'}},
  grc:{m:{a:'α',b:'β',g:'γ',d:'δ',e:'εη',z:'ζ',t:'τθ',i:'ι',k:'κχ',c:'κχ',l:'λ',m:'μ',n:'ν',x:'ξχ',o:'οω',p:'πφ',f:'φ',r:'ρ',s:'σς',u:'υ',y:'υ',w:'ω',h:'',th:'θ',ph:'φ',ch:'χ',kh:'χ',ps:'ψ',ks:'ξ',rh:'ρ'}}
 };
 const VOW=new Set(['a','e','i','o','u','ə','ǝ']);
@@ -583,8 +583,8 @@ function buildRx(q,L){
   const c=CL[L],src=prep(q),toks=[];
   if(!c.sem&&/[()ʾʿʔʕ]/.test(q))return {ok:false};
   const cls=v=>v==null?null:typeof v==='object'?'(?:'+v.re+')':v===''?'':'['+[...new Set([...v].map(x=>norm(x)))].map(reEsc).join('')+']';
-  const Mre=c.sem&&c.M?'['+[...c.M].map(x=>reEsc(norm(x))).join('')+']*':'';
-  const J=c.sem?Mre:' ?';
+  const Mre=c.sem&&c.M?'['+[...c.M].map(x=>reEsc(norm(x))).join('')+']*':c.skip?'['+reEsc(norm(c.skip))+']*':'';
+  const J=c.sem?Mre:c.skip?'[ '+reEsc(norm(c.skip))+']*':' ?';
   let i=0;
   while(i<src.length){
     const two=src.substr(i,2);
@@ -711,7 +711,7 @@ const TRS={
       ham:{n:'gez_ham',V:GZV,VL:GZL,B:GZB}},
  grc:{sci:{n:'grc_sci',m:RTM.grc}},
  ar:{din:{n:'ar_din',m:RTM.ar},alt:{n:'ar_alt',m:Object.assign({},RTM.ar,{'ء':'ʔ','ع':'ʕ'})}},
- cu:{sci:{n:'cu_sci',m:{"а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "є": "e", "ж": "ž", "ѕ": "ʒ", "з": "z", "ꙁ": "z", "и": "i", "і": "i", "ї": "i", "ꙇ": "i", "й": "j", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o", "ѻ": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ꙋ": "u", "ѹ": "u", "ф": "f", "х": "x", "ѡ": "ō", "ꙍ": "ō", "ѿ": "ōt", "ц": "c", "ч": "č", "ш": "š", "щ": "št", "ъ": "ъ", "ы": "y", "ꙑ": "y", "ь": "ь", "ѣ": "ě", "ю": "ju", "я": "ja", "ꙗ": "ja", "ѥ": "je", "ѧ": "ę", "ѫ": "ǫ", "ѩ": "ję", "ѭ": "jǫ", "ѯ": "ks", "ѱ": "ps", "ѳ": "θ", "ѵ": "ü", "ё": "jo", "э": "ė", "ⰰ": "a", "ⰱ": "b", "ⰲ": "v", "ⰳ": "g", "ⰴ": "d", "ⰵ": "e", "ⰶ": "ž", "ⰷ": "ʒ", "ⰸ": "z", "ⰹ": "ï", "ⰺ": "i", "ⰻ": "i", "ⰼ": "ǵ", "ⰽ": "k", "ⰾ": "l", "ⰿ": "m", "ⱀ": "n", "ⱁ": "o", "ⱂ": "p", "ⱃ": "r", "ⱄ": "s", "ⱅ": "t", "ⱆ": "u", "ⱇ": "f", "ⱈ": "x", "ⱉ": "ō", "ⱋ": "št", "ⱌ": "c", "ⱍ": "č", "ⱎ": "š", "ⱏ": "ъ", "ⱐ": "ь", "ⱑ": "ě", "ⱓ": "ju", "ⱔ": "ę", "ⱗ": "ję", "ⱘ": "ǫ", "ⱙ": "jǫ", "ⱚ": "θ", "ⱛ": "ü"}},iso:{n:'cu_iso',m:{"а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ё": "ë", "ж": "ž", "ѕ": "ẑ", "з": "z", "и": "i", "і": "ì", "й": "j", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h", "ц": "c", "ч": "č", "ш": "š", "щ": "ŝ", "ъ": "ʺ", "ы": "y", "ь": "ʹ", "ѣ": "ě", "э": "è", "ю": "û", "я": "â", "ѫ": "ǎ", "ѳ": "f̀", "ѵ": "ỳ"}}},
+ cu:{sci:{n:'cu_sci',m:{"а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "є": "e", "ж": "ž", "ѕ": "ʒ", "з": "z", "ꙁ": "z", "и": "i", "і": "i", "ї": "i", "ꙇ": "i", "й": "j", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o", "ѻ": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ꙋ": "u", "ѹ": "u", "ф": "f", "х": "x", "ѡ": "ō", "ꙍ": "ō", "ѿ": "ōt", "ц": "c", "ч": "č", "ш": "š", "щ": "št", "ъ": "ŭ", "ы": "y", "ꙑ": "y", "ь": "ĭ", "ѣ": "ě", "ю": "ju", "я": "ja", "ꙗ": "ja", "ѥ": "je", "ѧ": "ę", "ѫ": "ǫ", "ѩ": "ję", "ѭ": "jǫ", "ѯ": "ks", "ѱ": "ps", "ѳ": "θ", "ѵ": "ü", "ё": "jo", "э": "ė", "ⰰ": "a", "ⰱ": "b", "ⰲ": "v", "ⰳ": "g", "ⰴ": "d", "ⰵ": "e", "ⰶ": "ž", "ⰷ": "ʒ", "ⰸ": "z", "ⰹ": "ï", "ⰺ": "i", "ⰻ": "i", "ⰼ": "ǵ", "ⰽ": "k", "ⰾ": "l", "ⰿ": "m", "ⱀ": "n", "ⱁ": "o", "ⱂ": "p", "ⱃ": "r", "ⱄ": "s", "ⱅ": "t", "ⱆ": "u", "ⱇ": "f", "ⱈ": "x", "ⱉ": "ō", "ⱋ": "št", "ⱌ": "c", "ⱍ": "č", "ⱎ": "š", "ⱏ": "ŭ", "ⱐ": "ĭ", "ⱑ": "ě", "ⱓ": "ju", "ⱔ": "ę", "ⱗ": "ję", "ⱘ": "ǫ", "ⱙ": "jǫ", "ⱚ": "θ", "ⱛ": "ü"}},iso:{n:'cu_iso',m:{"а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ё": "ë", "ж": "ž", "ѕ": "ẑ", "з": "z", "и": "i", "і": "ì", "й": "j", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h", "ц": "c", "ч": "č", "ш": "š", "щ": "ŝ", "ъ": "ʺ", "ы": "y", "ь": "ʹ", "ѣ": "ě", "э": "è", "ю": "û", "я": "â", "ѫ": "ǎ", "ѳ": "f̀", "ѵ": "ỳ"}}},
  cop:{sci:{n:'cop_sci',m:RTM.cop},simple:{n:'cop_simple',m:Object.assign({},RTM.cop,{'ϣ':'sh','ϧ':'kh','ϭ':'ky'})}}
 };
 let trCfg=Object.assign({cu:'sci',syr:'sci',ka:'sci',hy:'hm',gez:'trad',grc:'sci',ar:'din',cop:'sci'},LS.get('trcfg',{}));
@@ -765,7 +765,7 @@ function sciTr(w,L){
 const trTag=(w,L)=>{const t=sciTr(w,L);return t?`<span class="tr">${esc(t)}</span>`:''};
 function keysFor(L,ch){const c=CL[L];if(!c)return '';const out=[];
   const nc=norm(ch);for(const [k,v] of Object.entries(c.m)){const ok=typeof v==='object'?v.re.split('|').includes(ch):[...v].some(x=>x===ch||norm(x)===nc);if(!ok)continue;
-    if(k===')')out.push('ʾ','ʔ',')');else if(k==='(')out.push('ʿ','ʕ','(');else out.push(k)}
+    if(k===')')out.push(...(L==='cu'?['’']:['ʾ','ʔ',')']));else if(k==='(')out.push('ʿ','ʕ','(');else out.push(k)}
   const u=[...new Set(out)].sort((a,b)=>(a.length>1)-(b.length>1));
   return u.length?`<span class="kys"> ← </span><span class="ky">${esc(u.join(' '))}</span>`:''}
 function trTable(L){
@@ -775,7 +775,7 @@ function trTable(L){
     const ord=['1','2','3','4','5','6','7'].map((n,o)=>`<span><b>${String.fromCharCode(0x1208+o)}</b> l${esc(sys.V[o])}</span>`).join('');
     return `<p class="lg">${I.cons}</p><div class="sch">${cons}</div><p class="lg">${I.orders}</p><div class="sch">${ord}</div><p class="note">${I.sixth} (ንጉሥ → ${esc(sciTr('ንጉሥ','gez')||'nəguś')}, ነግሠ → ${esc(sciTr('ነግሠ','gez')||'')}).</p>`;
   }
-  return `<div class="sch">${Object.entries(sys.m).map(([c,v])=>`<span><b>${esc(c)}</b> ${esc(v)}${keysFor(L,c)}</span>`).join('')}</div>`+(L==='hy'?'<p class="note">ու → u</p>':'')+(L==='syr'?'<p class="note">'+I.syrsp+'</p>':'')+(L==='grc'?'<p class="note">'+I.grcn+'</p>':'');
+  return `<div class="sch">${Object.entries(sys.m).map(([c,v])=>`<span><b>${esc(c)}</b> ${esc(v)}${keysFor(L,c)}</span>`).join('')}</div>`+(L==='hy'?'<p class="note">ու → u</p>':'')+(L==='syr'?'<p class="note">'+I.syrsp+'</p>':'')+(L==='grc'?'<p class="note">'+I.grcn+'</p>':'')+(L==='cu'?'<p class="note">'+I.cun+'</p>':'');
 }
 function renderTrSec(){
   const op=new Set([...document.querySelectorAll('#trsec details[open]')].map(d=>d.dataset.l));
