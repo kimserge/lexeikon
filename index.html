@@ -296,7 +296,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
 .mkb .ks{display:flex;justify-content:center;gap:5px;flex:1;min-width:0}.mkb .f{flex:0 0 46px;max-width:46px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}.mkb .bs{flex:0 0 40px;max-width:40px;background:color-mix(in srgb,var(--ink) 14%,var(--bg))}.mkb .rb .sl,.mkb .rb .sr{flex:0 0 max(calc(var(--fw) + var(--n1) * (var(--kw) + 5px)),calc(var(--n2) * (var(--kw) + 5px)));display:flex;gap:5px}.mkb .rb .sr{justify-content:flex-end}.mkb .rb .sl button:not(.f),.mkb .rb .sr button{flex:0 0 var(--kw);max-width:var(--kw)}.mkb .sp{flex:1 1 0;max-width:none;font:500 13px 'Noto Sans',sans-serif;color:var(--mut);overflow:hidden;white-space:nowrap}
 .gob{display:none}body.coarse.qv .gob{display:flex;position:absolute;right:6px;top:50%;transform:translateY(-50%);align-items:center;gap:4px;border:0;border-radius:9px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--ink);font:600 14px 'Noto Sans',sans-serif;padding:0 12px;height:40px;cursor:pointer}body.coarse.qv #q{padding-right:118px}body.coarse #clr{display:none}body.coarse.scd .qtools{display:none}body.coarse #kbB,body.coarse #kb{display:none}
 @media (min-width:700px){.mkb{--kw:62px;--fw:84px;padding:8px 10px calc(10px + env(safe-area-inset-bottom))}.mkb .r{max-width:980px;height:min(56px,7.2vh);gap:8px;margin:8px auto}.mkb .ks,.mkb .rb .sl,.mkb .rb .sr{gap:8px}.mkb button{max-width:72px;font-size:26px;border-radius:9px}.mkb button.dm{font-size:28px}.mkb .f{flex:0 0 84px;max-width:84px}.mkb .bs{flex:0 0 84px;max-width:84px}.mkb .sp{font-size:16px}.mkb svg{width:26px;height:26px}}
-body.mkbo .qtools{display:none}body.mkbo{padding-bottom:var(--mkbh,240px)}body.mkbo .ljmp,body.mkbo .jmp{bottom:calc(var(--mkbh,240px) + 8px)}
+body.coarse #sug{display:none!important}body.mkbo .qtools{display:none}body.mkbo{padding-bottom:var(--mkbh,240px)}body.mkbo .ljmp,body.mkbo .jmp{bottom:calc(var(--mkbh,240px) + 8px)}
 </style>
 </head>
 <body>
@@ -367,7 +367,7 @@ body.mkbo .qtools{display:none}body.mkbo{padding-bottom:var(--mkbh,240px)}body.m
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.37 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.38 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -950,7 +950,7 @@ function sugPos(){const s=$('#sug');if(s.hidden)return;const v=window.visualView
   if(wide){t=r.top-h.top-g;l=r.right-h.left+g;w=Math.min($('.lib').getBoundingClientRect().width,innerWidth-l-12)}
   else{t=r.bottom-h.top+g;if(!k.hidden)t=Math.max(t,k.getBoundingClientRect().bottom-h.top);l=innerWidth/2;w=r.right-h.left-l}
   t=Math.min(t,vh-110);s.style.top=t+'px';s.style.left=l+'px';s.style.width=w+'px';s.style.maxHeight=Math.max(96,vh-t-8)+'px'}
-function renderSug(){
+function renderSug(){if(document.body.classList.contains('coarse')){sugHide();return}
   const q=$('#q');if(sugOff||!q.value.trim()){sugHide();return}
   const m=new Map();
   for(const r of results){if(r[0]>2)continue;const d=r[2],e=d.entries[r[3]],L=elang(d,r[3]),k=e[0]+'\u0001'+L;if(!m.has(k)){if(m.size>=30)continue;m.set(k,{w:e[0],L,s:r[0],ds:new Set()})}m.get(k).ds.add(sgl(d))}
