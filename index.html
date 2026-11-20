@@ -367,7 +367,7 @@ body.coarse #sug{display:none!important}body.mkbo .qtools{display:none}body.mkbo
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.42 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.43 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -508,21 +508,30 @@ const KEYS={
 
 const KBL={
  tr:['Translit',['q w e r t y u i o p','a s d f g h j k l \u0304 \u0308','z x c v b n m \u030C \u0307 \u0323 \u0331'],'ʾ ʿ ə'],
- syr:['ܣܘܪܝܝܐ',['\u0730 \u0733 ܐ ܒ ܓ ܕ ܗ ܘ ܙ ܚ','\u0736 \u073A ܛ ܝ ܟ ܠ ܡ ܢ ܣ','\u073D \u0748 \u0308 ܥ ܦ ܨ ܩ ܪ ܫ ܬ'],'',1],
- gez:['ግዕዝ',['ሀ ለ ሐ መ ሠ ረ ሰ ቀ በ','ተ ኀ ነ አ ከ ወ ዐ ዘ የ','ደ ገ ጠ ጰ ጸ ፀ ፈ ፐ'],''],
+ syr:['ܣܘܪܝܝܐ',['ܐ ܒ ܓ ܕ ܗ ܘ ܙ ܚ','ܛ ܝ ܟ ܠ ܡ ܢ ܣ','ܥ ܦ ܨ ܩ ܪ ܫ ܬ'],'',1,'syr2','◌ܳ'],
+ syr2:['ܣܘܪܝܝܐ',['\u0730 \u0731 \u0732 \u0733 \u0734 \u0735 \u0736 \u0737 \u0738 \u0739','\u073A \u073B \u073C \u073D \u073E \u073F \u0740 \u0741 \u0742 \u0308 \u0748','܀ ܁ ܂ ܃ ܄ ܅ ܆ ܇ ܈ ܉'],'',1,'syr','ܐܒ'],
+ gez:['ግዕዝ',['ሀ ለ ሐ መ ሠ ረ ሰ ቀ በ','ተ ኀ ነ አ ከ ወ ዐ ዘ የ','ደ ገ ጠ ጰ ጸ ፀ ፈ ፐ'],'',0,'gez2','ቡ'],
+ gez2:['ግዕዝ',['@forms','፡ ። ፣ ፤ ፥ ፦ ፧ ፨','፩ ፪ ፫ ፬ ፭ ፮ ፯ ፰ ፱ ፲'],'',0,'gez','ሀለ'],
  ka:['ქართული',['ა ბ გ დ ე ვ ზ თ ი კ ლ','მ ნ ო პ ჟ რ ს ტ უ ფ ქ','ღ ყ შ ჩ ც ძ წ ჭ ხ ჯ ჰ'],''],
- grc:['Ἑλληνική',['ς ε ρ τ υ θ ι ο π ᾿ ῾','α σ δ φ γ η ξ κ λ ´ `','ζ χ ψ ω β ν μ ῀ ͺ ¨'],''],
+ grc:['Ἑλληνική',['ς ε ρ τ υ θ ι ο π','α σ δ φ γ η ξ κ λ','ζ χ ψ ω β ν μ'],'',0,'grc2','῾´'],
+ grc2:['Ἑλληνική',['᾿ ῾ ´ ` ῀ ͺ ¨','\u0304 \u0306 · ; ’ ʹ ͵','ϝ ϛ ϙ ϟ ϡ ϳ'],'',0,'grc','αβ'],
  la:['Latina',['q w e r t y u i o p','a s d f g h j k l','z x c v b n m'],''],
- hy:['Հայերեն',['ա բ գ դ ե զ է ը թ ժ ի','լ խ ծ կ հ ձ ղ ճ մ յ ն','շ ո չ պ ջ ռ ս վ տ ր ց'],'ւ փ ք օ ֆ'],
- ar:['العربية',['\u064E \u064F ض ص ث ق ف غ ع ه خ ح','\u0652 \u0651 ش س ي ب ل ا ت ن م ك','\u064B \u064C ئ ء ؤ ر ى ة و ز ظ ط'],'ج د ذ',1],
- cu:['Slav',['й ц у к е н г ш щ з х ъ','ф ы в а п р о л д ж э ѣ','я ч с м и т ь б ю і ѵ ѳ'],'ё|ѧ ѫ ѡ',0,'cu2'],
- cu2:['Slav',['ѣ і ї ѵ ѳ ѡ ѿ ѕ ꙁ ꙋ ѹ ꙑ','ѧ ѫ ѩ ѭ ꙗ ѥ ѯ ѱ ҁ ꙇ ѻ ꙍ','\u0483 \u0487 \u0484 \u0301 \u0300 \u0486 \u0485 \u0311'],'',0,'cu'],
- cop:['Ⲙⲉⲧⲣⲉⲙⲛⲭⲏⲙⲓ',['ⲁ ⲃ ⲅ ⲇ ⲉ ⲍ ⲏ ⲑ ⲓ ⲕ ⲗ','ⲙ ⲛ ⲝ ⲟ ⲡ ⲣ ⲥ ⲧ ⲩ ⲫ','ⲭ ⲯ ⲱ ϣ ϥ ϧ ϩ ϫ ϭ ϯ'],'']};
+ hy:['Հայերեն',['ա բ գ դ ե զ է ը թ ժ ի լ','խ ծ կ հ ձ ղ ճ մ յ ն շ ո','չ պ ջ ռ ս վ տ ր ց ւ փ ք'],'օ|ֆ',0,'hy2','՞«'],
+ hy2:['Հայերեն',['՛ ՜ ՞ ՟ ՚ ՙ','։ ՝ ֊ « » և','ﬓ ﬔ ﬕ ﬖ ﬗ'],'',0,'hy','աբ'],
+ ar:['العربية',['ض ص ث ق ف غ ع ه خ ح ج','ش س ي ب ل ا ت ن م ك ط','ئ ء ؤ ر ى ة و ز ظ د ذ'],'',1,'ar2','ـَ'],
+ ar2:['العربية',['\u064E \u064F \u0650 \u0652 \u0651 \u064B \u064C \u064D','\u0670 \u0653 \u0654 \u0655 ٱ آ أ إ','، ؛ ؟ ٭ ـ'],'',1,'ar','اب'],
+ cu:['Slav',['й ц у к е н г ш щ з х ъ','ф ы в а п р о л д ж э ѣ','я ч с м и т ь б ю і ѵ ѳ'],'ё|ѧ \u0483 ѡ',0,'cu2','ѫ'],
+ cu2:['Slav',['ѣ і ї ѵ ѳ ѡ ѿ ѕ ꙁ ꙋ ѹ ꙑ','ѧ ѫ ѩ ѭ ꙗ ѥ ѯ ѱ ҁ ꙇ ѻ ꙍ','\u0483 \u0487 \u0484 \u0301 \u0300 \u0486 \u0485 \u0311'],'',0,'cu','АБ'],
+ cop:['Ⲙⲉⲧⲣⲉⲙⲛⲭⲏⲙⲓ',['ⲁ ⲃ ⲅ ⲇ ⲉ ⲍ ⲏ ⲑ ⲓ ⲕ ⲗ','ⲙ ⲛ ⲝ ⲟ ⲡ ⲣ ⲥ ⲧ ⲩ ⲫ','ⲭ ⲯ ⲱ ϣ ϥ ϧ ϩ ϫ ϭ ϯ'],'',0,'cop2','⳾'],
+ cop2:['Ⲙⲉⲧⲣⲉⲙⲛⲭⲏⲙⲓ',['\u0300 \u0305 \u2CEF \u2CF0 \u2CF1 \u0304 \u0307 \u0308','⳹ ⳺ ⳻ ⳼ ⳽ ⳾ ⳿ ·',''],'',0,'cop','ⲁⲃ']};
+const kBase=l=>l.replace(/2$/,'');
+const gezForms=()=>{const q=$('#q'),a=q.selectionStart??q.value.length,c=q.value.slice(0,a).slice(-1),x=c?c.charCodeAt(0):0,b=(x>=0x1200&&x<=0x137F)?x&~7:0x1200;const o=[];for(let k=0;k<8;k++){const ch=String.fromCharCode(b+k);if(/\p{L}/u.test(ch))o.push(ch)}return o};
+
 const kbEx=l=>l==='tr'?(trCfg.syr==='alt'?'ł ʒ|ə ʔ ʕ':'ł ʒ|ə ʾ ʿ'):KBL[l][2];
 const KBO=['tr','syr','gez','ka','grc','hy','ar','cop','cu'];
 const KDIA={'᾿':'\u0313','῾':'\u0314','´':'\u0301','`':'\u0300','῀':'\u0342','ͺ':'\u0345','¨':'\u0308'};
 const kMark=c=>!!KDIA[c]||/^\p{M}$/u.test(c);
-const kLab=(c,l)=>KDIA[c]?c:/^\p{M}$/u.test(c)?(/[\u0600-\u074F]/.test(c)||l==='syr'?'\u0640'+c:'\u25CC'+c):c;
+const kLab=(c,l)=>KDIA[c]?c:/^\p{M}$/u.test(c)?(/[\u0600-\u074F]/.test(c)||kBase(l)==='syr'?'\u0640'+c:'\u25CC'+c):c;
 function kbKeys(str,gez,l){return str?str.split(' ').map(c=>`<button type="button" class="${kMark(c)?'dm':''}" ${gez?'data-g':'data-c'}="${c}">${kLab(c,l)}</button>`).join(''):''}
 function kbType(c){const q=$('#q');c=KDIA[c]||c;if(kMark(c)){const a=q.selectionStart??q.value.length;if(!a)return;q.value=q.value.slice(0,a)+c+q.value.slice(a);const pre=q.value.slice(0,a+c.length).normalize('NFC');q.value=pre+q.value.slice(a+c.length);q.setSelectionRange(pre.length,pre.length);debounced()}else insert(c)}
 function kbBack(){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b||!a){backspace();return}const d=[...q.value.slice(0,a).normalize('NFD')];d.pop();const pre=d.join('').normalize('NFC');q.value=pre+q.value.slice(a);q.setSelectionRange(pre.length,pre.length);debounced()}
@@ -531,7 +540,7 @@ const GEZ={0x1210:0x1200,0x1280:0x1200,0x1220:0x1230,0x12D0:0x12A0,0x1340:0x1338
 function norm(s){
   s=String(s).normalize('NFKD').replace(/\p{M}/gu,'').toLowerCase();
   s=s.replace(/ς/g,'σ').replace(/[ⴀ-ⴥ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x2D00+0x10D0))
-     .replace(/[ـ܏()\[\]\-‐·]/g,'').replace(/[፡-፨]/g,' ').replace(/[ٱ]/g,'ا');
+     .replace(/[ـ܏()\[\]\-‐·\u055A-\u055F\u0589\u058A«»]/g,'').replace(/[፡-፨]/g,' ').replace(/[ٱ]/g,'ا');
   if(opt.lat)s=s.replace(/j/g,'i').replace(/v/g,'u');
   if(opt.ar)s=s.replace(/ة/g,'ه').replace(/ى/g,'ي');
   if(opt.gez)s=s.replace(/[ሀ-ፗ]/g,c=>{const x=c.charCodeAt(0),b=x&~7;return GEZ[b]?String.fromCharCode(GEZ[b]+(x&7)):c});
@@ -1130,7 +1139,7 @@ function renderKb(){
   const L=KBO;if(langF&&KBL[langF])kbLang=langF;if(!KBL[kbLang])kbLang='tr';
   let h=`<div class="kl">${L.map(l=>`<button data-k="${l}" class="${l===kbLang?'on':''}" title="${esc(l==='tr'?'Translit':l==='cu'?'Slav':(I.lang&&I.lang[l])||LANGS[l][0])}">${esc(l==='tr'?'Translit':l==='cu'?'Slav':(I.chip&&I.chip[l]||l).replace(/\.$/,''))}</button>`).join('')}</div>`;
   if(kbLang==='gez'&&gezBase!=null)h+=`<div class="keys forms">${[0,1,2,3,4,5,6].map(o=>`<button data-c="${String.fromCharCode(gezBase+o)}">${String.fromCharCode(gezBase+o)}</button>`).join('')}</div>`;
-  {const [nm,rows0,,rtl,alt]=KBL[kbLang],rows=alt?[...rows0,...KBL[alt][1]]:rows0,ex=kbEx(kbLang).replace('|',' ').trim(),g=kbLang==='gez';h+=rows.map(r=>`<div class="kbr" ${rtl?'dir="rtl"':''}>${kbKeys(r,g,kbLang)}</div>`).join('')+`<div class="kbr kbl">${kbKeys(ex,g,kbLang)}`}
+  {const [nm,rows0,,rtl,alt]=KBL[kbLang],ex=kbEx(kbLang).replace('|',' ').trim(),g=kbLang==='gez';h+=rows0.map(r=>`<div class="kbr" ${rtl?'dir="rtl"':''}>${kbKeys(r,g,kbLang)}</div>`).join('')+(alt?KBL[alt][1].filter(r=>r&&r!=='@forms').map(r=>`<div class="kbr" ${rtl?'dir="rtl"':''}>${kbKeys(r,false,kbLang)}</div>`).join(''):'')+`<div class="kbr kbl">${kbKeys(ex,g,kbLang)}`}
   h+=`<button class="fn" data-c=" " aria-label="${esc(I.space)}" title="${esc(I.space)}">${I.space}</button><button class="fn" data-bs="1" aria-label="${esc(I.bksp.replace('⌫','').trim())}" title="${esc(I.bksp.replace('⌫','').trim())}"><span class="bsi">⌫</span> ${esc(I.bksp.replace('⌫','').trim())}</button></div>`;
   k.innerHTML=h;k.dir='ltr';
 }
@@ -1499,14 +1508,15 @@ $('#kb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
 });
 const COARSE=matchMedia('(pointer: coarse)').matches;let mkbL='tr';
 if(COARSE){document.body.classList.add('coarse');$('#q').setAttribute('inputmode','none')}
-function mkbDraw(){const [nm,rows,,rtl,alt]=KBL[mkbL],ex=kbEx(mkbL),d=rtl?' dir="rtl"':'';const K=c=>`<button type="button" class="${kMark(c)?'dm':''}" data-c="${c}">${kLab(c,mkbL)}</button>`,ks=x=>x?x.split(' ').map(K).join(''):'';
+function mkbDraw(){const [nm,rows,,rtl,alt,albl]=KBL[mkbL],ex=kbEx(mkbL),d=rtl?' dir="rtl"':'';const K=c=>`<button type="button" class="${kMark(c)?'dm':''}" data-c="${c}">${kLab(c,mkbL)}</button>`,ks=x=>x?x.split(' ').map(K).join(''):'';
   {const sp=ex.includes('|')?ex.split('|').map(x=>x?x.split(' '):[]):null,xs=sp?[...sp[0],...sp[1]]:ex?ex.split(' '):[],h=sp?sp[0].length:Math.floor(xs.length/2);
-  $('#mkb').innerHTML=rows.map((r,i)=>`<div class="r"><div class="ks"${d}>${ks(r)}</div>${i===0?'<button type="button" class="f bs" data-a="bs" aria-label="⌫"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5h11v14H9l-6-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9l5 6M17 9l-5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>':''}</div>`).join('')+`<div class="r rb" style="--n1:${h+(alt?1:0)};--n2:${xs.length-h}"><div class="sl"><button type="button" class="f" data-a="gl" aria-label="🌐"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>${alt?`<button type="button" class="alt" data-a="alt" aria-label="${esc(alt)}">${mkbL==='cu'?'ѫ':'АБ'}</button>`:''}${xs.slice(0,h).map(K).join('')}</div><button type="button" class="sp" data-c=" ">${esc(nm)}</button><div class="sr">${xs.slice(h).map(K).join('')}</div></div>`}}
+  $('#mkb').innerHTML=rows.map((r,i)=>`<div class="r"><div class="ks"${d}>${r==='@forms'?gezForms().map(c=>`<button type="button" data-c="${c}" data-r="1">${c}</button>`).join(''):ks(r)}</div>${i===0?'<button type="button" class="f bs" data-a="bs" aria-label="⌫"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5h11v14H9l-6-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9l5 6M17 9l-5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>':''}</div>`).join('')+`<div class="r rb" style="--n1:${h+(alt?1:0)};--n2:${xs.length-h}"><div class="sl"><button type="button" class="f" data-a="gl" aria-label="🌐"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>${alt?`<button type="button" class="alt" data-a="alt" aria-label="${esc(albl)}">${esc(albl)}</button>`:''}${xs.slice(0,h).map(K).join('')}</div><button type="button" class="sp" data-c=" ">${esc(nm)}</button><div class="sr">${xs.slice(h).map(K).join('')}</div></div>`}}
 function mkbShow(on){const k=$('#mkb');if(!COARSE)return;if(on&&k.hidden){mkbDraw();k.hidden=false}else if(!on)k.hidden=true;document.body.classList.toggle('mkbo',!k.hidden);if(!k.hidden)document.documentElement.style.setProperty('--mkbh',k.offsetHeight+'px')}
 function mkbAct(b){if(!b)return;b.classList.add('tap');setTimeout(()=>b.classList.remove('tap'),120);const q=$('#q');if(document.activeElement!==q)q.focus({preventScroll:true});
-  if(b.dataset.a==='gl'){const c=mkbL==='cu2'?'cu':mkbL;mkbL=KBO[(KBO.indexOf(c)+1)%KBO.length];mkbDraw();return}
+  if(b.dataset.a==='gl'){const c=kBase(mkbL);mkbL=KBO[(KBO.indexOf(c)+1)%KBO.length];mkbDraw();return}
   if(b.dataset.a==='alt'){mkbL=KBL[mkbL][4];mkbDraw();return}
   if(b.dataset.a==='bs'){kbBack();return}
+  if(b.dataset.r){const q=$('#q'),a=q.selectionStart??q.value.length,c=q.value.slice(0,a).slice(-1),x=c?c.charCodeAt(0):0;if(x>=0x1200&&x<=0x137F&&(x&~7)===(b.dataset.c.charCodeAt(0)&~7)){q.value=q.value.slice(0,a-1)+b.dataset.c+q.value.slice(a);q.setSelectionRange(a,a);debounced()}else kbType(b.dataset.c);mkbL=kBase(mkbL);mkbDraw();return}
   if(b.dataset.c!=null)kbType(b.dataset.c)}
 let mkbT=0;
 $('#mkb').addEventListener('touchstart',e=>{e.preventDefault();mkbT=Date.now();const t=e.changedTouches[0];mkbAct(document.elementFromPoint(t.clientX,t.clientY)?.closest('#mkb button'))},{passive:false});
