@@ -2,41 +2,30 @@
  "id": "u-kimserge-test",
  "name": "Test",
  "sig": "*Test",
+ "ver": "1.0",
  "author": "Sergey Kim",
  "la": "grc",
- "lb": "ar",
- "tl": "de",
+ "lb": "grc",
+ "tl": "fr",
  "note": "",
- "updated": "2026-11-19T18:11:38.031Z",
+ "updated": "2026-11-20T10:06:24.873Z",
  "lang": "grc",
  "entries": [
   [
-   "Greek",
-   "(→ ⁨Grk⁩), \u000bAk 47\f: Gut\n= ⁨Grmrgr⁩ (→ ⁨Rrr⁩), \u000bOctAr V\f: Jawohl",
+   "Απηντησεν",
+   "(→ ⁨ἀπαντάω⁩), répondit",
    "grc"
-  ],
-  [
-   "Grmrgr",
-   "(→ ⁨Rrr⁩), \u000bOctAr V\f: Jawohl\n= ⁨Greek⁩ (→ ⁨Grk⁩), \u000bAk 47\f: Gut",
-   "ar"
   ]
  ],
  "cards": [
   {
    "a": {
-    "f": "Greek",
-    "l": "Grk",
-    "s": "Ak 47",
-    "t": "Gut"
+    "f": "Απηντησεν",
+    "l": "ἀπαντάω",
+    "s": "",
+    "t": "répondit"
    },
-   "b": [
-    {
-     "f": "Grmrgr",
-     "l": "Rrr",
-     "s": "OctAr V",
-     "t": "Jawohl"
-    }
-   ]
+   "b": []
   }
  ]
 }
