@@ -378,7 +378,7 @@ body.coarse #sug{display:none!important}body.coarse .qtools{display:none!importa
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.112 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.113 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -906,7 +906,7 @@ async function loadUserDicts(){
   if(VPID)try{const r=await fetch(PAPI+'/admin/projects/'+encodeURIComponent(VPID),{headers:{Authorization:'Bearer '+a.token}});if(r.ok){const d=await r.json();if(d&&d.entries&&!dicts.some(x=>(x.base||x.id)===d.id))dicts.push(...userSplit(d,100,false))}}catch(e){}
   try{const r=await fetch(PAPI+'/dicts',{headers:{Authorization:'Bearer '+a.token}});if(!r.ok)return;const L=await r.json();
     for(const d of L){if(!d.entries||!d.entries.length)continue;dicts=dicts.filter(x=>(x.base||x.id)!==d.id);dicts.push(...userSplit(d,100,true))}refresh()}catch(e){}}
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','ccl','che','graf','are','kun','psm','heb','hyf','dyach'],BVER=78;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','ccl','che','graf','are','kun','psm','heb','hyf','dyach'],BVER=79;
 const latExtra=()=>({en:'laen',de:'lade',it:'laen',fr:'lafr'})[UIL];
 const BHID=new Set(),BNOS=new Set();
 async function loadBCfg(){try{const C=await (await fetch('data/builtins.json',{cache:'no-store'})).json();
@@ -1196,8 +1196,23 @@ function refresh(){renderLib();renderChips();renderKb();search()}
 /* keyboard */
 let kbLang=LS.get('kb','syr'),gezBase=null;
 function kbAuto(){const B=[...$('#lgb').querySelectorAll('button[data-g]')],A=B.filter(b=>!b.classList.contains('off')).map(b=>b.dataset.g);if(!A.length||A.length===B.length)return;const l=A.find(x=>KEYS[x]);if(l&&l!==kbLang){kbLang=l;gezBase=null;renderKb()}}
-const HEPK={a:'א',b:'ב',g:'ג',d:'ד',h:'ה',v:'ו',z:'ז',x:'ח',y:'ט',i:'י',k:'כ',K:'ך',l:'ל',m:'מ',M:'ם',n:'נ',N:'ן',s:'ס',e:'ע',p:'פ',P:'ף',c:'צ',C:'ץ',q:'ק',r:'ר',w:'ש',t:'ת',j:'י',u:'ו',o:'ע',f:'פ'},HEPL={};for(const [k,v] of Object.entries(HEPK))if(!HEPL[v])HEPL[v]=k;
-function physMap(k){return !COARSE&&!$('#kb').hidden&&kBase(kbLang)==='he'?HEPK[k]||null:null}
+const PK={
+ he:{a:'א',b:'ב',g:'ג',d:'ד',h:'ה',v:'ו',z:'ז',x:'ח',y:'ט',i:'י',k:'כ',K:'ך',l:'ל',m:'מ',M:'ם',n:'נ',N:'ן',s:'ס',e:'ע',p:'פ',P:'ף',c:'צ',C:'ץ',q:'ק',r:'ר',w:'ש',t:'ת',j:'י',u:'ו',o:'ע',f:'פ'},
+ syr:{a:'ܐ',b:'ܒ',g:'ܓ',d:'ܕ',h:'ܗ',v:'ܘ',z:'ܙ',x:'ܚ',y:'ܛ',i:'ܝ',k:'ܟ',l:'ܠ',m:'ܡ',n:'ܢ',s:'ܣ',e:'ܥ',p:'ܦ',c:'ܨ',q:'ܩ',r:'ܪ',w:'ܫ',t:'ܬ',u:'ܘ',j:'ܝ',o:'ܥ',f:'ܦ'},
+ ar:{a:'ا',b:'ب',t:'ت',T:'ث',j:'ج',x:'ح',X:'خ',d:'د',D:'ذ',r:'ر',z:'ز',s:'س',w:'ش',c:'ص',C:'ض',y:'ط',Y:'ظ',e:'ع',E:'غ',f:'ف',q:'ق',k:'ك',l:'ل',m:'م',n:'ن',h:'ه',v:'و',i:'ي',"'":'ء',I:'ئ',V:'ؤ',A:'ى',H:'ة',u:'و',o:'ع',p:'ب',g:'غ'},
+ ka:{a:'ა',b:'ბ',g:'გ',d:'დ',e:'ე',v:'ვ',z:'ზ',T:'თ',i:'ი',k:'კ',l:'ლ',m:'მ',n:'ნ',o:'ო',p:'პ',J:'ჟ',r:'რ',s:'ს',t:'ტ',u:'უ',f:'ფ',q:'ქ',R:'ღ',y:'ყ',S:'შ',C:'ჩ',c:'ც',Z:'ძ',w:'წ',W:'ჭ',x:'ხ',j:'ჯ',h:'ჰ'},
+ hy:{a:'ա',b:'բ',g:'գ',d:'դ',e:'ե',E:'է',z:'զ',Z:'ժ',y:'յ',Y:'ը',i:'ի',l:'լ',L:'ղ',x:'խ',c:'ծ',C:'ց',k:'կ',K:'ք',h:'հ',D:'ձ',m:'մ',n:'ն',s:'ս',S:'շ',o:'ո',O:'օ',q:'չ',Q:'ճ',p:'պ',P:'փ',j:'ջ',R:'ռ',r:'ր',v:'վ',t:'տ',T:'թ',w:'ւ',f:'ֆ'},
+ cop:{a:'ⲁ',b:'ⲃ',g:'ⲅ',d:'ⲇ',e:'ⲉ',z:'ⲍ',E:'ⲏ',T:'ⲑ',i:'ⲓ',k:'ⲕ',l:'ⲗ',m:'ⲙ',n:'ⲛ',X:'ⲝ',o:'ⲟ',p:'ⲡ',r:'ⲣ',s:'ⲥ',t:'ⲧ',u:'ⲩ',f:'ⲫ',x:'ⲭ',P:'ⲯ',w:'ⲱ',S:'ϣ',F:'ϥ',H:'ϧ',h:'ϩ',j:'ϫ',c:'ϭ',q:'ϯ',y:'ⲩ',v:'ⲃ'},
+ gez:{h:'ሀ',l:'ለ',H:'ሐ',m:'መ',X:'ሠ',r:'ረ',s:'ሰ',q:'ቀ',b:'በ',t:'ተ',x:'ኀ',n:'ነ',k:'ከ',w:'ወ','`':'ዐ',z:'ዘ',y:'የ',d:'ደ',g:'ገ',T:'ጠ',P:'ጰ',S:'ጸ',Z:'ፀ',f:'ፈ',p:'ፐ',"'":'አ'}};
+const PGV={e:0,u:1,i:2,a:3,E:4,o:6};
+const PKL={};for(const [L,m] of Object.entries(PK)){PKL[L]={};for(const [k,v] of Object.entries(m))if(!PKL[L][v])PKL[L][v]=k}
+function physOn(){return !COARSE&&!$('#kb').hidden&&!!PK[kBase(kbLang)]}
+function physMap(k){if(!physOn())return null;const L=kBase(kbLang);if(L==='gez')return null;return PK[L][k]||null}
+function physType(k){if(!physOn())return false;const L=kBase(kbLang);
+  if(L!=='gez'){const c=PK[L][k];if(!c)return false;insert(c);return true}
+  const q=$('#q'),a=q.selectionStart??q.value.length,pc=a?q.value.charCodeAt(a-1):0;
+  if(k in PGV){const o=PGV[k];if(pc>=0x1200&&pc<=0x137F&&(pc&7)===5){q.value=q.value.slice(0,a-1)+String.fromCharCode((pc&~7)+o)+q.value.slice(a);q.setSelectionRange(a,a);debounced()}else insert(String.fromCharCode(0x12A0+o));return true}
+  const c=PK.gez[k];if(!c)return false;insert(String.fromCharCode(c.charCodeAt(0)+5));return true}
 const BSI='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5h11v14H9l-6-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9l5 6M17 9l-5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
 function kbFit(){const k=$('#kb');if(k.hidden)return;const R=[...k.querySelectorAll('.kbr')];if(!R.length)return;const W=R[0].clientWidth,G=4;let u=60;
   for(const r of R){const B=[...r.children];const un=B.reduce((n,b)=>n+(b.classList.contains('sp')?5.5:b.classList.contains('bs')?1.5:b.classList.contains('alt')?1.3:1),0);u=Math.min(u,(W-G*(B.length-1))/un)}
@@ -1215,7 +1230,7 @@ function renderKb(){
   const r3=[rows[2],xr===2?xs:''].filter(Boolean).join(' ').split(' ').filter(Boolean),aU=(alt?1.3:0)+(alt2?1.3:0),kL=Math.max(0,Math.min(r3.length,Math.round((r3.length+aU)/2)));
   h+=rows.map((r,i)=>`<div class="kbr"${d}>${i===2?(rows[2]==='@forms'?keys(r):kbKeys(r3.slice(0,kL).join(' '),g,kbLang)):keys(r)}${i===xr&&xr!==2?kbKeys(xs,g,kbLang):''}${i===0?`<button type="button" class="fn bs" data-bs="1" aria-label="${esc(I.bksp.replace('⌫','').trim())}" title="${esc(I.bksp.replace('⌫','').trim())}">${BSI}</button>`:''}${i===2?`<button type="button" class="fn sp" data-c=" " title="${esc(I.space)}"><bdi>${esc(nm)}</bdi></button>${rows[2]==='@forms'?'':kbKeys(r3.slice(kL).join(' '),g,kbLang)}${alt?`<button type="button" class="fn alt" data-alt="${alt}" title="${esc(albl)}">${esc(albl)}</button>`:''}${alt2?`<button type="button" class="fn alt" data-alt="${alt2}" title="${esc(albl2)}">${esc(albl2)}</button>`:''}`:''}</div>`).join('');
   k.innerHTML=h;k.dir='ltr';kbFit();
-  if(cur==='he')k.querySelectorAll('.kbr [data-c]:not(.sp)').forEach(b=>{const l=HEPL[b.dataset.c];if(l)b.insertAdjacentHTML('afterbegin',`<span class="pk">${l===l.toUpperCase()?'⇧'+l.toLowerCase():l}</span>`)});
+  if(PKL[cur]&&!COARSE)k.querySelectorAll('.kbr [data-c]:not(.sp),.kbr [data-g]').forEach(b=>{const l=PKL[cur][b.dataset.c||b.dataset.g];if(l)b.insertAdjacentHTML('afterbegin',`<span class="pk">${/^[A-Z]$/.test(l)?'⇧'+l.toLowerCase():l}</span>`)});
 }
 function layoutKeys(){
   const g=$('#kb').querySelector('.keys:not(.forms)');if(!g||!g.clientWidth)return;
@@ -1529,10 +1544,10 @@ async function hardUpdate(){
 $('#upd').addEventListener('click',hardUpdate);$('#offB').addEventListener('click',offDownload);
 /* ---------- events ---------- */
 $('#q').addEventListener('input',debounced);
-$('#q').addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.isComposing)return;const c=physMap(e.key);if(!c)return;e.preventDefault();insert(c);$('#clr').hidden=false});
+$('#q').addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.isComposing)return;if(!physOn()||[...e.key].length!==1)return;if(physType(e.key)){e.preventDefault();$('#clr').hidden=false}});
 document.addEventListener('keydown',e=>{if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.isComposing||[...e.key].length!==1||/\s/.test(e.key))return;
   const t=e.target;if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
-  const q=$('#q');e.preventDefault();q.focus({preventScroll:true});q.value=physMap(e.key)||e.key;q.setSelectionRange(q.value.length,q.value.length);$('#clr').hidden=false;q.dispatchEvent(new Event('input',{bubbles:true}))});
+  const q=$('#q');e.preventDefault();q.focus({preventScroll:true});if(physOn()&&PK[kBase(kbLang)]&&(kBase(kbLang)==='gez'?(e.key in PGV||PK.gez[e.key]):PK[kBase(kbLang)][e.key])){q.value='';q.setSelectionRange(0,0);physType(e.key)}else q.value=e.key;q.setSelectionRange(q.value.length,q.value.length);$('#clr').hidden=false;q.dispatchEvent(new Event('input',{bubbles:true}))});
 $('#clr').addEventListener('click',()=>{$('#q').value='';$('#clr').hidden=true;if(typeof mkbL!=='undefined'){mkbL=mkbDef();if(!$('#mkb').hidden)mkbDraw()}search();window.scrollTo({top:0,behavior:'instant'});$('#q').focus({preventScroll:true})});
 $('#q').addEventListener('keydown',e=>{
   if(e.key==='ArrowDown'&&$('#sug').hidden&&$('#q').value.trim()){sugOff=false;renderSug();return}
