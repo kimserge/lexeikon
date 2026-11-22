@@ -367,7 +367,7 @@ body.coarse #sug{display:none!important}body.coarse .qtools{display:none!importa
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.63 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.64 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -856,10 +856,11 @@ function viewInit(){if(!VIEW)return;const mine=x=>x.id===VIEW||x.id.startsWith(V
   else b.innerHTML=`${esc(I.vnf)} · <a href="./">${esc(I.vall)}</a>`;
   $('#stat').before(b);if(d&&VQ){$('#q').value=VQ;$('#clr').hidden=false}search()}
 /* a user dictionary becomes two: A→B with A headwords and B→A with B headwords */
-function userSplit(d,created,mine){const out=[],LN2=x=>(LANGS[x]||[x])[1]||x;
+const TLAB={ru:{de:'Нем',fr:'Фр',en:'Англ',ru:'Рус',it:'Ит'},en:{de:'Ger',fr:'Fr',en:'Eng',ru:'Rus',it:'It'},de:{de:'Dt',fr:'Frz',en:'Engl',ru:'Russ',it:'Ital'},fr:{de:'All',fr:'Fr',en:'Angl',ru:'Russe',it:'It'},it:{de:'Ted',fr:'Fr',en:'Ingl',ru:'Russo',it:'It'}};
+function userSplit(d,created,mine){const out=[],LN2=x=>String((I.chip&&I.chip[x])||(LANGS[x]||[x])[1]||x).replace(/\.$/,''),TL=x=>((TLAB[UIL]||TLAB.en)[x])||x;
   const one=!d.lb||d.lb===(d.la||d.lang);for(const [suf,L,O] of one?[['@a',d.la||d.lang,null]]:[['@a',d.la||d.lang,d.lb],['@b',d.lb,d.la||d.lang]]){if(!L)continue;const E=d.entries.filter(e=>(e[2]||d.lang)===L);if(!E.length)continue;
     const x={id:d.id+suf,base:d.id,name:d.name,author:d.author,ver:d.ver,sig:d.sig,la:L,lb:null,tl:d.tl,lang:L,entries:E,user:true,demo:true,mine:!!mine,created};
-    SIG[x.id]=[(d.sig||('*'+d.name.slice(0,5))),d.name+' ('+LN2(L)+(O?' → '+LN2(O):'')+') · '+d.author+(d.ver?' · v'+d.ver:'')];out.push(x)}
+    SIG[x.id]=[(d.sig||('*'+d.name.slice(0,5))),d.name+' ('+LN2(L)+(d.tl?'-'+TL(d.tl):'')+') · '+d.author+(d.ver?' · v'+d.ver:'')];out.push(x)}
   return out}
 async function loadUserDicts(){
   /* accepted dictionaries (visible to everyone) */
