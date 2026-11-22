@@ -313,6 +313,26 @@ body:not(.coarse) .hdr .pres{grid-column:2;grid-row:1/3;align-self:center;min-wi
 body:not(.coarse) .hdr .pres p{margin:0 0 4px}
 body:not(.coarse) .hdr .pres .sub{margin-top:0}}
 @media(min-width:900px) and (max-width:1199px){body:not(.coarse) .hdr .pres p{font-size:12px;line-height:1.35}body:not(.coarse) .hdr .tg{font-size:16px}}
+
+.guide{display:none}
+@media(max-width:899px){
+ .pres{display:none}
+ #res li.empty{display:none}
+ .guide{display:block;list-style:none;margin:18px 0 6px;padding:16px 16px 14px;border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--mut);font-size:14px;line-height:1.45}
+ .guide p{margin:0}
+ .guide .gcnt{color:var(--ink);font-size:15px;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line)}
+ .guide .gcnt b{color:var(--lap);font-size:17px}
+ .guide .ghow{color:var(--ink)}
+ .guide .gex{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+ .guide .gex button{display:inline-flex;align-items:baseline;gap:6px;border:1px solid color-mix(in srgb,var(--lap) 45%,transparent);background:color-mix(in srgb,var(--lap) 7%,transparent);color:var(--ink);border-radius:999px;padding:3px 10px;font:inherit;font-size:13px;cursor:pointer}
+ .guide .gex button b{font-family:'Noto Sans',sans-serif}
+ .guide .gex button span[aria-hidden]{color:var(--mut);font-size:12px}
+ .guide .gex .sc{font-size:15px}
+ .guide .gtip{display:flex;gap:8px;margin-top:6px}
+ .guide .gtip:first-of-type{margin-top:0}
+ .guide .gi{color:var(--lap);width:1em;flex:none;text-align:center}
+ .guide .gcr{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -391,7 +411,7 @@ body:not(.coarse) .hdr .pres .sub{margin-top:0}}
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.24 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.25 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -942,6 +962,11 @@ async function loadBuiltins0(){
 /* ---------- search ---------- */
 let mode='pre',langF='',results=[],shown=0;const PAGE=50;
 const elang=(d,i)=>d.entries[i][2]||d.lang;
+const EXL=[['mlk','ܡܠܟܐ'],['ngs','ነግሠ'],['gmerti','ღმერთი'],['tagavor','թագաւոր']];
+function guideHtml(s){const i=s.indexOf(EX);if(i<0)return '';const head=s.slice(0,i).replace(/[^.]*$/,''),tail=s.slice(i+EX.length).replace(/^[\s.]+/,'');
+  const sub=I.sub||'',how=sub.split(':')[0].replace(/\s+$/,''),orig=(sub.split('</span>.').pop()||'').trim();
+  return `<li class="guide"><p class="gcnt">${head}</p><p class="ghow">${how}. ${orig}</p><div class="gex">${EXL.map(([a,b])=>`<button type="button" data-ex="${a}"><b>${a}</b><span aria-hidden="true">→</span><span class="sc">${b}</span></button>`).join('')}</div><p class="gtip gtap"><span class="gi" aria-hidden="true">☞</span>${esc(I.latnote||'')}</p><p class="gtip gdn"><span class="gi" aria-hidden="true">↓</span>${tail}</p><p class="gcr">${esc(I.credit||'')}</p></li>`}
+$('#res').addEventListener('click',e=>{const b=e.target.closest('.gex [data-ex]');if(!b)return;const q=$('#q');q.value=b.dataset.ex;q.dispatchEvent(new Event('input',{bubbles:true}))});
 function search(){document.body.classList.toggle('qv',!!$('#q').value);
   const q=$('#q').value,scope=$('#scope').checked,act=dicts.filter(d=>!srchOff(d.id));
   const total=act.reduce((n,d)=>n+d.entries.length,0);
@@ -949,7 +974,7 @@ function search(){document.body.classList.toggle('qv',!!$('#q').value);
   lemBanner(q);
   if(!q.trim()){
     $('#res').innerHTML='';$('#more').hidden=true;$('#stat').textContent='';sugHide();results=[];GF=new Map();lnavRender();$('#jmp').hidden=true;
-    $('#res').insertAdjacentHTML('beforeend',`<li class="empty">${dicts.length?I.empty(total.toLocaleString(UIL),act.length,dicts.length):I.loading}</li>`);
+    $('#res').insertAdjacentHTML('beforeend',`<li class="empty">${dicts.length?I.empty(total.toLocaleString(UIL),act.length,dicts.length):I.loading}</li>`+(dicts.length?guideHtml(I.empty(total.toLocaleString(UIL),act.length,dicts.length)):''));
     return;
   }
   let re=null;
