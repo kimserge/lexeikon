@@ -306,10 +306,15 @@ function renderSides(){if(!edCard.b.length)edCard.b.push({f:'',l:'',s:'',t:''});
 const sideOf=el=>{const s=el.closest('[data-i]');if(!s)return null;const i=+s.dataset.i;return [i,i===-1?edCard.a:edCard.b[i]]};
 let sT=null;
 $('#sides').addEventListener('input',e=>{const f=e.target.dataset.f,so=sideOf(e.target);if(!f||!so)return;const[i,S]=so;S[f]=e.target.value;if(f==='f'||f==='l'){S._typing=f==='l';clearTimeout(sT);sT=setTimeout(()=>suggest(i),180)}});
-$('#sides').addEventListener('focusin',e=>{if(e.target.matches('input[data-f]')){kbT=e.target;if(!$('#kb').hidden&&KEYS[e.target.lang]&&(e.target.dataset.f==='f'||e.target.dataset.f==='l')){kbL=e.target.lang;renderKb()}}});
+const kbFld=x=>x&&x.matches&&x.matches('input[data-f=f],input[data-f=l]')&&KEYS[x.lang];
+$('#sides').addEventListener('pointerdown',e=>{if(!$('#kb').hidden&&kbFld(e.target))e.target.inputMode='none'});
+document.addEventListener('focusin',e=>{const x=e.target;if($('#kb').hidden||x.closest('#kb'))return;
+  if(kbFld(x)){kbT=x;kbL=x.lang;renderKb();markKb();return}
+  if(x.matches('input,textarea,select,[contenteditable]')){$('#kb').hidden=true;markKb()}});
+$('#sides').addEventListener('focusin',e=>{if(e.target.matches('input[data-f]'))kbT=e.target});
 $('#sides').addEventListener('click',e=>{const b=e.target.closest('[data-l]');if(b){const so=sideOf(b);so[1].l=b.dataset.l;so[1]._typing=false;b.closest('.side').querySelector('[data-f=l]').value=b.dataset.l;suggest(so[0]);return}
   const r=e.target.closest('[data-rm]');if(r){edCard.b.splice(+r.dataset.rm,1);renderSides();return}
-  const k=e.target.closest('[data-kb]');if(k){const inp=k.parentNode.querySelector('input');kbT=inp;if(!$('#kb').hidden&&kbL===k.dataset.kb){$('#kb').hidden=true;markKb();return}kbL=k.dataset.kb;gezBase=null;$('#kb').hidden=false;renderKb();inp.focus({preventScroll:true});kbScroll()}});
+  const k=e.target.closest('[data-kb]');if(k){const inp=k.parentNode.querySelector('input');kbT=inp;if(!$('#kb').hidden&&kbL===k.dataset.kb){$('#kb').hidden=true;markKb();return}kbL=k.dataset.kb;gezBase=null;$('#kb').hidden=false;inp.blur();inp.inputMode='none';renderKb();markKb();inp.focus({preventScroll:true});kbScroll()}});
 function kbScroll(){requestAnimationFrame(()=>{if(!kbT)return;const r=kbT.getBoundingClientRect(),kh=$('#kb').getBoundingClientRect().top;if(r.bottom>kh-60||r.top<0)$('#ed').scrollBy({top:r.bottom-(kh-90),behavior:'smooth'})})}
 $('#addB').onclick=()=>{if(edCard.b.length<3){edCard.b.push({f:'',l:'',s:'',t:''});renderSides();$('#sides').lastElementChild.querySelector('input').focus()}};
 function openCard(c){const d=cdata(c?c.data:null);edCard={id:c?c.id:null,a:{...{f:'',l:'',s:'',t:''},...d.a},b:(d.b||[]).map(x=>({...{f:'',l:'',s:'',t:''},...x}))};
@@ -328,7 +333,7 @@ $('#edDel').onclick=async()=>{if(!confirm(I.surec))return;try{await api(`/projec
 
 /* ---- on-screen keyboard ---- */
 let kbT=null,kbL='grc',gezBase=null;
-function markKb(){document.querySelectorAll('.kbb').forEach(b=>b.classList.toggle('on',!$('#kb').hidden&&b.dataset.kb===kbL&&b.parentNode.querySelector('input')===kbT))}
+function markKb(){document.querySelectorAll('input[data-f]').forEach(x=>{x.inputMode=(!$('#kb').hidden&&x===kbT)?'none':''});document.querySelectorAll('.kbb').forEach(b=>b.classList.toggle('on',!$('#kb').hidden&&b.dataset.kb===kbL&&b.parentNode.querySelector('input')===kbT))}
 function renderKb(){const k=$('#kb');if(k.hidden)return;let h=`<div class="kh"><span>${esc(I.kbd)} · ${esc(lname(kbL))}</span><button type="button" class="lnk" data-kx="1">${esc(I.kbClose)}</button></div>`;
   if(kbL==='gez'&&gezBase!=null)h+=`<div class="keys forms">${[0,1,2,3,4,5,6,7].map(o=>`<button data-c="${String.fromCharCode(gezBase+o)}">${String.fromCharCode(gezBase+o)}</button>`).join('')}</div>`;
   if(DIA[kbL])h+=`<div class="keys forms dia">${DIA[kbL].map(c=>`<button data-c="${c}">◌${c}</button>`).join('')}</div>`;
