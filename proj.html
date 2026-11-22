@@ -277,6 +277,10 @@ async function arLem(w){const A=await getJ('data/lem/ar.json');if(!A)return [];c
 async function suggest(i){const S=i===-1?edCard.a:edCard.b[i],L=i===-1?pLa(cur):pLb(cur),box=document.querySelector(`.sugs[data-i="${i}"]`);if(!box)return;
   const f=S.f.trim(),l=S.l.trim(),items=[];
   if(!f&&!l){box.innerHTML=`<span class="meta">${esc(I.nolem)}</span>`;return}
+  if(L==='ar'){const A=await getJ('data/lem/ar.json');if(!A)return;const R=A._R||(A._R=[...new Set(Object.values(A.w).flat().map(x=>x[1]).filter(Boolean))]),rs=[];
+    const typed=S._typing&&l;if(f&&!typed)for(const w of f.split(/\s+/).filter(Boolean))for(const x of await arLem(w))if(x.rt)rs.push(x.rt);
+    if(!rs.length||typed){const q=arK(typed?l:f.split(/\s+/)[0]);if(q)for(const r of R)if(arK(r).startsWith(q))rs.push(r)}
+    const u=[...new Set(rs)].slice(0,14);box.innerHTML=u.map(r=>`<button type="button" data-l="${esc(r)}" class="${r===l?'on':''}"><b dir="rtl">${esc(r)}</b></button>`).join('')||'<span class="meta">—</span>';return}
   const H=await hwIdx(L),gl=w=>H.m.get(w)||'';
   if(f&&(!S._typing)){
     const ws=f.split(/\s+/).filter(Boolean);
