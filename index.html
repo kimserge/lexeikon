@@ -367,7 +367,7 @@ body.coarse #sug{display:none!important}body.coarse .qtools{display:none!importa
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.64 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.65 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -873,6 +873,11 @@ async function loadUserDicts(){
     for(const d of L){if(!d.entries||!d.entries.length)continue;dicts=dicts.filter(x=>(x.base||x.id)!==d.id);dicts.push(...userSplit(d,100,true))}refresh()}catch(e){}}
 const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','are','kun','psm'],BVER=42;
 const latExtra=()=>({en:'laen',de:'lade',it:'laen',fr:'lafr'})[UIL];
+const BHID=new Set(),BNOS=new Set();
+async function loadBCfg(){try{const C=await (await fetch('data/builtins.json',{cache:'no-store'})).json();
+  for(const [id,c] of Object.entries(C||{})){if(c.show===false)BHID.add(id);if(c.search===false)BNOS.add(id);
+    if(c.sig||c.name){const o=SIG[id]||['',''];SIG[id]=[c.sig||o[0],c.name||o[1]]}if(c.cpy)CPY[id]=()=>c.cpy}}catch(e){}}
+const srchOff=id=>off.has(id)||BHID.has(id)||BNOS.has(id);
 async function loadBuiltins(){
   const gone=LS.get('gone',[]);
   for(const k of [...BUILTIN,latExtra()].filter(Boolean)){
@@ -889,7 +894,7 @@ async function loadBuiltins(){
 let mode='pre',langF='',results=[],shown=0;const PAGE=50;
 const elang=(d,i)=>d.entries[i][2]||d.lang;
 function search(){document.body.classList.toggle('qv',!!$('#q').value);
-  const q=$('#q').value,scope=$('#scope').checked,act=dicts.filter(d=>!off.has(d.id));
+  const q=$('#q').value,scope=$('#scope').checked,act=dicts.filter(d=>!srchOff(d.id));
   const total=act.reduce((n,d)=>n+d.entries.length,0);
   results=[];shown=0;
   lemBanner(q);
@@ -1107,7 +1112,7 @@ const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\u2060\uE000-\uE013]/g,'
 function langsPresent(){const s=new Set();for(const d of dicts){if(d.lang==='mix')d.entries.forEach(e=>s.add(e[2]));else s.add(d.lang)}return Object.keys(LANGS).filter(k=>s.has(k))}
 function renderChips(){}
 const GLY={syr:'ܐ',ka:'შ',grc:'Ω',la:'L',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ظ'};
-function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix')continue;for(const L of new Set([d.lang,...(d.user&&d.lb?[d.lb]:[])]))(by[L]=by[L]||[]).push(d.id)}
+function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix'||BHID.has(d.id))continue;for(const L of new Set([d.lang,...(d.user&&d.lb?[d.lb]:[])]))(by[L]=by[L]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
 const INTERIM=new Set(['b-psm','b-graf','b-brk','b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
 const RANGE={'b-psm':['ܕܪܓܐ','ܘܝ'],'b-graf':['آب','ابستيخون'],'b-brk':['ܫܡܫ','ܫܢܕܐ'],'b-kun':['ա','ածեաց'],'b-che':['ا','دال'],'b-cos':['ܫܡܫ','ܫܢܕ'],'b-mis':['ա','աքաղաղ']};
@@ -1139,9 +1144,9 @@ const INL=new Set();
 const CPY={'b-psm':()=>'Payne Smith 1903 · public domain · OCR LexEikôn: p. 98–107','b-are':()=>'Arabeyes · FreeDict · GNU GPL 2+','b-graf':()=>'© CSCO · OCR LexEikôn: p. 1–2','b-brk':()=>'OCR LexEikôn: p. 789–790','b-ml':()=>'Perseus Digital Library (perseus.tufts.edu) · CC BY-SA 3.0 US','b-kun':()=>'© B. O. Künzle · OCR LexEikôn: p. 1–5','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–424, 485','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'© Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · public domain · DSL','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lade':()=>'FreeDict · GNU GPL 3+','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 let onlyD=VIEW?null:LS.get('onlyd',null),onlyN=VIEW?0:LS.get('onlyn',onlyD?1:0);
 function renderLib(){
-  const HIDE=new Set(['b-hy']);renderLgb();const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
+  const HIDE=new Set(['b-hy',...BHID]);renderLgb();const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
   const lo=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')],lg=[...new Set(vis.map(d=>d.lang))].sort((a,b)=>LORD(a)-LORD(b));
-  $('#dl').innerHTML=lg.map((g,n)=>`<li class="dlg g${n%2}" data-lg="${esc(g)}">${esc(g==='mix'?'7 языков':(LANGS[g]||LANGS.xx)[0])}</li>`+vis.filter(d=>d.lang===g).map(d=>`<li class="g${n%2}"><input type="checkbox" data-t="${esc(d.id)}" ${off.has(d.id)?'':'checked'} aria-label="${I.usearia}" title="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><input type="checkbox" class="only" data-o="${esc(d.id)}" ${onlyD===d.id&&onlyN===1?'checked':''} aria-label="${I.onlyaria}" title="${I.onlyaria}"><span>${SIG[d.id]?`<b class="sg">${esc(sgl(d))}</b> = `:''}<span class="nm">${esc(fullN(d))}</span>${INL.has(d.id)?`<span class="cpy inl">${esc(CPY[d.id]())}</span>`:''}<span class="mt">${d.lang==='mix'?'7 языков · ':''}${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]&&!INL.has(d.id)?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}${INTERIM.has(d.id)?`<span class="cpy itm">⚠ ${esc(I.interim)}${RANGE[d.id]?` (<bdi>${esc(RANGE[d.id][0])}</bdi> – <bdi>${esc(RANGE[d.id][1])}</bdi>)`:''}</span>`:''}</span></li>`).join('')).join('');
+  $('#dl').innerHTML=lg.map((g,n)=>`<li class="dlg g${n%2}" data-lg="${esc(g)}">${esc(g==='mix'?'7 языков':(LANGS[g]||LANGS.xx)[0])}</li>`+vis.filter(d=>d.lang===g).map(d=>`<li class="g${n%2}"><input type="checkbox" data-t="${esc(d.id)}" ${srchOff(d.id)?'':'checked'} ${BNOS.has(d.id)?'disabled':''} aria-label="${I.usearia}" title="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><input type="checkbox" class="only" data-o="${esc(d.id)}" ${onlyD===d.id&&onlyN===1?'checked':''} aria-label="${I.onlyaria}" title="${I.onlyaria}"><span>${SIG[d.id]?`<b class="sg">${esc(sgl(d))}</b> = `:''}<span class="nm">${esc(fullN(d))}</span>${INL.has(d.id)?`<span class="cpy inl">${esc(CPY[d.id]())}</span>`:''}<span class="mt">${d.lang==='mix'?'7 языков · ':''}${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]&&!INL.has(d.id)?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}${INTERIM.has(d.id)?`<span class="cpy itm">⚠ ${esc(I.interim)}${RANGE[d.id]?` (<bdi>${esc(RANGE[d.id][0])}</bdi> – <bdi>${esc(RANGE[d.id][1])}</bdi>)`:''}</span>`:''}</span></li>`).join('')).join('');
 }
 function refresh(){renderLib();renderChips();renderKb();search()}
 
@@ -1371,8 +1376,8 @@ function markXr(raw){if(!raw||!raw.includes('↗'))return raw;
 function linkXr(html,d){return html.replace(/((?:[^<]|<[^>]*>)*)/g,(m,w)=>{const t=w.replace(/<[^>]*>/g,'').replace(/^-?[\d.]+/,'');return `<span class="xr" data-x="${esc(t)}" data-d="${d.id}">${w}</span>`})}
 function xrFind(w,did){const n=x=>norm(String(x).replace(/^[\d.]+/,'').replace(/[-‐()]/g,'')),k=n(w);
   const hit=d=>d.entries.map((e,i)=>i).filter(i=>n(d.entries[i][0])===k).map(i=>[d,i]);
-  const d0=dicts.find(x=>x.id===did);if(d0&&d0.user){const L=scriptLang(w),r=[];for(const d of dicts)if(!off.has(d.id)&&!d.user&&(d.lang===L||d.lang==='mix'))for(const x of hit(d))if(elang(x[0],x[1])===L)r.push(x);return r}let r=d0?hit(d0):[];
-  if(!r.length){const L=d0&&d0.lang;for(const d of dicts)if(d!==d0&&!off.has(d.id)&&(!L||d.lang===L))r.push(...hit(d))}
+  const d0=dicts.find(x=>x.id===did);if(d0&&d0.user){const L=scriptLang(w),r=[];for(const d of dicts)if(!srchOff(d.id)&&!d.user&&(d.lang===L||d.lang==='mix'))for(const x of hit(d))if(elang(x[0],x[1])===L)r.push(x);return r}let r=d0?hit(d0):[];
+  if(!r.length){const L=d0&&d0.lang;for(const d of dicts)if(d!==d0&&!srchOff(d.id)&&(!L||d.lang===L))r.push(...hit(d))}
   return r}
 function scriptLang(w){const c=[...String(w)].find(x=>/\p{L}/u.test(x))||'',u=c.codePointAt(0)||0;return u>=0x700&&u<0x750?'syr':u>=0x1200&&u<0x13a0?'gez':(u>=0x10a0&&u<0x1100)||(u>=0x2d00&&u<0x2d30)?'ka':(u>=0x370&&u<0x400)||(u>=0x1f00&&u<0x2000)?'grc':u>=0x530&&u<0x590?'hy':u>=0x600&&u<0x700?'ar':(u>=0x2c80&&u<0x2d00)||(u>=0x3e2&&u<0x3f0)?'cop':'la'}
 
@@ -1575,7 +1580,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#ov').hidden)ne
   applyLang();$('#uil').addEventListener('change',e=>{UIL=e.target.value;LS.set('ui',UIL);applyLang();renderTrSec();refresh();laIdx=null;if(UIL!=='de')gerLoad();loadBuiltins().then(()=>{setSync('');refresh()})});
   renderTrSec();$('#trsec').addEventListener('change',e=>{const L=e.target.dataset.tl;if(!L)return;trCfg[L]=e.target.value;LS.set('trcfg',trCfg);renderTrSec();applyLang();renderKb();search()});
   refresh();
-  await loadBuiltins();setSync('');await loadUserDicts();viewInit();
+  await loadBCfg();await loadBuiltins();setSync('');await loadUserDicts();viewInit();
   try{LATF=await (await fetch('data/latforms.json',FRESH?{cache:'reload'}:{})).json();search()}catch(e){}
   if(UIL!=='de')gerLoad();
   if(FRESH)try{history.replaceState(null,'',location.pathname)}catch(e){}
