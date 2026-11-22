@@ -181,6 +181,21 @@ export default {
       // ---- administrator ----
       if (P[0] === 'admin') {
         if (!admin) return reply({ error: 'forbidden' }, 403);
+        // built-in dictionaries: visibility, search, name, abbreviation, copyright (data/builtins.json on main)
+        if (P[1] === 'builtins') {
+          if (request.method === 'GET') { const f = await getFile(env, 'data/builtins.json', 'main'); let c = {}; try { c = f ? JSON.parse(f.text) : {}; } catch (e) {} return reply(c); }
+          if (request.method === 'PUT') {
+            const b = await body(), out = {};
+            for (const [id, c] of Object.entries(b && typeof b.cfg === 'object' ? b.cfg : {})) {
+              if (!/^b-[a-z0-9-]{1,20}$/.test(id) || !c || typeof c !== 'object') continue;
+              const o = {}; if (c.show === false) o.show = false; if (c.search === false) o.search = false;
+              for (const k of ['name', 'sig', 'cpy']) { const v = clean(c[k], k === 'sig' ? 40 : 300); if (v) o[k] = v; }
+              if (Object.keys(o).length) out[id] = o;
+            }
+            await pushFile(env, 'data/builtins.json', JSON.stringify(out, null, 1) + '\n', 'builtins: settings by ' + user.nick, 'main');
+            return reply({ ok: true, cfg: out });
+          }
+        }
         if (request.method === 'GET' && P[1] === 'projects' && !P[2]) {
           const r = await db.prepare(`SELECT p.*, u.nick, u.sig usig, u.email, (SELECT count(*) FROM cards c WHERE c.project_id=p.id) n FROM projects p JOIN users u ON u.id=p.user_id ORDER BY p.pushed DESC, p.updated DESC`).all();
           return reply(r.results);

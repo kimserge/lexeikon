@@ -1,0 +1,140 @@
+[
+ {
+  "id": "b-syr",
+  "sig": "LexSyr",
+  "name": "Lexidion Syriacum",
+  "cpy": "DSL · источник не указан"
+ },
+ {
+  "id": "b-brk",
+  "sig": "Brockelmann",
+  "name": "Carl Brockelmann, Lexicon Syriacum, ed. 2, Halis Saxonum: Max Niemeyer 1928",
+  "cpy": "OCR LexEikôn: p. 789–790"
+ },
+ {
+  "id": "b-cos",
+  "sig": "Costaz",
+  "name": "Louis Costaz, Dictionnaire syriaque-français / Syriac-English Dictionary / Qāmūs suryānī-ʿarabī, Beyrouth 1963",
+  "cpy": "© Dar el-Machreq · OCR LexEikôn: p. 374"
+ },
+ {
+  "id": "b-ka",
+  "sig": "Serebr",
+  "name": "Серебряков, Древнегрузинско-русский словарь",
+  "cpy": "© авторы · DSL"
+ },
+ {
+  "id": "b-kac",
+  "sig": "Čub",
+  "name": "Чубинашвили, Грузинско-русский словарь, 1887",
+  "cpy": "Н. Чубинашвили 1887 · public domain · DSL: promemo"
+ },
+ {
+  "id": "b-agwb",
+  "sig": "AGWB",
+  "name": "AGWB, altgeorgisch–deutsches Wörterbuch, TITUS",
+  "cpy": "© Jost Gippert, TITUS"
+ },
+ {
+  "id": "b-grc",
+  "sig": "Dvor",
+  "name": "И. Х. Дворецкий, Древнегреческо-русский словарь, Москва 1958",
+  "cpy": "И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов"
+ },
+ {
+  "id": "b-ml",
+  "sig": "MLS",
+  "name": "H. G. Liddell, R. Scott, An Intermediate Greek-English Lexicon, Oxford: Clarendon Press 1889",
+  "cpy": "Perseus Digital Library (perseus.tufts.edu) · CC BY-SA 3.0 US"
+ },
+ {
+  "id": "b-dil",
+  "sig": "DillLex",
+  "name": "August Dillmann, Lexicon linguae aethiopicae, Lipsiae 1865",
+  "cpy": "© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0"
+ },
+ {
+  "id": "b-gez",
+  "sig": "DillChr",
+  "name": "August Dillmann, Chrestomathia Aethiopica: glossarium, Lipsiae 1866",
+  "cpy": "Dillmann 1866 · public domain · DSL"
+ },
+ {
+  "id": "b-rai",
+  "sig": "Rain",
+  "name": "Osvaldo Raineri, Dizionario geʿez–italiano",
+  "cpy": "O. Raineri · DSL (Lingvo)"
+ },
+ {
+  "id": "b-la",
+  "sig": "Tan",
+  "name": "Тананушко, Латинско-русский словарь",
+  "cpy": "© авторы · DSL"
+ },
+ {
+  "id": "b-hy",
+  "sig": "Bedr",
+  "name": "Matthias Bedrossian, New Dictionary Armenian–English, Venice 1875–1879",
+  "cpy": "Bedrossian 1875–1879 · public domain · DSL"
+ },
+ {
+  "id": "b-mis",
+  "sig": "Misk",
+  "name": "Joannes Miskgian, Manuale lexicon armeno-latinum ad usum scholarum, Romae 1887",
+  "cpy": "J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա"
+ },
+ {
+  "id": "b-cop",
+  "sig": "SahGl",
+  "name": "Sahidic Coptic–English glossary",
+  "cpy": "DSL · источник не указан"
+ },
+ {
+  "id": "b-che",
+  "sig": "Cheikho",
+  "name": "Louis Cheikho, Lexicon Chrestomathiæ Arabicæ, in: Chrestomathia Arabica cum lexico variisque notis, Beryti: Typographia Patrum Societatis Jesu",
+  "cpy": "L. Cheikho · OCR LexEikôn: p. 419–424, 485"
+ },
+ {
+  "id": "b-graf",
+  "sig": "Graf",
+  "name": "Georg Graf, Verzeichnis arabischer kirchlicher Termini, CSCO 147, Subsidia 8, Louvain 1954",
+  "cpy": "© CSCO · OCR LexEikôn: p. 1–2"
+ },
+ {
+  "id": "b-are",
+  "sig": "Arabeyes",
+  "name": "Arabeyes Wordlist, Arabic–English (FreeDict ara-eng)",
+  "cpy": "Arabeyes · FreeDict · GNU GPL 2+"
+ },
+ {
+  "id": "b-kun",
+  "sig": "Künzle",
+  "name": "Beda O. Künzle, Das altarmenische Evangelium: Lexikon, Bern: Peter Lang 1984",
+  "cpy": "© B. O. Künzle · OCR LexEikôn: p. 1–5"
+ },
+ {
+  "id": "b-psm",
+  "sig": "Payne-Smith",
+  "name": "J. Payne Smith (Mrs. Margoliouth), A Compendious Syriac Dictionary, Oxford: Clarendon Press 1903",
+  "cpy": "Payne Smith 1903 · public domain · OCR LexEikôn: p. 98–107"
+ },
+ {
+  "id": "b-laen",
+  "sig": "Whit",
+  "name": "William Whitaker, Latin–English dictionary (Words)",
+  "cpy": "W. Whitaker · public domain"
+ },
+ {
+  "id": "b-lade",
+  "sig": "FD Lat–Dt",
+  "name": "FreeDict Latein–Deutsch (Sebastian Humenda)",
+  "cpy": "FreeDict · GNU GPL 3+"
+ },
+ {
+  "id": "b-lafr",
+  "sig": "LebQu",
+  "name": "Lebaigue, Quicherat, Dictionnaire latin–français",
+  "cpy": "Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007"
+ }
+]
