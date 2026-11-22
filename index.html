@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <script>if(navigator.standalone)document.documentElement.classList.add("iospwa")</script>
-<title>LexEikôn — учебные словари древних языков · v5 (test)</title>
+<title>LexEikôn — dictionnaires d’étude des langues anciennes</title>
+<meta name="description" content="LexEikôn : dictionnaires d’étude des langues anciennes — syriaque, guèze, géorgien, grec, latin, arménien, arabe, hébreu et araméen, slavon, copte.">
+<meta property="og:title" content="LexEikôn — dictionnaires d’étude des langues anciennes">
+<meta property="og:description" content="Syriaque, guèze, géorgien, grec, latin, arménien, arabe, hébreu et araméen, slavon, copte.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kimserge.github.io/lexeikon/">
+<meta property="og:image" content="https://kimserge.github.io/lexeikon/icon-512.png">
+<meta property="og:locale" content="fr_FR">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
@@ -336,6 +343,7 @@ body:not(.coarse) .hdr .pres .sub{margin-top:0}}
  .guide .gcr{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:12px}
 }
 a[data-go]{color:var(--lap);text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer}
+i.it{font-style:italic}
 </style>
 </head>
 <body>
@@ -414,7 +422,7 @@ a[data-go]{color:var(--lap);text-decoration:underline dotted;text-underline-offs
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.27 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.28 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -446,7 +454,7 @@ const I18N={
   updfail:'Сервер недоступен. Попробуйте позже',sec_ack:'Благодарности',ack_txt:'Благодарим схожие проекты и издательства за предоставление прав на включение материалов в Лексейкон:',vis_tab:'Посещения',vis_today:'Посещений сегодня',vis_total:'За всё время',vis_c:'Стран сегодня',vis_err:'Нет данных',sec_set:'Выбрать словари',latnote:'Нажмите на латинское объяснение, чтобы его перевести.',cr_mail:'Написать письмо',cr_title:'Об инструменте',cp_unk:'права не указаны',cp_auth:'автор и издатель',cr_author:'Концепция',cr_course:'Курс',cr_cname:'Методология цифрового издания',cr_pub:'Издательство',cr_contact:'Контакт',cr_src:'Словари',credit:'Инструмент создан Sergey Kim (UNIL, FTSR, IRSB) в рамках курса «Методология цифрового издания».',inbody:'Найдено внутри статей',gall:'Показать ещё {n}',gof:'из {t}',lnin:'Внутри статей',dicts:'Словари',uilang:'Язык интерфейса',
   attrib:'Lexicon Linguae Aethiopicae: цифровое издание TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt и др.), лицензия CC BY-NC-SA 4.0.',
   found:'Найдено: ',none:'Ничего не найдено. Попробуйте режим «Содержит» или другой язык.',rxerr:'Ошибка в регулярном выражении',
-  empty:(tot,a,n)=>`<b>${tot}</b> статей в ${a} из ${n} словар${n==1?'я':'ей'}${a?'':' — включите хотя бы один в списке словарей'}. Например: ${EX}. <a data-go="trD">Транслитерация</a> и <a data-go="setD">выбор словарей</a> — внизу.`,
+  empty:(tot,a,n)=>`<b>${tot}</b> статей в ${a} из ${n} словар${n==1?'я':'ей'}${a?'':' — включите хотя бы один в списке словарей'}. Например: ${EX}. Транслитерация и выбор словарей — внизу.`,
   loading:'Словари загружаются…',libn:(a,n,t)=>`${a} из ${n} включены · ${t} статей`,abbr:'ст.',
   space:'пробел',bksp:'⌫ стереть',off:'не показывать',cons:'Согласные',orders:'Порядки (на примере ለ)',
   sixth:'Шестой порядок: ə; в конце слова и перед слогом с полной гласной не пишется',
@@ -463,7 +471,7 @@ const I18N={
   updfail:'Server unavailable. Please try again later',sec_ack:'Acknowledgements',ack_txt:'We thank related projects and publishers for granting the rights to include their materials in LexEikôn:',vis_tab:'Visits',vis_today:'Visits today',vis_total:'All time',vis_c:'Countries today',vis_err:'No data',sec_set:'Choose dictionaries',latnote:'Tap a Latin definition to translate it.',cp_unk:'rights not stated',cp_auth:'author and publisher',cr_mail:'Send an e-mail',cr_title:'Credits',cr_author:'Concept',cr_course:'Course',cr_cname:'Methodology of Digital Edition',cr_pub:'Publisher',cr_contact:'Contact',cr_src:'Dictionaries',credit:'Tool created by Sergey Kim (UNIL, FTSR, IRSB) as part of the course “Methodology of Digital Edition”.',inbody:'Found inside entries',gall:'Show {n} more',gof:'of {t}',lnin:'Inside entries',dicts:'Dictionaries',uilang:'Interface language',
   attrib:'Lexicon Linguae Aethiopicae: digital edition by TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt et al.), licence CC BY-NC-SA 4.0.',
   found:'Found: ',none:'Nothing found. Try “Contains” mode or another language.',rxerr:'Error in regular expression',
-  empty:(tot,a,n)=>`<b>${tot}</b> entries in ${a} of ${n} dictionaries${a?'':' — enable at least one in the list'}. For example: ${EX}. <a data-go="trD">Transliteration</a> and <a data-go="setD">dictionary choice</a> are at the bottom.`,
+  empty:(tot,a,n)=>`<b>${tot}</b> entries in ${a} of ${n} dictionaries${a?'':' — enable at least one in the list'}. For example: ${EX}. Transliteration and dictionary choice are at the bottom.`,
   loading:'Loading dictionaries…',libn:(a,n,t)=>`${a} of ${n} enabled · ${t} entries`,abbr:'entries',
   space:'space',bksp:'⌫ delete',off:'do not show',cons:'Consonants',orders:'Orders (example ለ)',
   sixth:'Sixth order: ə; not written word-finally or before a syllable with a full vowel',
@@ -480,7 +488,7 @@ const I18N={
   updfail:'Server nicht erreichbar. Bitte später erneut versuchen',sec_ack:'Danksagung',ack_txt:'Wir danken verwandten Projekten und Verlagen für die Erlaubnis, ihre Materialien in LexEikôn aufzunehmen:',vis_tab:'Besuche',vis_today:'Besuche heute',vis_total:'Insgesamt',vis_c:'Länder heute',vis_err:'Keine Daten',sec_set:'Wörterbücher auswählen',latnote:'Eine lateinische Erklärung antippen, um sie zu übersetzen.',cp_unk:'Rechte nicht angegeben',cp_auth:'Autor und Verlag',cr_mail:'E-Mail schreiben',cr_title:'Credits',cr_author:'Konzept',cr_course:'Kurs',cr_cname:'Methodik der digitalen Edition',cr_pub:'Verlag',cr_contact:'Kontakt',cr_src:'Wörterbücher',credit:'Werkzeug erstellt von Sergey Kim (UNIL, FTSR, IRSB) im Rahmen des Kurses „Methodik der digitalen Edition“.',inbody:'Innerhalb der Einträge gefunden',gall:'Weitere {n} anzeigen',gof:'von {t}',lnin:'Innerhalb der Einträge',dicts:'Wörterbücher',uilang:'Sprache der Oberfläche',
   attrib:'Lexicon Linguae Aethiopicae: digitale Edition TraCES / Hiob-Ludolf-Zentrum, Hamburg (A. Bausi, A. Ellwardt u. a.), Lizenz CC BY-NC-SA 4.0.',
   found:'Gefunden: ',none:'Nichts gefunden. Versuchen Sie „Enthält“ oder eine andere Sprache.',rxerr:'Fehler im regulären Ausdruck',
-  empty:(tot,a,n)=>`<b>${tot}</b> Einträge in ${a} von ${n} Wörterbüchern${a?'':' — aktivieren Sie mindestens eines in der Liste'}. Zum Beispiel: ${EX}. <a data-go="trD">Transliteration</a> und <a data-go="setD">Wörterbuchauswahl</a> finden Sie unten.`,
+  empty:(tot,a,n)=>`<b>${tot}</b> Einträge in ${a} von ${n} Wörterbüchern${a?'':' — aktivieren Sie mindestens eines in der Liste'}. Zum Beispiel: ${EX}. Transliteration und Wörterbuchauswahl finden Sie unten.`,
   loading:'Wörterbücher werden geladen…',libn:(a,n,t)=>`${a} von ${n} aktiv · ${t} Einträge`,abbr:'Einträge',
   space:'Leerzeichen',bksp:'⌫ löschen',off:'nicht anzeigen',cons:'Konsonanten',orders:'Ordnungen (Beispiel ለ)',
   sixth:'Sechste Ordnung: ə; im Wortauslaut und vor einer Silbe mit Vollvokal nicht geschrieben',
@@ -497,7 +505,7 @@ const I18N={
   updfail:'Serveur indisponible. Réessayez plus tard',sec_ack:'Remerciements',ack_txt:'Nous remercions les projets apparentés et les éditeurs de nous avoir accordé le droit d’intégrer leurs matériaux dans LexEikôn :',vis_tab:'Visites',vis_today:'Visites aujourd’hui',vis_total:'Depuis le début',vis_c:'Pays aujourd’hui',vis_err:'Pas de données',sec_set:'Choisir les dictionnaires',latnote:'Touchez une définition latine pour la traduire.',cr_mail:'Écrire un courriel',cr_title:'Crédits',cp_unk:'droits non précisés',cp_auth:'auteur et éditeur',cr_author:'Conception',cr_course:'Cours',cr_cname:'Ecdotique numérique',cr_pub:'Éditeur',cr_contact:'Contact',cr_src:'Dictionnaires',credit:'Outil créé par Sergey Kim (UNIL, FTSR, IRSB) dans le cadre du cours « Ecdotique numérique ».',inbody:'Trouvé dans le corps des articles',gall:'Afficher {n} de plus',gof:'sur {t}',lnin:'Dans les articles',dicts:'Dictionnaires',uilang:'Langue de l’interface',
   attrib:'Lexicon Linguae Aethiopicae : édition numérique TraCES / Hiob-Ludolf-Zentrum, Hambourg (A. Bausi, A. Ellwardt et al.), licence CC BY-NC-SA 4.0.',
   found:'Résultats : ',none:'Aucun résultat. Essayez le mode « Contient » ou une autre langue.',rxerr:'Erreur dans l’expression régulière',
-  empty:(tot,a,n)=>`<b>${tot}</b> articles dans ${a} dictionnaire${a>1?'s':''} sur ${n}${a?'':' — activez-en au moins un dans la liste'}. Par exemple : ${EX}. <a data-go="trD">Translittération</a> et <a data-go="setD">choix des dictionnaires</a> en bas de page.`,
+  empty:(tot,a,n)=>`<b>${tot}</b> articles dans ${a} dictionnaire${a>1?'s':''} sur ${n}${a?'':' — activez-en au moins un dans la liste'}. Par exemple : ${EX}. Translittération et choix des dictionnaires en bas de page.`,
   loading:'Chargement des dictionnaires…',libn:(a,n,t)=>`${a} sur ${n} activés · ${t} articles`,abbr:'art.',
   space:'espace',bksp:'⌫ effacer',off:'ne pas afficher',cons:'Consonnes',orders:'Ordres (exemple ለ)',
   sixth:'Sixième ordre : ə ; non noté en fin de mot ni devant une syllabe à voyelle pleine',
@@ -514,7 +522,7 @@ const I18N={
   updfail:'Server non disponibile. Riprova più tardi',sec_ack:'Ringraziamenti',ack_txt:'Ringraziamo i progetti affini e gli editori per averci concesso i diritti di includere i loro materiali in LexEikôn:',vis_tab:'Visite',vis_today:'Visite oggi',vis_total:'In totale',vis_c:'Paesi oggi',vis_err:'Nessun dato',sec_set:'Scegli i dizionari',latnote:'Toccate una definizione latina per tradurla.',cr_mail:'Scrivere un’e-mail',cr_title:'Crediti',cp_unk:'diritti non indicati',cp_auth:'autore ed editore',cr_author:'Ideazione',cr_course:'Corso',cr_cname:'Metodologia dell’edizione digitale',cr_pub:'Editore',cr_contact:'Contatto',cr_src:'Dizionari',credit:'Strumento creato da Sergey Kim (UNIL, FTSR, IRSB) nell’ambito del corso «Metodologia dell’edizione digitale».',inbody:'Trovato all’interno delle voci',gall:'Mostra altri {n}',gof:'su {t}',lnin:'All’interno delle voci',dicts:'Dizionari',uilang:'Lingua dell’interfaccia',
   attrib:'Lexicon Linguae Aethiopicae: edizione digitale TraCES / Hiob-Ludolf-Zentrum, Amburgo (A. Bausi, A. Ellwardt et al.), licenza CC BY-NC-SA 4.0.',
   found:'Trovati: ',none:'Nessun risultato. Provate la modalità «Contiene» o un’altra lingua.',rxerr:'Errore nell’espressione regolare',
-  empty:(tot,a,n)=>`<b>${tot}</b> voci in ${a} dizionari${a==1?'o':''} su ${n}${a?'':' — attivatene almeno uno nell’elenco'}. Per esempio: ${EX}. <a data-go="trD">Traslitterazione</a> e <a data-go="setD">scelta dei dizionari</a> in fondo alla pagina.`,
+  empty:(tot,a,n)=>`<b>${tot}</b> voci in ${a} dizionari${a==1?'o':''} su ${n}${a?'':' — attivatene almeno uno nell’elenco'}. Per esempio: ${EX}. Traslitterazione e scelta dei dizionari in fondo alla pagina.`,
   loading:'Caricamento dei dizionari…',libn:(a,n,t)=>`${a} su ${n} attivi · ${t} voci`,abbr:'voci',
   space:'spazio',bksp:'⌫ cancella',off:'non mostrare',cons:'Consonanti',orders:'Ordini (esempio ለ)',
   sixth:'Sesto ordine: ə; non si scrive in fine di parola né davanti a sillaba con vocale piena',
@@ -942,7 +950,7 @@ async function loadUserDicts(){
   if(VPID)try{const r=await fetch(PAPI+'/admin/projects/'+encodeURIComponent(VPID),{headers:{Authorization:'Bearer '+a.token}});if(r.ok){const d=await r.json();if(d&&d.entries&&!dicts.some(x=>(x.base||x.id)===d.id))dicts.push(...userSplit(d,100,false))}}catch(e){}
   try{const r=await fetch(PAPI+'/dicts',{headers:{Authorization:'Bearer '+a.token}});if(!r.ok)return;const L=await r.json();
     for(const d of L){if(!d.entries||!d.entries.length)continue;dicts=dicts.filter(x=>(x.base||x.id)!==d.id);dicts.push(...userSplit(d,100,true))}refresh()}catch(e){}}
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','ccl','che','graf','kun','psm','heb','hyf','dyach','lane'],BVER=100;const LAZY={lane:'ar'},LAZYN={lane:49211};let lazyBusy=false;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','la','hy','mis','ccl','che','graf','kun','psm','heb','hyf','dyach','lane'],BVER=101;const LAZY={lane:'ar'},LAZYN={lane:49211};let lazyBusy=false;
 const latExtra=()=>({en:'laen',de:'lade',it:'laen',fr:'lafr'})[UIL];
 const BHID=new Set(),BNOS=new Set();
 async function loadBCfg(){try{const C=await (await fetch('data/builtins.json',{cache:'no-store'})).json();
@@ -1162,7 +1170,7 @@ function formatDef0(raw,L,hw,noRoot){
     else if(!cls&&/^[A-H]\)\s/.test(l)){cls=' s';l=l.replace(/^([A-H]\))\s/,'<b class="sn">$1</b> ')}
     if(cls===' s2 sa')sub=true;else if(cls===' s'||cls===' s2'||cls===' s3')sub=false;else if(sub&&!/^\x0b/.test(l))cls+=' si';
     if(L==='gez'&&!noRoot&&li===0&&l.length<40&&!/[ሀ-፿\x02-\x07]/.test(l)&&/[a-zʾʿḥḫṣśṭḍ']/.test(l)){return ''}
-    if(l.startsWith('\x01')){l=l.slice(1);if(!ex&&!g){return `<span class="l x"><span class="ex">${l.replace(/[\u1200-\u137F][\u1200-\u137F፡\s]*[\u1200-\u137F፡]|[\u1200-\u137F]/g,'\x06$&\x07').replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>').replace(/\x0e/g,'<span class="et">').replace(/\x0f/g,'</span>').replace(/\x10/g,'<span class="nl">').replace(/\x11/g,'</span>')}</span></span>`}}
+    if(l.startsWith('\x01')){l=l.slice(1);if(!ex&&!g){return `<span class="l x"><span class="ex">${l.replace(/[\u1200-\u137F][\u1200-\u137F፡\s]*[\u1200-\u137F፡]|[\u1200-\u137F]/g,'\x06$&\x07').replace(/\x02\u2063/g,'<i class="it">').replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>').replace(/\x0e/g,'<span class="et">').replace(/\x0f/g,'</span>').replace(/\x10/g,'<span class="nl">').replace(/\x11/g,'</span>')}</span></span>`}}
     if(/^@\s*/.test(l)){cls=' f';l=l.replace(/^@\s*(.*)$/,'<b class="fm">$1</b>')}
     if(L==='syr'){const SY='[\\u0700-\\u074F\\u0300-\\u036F]+';
       const rx=new RegExp('^((?:\\x02[^\\x03]*\\x03\\s*)*)('+SY+'(?:\\s+(?:sive|et|vel|aut)\\s+'+SY+')*)');
@@ -1178,14 +1186,14 @@ function formatDef0(raw,L,hw,noRoot){
     l=l.replace(/\(([^()]*\d[^()]*)\)/g,'<span class="ex">($1)</span>');
     let pre=(et?'<span class="et">':'')+(g?'<i class="gr">':'')+(ex?'<span class="ex">':'');
     for(const ch of l){if(ch==='\x0e')et=true;else if(ch==='\x0f')et=false;else if(ch==='\x02')g=true;else if(ch==='\x03')g=false;else if(ch==='\x04')ex=true;else if(ch==='\x05')ex=false}
-    l=pre+l.replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>').replace(/\x0b/g,'<span class="mo">').replace(/\x0c/g,'</span>').replace(/\x0e/g,'<span class="et">').replace(/\x0f/g,'</span>').replace(/\x10/g,'<span class="nl">').replace(/\x11/g,'</span>')+(ex?'</span>':'')+(g?'</i>':'')+(et?'</span>':'');
+    l=pre+l.replace(/\x02\u2063/g,'<i class="it">').replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>').replace(/\x0b/g,'<span class="mo">').replace(/\x0c/g,'</span>').replace(/\x0e/g,'<span class="et">').replace(/\x0f/g,'</span>').replace(/\x10/g,'<span class="nl">').replace(/\x11/g,'</span>')+(ex?'</span>':'')+(g?'</i>':'')+(et?'</span>':'');
     if(L==='syr')l=l.replace(/<span class="ex">([\s\S]*?)<\/span>/g,(m,t)=>'<span class="ex">'+t.replace(/[\u0700-\u074F](?:[\u0700-\u074F\u0300-\u036F\s]*[\u0700-\u074F\u0300-\u036F])?/g,'<b class="exb">$&</b>')+'</span>');
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
 const GLOSS={'b-lane':'en','b-psm':'en','b-graf':'de','b-brk':'la','b-ml':'en','b-kun':'fr de','b-che':'la','b-agwb':'de','b-cos':'fr','b-ccl':'en de fr','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-heb':'en','b-hyf':'fr','b-dyach':'ru','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-lade':'de','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-brk','b-gez','b-dil','b-mis','b-che']);
-const plain=s=>String(s||'').replace(/\uE030([^\uE031]*)\uE031\uE032([^\uE033]*)\uE033\uE034([^\uE035]*)\uE035/g,(m,a,b,c)=>({en:a,fr:b,de:c})[document.body.dataset.tl]||a).replace(/[\x02-\x07\x0b\x0c\u2060\uE000-\uE013]/g,'');
+const plain=s=>String(s||'').replace(/\uE030([^\uE031]*)\uE031\uE032([^\uE033]*)\uE033\uE034([^\uE035]*)\uE035/g,(m,a,b,c)=>({en:a,fr:b,de:c})[document.body.dataset.tl]||a).replace(/[\x02-\x07\x0b\x0c\u2060\u2063\uE000-\uE013]/g,'');
 
 /* ---------- UI rendering ---------- */
 function langsPresent(){const s=new Set();for(const d of dicts){if(d.lang==='mix')d.entries.forEach(e=>s.add(e[2]));else s.add(d.lang)}return Object.keys(LANGS).filter(k=>s.has(k))}
@@ -1643,7 +1651,7 @@ const tapFx=b=>{document.querySelectorAll('#lnav button.tap,#ljmp button.tap').f
 document.body.dataset.trm=LS.get('trm','la');const tlDef=()=>LS.get('tlm',null)||(['en','fr','de'].includes(UIL)?UIL:'en');document.body.dataset.tl=tlDef();document.body.dataset.trp=LS.get('trp','la');
 $('#res').addEventListener('click',async e=>{
   {const tb=e.target.closest('.tlb');if(tb){const o=['en','fr','de'],m=o[(o.indexOf(document.body.dataset.tl)+1)%3];document.body.dataset.tl=m;LS.set('tlm',m);return}}
-  {const tb=e.target.closest('.trb');if(tb){const k=tb.classList.contains('pp')?'trp':'trm',o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset[k])+1)%3];document.body.dataset[k]=m;LS.set(k,m);return}}
+  {const tb=e.target.closest('.trb');if(tb){const y0=tb.getBoundingClientRect().top,k=tb.classList.contains('pp')?'trp':'trm',o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset[k])+1)%3];document.body.dataset[k]=m;LS.set(k,m);const dy=tb.getBoundingClientRect().top-y0;if(dy&&!tb.closest('#pop'))scrollBy(0,dy);return}}
   const c0=e.target.closest('.cp');const h=e.target.closest('.hit');
   const xr=e.target.closest('.xr');if(xr&&(!h.classList.contains('long')||h.classList.contains('open'))){popStack=[];popMark(xr);showXr(xr.dataset.x,xr.dataset.d);return}
   const w=e.target.closest('.lw');if(w&&(!h.classList.contains('long')||h.classList.contains('open'))){popStack=[];popMark(w);w.dataset.g?showGer(w.dataset.g):showLat(w.dataset.w);return}
@@ -1654,7 +1662,7 @@ $('#res').addEventListener('click',async e=>{
 });
 $('#pop').addEventListener('click',async e=>{const gb=e.target.closest('[data-gt]');if(gb){e.stopPropagation();LS.set('gerT',gb.dataset.gt);await gerLoad(gb.dataset.gt);showGer(lastGer);return}const lb=e.target.closest('[data-lt]');if(lb){e.stopPropagation();const k=lb.dataset.lt;await laLoad(LATD[k]);showLat(lastLat,k);return}
   if(e.target.closest('#popB')){e.stopPropagation();popBack();return}
-  if(e.target.id==='popX')$('#pop').hidden=true;const xs=e.target.closest('[data-xs]');if(xs){xrSearch(xs.dataset.xs);return}const xr=e.target.closest('.xr');if(xr){popPush();showXr(xr.dataset.x,xr.dataset.d);return}{const tb=e.target.closest('.trb');if(tb){const k=tb.classList.contains('pp')?'trp':'trm',o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset[k])+1)%3];document.body.dataset[k]=m;LS.set(k,m);return}}const w=e.target.closest('.lw');if(w){popPush();w.dataset.g?showGer(w.dataset.g):showLat(w.dataset.w);return}
+  if(e.target.id==='popX')$('#pop').hidden=true;const xs=e.target.closest('[data-xs]');if(xs){xrSearch(xs.dataset.xs);return}const xr=e.target.closest('.xr');if(xr){popPush();showXr(xr.dataset.x,xr.dataset.d);return}{const tb=e.target.closest('.trb');if(tb){const y0=tb.getBoundingClientRect().top,k=tb.classList.contains('pp')?'trp':'trm',o=['both','ru','la'],m=o[(o.indexOf(document.body.dataset[k])+1)%3];document.body.dataset[k]=m;LS.set(k,m);const dy=tb.getBoundingClientRect().top-y0;if(dy&&!tb.closest('#pop'))scrollBy(0,dy);return}}const w=e.target.closest('.lw');if(w){popPush();w.dataset.g?showGer(w.dataset.g):showLat(w.dataset.w);return}
   if(e.target.closest('.def')&&!getSelection().toString()){const x=wordAt(e);if(x&&['grc','ar'].includes(scriptLang(x.w))&&x.w.length>1){popPush();showLem(x.w)}}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#pop').hidden=true});
 document.addEventListener('click',e=>{if(!$('#pop').hidden&&!e.target.closest('#pop')&&!e.composedPath().includes($('#pop'))&&!e.target.closest('.lw')&&!e.target.closest('.xr')&&!e.target.closest('.lmw')&&!e.target.closest('.hit .def'))$('#pop').hidden=true});
@@ -1732,7 +1740,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#ov').hidden)ne
 (async()=>{
   await idb.open();
   dicts=((await idb.all())||[]).sort((a,b)=>a.created-b.created);
-  for(const id of ['b-are'])if(dicts.some(d=>d.id===id)){dicts=dicts.filter(d=>d.id!==id);try{await idb.del(id)}catch(e){}}
+  for(const id of ['b-are','b-rai'])if(dicts.some(d=>d.id===id)){dicts=dicts.filter(d=>d.id!==id);try{await idb.del(id)}catch(e){}}
   applyLang();$('#uil').addEventListener('change',e=>{UIL=e.target.value;LS.set('ui',UIL);LS.set('tlm',null);document.body.dataset.tl=tlDef();applyLang();renderTrSec();refresh();laIdx=null;if(UIL!=='de')gerLoad();loadBuiltins().then(()=>{setSync('');refresh()})});
   renderTrSec();$('#trsec').addEventListener('change',e=>{const L=e.target.dataset.tl;if(!L)return;trCfg[L]=e.target.value;LS.set('trcfg',trCfg);renderTrSec();applyLang();renderKb();search()});
   refresh();
