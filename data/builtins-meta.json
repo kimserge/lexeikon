@@ -136,5 +136,11 @@
   "sig": "LebQu",
   "name": "Lebaigue, Quicherat, Dictionnaire latin–français",
   "cpy": "Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007"
+ },
+ {
+  "id": "b-heb",
+  "sig": "TBESH",
+  "name": "STEPBible TBESH — Translators Brief lexicon of Extended Strongs for Hebrew (glosses, Hebrew and Aramaic), Tyndale House Cambridge",
+  "cpy": "Tyndale House Cambridge · STEPBible.org (STEPBible.github.io/STEPBible-Data) · CC BY 4.0 · glosses only"
  }
 ]

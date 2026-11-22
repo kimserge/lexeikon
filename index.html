@@ -376,7 +376,7 @@ body.coarse #sug{display:none!important}body.coarse .qtools{display:none!importa
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.69 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.70 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -395,7 +395,7 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const LS={get(k,d){try{const v=localStorage.getItem('lex_'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('lex_'+k,JSON.stringify(v))}catch(e){}}};
 
 const LORD=k=>{const o=['syr','gez',...Object.keys(LANGS).filter(x=>x!=='syr'&&x!=='gez'&&x!=='xx')];const i=o.indexOf(k);return i<0?99:i};
-const LANGS={syr:['Сирийский','сир.'],ka:['Древнегрузинский','груз.'],grc:['Древнегреческий','греч.'],la:['Латынь','лат.'],hy:['Армянский','арм.'],gez:['Эфиопский (геэз)','эфиоп.'],ar:['Арабский','араб.'],cop:['Коптский','копт.'],xx:['Другой','—']};
+const LANGS={syr:['Сирийский','сир.'],ka:['Древнегрузинский','груз.'],grc:['Древнегреческий','греч.'],la:['Латынь','лат.'],hy:['Армянский','арм.'],gez:['Эфиопский (геэз)','эфиоп.'],ar:['Арабский','араб.'],he:['Иврит и арамейский','ивр.'],cop:['Коптский','копт.'],xx:['Другой','—']};
 /* ---------- interface languages ---------- */
 const EX='<b>mlk</b> → <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> → <span class="sc">ነግሠ</span>, <b>gmerti</b> → <span class="sc">ღმერთი</span>, <b>tagavor</b> → <span class="sc">թագաւոր</span>';
 const I18N={
@@ -412,10 +412,10 @@ const I18N={
   space:'пробел',bksp:'⌫ стереть',off:'не показывать',cons:'Согласные',orders:'Порядки (на примере ለ)',
   sixth:'Шестой порядок: ə; в конце слова и перед слогом с полной гласной не пишется',
   cun:'ъ и ь при наборе можно пропускать; ь можно также набрать как ’.',syrsp:'Спирантизация бгдкпт (ḇ ḡ ḏ ḵ p̄ ṯ) обозначается, только если в написании стоит рукаха (точка под буквой); в неогласованных словах её не видно.',grcn:'γγ → ng, αυ → au, ου → ou; густое придыхание → h, ῥ → rh',copied:'Скопировано',copyfail:'Не удалось скопировать',poptitle:'Латинский словарь',usearia:'Использовать в поиске',onlyaria:'1 — только этот словарь, 2 — все словари, 3 — ни одного',
-  lang:{syr:'Сирийский',ka:'Древнегрузинский',grc:'Древнегреческий',la:'Латынь',hy:'Армянский',gez:'Эфиопский (геэз)',ar:'Арабский',cop:'Коптский',xx:'Другой',cu:'Древнеславянский (кириллица и глаголица)'},
-  chip:{syr:'Сир.',ka:'Груз.',grc:'Греч.',la:'Лат.',hy:'Арм.',gez:'Эфиоп.',ar:'Араб.',cop:'Копт.',xx:'Др.'},
-  tag:{syr:'сир.',ka:'груз.',grc:'греч.',la:'лат.',hy:'арм.',gez:'эфиоп.',ar:'араб.',xx:'—'},
-  sys:{cu_sci:'Научная славистическая: ě ę ǫ ž š č',cu_iso:'ISO 9: ě ǎ ž š č ŝ',syr_sci:'Научная (консонантная)',syr_alt:'Научная с ʔ и ʕ',ka_sci:'Картвелологическая: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Национальная 2002: k’ t’ ts’ ch’ gh',hy_hm:'Хюбшман — Мейе: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Традиционная (Дилльман — Ламбдин): a, ā',gez_ham:'Гамбургская (Encyclopaedia Aethiopica): ä, a',grc_sci:'Научная',ar_din:'DIN 31635',ar_alt:'Научная с ʔ и ʕ',cop_sci:'Научная (Лейтон): š j c ti',cop_simple:'Упрощённая: sh j ky ti'}},
+  lang:{syr:'Сирийский',ka:'Древнегрузинский',grc:'Древнегреческий',la:'Латынь',hy:'Армянский',gez:'Эфиопский (геэз)',ar:'Арабский',he:'Иврит и арамейский',cop:'Коптский',xx:'Другой',cu:'Древнеславянский (кириллица и глаголица)'},
+  chip:{syr:'Сир.',ka:'Груз.',grc:'Греч.',la:'Лат.',hy:'Арм.',gez:'Эфиоп.',ar:'Араб.',he:'Ивр.',cop:'Копт.',xx:'Др.'},
+  tag:{syr:'сир.',ka:'груз.',grc:'греч.',la:'лат.',hy:'арм.',gez:'эфиоп.',ar:'араб.',he:'ивр.',arc:'арам.',xx:'—'},
+  sys:{he_sci:'Научная (SBL): ḥ ṭ ṣ š ś ʾ ʿ',cu_sci:'Научная славистическая: ě ę ǫ ž š č',cu_iso:'ISO 9: ě ǎ ž š č ŝ',syr_sci:'Научная (консонантная)',syr_alt:'Научная с ʔ и ʕ',ka_sci:'Картвелологическая: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Национальная 2002: k’ t’ ts’ ch’ gh',hy_hm:'Хюбшман — Мейе: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Традиционная (Дилльман — Ламбдин): a, ā',gez_ham:'Гамбургская (Encyclopaedia Aethiopica): ä, a',grc_sci:'Научная',ar_din:'DIN 31635',ar_alt:'Научная с ʔ и ʕ',cop_sci:'Научная (Лейтон): š j c ti',cop_simple:'Упрощённая: sh j ky ti'}},
  en:{offh:'Offline download',offdl:'Download everything for offline use (≈12 MB)',offp:'Downloading… {p}%',offok:'Everything is available offline · {d}',offerr:'Download failed: no connection',pj_h:'Create your own ancient dictionary',pj_b:'My dictionary project',pj_n:'The dictionary will appear in the program once approved by the administrator.',lemof:'Form of',pback:'Back',vonly:'Only this dictionary is shown',vall:'All dictionaries',vnf:'Dictionary not found: sign in to “Dictionary projects” in this browser.',upd:'Get latest version (clears the cache)',lgbnote:'turn all dictionaries of a language on or off',tagline:'study dictionaries of ancient languages',interim:'Intermediate recognition, not final',name:'English',
   sub:'Type in transliteration, without diacritics: <b>mlk</b> finds <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Original scripts work too.',
   search:'Search',clear:'Clear',alphabet:'Alphabet',findb:'Search',more:'Show more',copy:'copy',expand:'expand',close:'Close',
@@ -429,10 +429,10 @@ const I18N={
   space:'space',bksp:'⌫ delete',off:'do not show',cons:'Consonants',orders:'Orders (example ለ)',
   sixth:'Sixth order: ə; not written word-finally or before a syllable with a full vowel',
   cun:'ъ and ь may be omitted when typing; ь can also be typed as ’.',syrsp:'Spirantization of bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) is marked only where the spelling has rukkakha (dot below the letter); in unvocalized words it is not visible.',grcn:'γγ → ng, αυ → au, ου → ou; rough breathing → h, ῥ → rh',copied:'Copied',copyfail:'Could not copy',poptitle:'Latin dictionary',usearia:'Use in search',onlyaria:'1 — only this dictionary, 2 — all dictionaries, 3 — none',
-  lang:{syr:'Syriac',ka:'Old Georgian',grc:'Ancient Greek',la:'Latin',hy:'Armenian',gez:'Ethiopic (Gəʿəz)',ar:'Arabic',cop:'Coptic',xx:'Other',cu:'Old Slavonic (Cyrillic and Glagolitic)'},
-  chip:{syr:'Syr.',ka:'Geo.',grc:'Grk.',la:'Lat.',hy:'Arm.',gez:'Eth.',ar:'Arab.',cop:'Copt.',xx:'Oth.'},
-  tag:{syr:'syr.',ka:'geo.',grc:'grk.',la:'lat.',hy:'arm.',gez:'eth.',ar:'arab.',xx:'—'},
-  sys:{cu_sci:'Slavistic scientific: ě ę ǫ ž š č',cu_iso:'ISO 9: ě ǎ ž š č ŝ',syr_sci:'Scientific (consonantal)',syr_alt:'Scientific with ʔ and ʕ',ka_sci:'Kartvelological: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditional (Dillmann–Lambdin): a, ā',gez_ham:'Hamburg (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientific',ar_din:'DIN 31635',ar_alt:'Scientific with ʔ and ʕ',cop_sci:'Scientific (Layton): š j c ti',cop_simple:'Simplified: sh j ky ti'}},
+  lang:{syr:'Syriac',ka:'Old Georgian',grc:'Ancient Greek',la:'Latin',hy:'Armenian',gez:'Ethiopic (Gəʿəz)',ar:'Arabic',he:'Hebrew and Aramaic',cop:'Coptic',xx:'Other',cu:'Old Slavonic (Cyrillic and Glagolitic)'},
+  chip:{syr:'Syr.',ka:'Geo.',grc:'Grk.',la:'Lat.',hy:'Arm.',gez:'Eth.',ar:'Arab.',he:'Heb.',cop:'Copt.',xx:'Oth.'},
+  tag:{syr:'syr.',ka:'geo.',grc:'grk.',la:'lat.',hy:'arm.',gez:'eth.',ar:'arab.',he:'heb.',arc:'aram.',xx:'—'},
+  sys:{he_sci:'Scientific (SBL): ḥ ṭ ṣ š ś ʾ ʿ',cu_sci:'Slavistic scientific: ě ę ǫ ž š č',cu_iso:'ISO 9: ě ǎ ž š č ŝ',syr_sci:'Scientific (consonantal)',syr_alt:'Scientific with ʔ and ʕ',ka_sci:'Kartvelological: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditional (Dillmann–Lambdin): a, ā',gez_ham:'Hamburg (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientific',ar_din:'DIN 31635',ar_alt:'Scientific with ʔ and ʕ',cop_sci:'Scientific (Layton): š j c ti',cop_simple:'Simplified: sh j ky ti'}},
  de:{offh:'Offline laden',offdl:'Alles für die Offline-Nutzung laden (≈12 MB)',offp:'Wird geladen… {p} %',offok:'Alles offline verfügbar · {d}',offerr:'Laden fehlgeschlagen: keine Verbindung',pj_h:'Ein eigenes altsprachliches Wörterbuch anlegen',pj_b:'Mein Wörterbuchprojekt',pj_n:'Das Wörterbuch erscheint im Programm nach Freigabe durch den Administrator.',lemof:'Form von',pback:'Zurück',vonly:'Nur dieses Wörterbuch wird angezeigt',vall:'Alle Wörterbücher',vnf:'Wörterbuch nicht gefunden: bitte in diesem Browser bei „Wörterbuchprojekte“ anmelden.',upd:'Neueste Version (Cache leeren)',lgbnote:'alle Wörterbücher einer Sprache ein- oder ausschalten',tagline:'Studienwörterbücher alter Sprachen',interim:'Vorläufige Texterkennung, nicht endgültig',name:'Deutsch',
   sub:'In Umschrift tippen, ohne Diakritika: <b>mlk</b> findet <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Die Originalschrift geht auch.',
   search:'Suche',clear:'Löschen',alphabet:'Alphabet',findb:'Suchen',more:'Mehr anzeigen',copy:'kopieren',expand:'aufklappen',close:'Schließen',
@@ -446,10 +446,10 @@ const I18N={
   space:'Leerzeichen',bksp:'⌫ löschen',off:'nicht anzeigen',cons:'Konsonanten',orders:'Ordnungen (Beispiel ለ)',
   sixth:'Sechste Ordnung: ə; im Wortauslaut und vor einer Silbe mit Vollvokal nicht geschrieben',
   cun:'ъ und ь können beim Tippen weggelassen werden; ь lässt sich auch als ’ eingeben.',syrsp:'Die Spirantisierung von bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) wird nur angezeigt, wenn die Schreibung ein Rukkākhā (Punkt unter dem Buchstaben) hat; in unvokalisierten Wörtern ist sie nicht erkennbar.',grcn:'γγ → ng, αυ → au, ου → ou; Spiritus asper → h, ῥ → rh',copied:'Kopiert',copyfail:'Kopieren fehlgeschlagen',poptitle:'Lateinisches Wörterbuch',usearia:'In der Suche verwenden',onlyaria:'1 — nur dieses Wörterbuch, 2 — alle Wörterbücher, 3 — keines',
-  lang:{syr:'Syrisch',ka:'Altgeorgisch',grc:'Altgriechisch',la:'Latein',hy:'Armenisch',gez:'Äthiopisch (Gəʿəz)',ar:'Arabisch',cop:'Koptisch',xx:'Andere',cu:'Altslawisch (Kyrillisch und Glagolitisch)'},
-  chip:{syr:'Syr.',ka:'Georg.',grc:'Griech.',la:'Lat.',hy:'Arm.',gez:'Äth.',ar:'Arab.',cop:'Kopt.',xx:'And.'},
-  tag:{syr:'syr.',ka:'georg.',grc:'griech.',la:'lat.',hy:'arm.',gez:'äth.',ar:'arab.',xx:'—'},
-  sys:{cu_sci:'Slavistisch-wissenschaftlich: ě ę ǫ ž š č',cu_iso:'ISO 9: ě ǎ ž š č ŝ',syr_sci:'Wissenschaftlich (konsonantisch)',syr_alt:'Wissenschaftlich mit ʔ und ʕ',ka_sci:'Kartvelologisch: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditionell (Dillmann–Lambdin): a, ā',gez_ham:'Hamburger System (Encyclopaedia Aethiopica): ä, a',grc_sci:'Wissenschaftlich',ar_din:'DIN 31635',ar_alt:'Wissenschaftlich mit ʔ und ʕ',cop_sci:'Wissenschaftlich (Layton): š j c ti',cop_simple:'Vereinfacht: sh j ky ti'}},
+  lang:{syr:'Syrisch',ka:'Altgeorgisch',grc:'Altgriechisch',la:'Latein',hy:'Armenisch',gez:'Äthiopisch (Gəʿəz)',ar:'Arabisch',he:'Hebräisch und Aramäisch',cop:'Koptisch',xx:'Andere',cu:'Altslawisch (Kyrillisch und Glagolitisch)'},
+  chip:{syr:'Syr.',ka:'Georg.',grc:'Griech.',la:'Lat.',hy:'Arm.',gez:'Äth.',ar:'Arab.',he:'Hebr.',cop:'Kopt.',xx:'And.'},
+  tag:{syr:'syr.',ka:'georg.',grc:'griech.',la:'lat.',hy:'arm.',gez:'äth.',ar:'arab.',he:'hebr.',arc:'aram.',xx:'—'},
+  sys:{he_sci:'Wissenschaftlich (SBL): ḥ ṭ ṣ š ś ʾ ʿ',cu_sci:'Slavistisch-wissenschaftlich: ě ę ǫ ž š č',cu_iso:'ISO 9: ě ǎ ž š č ŝ',syr_sci:'Wissenschaftlich (konsonantisch)',syr_alt:'Wissenschaftlich mit ʔ und ʕ',ka_sci:'Kartvelologisch: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'National 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Traditionell (Dillmann–Lambdin): a, ā',gez_ham:'Hamburger System (Encyclopaedia Aethiopica): ä, a',grc_sci:'Wissenschaftlich',ar_din:'DIN 31635',ar_alt:'Wissenschaftlich mit ʔ und ʕ',cop_sci:'Wissenschaftlich (Layton): š j c ti',cop_simple:'Vereinfacht: sh j ky ti'}},
  fr:{offh:'Télécharger hors ligne',offdl:'Tout télécharger pour travailler hors ligne (≈12 Mo)',offp:'Téléchargement… {p} %',offok:'Tout est disponible hors ligne · {d}',offerr:'Échec du téléchargement : pas de connexion',pj_h:'Créer son propre dictionnaire ancien',pj_b:'Mon projet de dictionnaire',pj_n:'Le dictionnaire apparaîtra dans le programme après validation par l’administrateur.',lemof:'Forme de',pback:'Retour',vonly:'Seul ce dictionnaire est affiché',vall:'Tous les dictionnaires',vnf:'Dictionnaire introuvable : connectez-vous aux « Projets de dictionnaires » dans ce navigateur.',upd:'Dernière version (vide le cache)',lgbnote:'activer ou désactiver tous les dictionnaires d’une langue',tagline:'dictionnaires d’étude des langues anciennes',interim:'Reconnaissance intermédiaire, non définitive',name:'Français',
   sub:'Tapez en translittération, sans diacritiques : <b>mlk</b> trouve <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. L’écriture originale fonctionne aussi.',
   search:'Recherche',clear:'Effacer',alphabet:'Alphabet',findb:'Chercher',more:'Afficher plus',copy:'copier',expand:'déplier',close:'Fermer',
@@ -463,10 +463,10 @@ const I18N={
   space:'espace',bksp:'⌫ effacer',off:'ne pas afficher',cons:'Consonnes',orders:'Ordres (exemple ለ)',
   sixth:'Sixième ordre : ə ; non noté en fin de mot ni devant une syllabe à voyelle pleine',
   cun:'ъ et ь peuvent être omis à la saisie ; ь peut aussi se taper ’.',syrsp:'La spirantisation de bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) n’est notée que si la graphie porte le rukkokho (point souscrit) ; dans les mots non vocalisés, elle n’est pas visible.',grcn:'γγ → ng, αυ → au, ου → ou ; esprit rude → h, ῥ → rh',copied:'Copié',copyfail:'Copie impossible',poptitle:'Dictionnaire latin',usearia:'Utiliser dans la recherche',onlyaria:'1 — seulement ce dictionnaire, 2 — tous les dictionnaires, 3 — aucun',
-  lang:{syr:'Syriaque',ka:'Géorgien ancien',grc:'Grec ancien',la:'Latin',hy:'Arménien',gez:'Éthiopien (guèze)',ar:'Arabe',cop:'Copte',xx:'Autre',cu:'Vieux slave (cyrillique et glagolitique)'},
-  chip:{syr:'Syr.',ka:'Géo.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Éth.',ar:'Arab.',cop:'Copte',xx:'Aut.'},
-  tag:{syr:'syr.',ka:'géo.',grc:'gr.',la:'lat.',hy:'arm.',gez:'éth.',ar:'arab.',xx:'—'},
-  sys:{cu_sci:'Scientifique slavistique : ě ę ǫ ž š č',cu_iso:'ISO 9 : ě ǎ ž š č ŝ',syr_sci:'Scientifique (consonantique)',syr_alt:'Scientifique avec ʔ et ʕ',ka_sci:'Kartvélologique : ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nationale 2002 : k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet : tʻ c č ł',hy_lc:'ALA-LC : tʻ ts ch gh',gez_trad:'Traditionnelle (Dillmann–Lambdin) : a, ā',gez_ham:'Hambourg (Encyclopaedia Aethiopica) : ä, a',grc_sci:'Scientifique',ar_din:'DIN 31635',ar_alt:'Scientifique avec ʔ et ʕ',cop_sci:'Scientifique (Layton) : š j c ti',cop_simple:'Simplifiée : sh j ky ti'}},
+  lang:{syr:'Syriaque',ka:'Géorgien ancien',grc:'Grec ancien',la:'Latin',hy:'Arménien',gez:'Éthiopien (guèze)',ar:'Arabe',he:'Hébreu et araméen',cop:'Copte',xx:'Autre',cu:'Vieux slave (cyrillique et glagolitique)'},
+  chip:{syr:'Syr.',ka:'Géo.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Éth.',ar:'Arab.',he:'Héb.',cop:'Copte',xx:'Aut.'},
+  tag:{syr:'syr.',ka:'géo.',grc:'gr.',la:'lat.',hy:'arm.',gez:'éth.',ar:'arab.',he:'héb.',arc:'aram.',xx:'—'},
+  sys:{he_sci:'Scientifique (SBL) : ḥ ṭ ṣ š ś ʾ ʿ',cu_sci:'Scientifique slavistique : ě ę ǫ ž š č',cu_iso:'ISO 9 : ě ǎ ž š č ŝ',syr_sci:'Scientifique (consonantique)',syr_alt:'Scientifique avec ʔ et ʕ',ka_sci:'Kartvélologique : ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nationale 2002 : k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet : tʻ c č ł',hy_lc:'ALA-LC : tʻ ts ch gh',gez_trad:'Traditionnelle (Dillmann–Lambdin) : a, ā',gez_ham:'Hambourg (Encyclopaedia Aethiopica) : ä, a',grc_sci:'Scientifique',ar_din:'DIN 31635',ar_alt:'Scientifique avec ʔ et ʕ',cop_sci:'Scientifique (Layton) : š j c ti',cop_simple:'Simplifiée : sh j ky ti'}},
  it:{offh:'Scarica offline',offdl:'Scarica tutto per l’uso offline (≈12 MB)',offp:'Scaricamento… {p}%',offok:'Tutto disponibile offline · {d}',offerr:'Download non riuscito: nessuna connessione',pj_h:'Crea il tuo dizionario antico',pj_b:'Il mio progetto di dizionario',pj_n:'Il dizionario apparirà nel programma dopo l’approvazione dell’amministratore.',lemof:'Forma di',pback:'Indietro',vonly:'Viene mostrato solo questo dizionario',vall:'Tutti i dizionari',vnf:'Dizionario non trovato: accedete ai «Progetti di dizionario» in questo browser.',upd:'Ultima versione (svuota la cache)',lgbnote:'attivare o disattivare tutti i dizionari di una lingua',tagline:'dizionari di studio delle lingue antiche',interim:'Riconoscimento intermedio, non definitivo',name:'Italiano',
   sub:'Digitate in traslitterazione, senza diacritici: <b>mlk</b> trova <i>mlkʾ</i> <span class="sc">ܡܠܟܐ</span>, <b>ngs</b> — <i>nagśa</i> <span class="sc">ነግሠ</span>, <b>gmerti</b> — <i>ġmerti</i> <span class="sc">ღმერთი</span>. Funziona anche la scrittura originale.',
   search:'Ricerca',clear:'Cancella',alphabet:'Alfabeto',findb:'Cerca',more:'Mostra altri',copy:'copia',expand:'espandi',close:'Chiudi',
@@ -480,10 +480,10 @@ const I18N={
   space:'spazio',bksp:'⌫ cancella',off:'non mostrare',cons:'Consonanti',orders:'Ordini (esempio ለ)',
   sixth:'Sesto ordine: ə; non si scrive in fine di parola né davanti a sillaba con vocale piena',
   cun:'ъ e ь si possono omettere nella digitazione; ь si può anche digitare come ’.',syrsp:'La spirantizzazione di bgdkpt (ḇ ḡ ḏ ḵ p̄ ṯ) è indicata solo se la grafia ha il rukkākhā (punto sotto la lettera); nelle parole non vocalizzate non è visibile.',grcn:'γγ → ng, αυ → au, ου → ou; spirito aspro → h, ῥ → rh',copied:'Copiato',copyfail:'Impossibile copiare',poptitle:'Dizionario latino',usearia:'Usa nella ricerca',onlyaria:'1 — solo questo dizionario, 2 — tutti i dizionari, 3 — nessuno',
-  lang:{syr:'Siriaco',ka:'Georgiano antico',grc:'Greco antico',la:'Latino',hy:'Armeno',gez:'Etiopico (geʿez)',ar:'Arabo',cop:'Copto',xx:'Altro',cu:'Antico slavo (cirillico e glagolitico)'},
-  chip:{syr:'Sir.',ka:'Georg.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Etiop.',ar:'Arab.',cop:'Copto',xx:'Altro'},
-  tag:{syr:'sir.',ka:'georg.',grc:'gr.',la:'lat.',hy:'arm.',gez:'etiop.',ar:'arab.',xx:'—'},
-  sys:{cu_sci:'Scientifica slavistica: ě ę ǫ ž š č',cu_iso:'ISO 9: ě ǎ ž š č ŝ',syr_sci:'Scientifica (consonantica)',syr_alt:'Scientifica con ʔ e ʕ',ka_sci:'Cartvelologica: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nazionale 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Tradizionale (Dillmann–Lambdin): a, ā',gez_ham:'Amburghese (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientifica',ar_din:'DIN 31635',ar_alt:'Scientifica con ʔ e ʕ',cop_sci:'Scientifica (Layton): š j c ti',cop_simple:'Semplificata: sh j ky ti'}}
+  lang:{syr:'Siriaco',ka:'Georgiano antico',grc:'Greco antico',la:'Latino',hy:'Armeno',gez:'Etiopico (geʿez)',ar:'Arabo',he:'Ebraico e aramaico',cop:'Copto',xx:'Altro',cu:'Antico slavo (cirillico e glagolitico)'},
+  chip:{syr:'Sir.',ka:'Georg.',grc:'Gr.',la:'Lat.',hy:'Arm.',gez:'Etiop.',ar:'Arab.',he:'Ebr.',cop:'Copto',xx:'Altro'},
+  tag:{syr:'sir.',ka:'georg.',grc:'gr.',la:'lat.',hy:'arm.',gez:'etiop.',ar:'arab.',he:'ebr.',arc:'aram.',xx:'—'},
+  sys:{he_sci:'Scientifica (SBL): ḥ ṭ ṣ š ś ʾ ʿ',cu_sci:'Scientifica slavistica: ě ę ǫ ž š č',cu_iso:'ISO 9: ě ǎ ž š č ŝ',syr_sci:'Scientifica (consonantica)',syr_alt:'Scientifica con ʔ e ʕ',ka_sci:'Cartvelologica: ḳ ṭ ṗ c̣ č̣ ġ',ka_nat:'Nazionale 2002: k’ t’ ts’ ch’ gh',hy_hm:'Hübschmann–Meillet: tʻ c č ł',hy_lc:'ALA-LC: tʻ ts ch gh',gez_trad:'Tradizionale (Dillmann–Lambdin): a, ā',gez_ham:'Amburghese (Encyclopaedia Aethiopica): ä, a',grc_sci:'Scientifica',ar_din:'DIN 31635',ar_alt:'Scientifica con ʔ e ʕ',cop_sci:'Scientifica (Layton): š j c ti',cop_simple:'Semplificata: sh j ky ti'}}
 };
 let UIL=LS.get('ui',null);
 if(!I18N[UIL]){const n=((navigator.languages&&navigator.languages[0])||navigator.language||'ru').slice(0,2).toLowerCase();UIL=I18N[n]?n:'ru'}
@@ -512,6 +512,7 @@ const KEYS={
  hy:'ա բ գ դ ե զ է ը թ ժ ի լ խ ծ կ հ ձ ղ ճ մ յ ն շ ո չ պ ջ ռ ս վ տ ր ց ւ փ ք օ ֆ',
  cop:'ⲁ ⲃ ⲅ ⲇ ⲉ ⲍ ⲏ ⲑ ⲓ ⲕ ⲗ ⲙ ⲛ ⲝ ⲟ ⲡ ⲣ ⲥ ⲧ ⲩ ⲫ ⲭ ⲯ ⲱ ϣ ϥ ϧ ϩ ϫ ϭ ϯ',
  ar:'ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي ء ة ى',
+ he:'א ב ג ד ה ו ז ח ט י כ ך ל מ ם נ ן ס ע פ ף צ ץ ק ר ש ת',
  gez:[0x1200,0x1208,0x1210,0x1218,0x1220,0x1228,0x1230,0x1240,0x1260,0x1270,0x1280,0x1290,0x12A0,0x12A8,0x12C8,0x12D0,0x12D8,0x12E8,0x12F0,0x1308,0x1320,0x1330,0x1338,0x1340,0x1348,0x1350].map(c=>String.fromCharCode(c)).join(' ')
 };
 
@@ -531,6 +532,8 @@ const KBL={
  hy2:['Հայերեն',['՛ ՜ ՞ ՟ ՚ ՙ','։ ՝ ֊ « » և','ﬓ ﬔ ﬕ ﬖ ﬗ'],'',0,'hy','աբ'],
  ar:['العربية',['ض ص ث ق ف غ ع ه خ ح ج','ش س ي ب ل ا ت ن م ك ط','ئ ء ؤ ر ى ة و ز ظ د ذ'],'',1,'ar2','ـَ'],
  ar2:['العربية',['\u064E \u064F \u0650 \u0652 \u0651 \u064B \u064C \u064D','\u0670 \u0653 \u0654 \u0655 ٱ آ أ إ','، ؛ ؟ ٭ ـ'],'',1,'ar','اب'],
+ he:['עברית',['א ב ג ד ה ו ז ח ט','י כ ך ל מ ם נ ן ס','ע פ ף צ ץ ק ר ש ת'],'',1,'he2','אָ'],
+ he2:['עברית',['\u05B7 \u05B8 \u05B6 \u05B5 \u05B4 \u05B9 \u05BB \u05B0','\u05B2 \u05B1 \u05B3 \u05BC \u05C1 \u05C2 \u05BF','־ ׳ ״ ׃'],'',1,'he','אב'],
  cu:['словѣньскꙑ',['й ц у к е н г ш щ з х ъ','ф ы в а п р о л д ж э ѣ','я ч с м и т ь б ю і ѵ ѳ'],'|ѧ ѡ',0,'cu2','ѫ́:','cu3','Ⰰ'],
  cu2:['словѣньскꙑ',['ѣ і ї ѵ ѳ ѡ ѿ ѕ ꙁ ꙋ ѹ ꙑ','ѧ ѫ ѩ ѭ ꙗ ѥ ѯ ѱ ҁ ꙇ ѻ ꙍ','\u0483 \u0487 \u0484 \u0301 \u0300 \u0486 \u0485 \u0311 ё'],'',0,'cu','АБ'],
  cu3:['ⱄⰾⱁⰲⱑⱀⱐⱄⰽⱏⰹ',['ⰰ ⰱ ⰲ ⰳ ⰴ ⰵ ⰶ ⰷ ⰸ ⰹ ⰻ ⰼ','ⰽ ⰾ ⰿ ⱀ ⱁ ⱂ ⱃ ⱄ ⱅ ⱆ ⱇ ⱈ','ⱋ ⱌ ⱍ ⱎ ⱏ ⱐ ⱑ ⱓ ⱔ ⱘ ⱚ ⱛ'],'ⱉ|ⱗ ⱙ',0,null,null,'cu','АБ'],
@@ -543,7 +546,7 @@ const kGl=c=>GLT[c]?`<span class="gl">${c}<small>${GLT[c]}</small></span>`:null;
 const gezForms=()=>{const q=$('#q'),a=q.selectionStart??q.value.length,c=q.value.slice(0,a).slice(-1),x=c?c.charCodeAt(0):0,b=(x>=0x1200&&x<=0x137F)?x&~7:0x1200;const o=[];for(let k=0;k<8;k++){const ch=String.fromCharCode(b+k);if(/\p{L}/u.test(ch))o.push(ch)}return o};
 
 const kbEx=l=>l==='tr'?(trCfg.syr==='alt'?'ʔ ʕ':'ʾ ʿ'):KBL[l][2];
-const KBO=['tr','syr','gez','ka','grc','hy','ar','cop','cu'];
+const KBO=['tr','syr','gez','ka','grc','hy','ar','he','cop','cu'];
 const KDIA={'᾿':'\u0313','῾':'\u0314','´':'\u0301','`':'\u0300','῀':'\u0342','ͺ':'\u0345','¨':'\u0308'};
 const kMark=c=>!!KDIA[c]||/^\p{M}$/u.test(c);
 const kLab=(c,l)=>KDIA[c]?c:/^\p{M}$/u.test(c)?(/[\u0600-\u074F]/.test(c)||kBase(l)==='syr'?'\u0640'+c:'\u25CC'+c):c;
@@ -555,7 +558,7 @@ const GEZ={0x1210:0x1200,0x1280:0x1200,0x1220:0x1230,0x12D0:0x12A0,0x1340:0x1338
 function norm(s){
   s=String(s).normalize('NFKD').replace(/\p{M}/gu,'').toLowerCase();
   s=s.replace(/ς/g,'σ').replace(/[ⴀ-ⴥ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x2D00+0x10D0))
-     .replace(/[ـ܏()\[\]\-‐·\u055A-\u055F\u0589\u058A«»]/g,'').replace(/[፡-፨]/g,' ').replace(/[ٱ]/g,'ا');
+     .replace(/[ـ܏()\[\]\-‐·\u055A-\u055F\u0589\u058A«»]/g,'').replace(/[፡-፨]/g,' ').replace(/[ٱ]/g,'ا').replace(/־/g,' ').replace(/[ךםןףץ]/g,c=>({'ך':'כ','ם':'מ','ן':'נ','ף':'פ','ץ':'צ'})[c]);
   if(opt.lat)s=s.replace(/j/g,'i').replace(/v/g,'u');
   if(opt.ar)s=s.replace(/ة/g,'ه').replace(/ى/g,'ي');
   if(opt.gez)s=s.replace(/[ሀ-ፗ]/g,c=>{const x=c.charCodeAt(0),b=x&~7;return GEZ[b]?String.fromCharCode(GEZ[b]+(x&7)):c});
@@ -564,7 +567,7 @@ function norm(s){
 const ddir=s=>{const r=(String(s).match(/[\u0590-\u08FF]/g)||[]).length,l=(String(s).match(/[A-Za-z\u00C0-\u024F\u0370-\u03FF\u0400-\u04FF\u0530-\u058F\u10A0-\u10FF\u1200-\u139F\u1F00-\u1FFF]/g)||[]).length;return r>l?'rtl':'ltr'};
 const words=s=>' '+s.replace(/[^\p{L}\p{N}]+/gu,' ').trim()+' ';
 function detect(str){
-  const R={cop:/[Ⲁ-⳿Ϣ-ϯ]/g,syr:/[܀-ݏ]/g,ka:/[Ⴀ-ჿⴀ-⴯Ა-Ჿ]/g,grc:/[Ͱ-Ͽἀ-῿]/g,hy:/[԰-֏]/g,gez:/[ሀ-᎟]/g,ar:/[؀-ۿ]/g,la:/[A-Za-z]/g};
+  const R={cop:/[Ⲁ-⳿Ϣ-ϯ]/g,syr:/[܀-ݏ]/g,ka:/[Ⴀ-ჿⴀ-⴯Ა-Ჿ]/g,grc:/[Ͱ-Ͽἀ-῿]/g,hy:/[԰-֏]/g,gez:/[ሀ-᎟]/g,ar:/[؀-ۿ]/g,he:/[֐-׿]/g,la:/[A-Za-z]/g};
   let best='xx',bn=0;for(const k in R){const n=(str.match(R[k])||[]).length;if(n>bn){bn=n;best=k}}return best;
 }
 
@@ -572,6 +575,7 @@ function detect(str){
 const CL={
  syr:{sem:1,M:'ܐܘܝ',A:'ܐ',m:{')':'ܐ','(':'ܥ',b:'ܒ',v:'ܒ',g:'ܓ',d:'ܕ',h:'ܗܚ',w:'ܘ',z:'ܙ',x:'ܚ',t:'ܬܛ',y:'ܝ',j:'ܝ',k:'ܟ',l:'ܠ',m:'ܡ',n:'ܢ',s:'ܣܨܫ',c:'ܨ',p:'ܦ',f:'ܦ',q:'ܩ',r:'ܪ',sh:'ܫ',kh:'ܟܚ',th:'ܬ',dh:'ܕ',gh:'ܓ',ts:'ܨ'}},
  ar:{sem:1,M:'اوي',A:'ا',m:{')':'اء','(':'عغ',b:'ب',p:'ب',t:'تطث',th:'ث',j:'ج',g:'جغ',gh:'غ',h:'هحخ',x:'خ',kh:'خ',d:'دضذ',dh:'ذ',r:'ر',z:'زظذ',s:'سصش',sh:'ش',c:'ص',f:'ف',v:'ف',q:'ق',k:'ك',l:'ل',m:'م',n:'ن',w:'و',y:'ي'}},
+ he:{sem:1,M:'והי',A:'א',m:{')':'א','(':'ע',b:'ב',v:'בו',g:'ג',d:'ד',h:'הח',w:'ו',z:'ז',x:'ח',kh:'כח',ch:'ח',t:'טת',th:'ת',y:'י',j:'י',k:'כק',l:'ל',m:'מ',n:'נ',s:'סשצ',sh:'ש',c:'צ',ts:'צ',tz:'צ',p:'פ',f:'פ',ph:'פ',q:'ק',r:'ר'}},
  gez:{sem:1,M:'',A:'አ',m:{')':'አ','(':'ዐ',h:'ሀሐኀ',x:'ኀኸ',kh:'ኀኸ',l:'ለ',m:'መ',s:'ሰሠሸጸፀ',sh:'ሸ',r:'ረ',q:'ቀ',b:'በ',v:'ቨ',t:'ተጠ',c:'ቸጨጸ',ch:'ቸጨ',n:'ነኘ',k:'ከኸ',w:'ወ',z:'ዘዠ',y:'የ',d:'ደፀ',j:'ጀ',g:'ገጀ',p:'ፐጰ',f:'ፈ'}},
  ka:{m:{a:'ა',b:'ბ',g:'გღ',d:'დ',e:'ეჱ',v:'ვ',z:'ზჟძ',t:'თტ',i:'იჲ',k:'კქ',l:'ლ',m:'მ',n:'ნ',o:'ოჵ',p:'პფ',f:'ფჶ',r:'რ',s:'სშ',u:'უჳ',w:'ჳ',y:'ჲ',q:'ყჴ',x:'ხ',c:'ცწჩჭ',j:'ჯძ',h:'ჰ',sh:'შ',zh:'ჟ',gh:'ღ',kh:'ხ',ch:'ჩჭ',ts:'ცწ',dz:'ძ','ʒ':'ძ',th:'თ',ph:'ფ'}},
  hy:{m:{a:'ա',b:'բ',g:'գղ',d:'դ',e:'եէը',z:'զժձ',t:'տթ',i:'ի',l:'լղ',x:'խ',c:'ծցճչ',k:'կք',q:'ք',h:'հ',j:'ձջ',m:'մ',y:'յ',n:'ն',s:'սշ',o:'ոօ',p:'պփ',f:'ֆ',r:'րռ',v:{re:'վ|ու|ւ',show:'վւ'},w:'ւ',ew:'և',u:{re:'ու|ւ',show:'ու'},'ə':'ը','@':'ը',sh:'շ',zh:'ժ',gh:'ղ',kh:'խ',ch:'ճչ',ts:'ծց',dz:'ձ','ʒ':'ձ','ł':'ղ',th:'թ',ph:'փ'}},
@@ -706,6 +710,7 @@ const RTM={
  hy:{'ա':'a','բ':'b','գ':'g','դ':'d','ե':'e','զ':'z','է':'ē','ը':'ə','թ':'tʻ','ժ':'ž','ի':'i','լ':'l','խ':'x','ծ':'c','կ':'k','հ':'h','ձ':'j','ղ':'ł','ճ':'č','մ':'m','յ':'y','ն':'n','շ':'š','ո':'o','չ':'čʻ','պ':'p','ջ':'ǰ','ռ':'ṙ','ս':'s','վ':'v','տ':'t','ր':'r','ց':'cʻ','ւ':'w','փ':'pʻ','ք':'kʻ','օ':'ō','ֆ':'f','և':'ew'},
  syr:{'ܐ':'ʾ','ܒ':'b','ܓ':'g','ܕ':'d','ܗ':'h','ܘ':'w','ܙ':'z','ܚ':'ḥ','ܛ':'ṭ','ܝ':'y','ܟ':'k','ܠ':'l','ܡ':'m','ܢ':'n','ܣ':'s','ܥ':'ʿ','ܦ':'p','ܨ':'ṣ','ܩ':'q','ܪ':'r','ܫ':'š','ܬ':'t'},
  ar:{'ء':'ʾ','ا':'ā','ب':'b','ت':'t','ث':'ṯ','ج':'ǧ','ح':'ḥ','خ':'ḫ','د':'d','ذ':'ḏ','ر':'r','ز':'z','س':'s','ش':'š','ص':'ṣ','ض':'ḍ','ط':'ṭ','ظ':'ẓ','ع':'ʿ','غ':'ġ','ف':'f','ق':'q','ك':'k','ل':'l','م':'m','ن':'n','ه':'h','و':'w','ي':'y','ى':'ā','ة':'a'},
+ he:{'א':'ʾ','ב':'b','ג':'g','ד':'d','ה':'h','ו':'w','ז':'z','ח':'ḥ','ט':'ṭ','י':'y','כ':'k','ך':'k','ל':'l','מ':'m','ם':'m','נ':'n','ן':'n','ס':'s','ע':'ʿ','פ':'p','ף':'p','צ':'ṣ','ץ':'ṣ','ק':'q','ר':'r','ש':'š','ת':'t'},
  cop:{'ⲁ':'a','ⲃ':'b','ⲅ':'g','ⲇ':'d','ⲉ':'e','ⲍ':'z','ⲏ':'ē','ⲑ':'th','ⲓ':'i','ⲕ':'k','ⲗ':'l','ⲙ':'m','ⲛ':'n','ⲝ':'ks','ⲟ':'o','ⲡ':'p','ⲣ':'r','ⲥ':'s','ⲧ':'t','ⲩ':'u','ⲫ':'ph','ⲭ':'kh','ⲯ':'ps','ⲱ':'ō','ϣ':'š','ϥ':'f','ϧ':'x','ϩ':'h','ϫ':'j','ϭ':'c','ϯ':'ti'},
  grc:{'α':'a','β':'b','γ':'g','δ':'d','ε':'e','ζ':'z','η':'ē','θ':'th','ι':'i','κ':'k','λ':'l','μ':'m','ν':'n','ξ':'x','ο':'o','π':'p','ρ':'r','σ':'s','ς':'s','τ':'t','υ':'y','φ':'ph','χ':'ch','ψ':'ps','ω':'ō'}
 };
@@ -720,11 +725,12 @@ const TRS={
  gez:{trad:{n:'gez_trad',V:['a','u','i','ā','e','ə','o','ʷā'],VL:['a','','i','ā','e','ə','',''],B:Object.assign({},GZB,{0x1340:'ṣ́'})},
       ham:{n:'gez_ham',V:GZV,VL:GZL,B:GZB}},
  grc:{sci:{n:'grc_sci',m:RTM.grc}},
+ he:{sci:{n:'he_sci',m:RTM.he}},
  ar:{din:{n:'ar_din',m:RTM.ar},alt:{n:'ar_alt',m:Object.assign({},RTM.ar,{'ء':'ʔ','ع':'ʕ'})}},
  cu:{sci:{n:'cu_sci',m:{"а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "є": "e", "ж": "ž", "ѕ": "ʒ", "з": "z", "ꙁ": "z", "и": "i", "і": "i", "ї": "i", "ꙇ": "i", "й": "j", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o", "ѻ": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ꙋ": "u", "ѹ": "u", "ф": "f", "х": "x", "ѡ": "ō", "ꙍ": "ō", "ѿ": "ōt", "ц": "c", "ч": "č", "ш": "š", "щ": "št", "ъ": "ŭ", "ы": "y", "ꙑ": "y", "ь": "ĭ", "ѣ": "ě", "ю": "ju", "я": "ja", "ꙗ": "ja", "ѥ": "je", "ѧ": "ę", "ѫ": "ǫ", "ѩ": "ję", "ѭ": "jǫ", "ѯ": "ks", "ѱ": "ps", "ѳ": "θ", "ѵ": "ü", "ё": "jo", "э": "ė", "ⰰ": "a", "ⰱ": "b", "ⰲ": "v", "ⰳ": "g", "ⰴ": "d", "ⰵ": "e", "ⰶ": "ž", "ⰷ": "ʒ", "ⰸ": "z", "ⰹ": "ï", "ⰺ": "i", "ⰻ": "i", "ⰼ": "ǵ", "ⰽ": "k", "ⰾ": "l", "ⰿ": "m", "ⱀ": "n", "ⱁ": "o", "ⱂ": "p", "ⱃ": "r", "ⱄ": "s", "ⱅ": "t", "ⱆ": "u", "ⱇ": "f", "ⱈ": "x", "ⱉ": "ō", "ⱋ": "št", "ⱌ": "c", "ⱍ": "č", "ⱎ": "š", "ⱏ": "ŭ", "ⱐ": "ĭ", "ⱑ": "ě", "ⱓ": "ju", "ⱔ": "ę", "ⱗ": "ję", "ⱘ": "ǫ", "ⱙ": "jǫ", "ⱚ": "θ", "ⱛ": "ü"}},iso:{n:'cu_iso',m:{"а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ё": "ë", "ж": "ž", "ѕ": "ẑ", "з": "z", "и": "i", "і": "ì", "й": "j", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h", "ц": "c", "ч": "č", "ш": "š", "щ": "ŝ", "ъ": "ʺ", "ы": "y", "ь": "ʹ", "ѣ": "ě", "э": "è", "ю": "û", "я": "â", "ѫ": "ǎ", "ѳ": "f̀", "ѵ": "ỳ"}}},
  cop:{sci:{n:'cop_sci',m:RTM.cop},simple:{n:'cop_simple',m:Object.assign({},RTM.cop,{'ϣ':'sh','ϧ':'kh','ϭ':'ky'})}}
 };
-let trCfg=Object.assign({cu:'sci',syr:'sci',ka:'sci',hy:'hm',gez:'trad',grc:'sci',ar:'din',cop:'sci'},LS.get('trcfg',{}));
+let trCfg=Object.assign({cu:'sci',syr:'sci',ka:'sci',hy:'hm',gez:'trad',grc:'sci',ar:'din',he:'sci',cop:'sci'},LS.get('trcfg',{}));
 function arTr(w,m){const V={'َ':'a','ِ':'i','ُ':'u'},T={'ً':'an','ٍ':'in','ٌ':'un'},SUN='تثدذرزسشصضطظلن';
   const info=x=>({v:x.k.map(k=>V[k]).find(Boolean)||'',t:x.k.map(k=>T[k]).find(Boolean)||'',d:x.k.includes('ّ'),s:x.k.includes('ْ'),l:x.k.includes('ٰ')});
   const H=m['ء']||'ʾ';const CN=wd=>[...wd.replace(/ـ/g,'')].map((c,i)=>c==='ا'?(i?'ā':H):c==='آ'?H+'ā':'أإؤئء'.includes(c)?H:c==='ى'?'ā':c==='ة'?'a':c==='و'?'w':c==='ي'?'y':(m[c]!=null?m[c]:c)).join('');
@@ -767,11 +773,28 @@ function sciTr(w,L){
     for(let i=0;i<a.length;i++){const c=a[i];if(/\p{M}/u.test(c))continue;let j=i+1,rk=false;while(j<a.length&&/\p{M}/u.test(a[j])){if(a[j]==='\u0742')rk=true;j++}r+=rk&&SP[c]?SP[c]:(sys.m[c]??c)}
     return r}
   if(L==='ar')return arTr(s,sys.m);
+  if(L==='he')return heTr(s,sys.m);
   if(L==='hy')s=s.toLowerCase().replace(/ու/g,'u');
   if(L==='cop')s=s.normalize('NFD').replace(/\p{M}/gu,'').toLowerCase();
   if(L==='cu')s=s.toLowerCase().replace(/[\u0483-\u0489\u0300\u0301\u0311]/g,'');
   return [...s].map(c=>sys.m[c]??c).join('');
 }
+function heTr(w,m){const V={'\u05B7':'a','\u05B8':'ā','\u05B6':'e','\u05B5':'ē','\u05B4':'i','\u05B9':'ō','\u05BA':'ō','\u05BB':'u','\u05B2':'ă','\u05B1':'ĕ','\u05B3':'ŏ','\u05C7':'o'};
+  return w.normalize('NFD').replace(/[\u0591-\u05AF\u05BD\u05C0\u05C3\u05C4\u05C5]/g,'').split(/([\s\u05BE]+)/).map(wd=>{if(/^[\s\u05BE]+$/.test(wd))return wd.replace(/\u05BE/g,'-');
+    const cl=[];for(const c of wd){if(/\p{M}/u.test(c)&&cl.length)cl[cl.length-1].k.push(c);else cl.push({c,k:[]})}
+    let r='',pv='';
+    cl.forEach((x,i)=>{const k=x.k,dg=k.includes('\u05BC'),v=k.map(q=>V[q]).find(Boolean)||'',sh=k.includes('\u05B0'),last=i===cl.length-1;
+      if(x.c==='ו'&&!v&&dg&&!pv&&i>0){r+='û';pv='û';return}
+      if(x.c==='ו'&&v==='ō'&&i>0&&!pv){r+='ō';pv='ō';return}
+      if(x.c==='י'&&!k.length&&i>0&&/[iēe]$/.test(pv)){r=r.slice(0,-1)+({i:'î',ē:'ê',e:'ê'})[pv];pv='';return}
+      if(x.c==='ה'&&!k.length&&last&&pv){const t={ā:'â',e:'ê',ē:'ê',ō:'ô'}[pv];if(t){r=r.slice(0,-1)+t;return}}
+      if(x.c==='ו'&&v==='ō'&&!pv&&i>0){r+='ō';return}
+      let c=m[x.c]??x.c;if(x.c==='ש'&&k.includes('\u05C2'))c='ś';
+      if(dg&&pv&&!'הא'.includes(x.c))c=c+c;
+      r+=c;const vv=v||(sh&&(i===0||dg)?'ə':'');
+      if(x.c==='ו'&&v==='ō'){}
+      r+=vv;pv=vv});
+    return r}).join('')}
 const trTag=(w,L)=>{const t=sciTr(w,L);return t?`<span class="tr">${esc(t)}</span>`:''};
 function keysFor(L,ch){const c=CL[L];if(!c)return '';const out=[];
   const nc=norm(ch);for(const [k,v] of Object.entries(c.m)){const ok=typeof v==='object'?v.re.split('|').includes(ch):[...v].some(x=>x===ch||norm(x)===nc);if(!ok)continue;
@@ -880,7 +903,7 @@ async function loadUserDicts(){
   if(VPID)try{const r=await fetch(PAPI+'/admin/projects/'+encodeURIComponent(VPID),{headers:{Authorization:'Bearer '+a.token}});if(r.ok){const d=await r.json();if(d&&d.entries&&!dicts.some(x=>(x.base||x.id)===d.id))dicts.push(...userSplit(d,100,false))}}catch(e){}
   try{const r=await fetch(PAPI+'/dicts',{headers:{Authorization:'Bearer '+a.token}});if(!r.ok)return;const L=await r.json();
     for(const d of L){if(!d.entries||!d.entries.length)continue;dicts=dicts.filter(x=>(x.base||x.id)!==d.id);dicts.push(...userSplit(d,100,true))}refresh()}catch(e){}}
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','are','kun','psm'],BVER=43;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','cop','che','graf','are','kun','psm','heb'],BVER=44;
 const latExtra=()=>({en:'laen',de:'lade',it:'laen',fr:'lafr'})[UIL];
 const BHID=new Set(),BNOS=new Set();
 async function loadBCfg(){try{const C=await (await fetch('data/builtins.json',{cache:'no-store'})).json();
@@ -1046,7 +1069,7 @@ function more(){
 function gExpand(g){const y=scrollY,n=shown;gOpen.add(g);$('#res').innerHTML='';shown=0;inbHead=false;while(shown<n&&shown<results.length)more();scrollTo({top:y})}
 function hitHtml([s,_,d,i],kk){{const j=0,k0=kk;const e=d.entries[i],l=elang(d,i);
     let sep='';if(s===3&&!inbHead){inbHead=true;sep=`<li class="sep">${I.inbody} · ${results.filter(r=>r[0]===3).length.toLocaleString(UIL)}</li>`}
-    return sep+`<li class="${s===3?'inb':''}" data-k="${k0+j}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hlf"><span class="hw" dir="auto">${s<3?hlHead(e[0],s,l):esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(LANGS[l]?LANGS[l][1]:'')} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn(e):''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}}
+    return sep+`<li class="${s===3?'inb':''}" data-k="${k0+j}"><article class="hit" data-d="${esc(d.id)}" data-i="${i}"><div class="hd"><div class="hlf"><span class="hw" dir="auto">${s<3?hlHead(e[0],s,l):esc(e[0])}</span>${trTag(e[0],l)}<span class="tag">${esc(e[3]&&e[3].tg&&I.tag&&I.tag[e[3].tg]||(LANGS[l]?LANGS[l][1]:''))} · <abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="hb">${trOf(e)?trBtn(e):''}<button class="cp" type="button" aria-label="${esc(I.copy)}" title="${esc(I.copy)}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div><div class="def" dir="${l==='ar'&&!LATDEF.has(d.id)?ddir(e[1]):'ltr'}">${(h=>s===3?markHits(h):h)(defHtml(d,e,l))}</div></article></li>`}}
 
 /* ---------- entry formatting ---------- */
 function arForms(raw){const W='[\\u0600-\\u06FF]+(?:[ \\t]+[\\u0600-\\u06FF]+)*',R=new RegExp('^'+W+'(?:(?:\\s*,\\s*|\\s+\\x02(?:et|and)\\x03\\s+)'+W+')*');return String(raw).split('\n').map(ln=>ln.replace(R,m=>m.replace(new RegExp(W,'g'),'$&'))).join('\n')}
@@ -1114,14 +1137,14 @@ function formatDef0(raw,L,hw,noRoot){
     return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
   }).join('');
 }
-const GLOSS={'b-psm':'en','b-are':'en','b-graf':'de','b-brk':'la','b-ml':'en','b-kun':'fr de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-lade':'de','b-mis':'la','b-rai':'it','b-syr':'la'};
+const GLOSS={'b-psm':'en','b-are':'en','b-graf':'de','b-brk':'la','b-ml':'en','b-kun':'fr de','b-che':'la','b-agwb':'de','b-cos':'fr','b-cop':'en','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-heb':'en','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-lade':'de','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-brk','b-gez','b-dil','b-mis','b-che']);
 const plain=s=>String(s||'').replace(/[\x02-\x07\x0b\x0c\u2060\uE000-\uE013]/g,'');
 
 /* ---------- UI rendering ---------- */
 function langsPresent(){const s=new Set();for(const d of dicts){if(d.lang==='mix')d.entries.forEach(e=>s.add(e[2]));else s.add(d.lang)}return Object.keys(LANGS).filter(k=>s.has(k))}
 function renderChips(){}
-const GLY={syr:'ܐ',ka:'შ',grc:'Ω',la:'L',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ظ'};
+const GLY={syr:'ܐ',ka:'შ',grc:'Ω',la:'L',hy:'Ա',gez:'አ',cop:'Ϣ',ar:'ظ',he:'א'};
 function renderLgb(){const by={};for(const d of dicts){if(d.lang==='mix'||BHID.has(d.id))continue;for(const L of new Set([d.lang,...(d.user&&d.lb?[d.lb]:[])]))(by[L]=by[L]||[]).push(d.id)}
   $('#lgb').innerHTML=['syr','gez',...Object.keys(LANGS).filter(k=>k!=='syr'&&k!=='gez')].filter(k=>by[k]).map(k=>{const on=by[k].some(id=>!off.has(id)),n=(I.lang&&I.lang[k])||LANGS[k][0];return `<button data-g="${k}" class="${on?'':'off'}" aria-pressed="${on}" title="${esc(n)}" aria-label="${esc(n)}" ><span class="s" lang="${k}">${GLY[k]||k}</span><span class="a">${esc((I.chip&&I.chip[k]||k).replace(/\.$/,''))}</span></button>`}).join('')}
 const INTERIM=new Set(['b-psm','b-graf','b-brk','b-kun','b-che','b-cos','b-ka','b-rai','b-mis']);
@@ -1139,6 +1162,7 @@ const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-lade':['FD Lat–Dt','FreeDict Latein–Deutsch (Sebastian Humenda)'],
  'b-laen':['Whit','William Whitaker, Latin–English dictionary (Words)'],
  'b-lafr':['LebQu','Lebaigue, Quicherat, Dictionnaire latin–français'],
+ 'b-heb':['TBESH','STEPBible TBESH — Translators Brief lexicon of Extended Strongs for Hebrew (glosses, Hebrew and Aramaic), Tyndale House Cambridge'],
  'b-hy':['Bedr','Matthias Bedrossian, New Dictionary Armenian–English, Venice 1875–1879'],
  'b-mis':['Misk','Joannes Miskgian, Manuale lexicon armeno-latinum ad usum scholarum, Romae 1887'],
  'b-cop':['SahGl','Sahidic Coptic–English glossary'],
@@ -1151,7 +1175,7 @@ const SIG={'b-syr':['LexSyr','Lexidion Syriacum'],
  'b-ml':['MLS','H. G. Liddell, R. Scott, An Intermediate Greek-English Lexicon, Oxford: Clarendon Press 1889']};
 const sgl=d=>SIG[d.id]?SIG[d.id][0]:d.name,fullN=d=>SIG[d.id]?SIG[d.id][1]:d.name;
 const INL=new Set();
-const CPY={'b-psm':()=>'Payne Smith 1903 · public domain · OCR LexEikôn: p. 98–107','b-are':()=>'Arabeyes · FreeDict · GNU GPL 2+','b-graf':()=>'© CSCO · OCR LexEikôn: p. 1–2','b-brk':()=>'OCR LexEikôn: p. 789–790','b-ml':()=>'Perseus Digital Library (perseus.tufts.edu) · CC BY-SA 3.0 US','b-kun':()=>'© B. O. Künzle · OCR LexEikôn: p. 1–5','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–424, 485','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'© Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · © Calfa (dictionary.calfa.fr) · CC BY-NC 4.0, used with permission','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lade':()=>'FreeDict · GNU GPL 3+','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
+const CPY={'b-heb':()=>'Tyndale House Cambridge · STEPBible.org (STEPBible.github.io/STEPBible-Data) · CC BY 4.0 · glosses only','b-psm':()=>'Payne Smith 1903 · public domain · OCR LexEikôn: p. 98–107','b-are':()=>'Arabeyes · FreeDict · GNU GPL 2+','b-graf':()=>'© CSCO · OCR LexEikôn: p. 1–2','b-brk':()=>'OCR LexEikôn: p. 789–790','b-ml':()=>'Perseus Digital Library (perseus.tufts.edu) · CC BY-SA 3.0 US','b-kun':()=>'© B. O. Künzle · OCR LexEikôn: p. 1–5','b-che':()=>'L. Cheikho · OCR LexEikôn: p. 419–424, 485','b-agwb':()=>'© Jost Gippert, TITUS','b-cos':()=>'© Dar el-Machreq · OCR LexEikôn: p. 374','b-dil':()=>'© TraCES / Hiob-Ludolf-Zentrum, Hamburg · CC BY-NC-SA 4.0','b-gez':()=>'Dillmann 1866 · public domain · DSL','b-syr':()=>'DSL · '+I.cp_unk,'b-ka':()=>'© '+I.cp_auth+' · DSL','b-la':()=>'© '+I.cp_auth+' · DSL','b-hy':()=>'Bedrossian 1875–1879 · © Calfa (dictionary.calfa.fr) · CC BY-NC 4.0, used with permission','b-mis':()=>'J. Miskgian, Romae 1887 · public domain · OCR LexEikôn: Ա','b-grc':()=>'И. Х. Дворецкий 1958 · DSL: С. Гурин, А. Кайдалов','b-kac':()=>'Н. Чубинашвили 1887 · public domain · DSL: promemo','b-rai':()=>'O. Raineri · DSL (Lingvo)','b-cop':()=>'DSL · '+I.cp_unk,'b-laen':()=>'W. Whitaker · public domain','b-lade':()=>'FreeDict · GNU GPL 3+','b-lafr':()=>'Lebaigue 1881, Quicherat 1866/1892 · public domain · DSL: Leiris 2007'};
 let onlyD=VIEW?null:LS.get('onlyd',null),onlyN=VIEW?0:LS.get('onlyn',onlyD?1:0);
 function renderLib(){
   const HIDE=new Set([...BHID]);renderLgb();const vis=dicts.filter(d=>!HIDE.has(d.id)),act=vis.filter(d=>!off.has(d.id));$('#libn').textContent=I.libn(act.length,vis.length,act.reduce((n,d)=>n+d.entries.length,0).toLocaleString(UIL));
@@ -1389,7 +1413,7 @@ function xrFind(w,did){const n=x=>norm(String(x).replace(/^[\d.]+/,'').replace(/
   const d0=dicts.find(x=>x.id===did);if(d0&&d0.user){const L=scriptLang(w),r=[];for(const d of dicts)if(!srchOff(d.id)&&!d.user&&(d.lang===L||d.lang==='mix'))for(const x of hit(d))if(elang(x[0],x[1])===L)r.push(x);return r}let r=d0?hit(d0):[];
   if(!r.length){const L=d0&&d0.lang;for(const d of dicts)if(d!==d0&&!srchOff(d.id)&&(!L||d.lang===L))r.push(...hit(d))}
   return r}
-function scriptLang(w){const c=[...String(w)].find(x=>/\p{L}/u.test(x))||'',u=c.codePointAt(0)||0;return u>=0x700&&u<0x750?'syr':u>=0x1200&&u<0x13a0?'gez':(u>=0x10a0&&u<0x1100)||(u>=0x2d00&&u<0x2d30)?'ka':(u>=0x370&&u<0x400)||(u>=0x1f00&&u<0x2000)?'grc':u>=0x530&&u<0x590?'hy':u>=0x600&&u<0x700?'ar':(u>=0x2c80&&u<0x2d00)||(u>=0x3e2&&u<0x3f0)?'cop':'la'}
+function scriptLang(w){const c=[...String(w)].find(x=>/\p{L}/u.test(x))||'',u=c.codePointAt(0)||0;return u>=0x700&&u<0x750?'syr':u>=0x1200&&u<0x13a0?'gez':(u>=0x10a0&&u<0x1100)||(u>=0x2d00&&u<0x2d30)?'ka':(u>=0x370&&u<0x400)||(u>=0x1f00&&u<0x2000)?'grc':u>=0x530&&u<0x590?'hy':u>=0x600&&u<0x700?'ar':u>=0x590&&u<0x600?'he':(u>=0x2c80&&u<0x2d00)||(u>=0x3e2&&u<0x3f0)?'cop':'la'}
 
 /* ---------- morphology: Greek (CLTK lemmata) and Arabic (Arramooz) ---------- */
 const MC={};const mget=(u,t)=>MC[u]||(MC[u]=fetch(u).then(r=>r.ok?(t?r.text():r.json()):null).catch(()=>null));
