@@ -142,5 +142,17 @@
   "sig": "TBESH",
   "name": "STEPBible TBESH — Translators Brief lexicon of Extended Strongs for Hebrew (glosses, Hebrew and Aramaic), Tyndale House Cambridge",
   "cpy": "Tyndale House Cambridge · STEPBible.org (STEPBible.github.io/STEPBible-Data) · CC BY 4.0 · glosses only"
+ },
+ {
+  "id": "b-hyf",
+  "sig": "Calfa",
+  "name": "Ambroise Calfa, Dictionnaire arménien-français, Paris 1861 (Calfa.fr)",
+  "cpy": "Calfa 1861 · © Calfa (dictionary.calfa.fr) · CC BY-NC 4.0, used with permission"
+ },
+ {
+  "id": "b-dyach",
+  "sig": "Djač",
+  "name": "Г. Дьяченко, Полный церковнославянский словарь, М. 1900 (сокращённая редакция ABBYY Lingvo)",
+  "cpy": "Дьяченко 1900 · ред. ABBYY Lingvo · DSL: lingvoda.ru, dic.1963.ru"
  }
 ]
