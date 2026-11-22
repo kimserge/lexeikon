@@ -304,6 +304,15 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
 .gob{display:none}body.coarse.qv .gob{display:flex;position:absolute;right:6px;top:50%;transform:translateY(-50%);align-items:center;gap:4px;border:0;border-radius:9px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--ink);font:600 14px 'Noto Sans',sans-serif;padding:0 12px;height:40px;cursor:pointer}body.coarse.qv #q{padding-right:118px}body.coarse #clr{display:none}body.coarse.scd .qtools{display:none}body.coarse #kbB,body.coarse #kb{display:none}
 @media (min-width:700px){.mkb{--kw:62px;--fw:84px;--g:8px;padding:8px 10px calc(10px + env(safe-area-inset-bottom))}.mkb .r{max-width:980px;height:min(56px,7.2vh);gap:8px;margin:8px auto}.mkb .ks,.mkb .rb .sl,.mkb .rb .sr{gap:8px}.mkb button{max-width:72px;font-size:26px;border-radius:9px}.mkb button.dm{font-size:28px}.mkb .f{flex:0 0 84px;max-width:84px}.mkb .bs{flex:0 0 84px;max-width:84px}.mkb .sp{font-size:16px}.mkb svg{width:26px;height:26px}}
 body.coarse #sug{display:none!important}body.coarse .qtools{display:none!important}body.mkbo .qtools{display:none}body.mkbo{padding-bottom:var(--mkbh,240px)}body.mkbo .ljmp,body.mkbo .jmp{bottom:calc(var(--mkbh,240px) + 8px)}
+@media(min-width:900px){body:not(.coarse) .hdr .top{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto 1fr;column-gap:36px;row-gap:12px;align-items:start;padding-top:calc(18px + var(--sat));padding-bottom:16px}
+body:not(.coarse) .hdr .top .tin,body:not(.coarse) .hdr .top .tin>div{display:contents}
+body:not(.coarse) .hdr .hrow{grid-column:1;grid-row:1;display:flex;flex-direction:row;align-items:center;gap:12px;flex-wrap:nowrap}
+body:not(.coarse) .hdr .hrow h1{margin:0}
+body:not(.coarse) .hdr .lgb{grid-column:1;grid-row:2;margin:0;align-self:start}
+body:not(.coarse) .hdr .pres{grid-column:2;grid-row:1/3;align-self:center;min-width:0}
+body:not(.coarse) .hdr .pres p{margin:0 0 4px}
+body:not(.coarse) .hdr .pres .sub{margin-top:0}}
+@media(min-width:900px) and (max-width:1199px){body:not(.coarse) .hdr .pres p{font-size:12px;line-height:1.35}body:not(.coarse) .hdr .tg{font-size:15px;max-width:180px;line-height:1.2}}
 </style>
 </head>
 <body>
@@ -312,9 +321,9 @@ body.coarse #sug{display:none!important}body.coarse .qtools{display:none!importa
   <div class="tin">
     <div>
       <div class="hrow"><select id="uil" class="uil" data-i18n-aria="uilang"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select><h1>LexEikôn</h1><span class="tg" data-i18n="tagline"></span><button id="allB" class="allb" type="button" aria-pressed="false"></button></div>
-      <p class="sub" data-i18n="sub"></p>
+      <div class="pres"><p class="sub" data-i18n="sub"></p>
       <p class="sub2" data-i18n="latnote"></p>
-      <p class="credit" data-i18n="credit"></p>
+      <p class="credit" data-i18n="credit"></p></div>
     </div>
   </div>
   <div class="lgb" id="lgb" role="group" data-i18n-aria="langgrp"></div>
@@ -382,7 +391,7 @@ body.coarse #sug{display:none!important}body.coarse .qtools{display:none!importa
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.121 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.122 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -910,7 +919,7 @@ async function loadUserDicts(){
   if(VPID)try{const r=await fetch(PAPI+'/admin/projects/'+encodeURIComponent(VPID),{headers:{Authorization:'Bearer '+a.token}});if(r.ok){const d=await r.json();if(d&&d.entries&&!dicts.some(x=>(x.base||x.id)===d.id))dicts.push(...userSplit(d,100,false))}}catch(e){}
   try{const r=await fetch(PAPI+'/dicts',{headers:{Authorization:'Bearer '+a.token}});if(!r.ok)return;const L=await r.json();
     for(const d of L){if(!d.entries||!d.entries.length)continue;dicts=dicts.filter(x=>(x.base||x.id)!==d.id);dicts.push(...userSplit(d,100,true))}refresh()}catch(e){}}
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','ccl','che','graf','are','kun','psm','heb','hyf','dyach'],BVER=87;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','ccl','che','graf','are','kun','psm','heb','hyf','dyach'],BVER=88;
 const latExtra=()=>({en:'laen',de:'lade',it:'laen',fr:'lafr'})[UIL];
 const BHID=new Set(),BNOS=new Set();
 async function loadBCfg(){try{const C=await (await fetch('data/builtins.json',{cache:'no-store'})).json();
@@ -1197,7 +1206,7 @@ function renderLib(){
   $('#dl').innerHTML=lg.map((g,n)=>`<li class="dlg g${n%2}" data-lg="${esc(g)}">${esc(g==='mix'?'7 языков':(LANGS[g]||LANGS.xx)[0])}</li>`+vis.filter(d=>d.lang===g).map(d=>`<li class="g${n%2}"><input type="checkbox" data-t="${esc(d.id)}" ${srchOff(d.id)?'':'checked'} ${BNOS.has(d.id)?'disabled':''} aria-label="${I.usearia}" title="${I.usearia}" style="width:20px;height:20px;accent-color:var(--lap)"><input type="checkbox" class="only" data-o="${esc(d.id)}" ${onlyD===d.id&&onlyN===1?'checked':''} aria-label="${I.onlyaria}" title="${I.onlyaria}"><span>${SIG[d.id]?`<b class="sg">${esc(sgl(d))}</b> = `:''}<span class="nm">${esc(fullN(d))}</span>${INL.has(d.id)?`<span class="cpy inl">${esc(CPY[d.id]())}</span>`:''}<span class="mt">${d.lang==='mix'?'7 языков · ':''}${d.entries.length.toLocaleString(UIL)} ${I.abbr}</span>${CPY[d.id]&&!INL.has(d.id)?`<span class="cpy">${esc(CPY[d.id]())}</span>`:''}${INTERIM.has(d.id)?`<span class="cpy itm">⚠ ${esc(I.interim)}${(r=>r.length?` (${r.map(x=>`<bdi>${esc(x[0])}</bdi> – <bdi>${esc(x[1])}</bdi>`).join('; ')})`:'')(rangeOf(d))}</span>`:''}</span></li>`).join('')).join('');
 }
 function allOn(){return dicts.filter(d=>!BHID.has(d.id)).every(d=>!off.has(d.id))}
-function setAll(){const ids=dicts.map(d=>d.id);if(allOn())ids.forEach(id=>{const d=dicts.find(x=>x.id===id);d.lang==='syr'?off.delete(id):off.add(id)});else ids.forEach(id=>off.delete(id));if(!VIEW)LS.set('offv',[...off]);refresh()}
+function setAll(){const ids=dicts.map(d=>d.id);if(allOn())ids.forEach(id=>off.add(id));else ids.forEach(id=>off.delete(id));if(!VIEW)LS.set('offv',[...off]);refresh()}
 function lgbFit(){const L=$('#lgb');if(!L)return;if(innerWidth<700){L.style.width='';return}const q=$('#q');if(!q)return;const w=q.getBoundingClientRect().right-L.getBoundingClientRect().left;L.style.width=w>200?w+'px':''}
 addEventListener('resize',()=>lgbFit());
 function refresh(){if(!VIEW&&LS.get('offv',null)===null)for(const d of dicts)if(d.lang!=='syr'&&!(d.user&&d.lb==='syr'))off.add(d.id);renderLib();renderChips();renderKb();search()}
@@ -1279,7 +1288,7 @@ function insert(c){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.select
 function backspace(){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b){q.value=q.value.slice(0,a)+q.value.slice(b);q.setSelectionRange(a,a)}else if(a>0){const s=[...q.value.slice(0,a)];s.pop();const p=s.join('');q.value=p+q.value.slice(a);q.setSelectionRange(p.length,p.length)}debounced()}
 
 try{new ResizeObserver(()=>document.documentElement.style.setProperty('--hh',$('header').offsetHeight+'px')).observe($('header'))}catch(e){}
-let cmpLock=false;function cmpUpd(){const B=document.body,co=B.classList.contains('coarse'),mk=$('#mkb'),on=co?(cmpLock||(mk&&!mk.hidden)||document.activeElement===$('#q')||(B.classList.contains('scd')&&!!$('#q').value.trim())):(cmpLock||!$('#kb').hidden||!!$('#q').value.trim()||document.activeElement===$('#q'));if(B.classList.contains('cmp')===on)return;const scd=B.classList.contains('scd'),A=co&&scd?$('#res'):$('#q'),y0=co?A.getBoundingClientRect().top:0;B.classList.toggle('cmp',on);if(co&&(scd||(!on&&scrollY>4))){const d=A.getBoundingClientRect().top-y0;if(d)scrollBy(0,d)}}
+let cmpLock=false;function cmpUpd(){const B=document.body,co=B.classList.contains('coarse'),mk=$('#mkb'),on=!co&&innerWidth>=900?false:co?(cmpLock||(mk&&!mk.hidden)||document.activeElement===$('#q')||(B.classList.contains('scd')&&!!$('#q').value.trim())):(cmpLock||!$('#kb').hidden||!!$('#q').value.trim()||document.activeElement===$('#q'));if(B.classList.contains('cmp')===on)return;const scd=B.classList.contains('scd'),A=co&&scd?$('#res'):$('#q'),y0=co?A.getBoundingClientRect().top:0;B.classList.toggle('cmp',on);if(co&&(scd||(!on&&scrollY>4))){const d=A.getBoundingClientRect().top-y0;if(d)scrollBy(0,d)}}
 let tmr;function debounced(){sugOff=false;sugIdx=-1;cmpUpd();$('#clr').hidden=!$('#q').value;clearTimeout(tmr);tmr=setTimeout(search,120)}
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2600)}
 
