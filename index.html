@@ -291,7 +291,7 @@ html.iospwa{--sat:max(env(safe-area-inset-top,0px),44px)}
 @media(prefers-reduced-motion:reduce){.toast{transition:none}}
 @media(max-width:600px){.tin{flex-wrap:nowrap;align-items:flex-start;gap:10px}.syms button.md{font-size:34px}.top{padding-top:calc(14px + var(--sat));padding-bottom:10px}h1{font-size:26px}.tg{font-size:15px}.uil{min-height:34px}.top .sub{font-size:13px;line-height:1.4;margin-top:6px}.sub2,.credit{font-size:12px;margin-top:4px}.lgb{margin-top:10px}.syms button{min-height:40px;font-size:21px}.syms{gap:clamp(3px,1.2vw,5px)}.hw{font-size:20px}.qrow{flex-wrap:wrap}.qbox{flex-basis:100%}.tin>div{min-width:0;width:100%}.lgb{gap:clamp(3px,1.2vw,6px)}.lgb button{flex:1 1 0;max-width:42px;height:46px;border-radius:10px;gap:2px}.lgb button .s{font-size:19px}.lgb button .a{font-size:clamp(7.5px,2.35vw,9px);letter-spacing:0}.lgb .lgn{font-size:11.5px;line-height:1.25}}
 .dl li input.only{appearance:none;-webkit-appearance:none;width:20px;height:20px;margin:0;border:2px solid var(--lap);border-radius:50%;cursor:pointer;display:grid;place-items:center}.dl li input.only:checked::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--lap)}
-#kb .kbr{display:flex;justify-content:center;gap:4px;margin:4px 0}#kb .kbr button{flex:1 1 0;min-width:0;max-width:44px;height:40px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:400 20px/1 var(--lex);cursor:pointer}#kb .kbr button.dm,.mkb button.dm{color:var(--lap);font-size:23px}#kb .kbr button:hover{border-color:var(--ink)}#kb .kbl button.fn{flex:0 1 auto;max-width:none;padding:0 12px;font:500 14px 'Noto Sans',sans-serif;color:var(--mut)}#kb .keys.forms{display:flex;gap:4px;justify-content:center}
+#kb .kbr{display:flex;justify-content:center;gap:4px;margin:4px 0}#kb .kbr .ks{display:flex;gap:4px;flex:1 1 auto;min-width:0}#kb .kbr button{position:relative;flex:1 1 0;min-width:0;height:42px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:400 20px/1 var(--lex);cursor:pointer}#kb .kbr button.dm,.mkb button.dm{color:var(--lap);font-size:23px}#kb .kbr button:hover{border-color:var(--ink)}#kb .kbr button.fn{flex:1.2 1 0;padding:0 6px;font:500 14px 'Noto Sans',sans-serif;color:var(--mut);display:flex;align-items:center;justify-content:center}#kb .kbr button.bs{flex:1.5 1 0}#kb .kbr button.sp{flex:3 1 0;overflow:hidden;white-space:nowrap;font:400 13px var(--lex);color:var(--mut)}#kb .kbr button.alt{flex:1.3 1 0;background:var(--lap);color:var(--bg);border-color:var(--lap);font:400 17px/1 var(--lex)}#kb .kbr button.alt:hover{filter:brightness(1.1)}#kb .pk{direction:ltr;unicode-bidi:isolate;position:absolute;top:3px;left:4px;font:600 10px/1 'Noto Sans',sans-serif;color:#c0392b;opacity:.9;pointer-events:none}#kb .keys.forms{display:flex;gap:4px;justify-content:center}
 .mkb{--kw:34px;--fw:46px;position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--ink) 12%,var(--bg));padding:4px 3px calc(6px + env(safe-area-inset-bottom));touch-action:manipulation;user-select:none;-webkit-user-select:none}.mkb[hidden]{display:none}
 .mkb .r{display:flex;justify-content:center;gap:5px;margin:6px auto;height:44px;max-width:640px}
 .mkb button{all:unset;flex:1 1 0;min-width:0;max-width:44px;border-radius:7px;background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;font:400 21px/1 var(--lex);box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 30%,transparent);-webkit-tap-highlight-color:transparent}
@@ -378,7 +378,7 @@ body.coarse #sug{display:none!important}body.coarse .qtools{display:none!importa
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.109 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.110 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -906,7 +906,7 @@ async function loadUserDicts(){
   if(VPID)try{const r=await fetch(PAPI+'/admin/projects/'+encodeURIComponent(VPID),{headers:{Authorization:'Bearer '+a.token}});if(r.ok){const d=await r.json();if(d&&d.entries&&!dicts.some(x=>(x.base||x.id)===d.id))dicts.push(...userSplit(d,100,false))}}catch(e){}
   try{const r=await fetch(PAPI+'/dicts',{headers:{Authorization:'Bearer '+a.token}});if(!r.ok)return;const L=await r.json();
     for(const d of L){if(!d.entries||!d.entries.length)continue;dicts=dicts.filter(x=>(x.base||x.id)!==d.id);dicts.push(...userSplit(d,100,true))}refresh()}catch(e){}}
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','ccl','che','graf','are','kun','psm','heb','hyf','dyach'],BVER=75;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','ccl','che','graf','are','kun','psm','heb','hyf','dyach'],BVER=76;
 const latExtra=()=>({en:'laen',de:'lade',it:'laen',fr:'lafr'})[UIL];
 const BHID=new Set(),BNOS=new Set();
 async function loadBCfg(){try{const C=await (await fetch('data/builtins.json',{cache:'no-store'})).json();
@@ -1196,14 +1196,20 @@ function refresh(){renderLib();renderChips();renderKb();search()}
 /* keyboard */
 let kbLang=LS.get('kb','syr'),gezBase=null;
 function kbAuto(){const B=[...$('#lgb').querySelectorAll('button[data-g]')],A=B.filter(b=>!b.classList.contains('off')).map(b=>b.dataset.g);if(!A.length||A.length===B.length)return;const l=A.find(x=>KEYS[x]);if(l&&l!==kbLang){kbLang=l;gezBase=null;renderKb()}}
+const HEPK={a:'א',b:'ב',g:'ג',d:'ד',h:'ה',v:'ו',z:'ז',x:'ח',y:'ט',i:'י',k:'כ',K:'ך',l:'ל',m:'מ',M:'ם',n:'נ',N:'ן',s:'ס',e:'ע',p:'פ',P:'ף',c:'צ',C:'ץ',q:'ק',r:'ר',w:'ש',t:'ת',j:'י',u:'ו',o:'ע',f:'פ'},HEPL={};for(const [k,v] of Object.entries(HEPK))if(!HEPL[v])HEPL[v]=k;
+function physMap(k){return !COARSE&&!$('#kb').hidden&&kBase(kbLang)==='he'?HEPK[k]||null:null}
+const BSI='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5h11v14H9l-6-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9l5 6M17 9l-5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
 function renderKb(){
   const k=$('#kb');if(k.hidden)return;
-  const L=KBO;if(langF&&KBL[langF])kbLang=langF;if(!KBL[kbLang])kbLang='tr';
-  let h=`<div class="kl">${L.map(l=>`<button data-k="${l}" class="${l===kbLang?'on':''}" title="${esc(l==='tr'?'Translit':l==='cu'?'Slav':(I.lang&&I.lang[l])||LANGS[l][0])}">${esc(l==='tr'?'Translit':l==='cu'?'Slav':(I.chip&&I.chip[l]||l).replace(/\.$/,''))}</button>`).join('')}</div>`;
-  if(kbLang==='gez'&&gezBase!=null)h+=`<div class="keys forms">${[0,1,2,3,4,5,6].map(o=>`<button data-c="${String.fromCharCode(gezBase+o)}">${String.fromCharCode(gezBase+o)}</button>`).join('')}</div>`;
-  {const [nm,rows0,,rtl,alt]=KBL[kbLang],ex=kbEx(kbLang).replace('|',' ').trim(),g=kbLang==='gez';h+=rows0.map(r=>`<div class="kbr" ${rtl?'dir="rtl"':''}>${kbKeys(r,g,kbLang)}</div>`).join('')+(alt?[...KBL[alt][1],...(KBL[alt][6]?[...KBL[KBL[alt][6]][1],KBL[KBL[alt][6]][2].replace('|',' ')]:[])].filter(r=>r&&r!=='@forms').map(r=>`<div class="kbr" ${rtl?'dir="rtl"':''}>${kbKeys(r,false,kbLang)}</div>`).join(''):'')+`<div class="kbr kbl">${kbKeys(ex,g,kbLang)}`}
-  h+=`<button class="fn" data-c=" " aria-label="${esc(I.space)}" title="${esc(I.space)}">${I.space}</button><button class="fn" data-bs="1" aria-label="${esc(I.bksp.replace('⌫','').trim())}" title="${esc(I.bksp.replace('⌫','').trim())}"><span class="bsi">⌫</span> ${esc(I.bksp.replace('⌫','').trim())}</button></div>`;
+  if(langF&&KBL[langF]&&kBase(kbLang)!==langF)kbLang=langF;if(!KBL[kbLang])kbLang='tr';
+  const cur=kBase(kbLang);
+  let h=`<div class="kl">${KBO.map(l=>`<button data-k="${l}" class="${l===cur?'on':''}" title="${esc(l==='tr'?'Translit':l==='cu'?'Slav':(I.lang&&I.lang[l])||LANGS[l][0])}">${esc(l==='tr'?'Translit':l==='cu'?'Slav':(I.chip&&I.chip[l]||l).replace(/\.$/,''))}</button>`).join('')}</div>`;
+  if(kbLang==='gez'&&gezBase!=null)h+=`<div class="kbr forms">${[0,1,2,3,4,5,6].map(o=>`<button data-c="${String.fromCharCode(gezBase+o)}">${String.fromCharCode(gezBase+o)}</button>`).join('')}</div>`;
+  const [nm,rows,,rtl,alt,albl,alt2,albl2]=KBL[kbLang],g=kbLang==='gez',d=rtl?' dir="rtl"':'',xs=(kbEx(kbLang)||'').replace('|',' ').trim();
+  const keys=r=>r==='@forms'?gezForms().map(c=>`<button type="button" data-c="${c}">${c}</button>`).join(''):kbKeys(r,g,kbLang);
+  h+=rows.map((r,i)=>`<div class="kbr"${d}>${keys(r)}${i===2?kbKeys(xs,g,kbLang):''}${i===0?`<button type="button" class="fn bs" data-bs="1" aria-label="${esc(I.bksp.replace('⌫','').trim())}" title="${esc(I.bksp.replace('⌫','').trim())}">${BSI}</button>`:''}${i===2?`<button type="button" class="fn sp" data-c=" " title="${esc(I.space)}"><bdi>${esc(nm)}</bdi></button>${alt?`<button type="button" class="fn alt" data-alt="${alt}" title="${esc(albl)}">${esc(albl)}</button>`:''}${alt2?`<button type="button" class="fn alt" data-alt="${alt2}" title="${esc(albl2)}">${esc(albl2)}</button>`:''}`:''}</div>`).join('');
   k.innerHTML=h;k.dir='ltr';
+  if(cur==='he')k.querySelectorAll('.kbr [data-c]:not(.sp)').forEach(b=>{const l=HEPL[b.dataset.c];if(l)b.insertAdjacentHTML('afterbegin',`<span class="pk">${l===l.toUpperCase()?'⇧'+l.toLowerCase():l}</span>`)});
 }
 function layoutKeys(){
   const g=$('#kb').querySelector('.keys:not(.forms)');if(!g||!g.clientWidth)return;
@@ -1517,9 +1523,10 @@ async function hardUpdate(){
 $('#upd').addEventListener('click',hardUpdate);$('#offB').addEventListener('click',offDownload);
 /* ---------- events ---------- */
 $('#q').addEventListener('input',debounced);
+$('#q').addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.isComposing)return;const c=physMap(e.key);if(!c)return;e.preventDefault();insert(c);$('#clr').hidden=false});
 document.addEventListener('keydown',e=>{if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.isComposing||[...e.key].length!==1||/\s/.test(e.key))return;
   const t=e.target;if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
-  const q=$('#q');e.preventDefault();q.focus({preventScroll:true});q.value=e.key;q.setSelectionRange(q.value.length,q.value.length);$('#clr').hidden=false;q.dispatchEvent(new Event('input',{bubbles:true}))});
+  const q=$('#q');e.preventDefault();q.focus({preventScroll:true});q.value=physMap(e.key)||e.key;q.setSelectionRange(q.value.length,q.value.length);$('#clr').hidden=false;q.dispatchEvent(new Event('input',{bubbles:true}))});
 $('#clr').addEventListener('click',()=>{$('#q').value='';$('#clr').hidden=true;if(typeof mkbL!=='undefined'){mkbL=mkbDef();if(!$('#mkb').hidden)mkbDraw()}search();window.scrollTo({top:0,behavior:'instant'});$('#q').focus({preventScroll:true})});
 $('#q').addEventListener('keydown',e=>{
   if(e.key==='ArrowDown'&&$('#sug').hidden&&$('#q').value.trim()){sugOff=false;renderSug();return}
@@ -1568,6 +1575,7 @@ $('#kbB').addEventListener('click',()=>{const k=$('#kb');k.hidden=!k.hidden;$('#
 $('#kb').addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault()});
 $('#kb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
   if(b.dataset.k){kbLang=b.dataset.k;gezBase=null;LS.set('kb',kbLang);renderKb();return}
+  if(b.dataset.alt){kbLang=b.dataset.alt;gezBase=null;renderKb();return}
   if(b.dataset.g){const x=b.dataset.g.charCodeAt(0);if(gezBase===x)insert(b.dataset.g);gezBase=x;renderKb();return}
   if(b.dataset.bs){kbBack();return}
   if(b.dataset.c!=null)kbType(b.dataset.c);
