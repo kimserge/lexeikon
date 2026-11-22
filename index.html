@@ -378,7 +378,7 @@ body.coarse #sug{display:none!important}body.coarse .qtools{display:none!importa
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.113 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v4.114 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <b>v4</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -906,7 +906,7 @@ async function loadUserDicts(){
   if(VPID)try{const r=await fetch(PAPI+'/admin/projects/'+encodeURIComponent(VPID),{headers:{Authorization:'Bearer '+a.token}});if(r.ok){const d=await r.json();if(d&&d.entries&&!dicts.some(x=>(x.base||x.id)===d.id))dicts.push(...userSplit(d,100,false))}}catch(e){}
   try{const r=await fetch(PAPI+'/dicts',{headers:{Authorization:'Bearer '+a.token}});if(!r.ok)return;const L=await r.json();
     for(const d of L){if(!d.entries||!d.entries.length)continue;dicts=dicts.filter(x=>(x.base||x.id)!==d.id);dicts.push(...userSplit(d,100,true))}refresh()}catch(e){}}
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','ccl','che','graf','are','kun','psm','heb','hyf','dyach'],BVER=79;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','rai','la','hy','mis','ccl','che','graf','are','kun','psm','heb','hyf','dyach'],BVER=80;
 const latExtra=()=>({en:'laen',de:'lade',it:'laen',fr:'lafr'})[UIL];
 const BHID=new Set(),BNOS=new Set();
 async function loadBCfg(){try{const C=await (await fetch('data/builtins.json',{cache:'no-store'})).json();
@@ -1206,10 +1206,17 @@ const PK={
  gez:{h:'ሀ',l:'ለ',H:'ሐ',m:'መ',X:'ሠ',r:'ረ',s:'ሰ',q:'ቀ',b:'በ',t:'ተ',x:'ኀ',n:'ነ',k:'ከ',w:'ወ','`':'ዐ',z:'ዘ',y:'የ',d:'ደ',g:'ገ',T:'ጠ',P:'ጰ',S:'ጸ',Z:'ፀ',f:'ፈ',p:'ፐ',"'":'አ'}};
 const PGV={e:0,u:1,i:2,a:3,E:4,o:6};
 const PKL={};for(const [L,m] of Object.entries(PK)){PKL[L]={};for(const [k,v] of Object.entries(m))if(!PKL[L][v])PKL[L][v]=k}
-function physOn(){return !COARSE&&!$('#kb').hidden&&!!PK[kBase(kbLang)]}
-function physMap(k){if(!physOn())return null;const L=kBase(kbLang);if(L==='gez')return null;return PK[L][k]||null}
-function physType(k){if(!physOn())return false;const L=kBase(kbLang);
-  if(L!=='gez'){const c=PK[L][k];if(!c)return false;insert(c);return true}
+const PCR=[['KeyQ','KeyW','KeyE','KeyR','KeyT','KeyY','KeyU','KeyI','KeyO','KeyP','BracketLeft','BracketRight'],['KeyA','KeyS','KeyD','KeyF','KeyG','KeyH','KeyJ','KeyK','KeyL','Semicolon','Quote','Backslash'],['KeyZ','KeyX','KeyC','KeyV','KeyB','KeyN','KeyM','Comma','Period','Slash']];
+const PCN=c=>({BracketLeft:'[',BracketRight:']',Semicolon:';',Quote:"'",Backslash:'\\',Comma:',',Period:'.',Slash:'/',Backquote:'`'})[c]||(/^Key/.test(c)?c.slice(3).toLowerCase():/^Digit/.test(c)?c.slice(5):c);
+const CUP={Backslash:'ѣ',Slash:'і',Digit1:'ѵ',Digit2:'ѳ',Digit3:'ѧ',Digit4:'ѡ',Digit5:'ѫ',Digit6:'ѯ',Digit7:'ѱ',Digit8:'ѕ',Digit9:'ꙋ',Digit0:'ѿ'};
+const isAux=l=>kBase(l)!==l;
+function auxMap(l){const [, rows,,rtl]=KBL[l],m={};rows.forEach((r,i)=>{if(!r||r==='@forms'||!PCR[i])return;let ks=r.split(' ').filter(Boolean);if(rtl)ks=ks.reverse();ks.forEach((c,j)=>{if(PCR[i][j])m[PCR[i][j]]=c})});return m}
+function physOn(){if(COARSE||$('#kb').hidden)return false;const l=kbLang;return isAux(l)||l==='cu'||!!PK[l]}
+function physType(e){if(!physOn())return false;const l=kbLang,k=e.key;
+  if(isAux(l)){if(e.shiftKey)return false;const c=auxMap(l)[e.code];if(!c)return false;kbType(c);return true}
+  if(l==='cu'){const c=CUP[e.code];if(!c||e.shiftKey)return false;insert(c);return true}
+  if([...k].length!==1)return false;
+  if(l!=='gez'){const c=PK[l][k];if(!c)return false;insert(c);return true}
   const q=$('#q'),a=q.selectionStart??q.value.length,pc=a?q.value.charCodeAt(a-1):0;
   if(k in PGV){const o=PGV[k];if(pc>=0x1200&&pc<=0x137F&&(pc&7)===5){q.value=q.value.slice(0,a-1)+String.fromCharCode((pc&~7)+o)+q.value.slice(a);q.setSelectionRange(a,a);debounced()}else insert(String.fromCharCode(0x12A0+o));return true}
   const c=PK.gez[k];if(!c)return false;insert(String.fromCharCode(c.charCodeAt(0)+5));return true}
@@ -1230,7 +1237,8 @@ function renderKb(){
   const r3=[rows[2],xr===2?xs:''].filter(Boolean).join(' ').split(' ').filter(Boolean),aU=(alt?1.3:0)+(alt2?1.3:0),kL=Math.max(0,Math.min(r3.length,Math.round((r3.length+aU)/2)));
   h+=rows.map((r,i)=>`<div class="kbr"${d}>${i===2?(rows[2]==='@forms'?keys(r):kbKeys(r3.slice(0,kL).join(' '),g,kbLang)):keys(r)}${i===xr&&xr!==2?kbKeys(xs,g,kbLang):''}${i===0?`<button type="button" class="fn bs" data-bs="1" aria-label="${esc(I.bksp.replace('⌫','').trim())}" title="${esc(I.bksp.replace('⌫','').trim())}">${BSI}</button>`:''}${i===2?`<button type="button" class="fn sp" data-c=" " title="${esc(I.space)}"><bdi>${esc(nm)}</bdi></button>${rows[2]==='@forms'?'':kbKeys(r3.slice(kL).join(' '),g,kbLang)}${alt?`<button type="button" class="fn alt" data-alt="${alt}" title="${esc(albl)}">${esc(albl)}</button>`:''}${alt2?`<button type="button" class="fn alt" data-alt="${alt2}" title="${esc(albl2)}">${esc(albl2)}</button>`:''}`:''}</div>`).join('');
   k.innerHTML=h;k.dir='ltr';kbFit();
-  if(PKL[cur]&&!COARSE)k.querySelectorAll('.kbr [data-c]:not(.sp),.kbr [data-g]').forEach(b=>{const l=PKL[cur][b.dataset.c||b.dataset.g];if(l)b.insertAdjacentHTML('afterbegin',`<span class="pk">${/^[A-Z]$/.test(l)?'⇧'+l.toLowerCase():l}</span>`)});
+  const LB=COARSE?null:isAux(kbLang)?Object.fromEntries(Object.entries(auxMap(kbLang)).map(([c,ch])=>[ch,PCN(c)])):kbLang==='cu'?Object.fromEntries(Object.entries(CUP).map(([c,ch])=>[ch,PCN(c)])):PKL[cur];
+  if(LB)k.querySelectorAll('.kbr [data-c]:not(.sp),.kbr [data-g]').forEach(b=>{const l=LB[b.dataset.c||b.dataset.g];if(l)b.insertAdjacentHTML('afterbegin',`<span class="pk">${/^[A-Z]$/.test(l)?'⇧'+l.toLowerCase():l}</span>`)});
 }
 function layoutKeys(){
   const g=$('#kb').querySelector('.keys:not(.forms)');if(!g||!g.clientWidth)return;
@@ -1544,10 +1552,10 @@ async function hardUpdate(){
 $('#upd').addEventListener('click',hardUpdate);$('#offB').addEventListener('click',offDownload);
 /* ---------- events ---------- */
 $('#q').addEventListener('input',debounced);
-$('#q').addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.isComposing)return;if(!physOn()||[...e.key].length!==1)return;if(physType(e.key)){e.preventDefault();$('#clr').hidden=false}});
+$('#q').addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.isComposing)return;if(!physOn())return;if(physType(e)){e.preventDefault();$('#clr').hidden=false}});
 document.addEventListener('keydown',e=>{if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.isComposing||[...e.key].length!==1||/\s/.test(e.key))return;
   const t=e.target;if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
-  const q=$('#q');e.preventDefault();q.focus({preventScroll:true});if(physOn()&&PK[kBase(kbLang)]&&(kBase(kbLang)==='gez'?(e.key in PGV||PK.gez[e.key]):PK[kBase(kbLang)][e.key])){q.value='';q.setSelectionRange(0,0);physType(e.key)}else q.value=e.key;q.setSelectionRange(q.value.length,q.value.length);$('#clr').hidden=false;q.dispatchEvent(new Event('input',{bubbles:true}))});
+  const q=$('#q');e.preventDefault();q.focus({preventScroll:true});q.value='';q.setSelectionRange(0,0);if(!physType(e))q.value=e.key;q.setSelectionRange(q.value.length,q.value.length);$('#clr').hidden=false;q.dispatchEvent(new Event('input',{bubbles:true}))});
 $('#clr').addEventListener('click',()=>{$('#q').value='';$('#clr').hidden=true;if(typeof mkbL!=='undefined'){mkbL=mkbDef();if(!$('#mkb').hidden)mkbDraw()}search();window.scrollTo({top:0,behavior:'instant'});$('#q').focus({preventScroll:true})});
 $('#q').addEventListener('keydown',e=>{
   if(e.key==='ArrowDown'&&$('#sug').hidden&&$('#q').value.trim()){sugOff=false;renderSug();return}
