@@ -1,4 +1,4 @@
-const V='lx5-14',D='lexeikon-data';
+const V='lx5-15',D='lexeikon-data';
 const LAST=new Map(),RV=30*60*1000;
 const PRE=['./','index.html'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(PRE)).then(()=>self.skipWaiting()))});
