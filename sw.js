@@ -1,4 +1,4 @@
-const V='lexeikon-v243',D='lexeikon-data';
+const V='lexeikon-v244',D='lexeikon-data';
 const LAST=new Map(),RV=30*60*1000;
 const PRE=['./','index.html','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(PRE)).then(()=>self.skipWaiting()))});
@@ -8,7 +8,7 @@ self.addEventListener('fetch',e=>{
   const u=new URL(r.url),font=/fonts\.(googleapis|gstatic)\.com$/.test(u.hostname);
   if(u.origin!==location.origin&&!font)return;
   if(u.origin===location.origin&&u.pathname.includes('/v1.64/'))return;
-  if(u.origin===location.origin&&(u.pathname.includes('/data/u/')||u.pathname.endsWith('/data/builtins.json')||/\/(v2|v3|v5|t4-a985fa)\//.test(u.pathname)))return;
+  if(u.origin===location.origin&&(u.pathname.includes('/data/u/')||u.pathname.endsWith('/data/builtins.json')||/\/(v2|v3|v4|t4-a985fa)\//.test(u.pathname)))return;
   // pages: network first; on network error or a server refusal (429, 5xx) show the cached copy
   if(r.mode==='navigate'||/\.html$/.test(u.pathname)){e.respondWith(caches.open(V).then(async c=>{const old=async()=>(await c.match(r,{ignoreSearch:true}))||(await caches.match(r,{ignoreSearch:true}))||(await c.match('./'));try{const res=await fetch(r,{cache:'no-cache'});if(res&&res.ok){c.put(r,res.clone());return res}return (await old())||res}catch(err){return (await old())||Response.error()}}));return}
   // data, fonts, icons: kept across releases (no mass re-download); refreshed in the background
