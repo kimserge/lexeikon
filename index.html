@@ -346,7 +346,8 @@ i.it{font-style:italic}
 .gzm{margin-top:8px;font-size:.92em}.gzm summary{cursor:pointer;color:var(--lap);font:500 13px 'Noto Sans',sans-serif;list-style:none}.gzm summary::before{content:'▸ '}.gzm[open] summary::before{content:'▾ '}
 .gzl{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;color:var(--mut)}.gzf b.fm{font-weight:600}.gzc{font-size:.85em}
 .gzt{font-style:italic}
-body.mob .libd[open]>summary{position:sticky;top:var(--stk,0px);z-index:6;background:var(--bg);box-shadow:0 6px 10px -8px rgb(0 0 0/.25)}
+@media(max-width:899px){body.mob .libd[open]>summary{position:sticky;top:var(--stk,0px);z-index:6;background:var(--bg);box-shadow:0 6px 10px -8px rgb(0 0 0/.25)}}
+#pop .psv{display:none}#pop .psc{cursor:default;text-decoration:none;border:0}
 </style>
 </head>
 <body>
@@ -425,7 +426,7 @@ body.mob .libd[open]>summary{position:sticky;top:var(--stk,0px);z-index:6;backgr
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.45 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.46 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -800,6 +801,21 @@ function arTr(w,m){const V={'َ':'a','ِ':'i','ُ':'u'},T={'ً':'an','ٍ':'in','
       const t=m[c];if(t==null){r+=c;pv='';continue}
       r+=(f.d&&i!==skip?t+t:t)+f.v+f.t+(f.l?'ā':'');pv=f.t||f.l?'':f.v}
     return r}).join('')}
+/* Syriac transliteration exceptions (gemination, assimilation) — keys: vocalized (without seyame/rukkakha) or consonantal */
+const SYX0=1,SYXV={'ܐܶܒܳܐ':'ʾebbā','ܐܶܒ̈ܶܐ':'ʾebbē','ܐܶܒܒܳܐ':'ʾebbā','ܥܰܡܳܐ':'ʿammā','ܥܰܡ̈ܶܐ':'ʿammē','ܟܽܠ':'kull','ܟܽܠܗ':'kulleh','ܟܽܠܳܗ':'kullāh','ܟܽܠܗܽܘܢ':'kullhōn','ܠܶܒܳܐ':'lebbā','ܠܶܒ':'lebb','ܪܰܒܳܐ':'rabbā','ܪܰܒ':'rabb','ܪܰܒܳܢ':'rabbān','ܪܰܒ̈ܳܢ':'rabbān','ܐܶܡܳܐ':'ʾemmā','ܓܰܒܳܐ':'gabbā','ܓܰܒ':'gabb','ܚܰܝܶܐ':'ḥayyē','ܚܰܝ̈ܶܐ':'ḥayyē','ܡܰܝܳܐ':'mayyā','ܡܰܝ̈ܳܐ':'mayyā','ܫܡܰܝܳܐ':'šmayyā','ܫܡܰܝ̈ܳܐ':'šmayyā','ܐܰܦܶܐ':'ʾappē','ܐܰܦ̈ܶܐ':'ʾappē','ܥܶܠܬܳܐ':'ʿelltā','ܥܶܠܠܬܳܐ':'ʿelltā','ܫܰܢܬܳܐ':'šattā','ܫܢܰܬ':'šnaṯ','ܒܰܪܬܳܐ':'bartā'},
+ SYXC={'ܡܕܝܢܬܐ':'mḏittā','ܡܕܝܢ̈ܬܐ':'mḏittā','ܐܢܬ':'ʾatt','ܐܢܬܝ':'ʾatt','ܐܢܬܬܐ':'ʾattā','ܐܢܬܘܢ':'ʾattōn','ܐܢܬܝܢ':'ʾattēn','ܫܡܝܐ':'šmayyā','ܟܠ':'kull','ܟܠܗܘܢ':'kullhōn','ܟܠܗܝܢ':'kullhēn','ܡܝܐ':'mayyā'};
+const syxV=s=>String(s).normalize('NFC').replace(/[݂݈݁݇]/g,''),syxC=s=>String(s).normalize('NFC').replace(/[ܰ-݊̈]/g,'');
+const SYXVn=Object.fromEntries(Object.entries(SYXV).map(([k,v])=>[syxV(k),v]));
+function syrX(wd,M){if(!/[ܐ-ݏ]/.test(wd))return wd;
+  const voc=/[ܰ-ܿ]/.test(wd),PRE='ܘܕܒܠ',V={'ܰ':'a','ܶ':'e','ܺ':'i','ܽ':'u','ܳ':'ā'};
+  const g=[];for(const ch of wd.normalize('NFC')){if(/[ܐ-ܯ]/.test(ch))g.push(ch);else if(g.length)g[g.length-1]+=ch}
+  for(let n=0;n<=2&&n<g.length;n++){if(n&&!PRE.includes(g[n-1][0]))break;
+    const rest=g.slice(n).join(''),hit=voc?(SYXVn[syxV(rest)]||SYXC[syxC(rest)]):SYXC[syxC(rest)];
+    if(hit){let p='';for(const x of g.slice(0,n)){p+=M[x[0]]||x[0];for(const c of x.slice(1))if(V[c])p+=V[c]}return p+hit}}
+  if(voc)return syrVocTr(wd,M);
+  const SP={'ܒ':'ḇ','ܓ':'ḡ','ܕ':'ḏ','ܟ':'ḵ','ܦ':'p̄','ܬ':'ṯ'};let r='';const a=[...wd.normalize('NFD')];
+  for(let i=0;i<a.length;i++){const c=a[i];if(/\p{M}/u.test(c))continue;let j=i+1,rk=false;while(j<a.length&&/\p{M}/u.test(a[j])){if(a[j]==='݂')rk=true;j++}r+=rk&&SP[c]?SP[c]:(M[c]??c)}
+  return r}
 function syrVocTr(w,M){
   const SP={'ܒ':'ḇ','ܓ':'ḡ','ܕ':'ḏ','ܟ':'ḵ','ܦ':'p̄','ܬ':'ṯ'};
   const V={'ܰ':'a','ܱ':'a','ܲ':'a','ܳ':'ā','ܴ':'ā','ܵ':'ā','ܶ':'e','ܷ':'e','ܸ':'e','ܹ':'ē','ܺ':'i','ܻ':'i','ܼ':'i','ܽ':'u','ܾ':'u','ܿ':'o'};
@@ -834,6 +850,7 @@ function sciTr(w,L){
       if(rough)t=t[0]==='r'?'rh'+t.slice(1):'h'+t;return t}).join('');
   }
   s=s.normalize('NFC');
+  if(L==='syr'&&SYX0)return s.split(/(\s+)/).map(wd=>syrX(wd,sys.m)).join('');
   if(L==='syr'&&/[\u0730-\u073F]/.test(s))return syrVocTr(s,sys.m);
   if(L==='syr'){const SP={'ܒ':'ḇ','ܓ':'ḡ','ܕ':'ḏ','ܟ':'ḵ','ܦ':'p̄','ܬ':'ṯ'};let r='';const a=[...s.normalize('NFD')];
     for(let i=0;i<a.length;i++){const c=a[i];if(/\p{M}/u.test(c))continue;let j=i+1,rk=false;while(j<a.length&&/\p{M}/u.test(a[j])){if(a[j]==='\u0742')rk=true;j++}r+=rk&&SP[c]?SP[c]:(sys.m[c]??c)}
@@ -1632,7 +1649,7 @@ $('#res').addEventListener('click',e=>{const b=e.target.closest('[data-gm]');if(
 function jmpGo(j){const end=()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'});
   if(j==='top'){scrollTo({top:0,behavior:'instant'});return}end();requestAnimationFrame(end)}
 function pscToggle(b){const ln=b.closest('.l')||b;let v=ln.nextElementSibling;if(v&&v.classList.contains('psv')){v.remove();b.classList.remove('on');return}document.querySelectorAll('.psv').forEach(x=>x.remove());document.querySelectorAll('.psc.on').forEach(x=>x.classList.remove('on'));v=document.createElement('div');v.className='psv';v.innerHTML=b.dataset.s.split(';').map(sg=>{const[p,r]=sg.split(':'),[x0,y0,x1,y1]=r.split(',').map(Number),w=x1-x0;return `<div class="psg" style="padding-top:${((y1-y0)*100/w).toFixed(2)}%"><img src="data/psm-scan/p${p.padStart(4,'0')}.webp" alt="Payne Smith p. ${p}" style="width:${(100000/w).toFixed(2)}%;margin-left:${(-x0*100/w).toFixed(2)}%;margin-top:${(-y0*100/w).toFixed(2)}%"></div>`}).join('');ln.after(v);b.classList.add('on')}
-document.addEventListener('click',e=>{const b=e.target.closest('.psc');if(b){e.stopPropagation();e.preventDefault();pscToggle(b)}},true);document.addEventListener('keydown',e=>{const b=e.target.closest&&e.target.closest('.psc');if(b&&(e.key==='Enter'||e.key===' ')){e.preventDefault();pscToggle(b)}});
+document.addEventListener('click',e=>{const b=e.target.closest('.psc');if(b&&!b.closest('#pop')){e.stopPropagation();e.preventDefault();pscToggle(b)}},true);document.addEventListener('keydown',e=>{const b=e.target.closest&&e.target.closest('.psc');if(b&&(e.key==='Enter'||e.key===' ')){e.preventDefault();pscToggle(b)}});
 $('#jmp').addEventListener('click',e=>{const b=e.target.closest('[data-j]');if(b)jmpGo(b.dataset.j)});
 {let js=null;$('#jmp').addEventListener('touchstart',e=>{const t=e.touches[0];js=[t.clientX,t.clientY,e.target.closest('[data-j]')]},{passive:true});
  $('#jmp').addEventListener('touchend',e=>{const t=e.changedTouches[0],b=js&&js[2];if(!b||Math.hypot(t.clientX-js[0],t.clientY-js[1])>10){js=null;return}js=null;e.preventDefault();const j=b.dataset.j;
