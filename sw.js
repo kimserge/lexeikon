@@ -1,4 +1,4 @@
-const V='lexeikon-v276',D='lexeikon-data';
+const V='lexeikon-v277',D='lexeikon-data';
 const LAST=new Map(),RV=30*60*1000;
 const PRE=['./','index.html','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(PRE)).then(()=>self.skipWaiting()))});
