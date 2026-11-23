@@ -425,7 +425,7 @@ body.mob .libd[open]>summary{position:sticky;top:var(--stk,0px);z-index:6;backgr
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.40 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.41 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -805,14 +805,14 @@ function syrVocTr(w,M){
   const V={'ܰ':'a','ܱ':'a','ܲ':'a','ܳ':'ā','ܴ':'ā','ܵ':'ā','ܶ':'e','ܷ':'e','ܸ':'e','ܹ':'ē','ܺ':'i','ܻ':'i','ܼ':'i','ܽ':'u','ܾ':'u','ܿ':'o'};
   return String(w).normalize('NFD').split(/(\s+)/).map(wd=>{
     if(!/[ܐ-ݏ]/.test(wd))return wd;
-    const g=[];for(const ch of wd){if(/[ܐ-ܯ]/.test(ch))g.push({c:ch,v:'',rk:false});else if(g.length){const x=g[g.length-1];if(V[ch]!=null)x.v=V[ch];else if(ch==='݂')x.rk=true}}
-    let r='',pv='';
-    for(let i=0;i<g.length;i++){const {c,v,rk}=g[i];
+    const g=[];for(const ch of wd){if(/[ܐ-ܯ]/.test(ch))g.push({c:ch,v:'',rk:false});else if(g.length){const x=g[g.length-1];if(V[ch]!=null)x.v=V[ch];else if(ch==='݂')x.rk=true;else if(ch==='\u0741')x.q=true;else if(ch==='\u0747'||ch==='\u0748')x.occ=true}}
+    let r='',pv='';const hasRk=g.some(x=>x.rk);
+    for(let i=0;i<g.length;i++){const {c,v,rk,q,occ}=g[i];if(occ&&!v)continue;
       if(!v&&c==='ܝ'&&(pv==='i'||pv==='e')){r=r.slice(0,-1)+(pv==='i'?'ī':'ē');pv='';continue}
       if(c==='ܘ'&&(v==='u'||v==='o')){r+=v==='u'?'u':'ō';pv=v;continue}
       if(!v&&c==='ܘ'&&pv==='u'){r=r.slice(0,-1)+'ū';pv='';continue}
       if(!v&&c==='ܐ'&&i>0){pv='';continue}
-      r+=(rk&&SP[c]?SP[c]:(M[c]??c))+v;pv=v}
+      const L0=rk&&SP[c]?SP[c]:(M[c]??c);const pg=i>0?g[i-1]:null,grk=c==='ܦ'&&i===1&&(g[0].c==='ܐ'||g[0].c==='ܗ'&&g[0].v==='e');r+=(SP[c]&&!rk&&pg&&pg.c!==c&&!grk&&/^[aeiou]$/.test(pv)&&(q||hasRk&&v)?L0:'')+L0+v;pv=v}
     return r}).join('');
 }
 function sciTr(w,L){
