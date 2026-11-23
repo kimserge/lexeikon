@@ -921,7 +921,7 @@ async function loadUserDicts(){
   if(VPID)try{const r=await fetch(PAPI+'/admin/projects/'+encodeURIComponent(VPID),{headers:{Authorization:'Bearer '+a.token}});if(r.ok){const d=await r.json();if(d&&d.entries&&!dicts.some(x=>(x.base||x.id)===d.id))dicts.push(...userSplit(d,100,false))}}catch(e){}
   try{const r=await fetch(PAPI+'/dicts',{headers:{Authorization:'Bearer '+a.token}});if(!r.ok)return;const L=await r.json();
     for(const d of L){if(!d.entries||!d.entries.length)continue;dicts=dicts.filter(x=>(x.base||x.id)!==d.id);dicts.push(...userSplit(d,100,true))}refresh()}catch(e){}}
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','la','hy','mis','ccl','che','graf','kun','psm','heb','hyf','dyach'],BVER=109;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','la','hy','mis','ccl','che','graf','kun','psm','heb','hyf','dyach'],BVER=110;
 const latExtra=()=>({en:'laen',de:'lade',it:'laen',fr:'lafr'})[UIL];
 const BHID=new Set(),BNOS=new Set();
 async function loadBCfg(){try{const C=await (await fetch('../data/builtins.json',{cache:'no-store'})).json();
