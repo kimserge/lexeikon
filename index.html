@@ -322,33 +322,31 @@ body:not(.coarse) .hdr .pres .sub{margin-top:0}}
 @media(min-width:900px) and (max-width:1199px){body:not(.coarse) .hdr .pres p{font-size:12px;line-height:1.35}body:not(.coarse) .hdr .tg{font-size:16px}}
 
 .guide{display:none}
-@media(max-width:899px){
- .pres{display:none}
- #res li.empty{display:none}
- .guide{display:block;list-style:none;margin:18px 0 6px;padding:16px 16px 14px;border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--mut);font-size:14px;line-height:1.45}
- .guide p{margin:0}
- .guide .gttl{color:var(--ink);font-size:15px;margin-bottom:10px}
- .guide .gttl b{font-family:var(--lex,serif);font-size:19px;color:var(--lap)}
- .guide .gcnt{color:var(--ink);font-size:15px;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line)}
- .guide .gcnt b{color:var(--lap);font-size:17px}
- .guide .ghow{color:var(--ink)}
- .guide .gex{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
- .guide .gex button{display:inline-flex;align-items:baseline;gap:6px;border:1px solid color-mix(in srgb,var(--lap) 45%,transparent);background:color-mix(in srgb,var(--lap) 7%,transparent);color:var(--ink);border-radius:999px;padding:3px 10px;font:inherit;font-size:13px;cursor:pointer}
- .guide .gex button b{font-family:'Noto Sans',sans-serif}
- .guide .gex button span[aria-hidden]{color:var(--mut);font-size:12px}
- .guide .gex .sc{font-size:15px}
- .guide .gtip{display:flex;gap:8px;margin-top:6px}
- .guide .gtip:first-of-type{margin-top:0}
- .guide .gi{color:var(--lap);width:1em;flex:none;text-align:center}
- .guide .gcr{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:12px}
-}
+body.mob .pres{display:none}
+body.mob #res li.empty{display:none}
+body.mob .guide{display:block;list-style:none;margin:18px 0 6px;padding:16px 16px 14px;border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--mut);font-size:14px;line-height:1.45}
+body.mob .guide p{margin:0}
+body.mob .guide .gttl{color:var(--ink);font-size:15px;margin-bottom:10px}
+body.mob .guide .gttl b{font-family:var(--lex,serif);font-size:19px;color:var(--lap)}
+body.mob .guide .gcnt{color:var(--ink);font-size:15px;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line)}
+body.mob .guide .gcnt b{color:var(--lap);font-size:17px}
+body.mob .guide .ghow{color:var(--ink)}
+body.mob .guide .gex{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+body.mob .guide .gex button{display:inline-flex;align-items:baseline;gap:6px;border:1px solid color-mix(in srgb,var(--lap) 45%,transparent);background:color-mix(in srgb,var(--lap) 7%,transparent);color:var(--ink);border-radius:999px;padding:3px 10px;font:inherit;font-size:13px;cursor:pointer}
+body.mob .guide .gex button b{font-family:'Noto Sans',sans-serif}
+body.mob .guide .gex button span[aria-hidden]{color:var(--mut);font-size:12px}
+body.mob .guide .gex .sc{font-size:15px}
+body.mob .guide .gtip{display:flex;gap:8px;margin-top:6px}
+body.mob .guide .gtip:first-of-type{margin-top:0}
+body.mob .guide .gi{color:var(--lap);width:1em;flex:none;text-align:center}
+body.mob .guide .gcr{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:12px}
 a[data-go]{color:var(--lap);text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer}
 i.it{font-style:italic}
 .l.lb{display:block;position:relative;padding-inline-start:1.1em;margin-top:.55em}.l.lb::before{content:'•';position:absolute;inset-inline-start:.15em;color:var(--lap);font-weight:700}
 .gzm{margin-top:8px;font-size:.92em}.gzm summary{cursor:pointer;color:var(--lap);font:500 13px 'Noto Sans',sans-serif;list-style:none}.gzm summary::before{content:'▸ '}.gzm[open] summary::before{content:'▾ '}
 .gzl{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;color:var(--mut)}.gzf b.fm{font-weight:600}.gzc{font-size:.85em}
 .gzt{font-style:italic}
-@media(max-width:899px){.libd[open]>summary{position:sticky;top:var(--stk,0px);z-index:6;background:var(--bg);box-shadow:0 6px 10px -8px rgb(0 0 0/.25)}}
+body.mob .libd[open]>summary{position:sticky;top:var(--stk,0px);z-index:6;background:var(--bg);box-shadow:0 6px 10px -8px rgb(0 0 0/.25)}
 </style>
 </head>
 <body>
@@ -427,7 +425,7 @@ i.it{font-style:italic}
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.39 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.40 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -1363,6 +1361,7 @@ function heFin(q){const v=q.value,n=v.replace(/([כמנפצ])(?=[\s.,;:!?־׃׀�
 function insert(c){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;q.value=q.value.slice(0,a)+c+q.value.slice(b);q.setSelectionRange(a+c.length,a+c.length);heFin(q);debounced()}
 function backspace(){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b){q.value=q.value.slice(0,a)+q.value.slice(b);q.setSelectionRange(a,a)}else if(a>0){const s=[...q.value.slice(0,a)];s.pop();const p=s.join('');q.value=p+q.value.slice(a);q.setSelectionRange(p.length,p.length)}debounced()}
 
+function mobUpd(){document.body.classList.toggle('mob',innerWidth<900||document.body.classList.contains('coarse'))}mobUpd();addEventListener('resize',mobUpd);
 try{new ResizeObserver(()=>document.documentElement.style.setProperty('--hh',$('header').offsetHeight+'px')).observe($('header'))}catch(e){}
 function stkUpd(){const q=document.querySelector('.qsticky');if(q)document.documentElement.style.setProperty('--stk',Math.max(0,Math.round(q.getBoundingClientRect().bottom))+'px')}
 try{new ResizeObserver(stkUpd).observe(document.querySelector('.qsticky'));new ResizeObserver(stkUpd).observe($('header'))}catch(e){}addEventListener('scroll',stkUpd,{passive:true});addEventListener('resize',stkUpd);
@@ -1715,7 +1714,7 @@ $('#kb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
 });
 {let sh=null;document.addEventListener('keydown',e=>{if(e.key==='Shift'&&!e.repeat)sh=e.code;else sh=null},true);document.addEventListener('keyup',e=>{if(e.key!=='Shift'||sh!==e.code){sh=null;return}sh=null;if(COARSE||$('#kb').hidden)return;const cur=kBase(kbLang),[,,,,alt,,alt2]=KBL[cur];if(e.code!=='ShiftRight'||!alt)return;kbLang=kbNext();gezBase=null;renderKb()},true)}
 const COARSE=matchMedia('(pointer: coarse)').matches;let mkbL='tr';
-if(COARSE){document.body.classList.add('coarse');$('#q').setAttribute('inputmode','none');document.body.classList.add('cmp')}
+if(COARSE){document.body.classList.add('coarse');$('#q').setAttribute('inputmode','none');document.body.classList.add('cmp');document.body.classList.add('mob')}
 function mkbDraw(){const [nm,rows,,rtl,alt,albl,alt2,albl2]=KBL[mkbL],ex=kbEx(mkbL),d=rtl?' dir="rtl"':'';const K=c=>`<button type="button" class="${kMark(c)?'dm':''}${/^[ʾʿʔʕ]$/.test(c)?' ap':''}" data-c="${c}">${kGl(c)||kLab(c,mkbL)}</button>`,ks=x=>x?x.split(' ').map(K).join(''):'';
   {const xs=ex?ex.replace('|',' ').trim().split(/\s+/).filter(Boolean):[],n=xs.length,cs=getComputedStyle($('#mkb')),kw=parseFloat(cs.getPropertyValue('--kw'))||34,fw=parseFloat(cs.getPropertyValue('--fw'))||46,g=parseFloat(cs.getPropertyValue('--g'))||5,R0=(alt?fw+g:0)+(alt2?kw*1.3+2+g:0),Sk=k=>Math.max(fw+k*(kw+g),R0+(n-k)*(kw+g)-(alt||alt2?0:g));const Dk=k=>Math.abs(fw+k*(kw+g)-(R0+(n-k)*(kw+g)-(alt||alt2?0:g)));let h=n;for(let k=n;k>=0;k--)if(Dk(k)<Dk(h)-8)h=k;const SW=Sk(h),WL=fw+h*(kw+g),WR=Math.max(0,R0+(n-h)*(kw+g)-(alt||alt2?0:g));
   $('#mkb').innerHTML=rows.map((r,i)=>`<div class="r"><div class="ks"${d}>${r==='@forms'?gezForms().map(c=>`<button type="button" data-c="${c}" data-r="1">${c}</button>`).join(''):ks(r)}</div>${i===2?'<button type="button" class="f bs" data-a="bs" aria-label="⌫"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5h11v14H9l-6-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9l5 6M17 9l-5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>':''}</div>`).join('')+`<div class="r rb" style="--L:${WL}px;--R:${WR}px"><div class="sl"><button type="button" class="f" data-a="gl" aria-label="🌐"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>${xs.slice(0,h).map(K).join('')}</div><button type="button" class="sp" data-c=" "><bdi>${esc(nm)}</bdi>${(()=>{const b=kBase(mkbL),c=b==='cu'?'Slav.':I.chip&&I.chip[b];return c?'<span style="margin-inline-start:.35em">('+esc(c)+')</span>':''})()}</button><div class="sr">${xs.slice(h).map(K).join('')}${alt?`<button type="button" class="alt${kBase(mkbL)==='gez'?' gzk':''}" data-a="alt" aria-label="${esc(albl)}">${esc(mkbL==='gez'?gezE()+'፥':albl)}</button>`:''}${alt2?`<button type="button" class="alt wide" data-a="alt2" aria-label="${esc(albl2)}"><span class="gl">${esc(albl2)}<small style="color:inherit;opacity:.85">${alt2==='cu3'?(UIL==='ru'?'Глаг':'Glag'):(UIL==='ru'?'Кир':'Cyr')}</small></span></button>`:''}</div></div>`}}
