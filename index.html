@@ -348,6 +348,7 @@ i.it{font-style:italic}
 .gzt{font-style:italic}
 @media(max-width:899px){body.mob .libd[open]>summary{position:sticky;top:var(--stk,0px);z-index:6;background:var(--bg);box-shadow:0 6px 10px -8px rgb(0 0 0/.25)}}
 #pop .psv{display:none}#pop .psc{cursor:default;text-decoration:none;border:0}
+#kb .kbsp{visibility:hidden}
 </style>
 </head>
 <body>
@@ -426,7 +427,7 @@ i.it{font-style:italic}
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.46 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.47 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -1312,15 +1313,19 @@ const PCN=c=>({BracketLeft:'[',BracketRight:']',Semicolon:';',Quote:"'",Backslas
 const CUP={Backslash:'ѣ',Slash:'і',Digit1:'ѵ',Digit2:'ѳ',Digit3:'ѧ',Digit4:'ѡ',Digit5:'ѫ',Digit6:'ѯ',Digit7:'ѱ',Digit8:'ѕ',Digit9:'ꙋ',Digit0:'ѿ'};
 const isAux=l=>kBase(l)!==l;
 function auxMap(l){const [, rows,,rtl]=KBL[l],m={};rows.forEach((r,i)=>{if(!r||r==='@forms'||!PCR[i])return;let ks=r.split(' ').filter(Boolean);if(rtl)ks=ks.reverse();ks.forEach((c,j)=>{if(PCR[i][j])m[PCR[i][j]]=c})});return m}
+function gezVow(k){const o=PGV[k],q=$('#q'),a=q.selectionStart??q.value.length,pc=a?q.value.charCodeAt(a-1):0;
+  if(pc>=0x1200&&pc<=0x137F&&(pc&7)===5){const tg=(pc&~7)+o;if([0x1249,0x124E,0x124F,0x12B1,0x12B6,0x12B7,0x1289,0x128E,0x128F,0x1291,0x1296,0x1297].includes(tg))return true;q.value=q.value.slice(0,a-1)+String.fromCharCode((pc&~7)+o)+q.value.slice(a);q.setSelectionRange(a,a);debounced()}else insert(String.fromCharCode(0x12A0+o));return true}
+const GEZ2N={Digit1:'፩',Digit2:'፪',Digit3:'፫',Digit4:'፬',Digit5:'፭',Digit6:'፮',Digit7:'፯',Digit8:'፰',Digit9:'፱',Digit0:'፲'},
+ GEZ2P={Semicolon:'፡',Period:'።',Comma:'፣',Quote:'፤',Slash:'፥',BracketLeft:'፦',BracketRight:'፨'},GEZ2Q='፧',GEZVK=['a','u','i','⇧a','e','','o',''];
 function physOn(){if(COARSE||$('#kb').hidden)return false;const l=kbLang;return isAux(l)||l==='cu'||l==='tr'||!!PK[l]}
 function physType(e){if(!physOn())return false;const l=kbLang,k=e.key;
+  if(l==='gez2'){if(e.key==='?'){kbType(GEZ2Q);return true}if(!e.shiftKey&&(GEZ2N[e.code]||GEZ2P[e.code])){kbType(GEZ2N[e.code]||GEZ2P[e.code]);renderKb();return true}if(e.key in PGV){gezVow(e.key);renderKb();return true}return false}
   if(isAux(l)){if(e.shiftKey)return false;const c=auxMap(l)[e.code];if(!c)return false;kbType(c);return true}
   if(l==='cu'){const c=CUP[e.code];if(!c||e.shiftKey)return false;insert(c);return true}
   if(l==='tr'){const c=PKTB[e.key]?PKTB[e.key]:e.shiftKey&&/^Key[A-Z]$/.test(e.code)?PKT[e.code.slice(3)]:null;if(!c)return false;insert(c);return true}
   if([...k].length!==1)return false;
   if(l!=='gez'){const c=PK[l][k];if(!c)return false;insert(c);return true}
-  const q=$('#q'),a=q.selectionStart??q.value.length,pc=a?q.value.charCodeAt(a-1):0;
-  if(k in PGV){const o=PGV[k];if(pc>=0x1200&&pc<=0x137F&&(pc&7)===5){const tg=(pc&~7)+o;if([0x1249,0x124E,0x124F,0x12B1,0x12B6,0x12B7,0x1289,0x128E,0x128F,0x1291,0x1296,0x1297].includes(tg))return true;q.value=q.value.slice(0,a-1)+String.fromCharCode((pc&~7)+o)+q.value.slice(a);q.setSelectionRange(a,a);debounced()}else insert(String.fromCharCode(0x12A0+o));return true}
+  if(k in PGV)return gezVow(k);
   const c=PK.gez[k];if(!c)return false;insert(String.fromCharCode(c.charCodeAt(0)+5));return true}
 const BSI='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5h11v14H9l-6-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9l5 6M17 9l-5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
 function kbFit(){const k=$('#kb');if(k.hidden)return;const R=[...k.querySelectorAll('.kbr')];if(!R.length)return;const W=R[0].clientWidth||k.clientWidth,G=4;let u=60;if(W<120){k.style.removeProperty('--u');requestAnimationFrame(()=>{if(R[0].clientWidth>=120)kbFit()});return}
@@ -1340,7 +1345,11 @@ function renderKb(){
   if(!KBL[kbLang])kbLang='tr';
   const cur=kBase(kbLang),[nm,rows,,rtl,alt,albl,alt2,albl2]=KBL[kbLang],d=rtl?' dir="rtl"':'',xs=(kbEx(kbLang)||'').replace('|',' ').trim();
   const pr=kbRows(kbLang);let R;
-  if(pr)R=pr.map(r=>r.map(o=>kbKey(o,kbLang)));
+  if(kbLang==='gez2'){const sp='<span class="kk kbsp" aria-hidden="true"></span>';
+    R=[Object.entries(GEZ2N).map(([c,ch])=>kbKey({c:ch,k:PCN(c)},kbLang)),
+       gezForms().map((c,j)=>`<span class="kk"><button type="button" data-c="${c}" data-r="1">${GEZVK[(c.charCodeAt(0))&7]?`<span class="pk">${GEZVK[(c.charCodeAt(0))&7]}</span>`:''}${c}</button></span>`),
+       [sp,sp,sp,...Object.entries(GEZ2P).map(([c,ch])=>kbKey({c:ch,k:PCN(c)},kbLang)),kbKey({c:GEZ2Q,k:'?'},kbLang)]]}
+  else if(pr)R=pr.map(r=>r.map(o=>kbKey(o,kbLang)));
   else{const am=isAux(kbLang)?auxMap(kbLang):null,lb={};if(am)for(const [c,ch] of Object.entries(am))lb[ch]=PCN(c);if(kbLang==='cu')for(const [c,ch] of Object.entries(CUP))lb[ch]=PCN(c);if(kbLang==='tr')for(const [c,ch] of Object.entries(PKT))lb[ch]='⇧'+c.toLowerCase();if(kbLang==='tr')for(const [c,ch] of Object.entries(PKTB))lb[ch]=c;
     R=rows.map(r=>r==='@forms'?gezForms().map(c=>`<span class="kk"><button type="button" data-c="${c}" data-r="1">${c}</button></span>`):(r?r.split(' ').filter(Boolean).map(c=>kbKey({c,s:null,k:lb[c]||''},kbLang)):[]));
     if(xs&&!isAux(kbLang)){const t=R[1].length<=R[2].length?1:2;R[t].push(...xs.split(' ').map(c=>kbKey({c,s:null,k:lb[c]||''},kbLang)))}}
