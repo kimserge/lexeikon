@@ -193,7 +193,8 @@ body[data-tl=en] .tlb .en,body[data-tl=fr] .tlb .fr,body[data-tl=de] .tlb .de{co
 .tag{font-size:13px;color:var(--mut);margin-inline-start:10px;white-space:nowrap}
 .def{display:block;margin-top:4px;font:17px/1.5 var(--lex);overflow-wrap:anywhere}
 .def .l{display:block}
-.def .l.f{margin-top:.55em}.l.cpos{margin-top:1.1em}.l.cwf{margin-top:.8em;font-style:italic}
+.def .l.f{margin-top:.55em}.l.cpos{margin-top:1.1em}b.fmhl{background:#ffe9a8;border-radius:3px;box-shadow:0 0 0 2px #ffe9a8}
+.l.cwf{margin-top:.8em;font-style:italic}
 .l.crp{margin-top:1em}.pchip{display:inline-block;padding:0 9px;border-radius:8px;background:color-mix(in srgb,var(--lap) 13%,transparent)}.pchip .gr{font-size:13px;font-weight:500}.fpan{background:light-dark(#fbf1dd,#2f2816);border-radius:8px;padding:4px 10px 8px;margin:.9em 0 .3em}.flab{display:inline-block;font:italic 500 17px 'Noto Serif',serif;letter-spacing:.03em;color:light-dark(#854f0b,#fac775);border-bottom:1.5px solid light-dark(#ef9f27,#854f0b);padding:2px 2px 2px 0;margin:4px 0 4px}.tld{color:#c62828;font-weight:600}.tld2{color:var(--lap);font-weight:600}
 .def .l.f:first-child{margin-top:0}
 .def .l.s{margin-top:.45em}
@@ -448,7 +449,7 @@ body[data-tk=ru] .l:has(>.tk-ka):not(:has(>.tk-ru)):not(:has(>.sn)),body[data-tk
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h" style="white-space:pre-line"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.112 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.113 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -1686,7 +1687,7 @@ async function lemBanner(q){const t=++lemTok,w=q.trim();if(!w||/\s/.test(w)&&scr
   if(!html)return;
   if(!results.length)$('#stat').textContent='';
   const head=`<li class="lemh">${esc(I.lemof||'Form of')} ${lh.map(l=>`<b dir="auto">${esc(l)}</b>`).join(', ')}</li>`;
-  $('#res').insertAdjacentHTML('afterbegin',head+html.replace(/<li class="" data-k="m/g,'<li class="lemx" data-k="m')+'<li class="lemh lemend"></li>');
+  $('#res').insertAdjacentHTML('afterbegin',head+html.replace(/<li class="" data-k="m/g,'<li class="lemx" data-k="m')+'<li class="lemh lemend"></li>');if(L==='cop')for(const x of $('#res').querySelectorAll('.lemx'))fmHl(x,w,0);
   requestAnimationFrame(()=>{for(const h of $('#res').querySelectorAll('.hit:not([data-m])')){h.dataset.m=1;const d=h.querySelector('.def');if(d.scrollHeight>(d.querySelector('.tv')?18:7.6)*parseFloat(getComputedStyle(d).fontSize)+4)h.classList.add('long')}})}
 function wordAt(e){let r=null;if(document.caretRangeFromPoint)r=document.caretRangeFromPoint(e.clientX,e.clientY);else if(document.caretPositionFromPoint){const p=document.caretPositionFromPoint(e.clientX,e.clientY);if(p){r=document.createRange();r.setStart(p.offsetNode,p.offset)}}
   if(!r)return null;const n=r.startContainer;if(!n||n.nodeType!==3)return null;const t=n.data,o=r.startOffset,re=/[\p{L}\p{M}ـ]/u;let a=o,b=o;while(a>0&&re.test(t[a-1]))a--;while(b<t.length&&re.test(t[b]))b++;if(a===b)return null;return {n,a,b,w:t.slice(a,b)}}
@@ -1705,13 +1706,18 @@ function popBack(){const x=popStack.pop();if(!x)return;$('#pop').innerHTML=x.h;$
 function popDeco(){const p=$('#pop');if(p.hidden){if(popStack.length)popStack=[];return}const ph=p.querySelector('.ph'),b=p.querySelector('#popB');if(!ph)return;
   if(popStack.length&&!b)ph.insertAdjacentHTML('afterbegin',`<button type="button" class="btn ghost popb" id="popB" aria-label="${esc(I.pback)}" title="${esc(I.pback)}">← ${esc(I.pback)}</button>`);else if(!popStack.length&&b)b.remove()}
 try{new MutationObserver(popDeco).observe($('#pop'),{childList:true,attributes:true,attributeFilter:['hidden']})}catch(e){}
-function showXr(w,did){
-  const r=popSort(xrFind(w,did));
+async function showXr(w,did){
+  let r=popSort(xrFind(w,did)),fm=0;
+  if(scriptLang(w)==='cop'){const lr=[];const seen=new Set(r.map(x=>x[0].id+'|'+x[1]));for(const l of await copLem(w))for(const x of xrFind(l,did)){const id=x[0].id+'|'+x[1];if(!seen.has(id)){seen.add(id);lr.push(x)}}
+    if(lr.length){fm=1;const own=x=>x[0].id===did?0:1;r=[...r,...lr].map((x,n)=>[x,n]).sort((a,b)=>own(a[0])-own(b[0])||a[1]-b[1]).map(x=>x[0])}}
   $('#pop').innerHTML=`<div class="ph"><span class="pt"><b>${esc(w)}</b></span><button class="btn ghost" id="popX">${I.close}</button></div>`+
     (r.length?r.map(([d,i])=>{const e=d.entries[i];return `<article><div class="hd"><span class="hw" dir="auto">${esc(e[0])}</span>${trTag(elang(d,i)==='syr'?syrHead(d,i):e[0],elang(d,i))} <span class="tag"><abbr class="sgt" title="${esc(fullN(d))}">${esc(sgl(d))}</abbr></span></div><div class="def">${defHtml(d,e,elang(d,i))}</div></article>`}).join(''):'<p class="note">—</p>')+
     `<p class="xs"><button type="button" class="btn ghost" data-xs="${esc(w)}">${I.search||'Search'} → ${esc(w)}</button></p>`;
   $('#pop').hidden=false;$('#pop').scrollTop=0;
+  if(fm)fmHl($('#pop'),w,1);
 }
+function fmHl(root,w,sc){const k=copF(w);let t=null;for(const b of root.querySelectorAll('b.fm')){if(copF(b.textContent)===k){b.classList.add('fmhl');t=t||b}}
+  if(t&&sc){const p=t.closest('.fpan')||t;requestAnimationFrame(()=>{const pr=$('#pop');pr.scrollTop+=p.getBoundingClientRect().top-pr.getBoundingClientRect().top-50})}}
 function xrSearch(w){$('#pop').hidden=true;$('#q').value=w;$('#clr').hidden=false;search();window.scrollTo({top:0,behavior:'instant'})}
 
 /* ---------- dictionary list follows the language on screen (desktop) ---------- */
