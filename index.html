@@ -447,7 +447,7 @@ body[data-tk=ru] .l:has(>.tk-ka):not(:has(>.tk-ru)):not(:has(>.sn)),body[data-tk
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h" style="white-space:pre-line"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.103 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.104 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -1274,8 +1274,9 @@ function formatDef0(raw,L,hw,noRoot){
       else if(new RegExp('^'+CP).test(l)){const h0=l.split(':')[0],hd=h0.replace(/\x02[^\x03]*\x03/g,'').replace(/\([^()]*\)/g,'');
         if(/[A-Za-z]{3,}/.test(hd)){const nest=(csub===1||csub===3)&&(/˜/.test(h0)||cforms.some(f=>h0.includes(f)));if(!nest)cforms=(h0.match(/\S+~/g)||[]);cls=' f'+(nest?' si':'');csub=nest?3:1;l=l.replace(new RegExp('^((?:'+CP+'+[-.,]?[\\s,]*)+?)(?=\\x02|[A-Za-z]|$)'),m=>'<b class="fm">'+m.replace(/[\s,]+$/,'')+'</b>'+(/[\s,]+$/.exec(m)||[''])[0])}
         else{cls+=' lb si';csub=2}}
+      else if(/^\x02c\x03\s/.test(l)||/^\+\s/.test(l))cls+=' lb'+(csub===3?' si2':csub?' si':'');
       else if(csub)cls+=csub===3?' si2':' si';
-      l=l.replace(/~/g,'<span class="tld">~</span>').replace(/˜/g,'<span class="tld2">~</span>')}
+      l=l.replace(/~/g,'<span class="tld">~</span>').replace(/([^\s>(])?˜/g,(m,c)=>'<span class="tld2">'+(c||'')+'~</span>')}
     l=l.replace(/\(([^()]*\d[^()]*)\)/g,'<span class="ex">($1)</span>');
     let pre=(et?'<span class="et">':'')+(g?'<i class="gr">':'')+(ex?'<span class="ex">':'');
     for(const ch of l){if(ch==='\x0e')et=true;else if(ch==='\x0f')et=false;else if(ch==='\x02')g=true;else if(ch==='\x03')g=false;else if(ch==='\x04')ex=true;else if(ch==='\x05')ex=false}
