@@ -175,7 +175,7 @@ body[data-tl=en] .tlb .en,body[data-tl=fr] .tlb .fr,body[data-tl=de] .tlb .de{co
 .edb{background:none;border:0;color:var(--rub,#b0281f);cursor:pointer;width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:8px}.edb:hover{background:color-mix(in srgb,var(--rub,#b0281f) 12%,transparent)}.edb svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #edp{position:fixed;top:0;right:0;bottom:0;width:min(470px,100vw);z-index:60;background:var(--bg);color:var(--ink);border-left:1px solid var(--line);box-shadow:-10px 0 30px rgb(0 0 0/.18);overflow:auto;padding:calc(14px + var(--sat,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px}
 #edp h2{margin:0;font:700 18px 'Noto Serif',serif;display:flex;align-items:center;gap:8px}#edp h2 .x{margin-left:auto;width:36px;height:36px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer;font-size:18px}
-#edp label{font:600 13px 'Noto Sans',sans-serif;color:var(--mut);margin-top:4px}#edp input,#edp textarea{width:100%;box-sizing:border-box;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:400 17px/1.5 var(--lex)}#edp textarea#edT{min-height:40vh;resize:vertical}.edk{margin:6px 0 4px;padding:6px;border:1px solid var(--line);border-radius:10px;background:var(--card)}.edk .ekt{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px}.edk .ekt button{border:1px solid var(--line);background:var(--bg);color:var(--mut);border-radius:999px;padding:2px 10px;font:400 14px var(--lex);cursor:pointer}.edk .ekt button.on{border-color:var(--lap);color:var(--lap)}.edk .ekt button.alt{background:var(--lap);color:var(--bg);border-color:var(--lap)}.edk .ekr{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;margin:3px 0}.edk .ekr button{min-width:30px;height:34px;padding:0 4px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:400 18px/1 var(--lex);cursor:pointer}.edk .ekr button:hover{border-color:var(--ink)}.edk .ekr button.dm{color:var(--lap);font-size:20px}.edk .gl small{display:none}#edp textarea#edN{min-height:70px;font:15px/1.4 'Noto Sans',sans-serif}
+#edp label{font:600 13px 'Noto Sans',sans-serif;color:var(--mut);margin-top:4px}#edp input,#edp textarea{width:100%;box-sizing:border-box;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:400 17px/1.5 var(--lex)}#edp textarea#edT{min-height:28vh;resize:vertical}#edp .edkb{align-self:flex-start;margin:2px 0}#edp .edkb[aria-expanded=true]{border-color:var(--lap);color:var(--lap)}#edp #kb{margin-top:6px}body.coarse #edp #kb:not([hidden]){display:block}#edp textarea#edN{min-height:70px;font:15px/1.4 'Noto Sans',sans-serif}
 #edp .leg,#edp .est{font-size:12px;color:var(--mut)}#edp .est b{color:var(--lap)}#edp .pv{border:1px dashed var(--line);border-radius:10px;padding:8px 10px;background:var(--card)}#edp .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}#edp .row button{min-height:40px;padding:0 14px;border-radius:10px;border:1.5px solid var(--lap);background:transparent;color:var(--lap);font:600 14px 'Noto Sans',sans-serif;cursor:pointer}#edp .row button.pri{background:var(--lap);color:var(--bg)}#edp .row button.del{border-color:var(--line);color:var(--mut);margin-left:auto}
 .cp{background:none;border:0;color:var(--rub);cursor:pointer;width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:8px}.cp:hover{background:color-mix(in srgb,var(--rub) 12%,transparent)}.cp svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .lw{cursor:pointer;text-decoration:underline dotted color-mix(in srgb,var(--lap) 55%,transparent);text-underline-offset:3px}
@@ -446,7 +446,7 @@ body[data-tk=ru] .l:has(>.tk-ka):not(:has(>.tk-ru)):not(:has(>.sn)),body[data-tk
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.83 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.84 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -587,6 +587,7 @@ const KEYS={
  gez:[0x1200,0x1208,0x1210,0x1218,0x1220,0x1228,0x1230,0x1240,0x1260,0x1270,0x1280,0x1290,0x12A0,0x12A8,0x12C8,0x12D0,0x12D8,0x12E8,0x12F0,0x1308,0x1320,0x1330,0x1338,0x1340,0x1348,0x1350].map(c=>String.fromCharCode(c)).join(' ')
 };
 
+let KT=null;const KQ=()=>KT||$('#q'),kDeb=()=>KT?KT.dispatchEvent(new Event('input')):debounced();
 const KBL={
  tr:['Translit',['q w e r t y u i o p','a s d f g h j k l ł','z x c v b n m ʒ ə'],'ʾ ʿ',0,'tr2','š̱'],
  tr2:['Translit',['̄ ̈ ̌ ̇ ̣ ̱ ́ ̀ ̂ ̆','̃ ̊ ̧ ̨ ̋ ̑ ̥ ̮ ̰ ̤ ̭ ̦','ʰ ʷ ð þ ŋ ɣ χ ħ ʃ ɛ ɔ θ'],'',0,'tr','ab'],
@@ -610,11 +611,11 @@ const KBL={
  cu3:['ⱄⰾⱁⰲⱑⱀⱐⱄⰽⱏⰹ',['ⰰ ⰱ ⰲ ⰳ ⰴ ⰵ ⰶ ⰷ ⰸ ⰹ ⰻ ⰼ','ⰽ ⰾ ⰿ ⱀ ⱁ ⱂ ⱃ ⱄ ⱅ ⱆ ⱇ ⱈ','ⱋ ⱌ ⱍ ⱎ ⱏ ⱐ ⱑ ⱓ ⱔ ⱘ ⱚ ⱛ'],'ⱉ|ⱗ ⱙ',0,null,null,'cu','АБ'],
  cop:['Ⲙⲉⲧⲣⲉⲙⲛⲭⲏⲙⲓ',['ⲁ ⲃ ⲅ ⲇ ⲉ ⲍ ⲏ ⲑ ⲓ ⲕ ⲗ','ⲙ ⲛ ⲝ ⲟ ⲡ ⲣ ⲥ ⲧ ⲩ ⲫ','ⲭ ⲯ ⲱ ϣ ϥ ϧ ϩ ϫ ϭ ϯ'],'',0,'cop2','⳾'],
  cop2:['Ⲙⲉⲧⲣⲉⲙⲛⲭⲏⲙⲓ',['\u0300 \u0305 \u2CEF \u2CF0 \u2CF1 \u0304 \u0307 \u0308','⳹ ⳺ ⳻ ⳼ ⳽ ⳾ ⳿ ·',''],'',0,'cop','ⲁⲃ']};
-const gezE=()=>{const q=$('#q'),a=q.selectionStart??q.value.length,c=q.value.slice(0,a).slice(-1),x=c?c.charCodeAt(0):0;return String.fromCharCode(((x>=0x1200&&x<=0x137F)?x&~7:0x1200)+4)};
+const gezE=()=>{const q=KQ(),a=q.selectionStart??q.value.length,c=q.value.slice(0,a).slice(-1),x=c?c.charCodeAt(0):0;return String.fromCharCode(((x>=0x1200&&x<=0x137F)?x&~7:0x1200)+4)};
 const kBase=l=>l.replace(/[23]$/,'');
 const GLT={'ⰰ':'a','ⰱ':'b','ⰲ':'v','ⰳ':'g','ⰴ':'d','ⰵ':'e','ⰶ':'ž','ⰷ':'ʒ','ⰸ':'z','ⰹ':'ï','ⰻ':'i','ⰼ':'ǵ','ⰽ':'k','ⰾ':'l','ⰿ':'m','ⱀ':'n','ⱁ':'o','ⱂ':'p','ⱃ':'r','ⱄ':'s','ⱅ':'t','ⱆ':'u','ⱇ':'f','ⱈ':'x','ⱉ':'ō','ⱋ':'št','ⱌ':'c','ⱍ':'č','ⱎ':'š','ⱏ':'ŭ','ⱐ':'ĭ','ⱑ':'ě','ⱓ':'ju','ⱔ':'ę','ⱘ':'ǫ','ⱚ':'θ','ⱛ':'ü','ⱗ':'ję','ⱙ':'jǫ'};
 const kGl=c=>GLT[c]?`<span class="gl">${c}<small>${GLT[c]}</small></span>`:null;
-const gezForms=()=>{const q=$('#q'),a=q.selectionStart??q.value.length,c=q.value.slice(0,a).slice(-1),x=c?c.charCodeAt(0):0,b=(x>=0x1200&&x<=0x137F)?x&~7:0x1200;const o=[];for(let k=0;k<8;k++){const ch=String.fromCharCode(b+k);if(/\p{L}/u.test(ch))o.push(ch)}return o};
+const gezForms=()=>{const q=KQ(),a=q.selectionStart??q.value.length,c=q.value.slice(0,a).slice(-1),x=c?c.charCodeAt(0):0,b=(x>=0x1200&&x<=0x137F)?x&~7:0x1200;const o=[];for(let k=0;k<8;k++){const ch=String.fromCharCode(b+k);if(/\p{L}/u.test(ch))o.push(ch)}return o};
 
 const kbEx=l=>l==='tr'?(trCfg.syr==='alt'?'ʔ ʕ':'ʾ ʿ'):KBL[l][2];
 const KBO=['tr','syr','gez','ka','grc','hy','ar','he','cop','cu'];
@@ -622,8 +623,8 @@ const KDIA={'᾿':'\u0313','῾':'\u0314','´':'\u0301','`':'\u0300','῀':'\u03
 const kMark=c=>!!KDIA[c]||/^\p{M}$/u.test(c);
 const kLab=(c,l)=>KDIA[c]?c:/^\p{M}$/u.test(c)?(/[\u0600-\u074F]/.test(c)||kBase(l)==='syr'?'\u0640'+c:'\u25CC'+c):c;
 function kbKeys(str,gez,l){return str?str.split(' ').map(c=>`<button type="button" class="${kMark(c)?'dm':''}${/^[ʾʿʔʕ]$/.test(c)?' ap':''}" ${gez?'data-g':'data-c'}="${c}">${kGl(c)||kLab(c,l)}</button>`).join(''):''}
-function kbType(c){const q=$('#q');c=KDIA[c]||c;if(kMark(c)){const a=q.selectionStart??q.value.length;if(!a)return;q.value=q.value.slice(0,a)+c+q.value.slice(a);const pre=q.value.slice(0,a+c.length).normalize('NFC');q.value=pre+q.value.slice(a+c.length);q.setSelectionRange(pre.length,pre.length);debounced()}else insert(c)}
-function kbBack(){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b||!a){backspace();return}const d=[...q.value.slice(0,a).normalize('NFD')];d.pop();const pre=d.join('').normalize('NFC');q.value=pre+q.value.slice(a);q.setSelectionRange(pre.length,pre.length);debounced()}
+function kbType(c){const q=KQ();c=KDIA[c]||c;if(kMark(c)){const a=q.selectionStart??q.value.length;if(!a)return;q.value=q.value.slice(0,a)+c+q.value.slice(a);const pre=q.value.slice(0,a+c.length).normalize('NFC');q.value=pre+q.value.slice(a+c.length);q.setSelectionRange(pre.length,pre.length);kDeb()}else insert(c)}
+function kbBack(){const q=KQ(),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b||!a){backspace();return}const d=[...q.value.slice(0,a).normalize('NFD')];d.pop();const pre=d.join('').normalize('NFC');q.value=pre+q.value.slice(a);q.setSelectionRange(pre.length,pre.length);kDeb()}
 const opt=Object.assign({lat:true,gez:true,ar:true},LS.get('opt',{}));
 const GEZ={0x1210:0x1200,0x1280:0x1200,0x1220:0x1230,0x12D0:0x12A0,0x1340:0x1338};
 function norm(s){
@@ -1418,8 +1419,8 @@ async function offDownload(){if(!window.caches)return;const b=$('#offB');b.disab
 {const fb=()=>{const f=document.querySelector('.foot');if(!f)return;const t=f.getBoundingClientRect().top;document.documentElement.style.setProperty('--lnb',Math.max(16,innerHeight-t+12)+'px')};addEventListener('scroll',fb,{passive:true});addEventListener('resize',fb);setTimeout(fb,500)}
 const HEF={'כ':'ך','מ':'ם','נ':'ן','פ':'ף','צ':'ץ'};
 function heFin(q){const v=q.value,n=v.replace(/([כמנפצ])(?=[\s.,;:!?־׃׀״׳"'()\[\]\-–—])/g,(m,c)=>HEF[c]);if(n!==v){const a=q.selectionStart,b=q.selectionEnd;q.value=n;q.setSelectionRange(a,b)}}
-function insert(c){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;q.value=q.value.slice(0,a)+c+q.value.slice(b);q.setSelectionRange(a+c.length,a+c.length);heFin(q);debounced()}
-function backspace(){const q=$('#q'),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b){q.value=q.value.slice(0,a)+q.value.slice(b);q.setSelectionRange(a,a)}else if(a>0){const s=[...q.value.slice(0,a)];s.pop();const p=s.join('');q.value=p+q.value.slice(a);q.setSelectionRange(p.length,p.length)}debounced()}
+function insert(c){const q=KQ(),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;q.value=q.value.slice(0,a)+c+q.value.slice(b);q.setSelectionRange(a+c.length,a+c.length);heFin(q);kDeb()}
+function backspace(){const q=KQ(),a=q.selectionStart??q.value.length,b=q.selectionEnd??a;if(a!==b){q.value=q.value.slice(0,a)+q.value.slice(b);q.setSelectionRange(a,a)}else if(a>0){const s=[...q.value.slice(0,a)];s.pop();const p=s.join('');q.value=p+q.value.slice(a);q.setSelectionRange(p.length,p.length)}kDeb()}
 
 function mobUpd(){document.body.classList.toggle('mob',innerWidth<900||document.body.classList.contains('coarse'))}mobUpd();addEventListener('resize',mobUpd);
 try{new ResizeObserver(()=>document.documentElement.style.setProperty('--hh',$('header').offsetHeight+'px')).observe($('header'))}catch(e){}
@@ -1697,15 +1698,10 @@ function edToMark(raw){let s=String(raw).replace(/\\|\[\[|\]\]|[{}⟨⟩⟦⟧�
 function edFromMark(m){const T=Object.fromEntries(EDT.map(([c,t])=>[t,c]));return String(m).replace(/\\(\\|\[\[|\]\]|[{}⟨⟩⟦⟧⁅⁆⦃⦄])|\[\[|\]\]|[{}⟨⟩⟦⟧⁅⁆⦃⦄]/g,(x,e)=>e!==undefined?e:T[x])}
 async function eApi(path,opt={}){const r=await fetch(PAPI+path,{...opt,headers:{'Content-Type':'application/json',Authorization:'Bearer '+EAUTH.token},body:opt.body?JSON.stringify(opt.body):undefined});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||r.status);return j}
 let edCur=null;
-let edKL='tr',edKF=null;
-function edKDraw(){const k=$('#edK');if(!k)return;const L=KBL[edKL]||KBL.tr,b=kBase(edKL),langs=[...new Set([kBase(edCur.lang),'tr'])].filter(l=>KBL[l]);
-  k.innerHTML=`<div class="ekt">${langs.map(l=>`<button type="button" data-kl="${l}" class="${l===b?'on':''}">${esc(KBL[l][0])}</button>`).join('')}${L[5]?`<button type="button" data-kl="${L[5]}" class="alt">${esc(L[6])}</button>`:''}${L[7]?`<button type="button" data-kl="${L[7]}" class="alt">${esc(L[8])}</button>`:''}</div>`+
-   [...L[1],(L[2]||'').replace('|',' ').trim()].filter(r=>r&&r!=='@forms').map(r=>`<div class="ekr"${L[3]?' dir="rtl"':''}>${kbKeys(r,false,edKL)}</div>`).join('')}
-function edKType(c){const f=edKF||$('#edT');if(!f||f.disabled)return;c=KDIA[c]||c;const a=f.selectionStart??f.value.length,e=f.selectionEnd??a;
-  let pre=f.value.slice(0,a)+c;if(kMark(c))pre=pre.normalize('NFC');f.value=pre+f.value.slice(e);f.setSelectionRange(pre.length,pre.length);f.focus();f.dispatchEvent(new Event('input'))}
-document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('#edH,#edT'))edKF=e.target});
-document.addEventListener('mousedown',e=>{if(e.target.closest('#edK button'))e.preventDefault()});
-document.addEventListener('click',e=>{const b=e.target.closest('#edK button');if(!b)return;if(b.dataset.kl){edKL=b.dataset.kl;edKDraw();return}if(b.dataset.c!=null)edKType(b.dataset.c)});
+let edKF=null,kbHome=null;
+function edKb(on){const k=$('#kb'),box=$('#edK');if(on&&box){if(!kbHome)kbHome=[k.parentNode,k.nextSibling];box.append(k);k.hidden=false;KT=edKF||$('#edT');const l=kBase(edCur.lang);kbLang=KBL[l]?l:'tr';gezBase=null;renderKb();$('#edKB').setAttribute('aria-expanded','true')}
+  else{if(kbHome){kbHome[0].insertBefore(k,kbHome[1]);kbHome=null;k.hidden=true;$('#kbB').setAttribute('aria-expanded','false')}KT=null;const b=$('#edKB');if(b)b.setAttribute('aria-expanded','false')}}
+document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('#edH,#edT')){edKF=e.target;if(kbHome)KT=e.target}});
 function edOpen(d,i){const en=d.entries[i];if(!en)return;let ed=null,base=d,raw=en[1];
   if(/^e-/.test(d.base||'')){ed=(EDITS[d.base]||[])[i];if(!ed)return;base=dicts.find(x=>x.id===ed.dict)||{id:ed.dict,lang:ed.lang,entries:[]};raw=ed.text}
   const tail=(String(ed?ed.orig:raw).match(/\x12[^\x13]*\x13$/)||[''])[0],body=String(raw).replace(/\x12[^\x13]*\x13$/,'');
@@ -1714,19 +1710,19 @@ function edOpen(d,i){const en=d.entries[i];if(!en)return;let ed=null,base=d,raw=
   const st=ed?`<p class="est">${esc((I.ed_st||{})[ed.status]||ed.status)}${ed.anote?` · <b>${esc(I.ed_an)}:</b> ${esc(ed.anote)}`:''}</p>`:'';
   p.innerHTML=`<h2>✎ <span>${esc(I.ed_btn)}</span><button class="x" type="button" aria-label="${esc(I.close)}">×</button></h2><p class="est">${esc(fullN(base))}</p>${st}
   <label for="edH">${esc(I.ed_head)}</label><input id="edH" dir="auto" value="${esc(ed?ed.head:en[0])}">
-  <label for="edT">${esc(I.ed_text)}</label><textarea id="edT" dir="ltr" spellcheck="false">${esc(edToMark(body))}</textarea><p class="leg">${esc(I.ed_leg)}</p><div id="edK" class="edk"></div>
+  <label for="edT">${esc(I.ed_text)}</label><textarea id="edT" dir="ltr" spellcheck="false">${esc(edToMark(body))}</textarea><p class="leg">${esc(I.ed_leg)}</p><button type="button" class="btn ghost edkb" id="edKB" aria-expanded="false">${esc(I.alphabet)}</button><div id="edK"></div>
   <label>${esc(I.ed_prev)}</label><div class="pv def" id="edV"></div>
   <label for="edN">${esc(I.ed_note)}</label><textarea id="edN">${esc(ed?ed.note||'':'')}</textarea>
   <div class="row"><button type="button" id="edS">${esc(I.ed_save)}</button><button type="button" class="pri" id="edG">${esc(I.ed_send)}</button>${ed&&ed.status!=='accepted'?`<button type="button" class="del" id="edD">${esc(I.ed_del)}</button>`:''}</div>`;
   p.hidden=false;const pv=()=>{try{$('#edV').innerHTML=defHtml(base,[$('#edH').value,edFromMark($('#edT').value),...edCur.rest],edCur.lang)}catch(e){$('#edV').textContent=''}};pv();
-  $('#edT').addEventListener('input',pv);$('#edH').addEventListener('input',pv);edKL=KBL[edCur.lang]?edCur.lang:'tr';edKF=$('#edT');edKDraw();
+  $('#edT').addEventListener('input',pv);$('#edH').addEventListener('input',pv);edKF=$('#edT');if(kbHome)edKb(false);$('#edKB').onclick=()=>edKb(!kbHome);
   if(ed&&ed.status==='accepted')p.querySelectorAll('input,textarea,#edS,#edG').forEach(x=>x.disabled=true);
   p.querySelector('.x').onclick=edClose;$('#edS').onclick=()=>edSave(false);$('#edG').onclick=()=>edSave(true);
   const dl=$('#edD');if(dl)dl.onclick=async()=>{try{await eApi('/edits/'+ed.id,{method:'DELETE'});edClose()}catch(e){toast(I.ed_err)}}}
 async function edSave(send){if(!edCur)return;const b={dict:edCur.d.id,lang:edCur.lang,okey:edCur.okey,orig:edCur.orig,head:$('#edH').value.trim(),text:edFromMark($('#edT').value)+edCur.tail,note:$('#edN').value.trim()};
   try{let ed=edCur.ed;ed=ed?await eApi('/edits/'+ed.id,{method:'PUT',body:b}):await eApi('/edits',{method:'POST',body:b});edCur.ed=ed;
     if(send){await eApi('/edits/'+ed.id+'/submit',{method:'POST'});toast(I.ed_sent)}else toast(I.ed_saved);if(send)edClose();else loadEdits()}catch(e){toast(I.ed_err)}}
-function edClose(){const p=$('#edp');if(p)p.hidden=true;edCur=null;loadEdits()}
+function edClose(){edKb(false);const p=$('#edp');if(p)p.hidden=true;edCur=null;loadEdits()}
 async function loadEdits(){if(!EAUTH||!EAUTH.token)return;let L;try{L=await eApi('/edits')}catch(e){return}
   for(const k of Object.keys(EDITS))delete EDITS[k];dicts=dicts.filter(x=>!/^e-/.test(x.base||''));
   const G={};for(const x of L)(G[x.dict]=G[x.dict]||[]).push(x);
@@ -1812,15 +1808,15 @@ document.addEventListener('click',e=>{if(!$('#pop').hidden&&!e.target.closest('#
 $('#mail').addEventListener('click',e=>{e.preventDefault();location.href='mailto:'+['sergey.kim','unil.ch'].join('@')});
 $('#syms').addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault()});
 $('#syms').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;insert(b.dataset.s);$('#q').focus()});
-$('#kbB').addEventListener('click',()=>{const k=$('#kb');k.hidden=!k.hidden;$('#kbB').setAttribute('aria-expanded',!k.hidden);if(!k.hidden){kbLang=mkbDef();gezBase=null}renderKb();cmpUpd();renderSug();if(k.hidden)$('#q').focus({preventScroll:true})});
+$('#kbB').addEventListener('click',()=>{if(kbHome)edKb(false);const k=$('#kb');k.hidden=!k.hidden;$('#kbB').setAttribute('aria-expanded',!k.hidden);if(!k.hidden){kbLang=mkbDef();gezBase=null}renderKb();cmpUpd();renderSug();if(k.hidden)$('#q').focus({preventScroll:true})});
 $('#kb').addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault()});
 $('#kb').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
   if(b.dataset.k){kbLang=b.dataset.k;gezBase=null;LS.set('kb',kbLang);renderKb();return}
   if(b.dataset.alt){kbLang=b.dataset.alt;gezBase=null;renderKb();return}
   if(b.dataset.shift){kbUp=!kbUp;renderKb();return}
   if(b.dataset.a==='gl'){const m=$('#kb .lmenu');if(m){m.remove();return}const cur=kBase(kbLang);b.insertAdjacentHTML('afterend',`<div class="lmenu">${KBO.map(l=>`<button type="button" data-k="${l}" class="${l===cur?'on':''}"><bdi>${esc(KBL[l][0])}</bdi><span>${esc(l==='tr'?'':l==='cu'?'Slav.':(I.chip&&I.chip[l])||'')}</span></button>`).join('')}</div>`);return}
-  if(b.dataset.mv){const q=$('#q'),a=q.selectionStart??q.value.length,n=Math.max(0,Math.min(q.value.length,a+ +b.dataset.mv));q.focus({preventScroll:true});q.setSelectionRange(n,n);return}
-  if(b.dataset.r){const q=$('#q'),a=q.selectionStart??q.value.length,c=q.value.slice(0,a).slice(-1),x=c?c.charCodeAt(0):0;if(x>=0x1200&&x<=0x137F&&(x&~7)===(b.dataset.c.charCodeAt(0)&~7)){q.value=q.value.slice(0,a-1)+b.dataset.c+q.value.slice(a);q.setSelectionRange(a,a);debounced()}else kbType(b.dataset.c);kbLang=kBase(kbLang);renderKb();return}
+  if(b.dataset.mv){const q=KQ(),a=q.selectionStart??q.value.length,n=Math.max(0,Math.min(q.value.length,a+ +b.dataset.mv));q.focus({preventScroll:true});q.setSelectionRange(n,n);return}
+  if(b.dataset.r){const q=KQ(),a=q.selectionStart??q.value.length,c=q.value.slice(0,a).slice(-1),x=c?c.charCodeAt(0):0;if(x>=0x1200&&x<=0x137F&&(x&~7)===(b.dataset.c.charCodeAt(0)&~7)){q.value=q.value.slice(0,a-1)+b.dataset.c+q.value.slice(a);q.setSelectionRange(a,a);kDeb()}else kbType(b.dataset.c);kbLang=kBase(kbLang);renderKb();return}
   if(b.dataset.bs){kbBack();return}
   if(b.dataset.c!=null){if(kbUp&&b.closest('.kk')){const u=b.dataset.c.toUpperCase();kbUp=false;kbType(u);renderKb();return}kbType(b.dataset.c);if(kbLang==='gez'){const g=$('#kb .sh .shl');$('#kb').querySelectorAll('.sh .shl').forEach(x=>x.textContent=gezE()+'፥')}}
 });
