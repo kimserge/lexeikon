@@ -17,6 +17,9 @@ async function init(db) {
       tl TEXT NOT NULL DEFAULT 'de', note TEXT, created TEXT NOT NULL, updated TEXT NOT NULL, pushed TEXT, UNIQUE(user_id, slug))`),
     db.prepare(`CREATE TABLE IF NOT EXISTS cards (id INTEGER PRIMARY KEY, project_id INTEGER NOT NULL, data TEXT NOT NULL,
       created TEXT NOT NULL, updated TEXT NOT NULL)`),
+    db.prepare(`CREATE TABLE IF NOT EXISTS edits (id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, dict TEXT NOT NULL, lang TEXT, okey TEXT NOT NULL,
+      orig TEXT NOT NULL, head TEXT NOT NULL, text TEXT NOT NULL, note TEXT, status TEXT NOT NULL DEFAULT 'draft', anote TEXT,
+      created TEXT NOT NULL, updated TEXT NOT NULL, sent TEXT, done TEXT)`),
   ]);
   for (const q of ['ALTER TABLE users ADD COLUMN sig TEXT', 'ALTER TABLE projects ADD COLUMN la TEXT', 'ALTER TABLE projects ADD COLUMN lb TEXT', 'ALTER TABLE projects ADD COLUMN sig TEXT',
     'ALTER TABLE projects ADD COLUMN status TEXT', 'ALTER TABLE projects ADD COLUMN accepted TEXT', 'ALTER TABLE projects ADD COLUMN anote TEXT', 'ALTER TABLE projects ADD COLUMN deleted TEXT', 'ALTER TABLE projects ADD COLUMN pubs INTEGER'])
@@ -88,9 +91,27 @@ async function getFile(env, path, branch) {
   const j = await r.json(), bin = atob(j.content.replace(/\n/g, ''));
   return { sha: j.sha, text: new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0))) };
 }
-async function pushFile(env, path, text, msg, branch = BRANCH) {
+// files over 1 MB: sha from the JSON listing, content through the raw media type
+async function getBig(env, path, branch) {
+  const m = await gh(env, '/contents/' + encodeURI(path) + '?ref=' + branch); if (!m.ok) return null;
+  const sha = (await m.json()).sha;
+  const r = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + encodeURI(path) + '?ref=' + branch, { headers: { Authorization: 'Bearer ' + env.GITHUB_TOKEN,
+    Accept: 'application/vnd.github.raw', 'User-Agent': 'lexeikon-projects' } });
+  if (!r.ok) return null; return { sha, text: await r.text() };
+}
+// replace one entry [key, orig, …] of a built-in dictionary file; returns the new file text or null if the entry was not found
+function patchEntry(text, okey, orig, head, nt) {
+  const J = (x) => JSON.stringify(x), A = (x) => JSON.stringify(x).replace(/[\u007f-\uffff]/g, (c) => '\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'));
+  for (const enc of [J, A]) for (const sep of [', ', ',']) {
+    const pat = enc(okey) + sep + enc(orig), i = text.indexOf(pat);
+    if (i >= 0 && text.indexOf(pat, i + 1) < 0) return text.slice(0, i) + enc(head) + sep + enc(nt) + text.slice(i + pat.length);
+  }
+  try { const d = JSON.parse(text), E = Array.isArray(d) ? d : d.entries, k = E.findIndex((e) => e[0] === okey && e[1] === orig);
+    if (k < 0) return null; E[k][0] = head; E[k][1] = nt; return JSON.stringify(d); } catch (e) { return null; }
+}
+async function pushFile(env, path, text, msg, branch = BRANCH, opt_sha) {
   await ensureBranch(env, branch);
-  const cur = await getFile(env, path, branch);
+  const cur = opt_sha !== undefined ? { sha: opt_sha } : await getFile(env, path, branch);
   const bytes = new TextEncoder().encode(text);let bin = '';for (const b of bytes) bin += String.fromCharCode(b);
   const r = await gh(env, '/contents/' + encodeURI(path), { method: 'PUT', body: JSON.stringify({ message: msg, content: btoa(bin), branch, sha: cur ? cur.sha : undefined }) });
   if (!r.ok) throw new Error('push ' + r.status);
@@ -128,11 +149,11 @@ async function mail(env, to, subject, text) {
 }
 // messages to authors in their interface language
 const MSG = {
-  ru: { del: 'Ваш словарь {n} удалён. Он не был опубликован в LexEikôn.', sub: 'Словарь {n} отправлен на проверку. Вы получите письмо, когда администратор его рассмотрит.', acc: 'Ваш словарь {n} принят и теперь виден всем пользователям LexEikôn.', rej: 'Ваш словарь {n} пока не принят.', note: 'Комментарий администратора:' },
-  en: { del: 'Your dictionary {n} has been deleted. It had not been published in LexEikôn.', sub: 'Your dictionary {n} has been submitted for review. You will receive an e-mail once the administrator has reviewed it.', acc: 'Your dictionary {n} has been accepted and is now visible to all users of LexEikôn.', rej: 'Your dictionary {n} has not been accepted yet.', note: 'Comment from the administrator:' },
-  de: { del: 'Ihr Wörterbuch {n} wurde gelöscht. Es war in LexEikôn nicht veröffentlicht.', sub: 'Ihr Wörterbuch {n} wurde zur Prüfung eingereicht. Sie erhalten eine E-Mail, sobald der Administrator es geprüft hat.', acc: 'Ihr Wörterbuch {n} wurde angenommen und ist jetzt für alle Nutzer von LexEikôn sichtbar.', rej: 'Ihr Wörterbuch {n} wurde noch nicht angenommen.', note: 'Kommentar des Administrators:' },
-  fr: { del: 'Votre dictionnaire {n} a été supprimé. Il n’avait pas été publié dans LexEikôn.', sub: 'Votre dictionnaire {n} a été soumis pour vérification. Vous recevrez un courriel dès que l’administrateur l’aura examiné.', acc: 'Votre dictionnaire {n} a été accepté et est désormais visible par tous les utilisateurs de LexEikôn.', rej: 'Votre dictionnaire {n} n’a pas encore été accepté.', note: 'Commentaire de l’administrateur :' },
-  it: { del: 'Il vostro dizionario {n} è stato eliminato. Non era stato pubblicato in LexEikôn.', sub: 'Il vostro dizionario {n} è stato inviato per la revisione. Riceverete un’e-mail quando l’amministratore lo avrà esaminato.', acc: 'Il vostro dizionario {n} è stato accettato ed è ora visibile a tutti gli utenti di LexEikôn.', rej: 'Il vostro dizionario {n} non è stato ancora accettato.', note: 'Commento dell’amministratore:' },
+  ru: { esub: 'Ваша правка к статье {n} отправлена на одобрение.', eacc: 'Ваша правка к статье {n} принята и внесена в словарь.', erej: 'Ваша правка к статье {n} не принята.', del: 'Ваш словарь {n} удалён. Он не был опубликован в LexEikôn.', sub: 'Словарь {n} отправлен на проверку. Вы получите письмо, когда администратор его рассмотрит.', acc: 'Ваш словарь {n} принят и теперь виден всем пользователям LexEikôn.', rej: 'Ваш словарь {n} пока не принят.', note: 'Комментарий администратора:' },
+  en: { esub: 'Your correction to the entry {n} has been submitted for approval.', eacc: 'Your correction to the entry {n} has been accepted and applied to the dictionary.', erej: 'Your correction to the entry {n} has not been accepted.', del: 'Your dictionary {n} has been deleted. It had not been published in LexEikôn.', sub: 'Your dictionary {n} has been submitted for review. You will receive an e-mail once the administrator has reviewed it.', acc: 'Your dictionary {n} has been accepted and is now visible to all users of LexEikôn.', rej: 'Your dictionary {n} has not been accepted yet.', note: 'Comment from the administrator:' },
+  de: { esub: 'Ihre Korrektur zum Eintrag {n} wurde zur Freigabe eingereicht.', eacc: 'Ihre Korrektur zum Eintrag {n} wurde angenommen und in das Wörterbuch übernommen.', erej: 'Ihre Korrektur zum Eintrag {n} wurde nicht angenommen.', del: 'Ihr Wörterbuch {n} wurde gelöscht. Es war in LexEikôn nicht veröffentlicht.', sub: 'Ihr Wörterbuch {n} wurde zur Prüfung eingereicht. Sie erhalten eine E-Mail, sobald der Administrator es geprüft hat.', acc: 'Ihr Wörterbuch {n} wurde angenommen und ist jetzt für alle Nutzer von LexEikôn sichtbar.', rej: 'Ihr Wörterbuch {n} wurde noch nicht angenommen.', note: 'Kommentar des Administrators:' },
+  fr: { esub: 'Votre correction de l’article {n} a été soumise pour approbation.', eacc: 'Votre correction de l’article {n} a été acceptée et intégrée au dictionnaire.', erej: 'Votre correction de l’article {n} n’a pas été acceptée.', del: 'Votre dictionnaire {n} a été supprimé. Il n’avait pas été publié dans LexEikôn.', sub: 'Votre dictionnaire {n} a été soumis pour vérification. Vous recevrez un courriel dès que l’administrateur l’aura examiné.', acc: 'Votre dictionnaire {n} a été accepté et est désormais visible par tous les utilisateurs de LexEikôn.', rej: 'Votre dictionnaire {n} n’a pas encore été accepté.', note: 'Commentaire de l’administrateur :' },
+  it: { esub: 'La vostra correzione alla voce {n} è stata inviata per l’approvazione.', eacc: 'La vostra correzione alla voce {n} è stata accettata e inserita nel dizionario.', erej: 'La vostra correzione alla voce {n} non è stata accettata.', del: 'Il vostro dizionario {n} è stato eliminato. Non era stato pubblicato in LexEikôn.', sub: 'Il vostro dizionario {n} è stato inviato per la revisione. Riceverete un’e-mail quando l’amministratore lo avrà esaminato.', acc: 'Il vostro dizionario {n} è stato accettato ed è ora visibile a tutti gli utenti di LexEikôn.', rej: 'Il vostro dizionario {n} non è stato ancora accettato.', note: 'Commento dell’amministratore:' },
 };
 const msg = (u, k, name, note) => { const M = MSG[u && u.lang] || MSG.en; return M[k].replace('{n}', '«' + name + '»') + (note ? '\n\n' + M.note + '\n' + note : '') + '\n\n— LexEikôn\nhttps://kimserge.github.io/lexeikon/proj.html'; };
 
@@ -195,6 +216,34 @@ export default {
             await pushFile(env, 'data/builtins.json', JSON.stringify(out, null, 1) + '\n', 'builtins: settings by ' + user.nick, 'main');
             return reply({ ok: true, cfg: out });
           }
+        }
+        // proposed corrections to built-in dictionaries
+        if (P[1] === 'edits') {
+          if (request.method === 'GET' && !P[2]) {
+            const r = await db.prepare(`SELECT e.*, u.nick, u.sig usig, u.email FROM edits e JOIN users u ON u.id=e.user_id WHERE e.status!='draft' ORDER BY e.sent DESC`).all();
+            return reply(r.results);
+          }
+          const e = P[2] ? await db.prepare('SELECT * FROM edits WHERE id=?1').bind(+P[2]).first() : null;
+          if (!e) return reply({ error: 'not found' }, 404);
+          const author = await db.prepare('SELECT * FROM users WHERE id=?1').bind(e.user_id).first(), b = await body(), t = now(), note = clean(b.note, 2000);
+          if (request.method === 'POST' && P[3] === 'accept') {
+            const head = clean(b.head, 300) || e.head, text = String(b.text ?? e.text).slice(0, 200000);
+            if (!/^b-[a-z0-9-]{1,20}$/.test(e.dict)) return reply({ error: 'dict' }, 400);
+            const path = 'data/' + e.dict.slice(2) + '.json', f = await getBig(env, path, 'main');
+            if (!f) return reply({ error: 'file' }, 404);
+            const nt = patchEntry(f.text, e.okey, e.orig, head, text);
+            if (nt === null) return reply({ error: 'changed' }, 409);
+            await pushFile(env, path, nt, `${e.dict}: correction by ${author.nick} (${head}) — accepted by ${user.nick}`, 'main', f.sha);
+            await db.prepare("UPDATE edits SET status='accepted', head=?1, text=?2, anote=?3, done=?4, updated=?4 WHERE id=?5").bind(head, text, note, t, e.id).run();
+            await mail(env, author.email, 'LexEikôn: ' + head, msg(author, 'eacc', head, note));
+            return reply({ ok: true, status: 'accepted' });
+          }
+          if (request.method === 'POST' && P[3] === 'reject') {
+            await db.prepare("UPDATE edits SET status='rejected', anote=?1, done=?2, updated=?2 WHERE id=?3").bind(note, t, e.id).run();
+            await mail(env, author.email, 'LexEikôn: ' + e.head, msg(author, 'erej', e.head, note));
+            return reply({ ok: true, status: 'rejected' });
+          }
+          return reply({ error: 'not found' }, 404);
         }
         if (request.method === 'GET' && P[1] === 'projects' && !P[2]) {
           const r = await db.prepare(`SELECT p.*, u.nick, u.sig usig, u.email, (SELECT count(*) FROM cards c WHERE c.project_id=p.id) n FROM projects p JOIN users u ON u.id=p.user_id ORDER BY p.pushed DESC, p.updated DESC`).all();
@@ -280,6 +329,38 @@ export default {
           await mail(env, await adminMail(env), 'LexEikôn: ' + (user.sig || user.nick) + ' — ' + p.name + ' (' + cards.length + ')', txt + '\n\nhttps://kimserge.github.io/lexeikon/admin.html');
           return reply({ ok: true, link, pushed: t, mailed: sent, pubs, ver });
         }
+      }
+      // ---- proposed corrections to built-in dictionaries ----
+      if (P[0] === 'edits') {
+        if (request.method === 'GET' && !P[1]) return reply((await db.prepare('SELECT * FROM edits WHERE user_id=?1 ORDER BY updated DESC').bind(user.id).all()).results);
+        if (request.method === 'POST' && !P[1]) {
+          const b = await body(), dict = clean(b.dict, 30), okey = String(b.okey || '').slice(0, 300), orig = String(b.orig || '').slice(0, 200000);
+          if (!/^b-[a-z0-9-]{1,20}$/.test(dict) || !okey) return reply({ error: 'dict' }, 400);
+          const t = now(), ex = await db.prepare("SELECT * FROM edits WHERE user_id=?1 AND dict=?2 AND okey=?3 AND orig=?4 AND status IN ('draft','pending')").bind(user.id, dict, okey, orig).first();
+          const head = clean(b.head, 300) || okey, text = String(b.text ?? orig).slice(0, 200000), note = clean(b.note, 2000);
+          if (ex) { await db.prepare('UPDATE edits SET head=?1, text=?2, note=?3, updated=?4 WHERE id=?5').bind(head, text, note, t, ex.id).run();
+            return reply(await db.prepare('SELECT * FROM edits WHERE id=?1').bind(ex.id).first()); }
+          return reply(await db.prepare('INSERT INTO edits (user_id,dict,lang,okey,orig,head,text,note,created,updated) VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?9) RETURNING *')
+            .bind(user.id, dict, clean(b.lang, 8), okey, orig, head, text, note, t).first());
+        }
+        const e = P[1] ? await db.prepare('SELECT * FROM edits WHERE id=?1 AND user_id=?2').bind(+P[1], user.id).first() : null;
+        if (!e) return reply({ error: 'not found' }, 404);
+        const t = now();
+        if (request.method === 'PUT' && !P[2]) { if (e.status === 'accepted') return reply({ error: 'done' }, 409); const b = await body();
+          await db.prepare("UPDATE edits SET head=?1, text=?2, note=?3, updated=?4, status=CASE WHEN status='rejected' THEN 'draft' ELSE status END WHERE id=?5")
+            .bind(clean(b.head, 300) || e.head, String(b.text ?? e.text).slice(0, 200000), clean(b.note, 2000), t, e.id).run();
+          return reply(await db.prepare('SELECT * FROM edits WHERE id=?1').bind(e.id).first()); }
+        if (request.method === 'DELETE' && !P[2]) { if (e.status === 'accepted') return reply({ error: 'done' }, 409);
+          await db.prepare('DELETE FROM edits WHERE id=?1').bind(e.id).run(); return reply({ ok: true }); }
+        if (request.method === 'POST' && P[2] === 'submit') {
+          if (e.status === 'accepted') return reply({ error: 'done' }, 409);
+          await db.prepare("UPDATE edits SET status='pending', sent=?1, updated=?1 WHERE id=?2").bind(t, e.id).run();
+          await mail(env, user.email, 'LexEikôn: ' + e.head, msg(user, 'esub', e.head));
+          await mail(env, await adminMail(env), 'LexEikôn: correction ' + e.dict + ' — ' + e.head + ' (' + (user.sig || user.nick) + ')',
+            (user.sig || user.nick) + ' (' + user.nick + ') proposes a correction to ' + e.dict + ' «' + e.head + '».' + (e.note ? '\n\n' + e.note : '') + '\n\nhttps://kimserge.github.io/lexeikon/admin.html#edits');
+          return reply({ ok: true, status: 'pending', sent: t });
+        }
+        return reply({ error: 'not found' }, 404);
       }
       // all own dictionaries (for the main app)
       if (request.method === 'GET' && P[0] === 'dicts') {
