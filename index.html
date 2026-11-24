@@ -446,7 +446,7 @@ body[data-tk=ru] .l:has(>.tk-ka):not(:has(>.tk-ru)):not(:has(>.sn)),body[data-tk
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h" style="white-space:pre-line"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.95 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.96 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -1446,7 +1446,7 @@ function mobUpd(){document.body.classList.toggle('mob',innerWidth<900||document.
 try{new ResizeObserver(()=>document.documentElement.style.setProperty('--hh',$('header').offsetHeight+'px')).observe($('header'))}catch(e){}
 function stkUpd(){const q=document.querySelector('.qsticky');if(q)document.documentElement.style.setProperty('--stk',Math.max(0,Math.round(q.getBoundingClientRect().bottom))+'px')}
 try{new ResizeObserver(stkUpd).observe(document.querySelector('.qsticky'));new ResizeObserver(stkUpd).observe($('header'))}catch(e){}addEventListener('scroll',stkUpd,{passive:true});addEventListener('resize',stkUpd);
-let cmpLock=false;function cmpUpd(){const B=document.body,co=B.classList.contains('coarse'),mk=$('#mkb'),on=!co&&innerWidth>=900?false:co?true:(cmpLock||!$('#kb').hidden||!!$('#q').value.trim()||document.activeElement===$('#q'));if(B.classList.contains('cmp')===on)return;const scd=B.classList.contains('scd'),A=co&&scd?$('#res'):$('#q'),y0=co?A.getBoundingClientRect().top:0;B.classList.toggle('cmp',on);if(co&&(scd||(!on&&scrollY>4))){const d=A.getBoundingClientRect().top-y0;if(d)scrollBy(0,d)}}
+let cmpLock=false;function cmpUpd(){const B=document.body,co=B.classList.contains('coarse'),mk=$('#mkb'),on=!co&&innerWidth>=900?false:co?true:(cmpLock||(!$('#kb').hidden&&!document.body.classList.contains('edkb'))||!!$('#q').value.trim()||document.activeElement===$('#q'));if(B.classList.contains('cmp')===on)return;const scd=B.classList.contains('scd'),A=co&&scd?$('#res'):$('#q'),y0=co?A.getBoundingClientRect().top:0;B.classList.toggle('cmp',on);if(co&&(scd||(!on&&scrollY>4))){const d=A.getBoundingClientRect().top-y0;if(d)scrollBy(0,d)}}
 let tmr;function debounced(){sugOff=false;sugIdx=-1;cmpUpd();$('#clr').hidden=!$('#q').value;clearTimeout(tmr);tmr=setTimeout(search,120)}
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2600)}
 
@@ -1722,11 +1722,12 @@ function edFromMark(m){const T=Object.fromEntries(EDT.map(([c,t])=>[t,c]));retur
 async function eApi(path,opt={}){const r=await fetch(PAPI+path,{...opt,headers:{'Content-Type':'application/json',Authorization:'Bearer '+EAUTH.token},body:opt.body?JSON.stringify(opt.body):undefined});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||r.status);return j}
 let edCur=null;
 let edKF=null,kbHome=null;
-function edKb(on){const k=$('#kb'),box=$('#edK');if(on&&box){if(!kbHome)kbHome=[k.parentNode,k.nextSibling];box.append(k);k.hidden=false;KT=edKF||$('#edT');const l=kBase(edCur.lang);kbLang=KBL[l]?l:'tr';gezBase=null;renderKb();$('#edKB').setAttribute('aria-expanded','true')}
+function edKb(on){const k=$('#kb'),box=$('#edK');document.body.classList.toggle('edkb',!!(on&&box));if(on&&box){if(!kbHome)kbHome=[k.parentNode,k.nextSibling];box.append(k);k.hidden=false;KT=edKF||$('#edT');const l=kBase(edCur.lang);kbLang=KBL[l]?l:'tr';gezBase=null;renderKb();$('#edKB').setAttribute('aria-expanded','true')}
   else{if(kbHome){kbHome[0].insertBefore(k,kbHome[1]);kbHome=null;k.hidden=true;$('#kbB').setAttribute('aria-expanded','false')}KT=null;const b=$('#edKB');if(b)b.setAttribute('aria-expanded','false')}}
 document.addEventListener('focusin',e=>{const t=e.target;if(!t.closest||!t.closest('#edp'))return;
   if(t.matches('#edH,#edT')){edKF=t;if(kbHome)KT=t;if(COARSE&&edCur){KT=t;const k=$('#mkb');if(k.hidden){const l=kBase(edCur.lang);mkbL=KBL[l]?l:'tr';mkbDraw();k.hidden=false}document.body.classList.add('edmk');document.documentElement.style.setProperty('--mkbh',k.offsetHeight+'px')}}
   else if(COARSE&&document.body.classList.contains('edmk')){edMkOff()}});
+document.addEventListener('pointerdown',e=>{const p=$('#edp'),inn=!!(p&&!p.hidden&&e.target.closest&&e.target.closest('#edp'));document.body.classList.toggle('edin',inn);if(!inn&&!COARSE)KT=null;else if(inn&&kbHome&&edKF)KT=edKF},true);
 function edMkOff(){if(!document.body.classList.contains('edmk'))return;document.body.classList.remove('edmk');$('#mkb').hidden=true;KT=null}
 document.addEventListener('keydown',e=>{if(!kbHome||!e.target.matches||!e.target.matches('#edH,#edT')||e.ctrlKey||e.metaKey||e.altKey||e.isComposing)return;KT=e.target;if(physType(e))e.preventDefault()},true);
 function edFit(){const t=$('#edT');if(!t)return;t.style.height='auto';t.style.height=(t.scrollHeight+4)+'px'}
@@ -1742,7 +1743,7 @@ function edOpen(d,i){const en=d.entries[i];if(!en)return;let ed=null,base=d,raw=
   <label>${esc(I.ed_prev)}</label><div class="pv def" id="edV"></div>
   <label for="edN">${esc(I.ed_note)}</label><textarea id="edN">${esc(ed?ed.note||'':'')}</textarea>
   <div class="row"><button type="button" id="edS">${esc(I.ed_save)}</button><button type="button" class="pri" id="edG">${esc(I.ed_send)}</button>${ed&&ed.status!=='accepted'?`<button type="button" class="del" id="edD">${esc(I.ed_del)}</button>`:''}</div>`;
-  p.hidden=false;const pv=()=>{try{$('#edV').innerHTML=defHtml(base,[$('#edH').value,edFromMark($('#edT').value),...edCur.rest],edCur.lang)}catch(e){$('#edV').textContent=''}};pv();
+  p.hidden=false;document.body.classList.add('edin');const pv=()=>{try{$('#edV').innerHTML=defHtml(base,[$('#edH').value,edFromMark($('#edT').value),...edCur.rest],edCur.lang)}catch(e){$('#edV').textContent=''}};pv();
   $('#edT').addEventListener('input',pv);$('#edH').addEventListener('input',pv);edKF=$('#edT');if(kbHome)edKb(false);if(COARSE){$('#edKB').hidden=true;$('#edH').setAttribute('inputmode','none');$('#edT').setAttribute('inputmode','none')}$('#edKB').onclick=()=>edKb(!kbHome);edFit();requestAnimationFrame(edFit);$('#edT').addEventListener('input',edFit);const sc=$('#edSc');if(sc)sc.onclick=()=>{const v=$('#edSv'),on=v.hidden;if(on&&!v.innerHTML)v.innerHTML=pscHtml(tail.slice(1,-1));v.hidden=!on;sc.setAttribute('aria-expanded',on)};
   if(ed&&ed.status==='accepted')p.querySelectorAll('input,textarea,#edS,#edG').forEach(x=>x.disabled=true);
   p.querySelector('.x').onclick=edClose;$('#edS').onclick=()=>edSave(false);$('#edG').onclick=()=>edSave(true);
@@ -1750,7 +1751,7 @@ function edOpen(d,i){const en=d.entries[i];if(!en)return;let ed=null,base=d,raw=
 async function edSave(send){if(!edCur)return;const b={dict:edCur.d.id,lang:edCur.lang,okey:edCur.okey,orig:edCur.orig,head:$('#edH').value.trim(),text:edFromMark($('#edT').value)+edCur.tail,note:$('#edN').value.trim()};
   try{let ed=edCur.ed;ed=ed?await eApi('/edits/'+ed.id,{method:'PUT',body:b}):await eApi('/edits',{method:'POST',body:b});edCur.ed=ed;
     if(send){await eApi('/edits/'+ed.id+'/submit',{method:'POST'});toast(I.ed_sent)}else toast(I.ed_saved);if(send)edClose();else loadEdits()}catch(e){toast(I.ed_err)}}
-function edClose(){edKb(false);if(COARSE)edMkOff();const p=$('#edp');if(p)p.hidden=true;edCur=null;loadEdits()}
+function edClose(){document.body.classList.remove('edin');edKb(false);if(COARSE)edMkOff();const p=$('#edp');if(p)p.hidden=true;edCur=null;loadEdits()}
 async function loadEdits(){if(!EAUTH||!EAUTH.token)return;let L;try{L=await eApi('/edits')}catch(e){return}
   for(const k of Object.keys(EDITS))delete EDITS[k];dicts=dicts.filter(x=>!/^e-/.test(x.base||''));
   const G={};for(const x of L)(G[x.dict]=G[x.dict]||[]).push(x);
@@ -1790,6 +1791,7 @@ $('#q').addEventListener('input',e=>{heFin(e.target);debounced()});
 $('#q').addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.isComposing)return;if(!physOn())return;if(physType(e)){e.preventDefault();$('#clr').hidden=false}});
 document.addEventListener('keydown',e=>{if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.isComposing||[...e.key].length!==1||/\s/.test(e.key))return;
   const t=e.target;if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;
+  if(document.body.classList.contains('edin'))return;
   const q=$('#q');e.preventDefault();q.focus({preventScroll:true});q.value='';q.setSelectionRange(0,0);if(!physType(e))q.value=e.key;q.setSelectionRange(q.value.length,q.value.length);$('#clr').hidden=false;q.dispatchEvent(new Event('input',{bubbles:true}))});
 $('#clr').addEventListener('click',()=>{$('#q').value='';$('#clr').hidden=true;if(typeof mkbL!=='undefined'){mkbL=mkbDef();if(!$('#mkb').hidden)mkbDraw()}search();window.scrollTo({top:0,behavior:'instant'});$('#q').focus({preventScroll:true})});
 $('#q').addEventListener('keydown',e=>{
