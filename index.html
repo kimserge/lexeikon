@@ -193,7 +193,7 @@ body[data-tl=en] .tlb .en,body[data-tl=fr] .tlb .fr,body[data-tl=de] .tlb .de{co
 .tag{font-size:13px;color:var(--mut);margin-inline-start:10px;white-space:nowrap}
 .def{display:block;margin-top:4px;font:17px/1.5 var(--lex);overflow-wrap:anywhere}
 .def .l{display:block}
-.def .l.f{margin-top:.55em}.l.cpos{margin-top:1.1em}.l.crp{margin-top:1em}.l.cpos .gr{font-size:1.3em;font-weight:500}.tld{color:#c62828;font-weight:600}.tld2{color:var(--lap);font-weight:600}
+.def .l.f{margin-top:.55em}.l.cpos{margin-top:1.1em}.l.crp{margin-top:1em}.pchip{display:inline-block;padding:0 9px;border-radius:8px;background:color-mix(in srgb,var(--lap) 13%,transparent)}.pchip .gr{font-size:13px;font-weight:500}.fpan{background:light-dark(#fbf1dd,#2f2816);border-radius:8px;padding:4px 10px 8px;margin:.9em 0 .3em}.flab{font:500 12px 'Noto Sans',sans-serif;color:light-dark(#854f0b,#fac775);margin:2px 0 0}.tld{color:#c62828;font-weight:600}.tld2{color:var(--lap);font-weight:600}
 .def .l.f:first-child{margin-top:0}
 .def .l.s{margin-top:.45em}
 .def .l.s:first-child{margin-top:0}
@@ -447,7 +447,7 @@ body[data-tk=ru] .l:has(>.tk-ka):not(:has(>.tk-ru)):not(:has(>.sn)),body[data-tk
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h" style="white-space:pre-line"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.109 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.110 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -1242,7 +1242,7 @@ function formatDef0(raw,L,hw,noRoot){
     out+=h.slice(last);
     lines.push(...out.split('\n'));
   }
-  let g=false,ex=false,et=false,sub=false,csub=0,cforms=[],cfb=0;
+  let g=false,ex=false,et=false,sub=false,csub=0,cforms=[],cfb=0,cpanS='';
   return lines.filter(l=>l.trim()!=='@').map((l,li)=>{
     let lv=-1;l=l.replace(/^\uE010([0-2])([^\uE013]*)\uE013/,(m,a,b)=>{lv=+a;return '<b class="sn">'+b+'</b>'});
     let cls=(ex||/^\s*\x04/.test(l))?' x':(/^<b class="sn">/.test(l)?' s':'');if(lv>=0)cls=[' s',' s2',' s3'][lv];
@@ -1269,16 +1269,16 @@ function formatDef0(raw,L,hw,noRoot){
     if(FMD==='b-kac'&&/^\s*—\s*/.test(l)){l=l.replace(/^\s*—\s*/,'');cls+=' lb'}
     if(FMD==='b-crum'&&li>0){const CP='[Ⲁ-⳿Ϣ-ϯ̀-ͯ~˜︧︤︥︦\ue0b0]',IND=n=>n<=0?'':[' si',' si2',' si3',' si4'][Math.min(n,4)-1],LV=c=>c===3?2:c?1:0;
       const bold=t=>{const g=t.replace(/\x02[^\x03]*\x03/g,m=>'\x01'.repeat(m.length)),k=g.search(/[A-Za-z]{3,}|\(/);const a=k<0?t:t.slice(0,k);return a.replace(new RegExp(CP+'+(?:[-.†⸗¹²³⁴⁵]+'+CP+'*)*[-.†⸗¹²³⁴⁵]*','g'),'<b class="fm">$&</b>')+(k<0?'':t.slice(k))};
-      if(/^\x0bCrum \d/.test(l)){cls=' crp';csub=0}
-      else if(l.startsWith('⁠')){l=bold(l.slice(1));cls=' f cfb';cfb=1;csub=0}
-      else if(/^(?:\x02[^\x03]*\x03\s*)+$/.test(l)){cls=cfb?' cpos2'+IND(cfb):' cpos';csub=0}
-      else if(/^\s*⸺\s*/.test(l)){l=l.replace(/^\s*⸺\s*/,'');cls+=' lb'+IND(cfb);csub=0}
-      else if(/^(?:I{1,3}|IV|VI{0,3})\.\s/.test(l)){cls=' s'+IND(cfb);l=l.replace(/^(\S+\.)\s/,'<b class="sn">$1</b> ');csub=0}
+      if(/^\x0bCrum \d/.test(l)){cls=' crp';csub=0;if(cfb){cpanS='</div>';cfb=0}}
+      else if(l.startsWith('\u2060')){const lab=/\bfor\s+[\u2c80-\u2cff]/.test(l)?'compound':'by-form';cpanS=(cfb?'</div>':'')+'<div class="fpan"><div class="flab">'+lab+'</div>';l=bold(l.slice(1));cls=' f';cfb=1;csub=0}
+      else if(/^(?:\x02[^\x03]*\x03\s*)+$/.test(l)){cls=' cpos';l='<span class="pchip">'+l+'</span>';csub=0}
+      else if(/^\s*⸺\s*/.test(l)){l=l.replace(/^\s*⸺\s*/,'');cls+=' lb'+IND(0);csub=0}
+      else if(/^(?:I{1,3}|IV|VI{0,3})\.\s/.test(l)){cls=' s'+IND(0);l=l.replace(/^(\S+\.)\s/,'<b class="sn">$1</b> ');csub=0}
       else if(new RegExp('^'+CP).test(l)){const h0=l.split(':')[0],hd=h0.replace(/\x02[^\x03]*\x03/g,'').replace(/\([^()]*\)/g,'');
-        if(/[A-Za-z]{3,}/.test(hd)){const nest=(csub===1||csub===3)&&(/˜/.test(h0)||cforms.some(f=>h0.includes(f)));if(!nest)cforms=(h0.match(/\S+~/g)||[]);cls=' f'+IND(cfb+(nest?1:0));csub=nest?3:1;l=bold(l)}
-        else{cls+=' lb'+IND(cfb+Math.max(1,LV(csub)));csub=csub===3?3:2}}
-      else if(/^\x02c\x03\s/.test(l)||/^\+\s/.test(l))cls+=' lb'+IND(cfb+LV(csub));
-      else cls+=IND(cfb+LV(csub));
+        if(/[A-Za-z]{3,}/.test(hd)){const nest=(csub===1||csub===3)&&(/˜/.test(h0)||cforms.some(f=>h0.includes(f)));if(!nest)cforms=(h0.match(/\S+~/g)||[]);cls=' f'+IND(0+(nest?1:0));csub=nest?3:1;l=bold(l)}
+        else{cls+=' lb'+IND(0+Math.max(1,LV(csub)));csub=csub===3?3:2}}
+      else if(/^\x02c\x03\s/.test(l)||/^\+\s/.test(l))cls+=' lb'+IND(0+LV(csub));
+      else cls+=IND(0+LV(csub));
       l=l.replace(/~/g,'<span class="tld">~</span>').replace(/\ue0b0([^˜\s]*)˜/g,'<span class="tld2">$1~</span>').replace(/([^\s>(])?˜/g,(m,c)=>'<span class="tld2">'+(c||'')+'~</span>')}
     l=l.replace(/\(([^()]*\d[^()]*)\)/g,'<span class="ex">($1)</span>');
     let pre=(et?'<span class="et">':'')+(g?'<i class="gr">':'')+(ex?'<span class="ex">':'');
@@ -1287,8 +1287,8 @@ function formatDef0(raw,L,hw,noRoot){
     if(/\x12/.test(l))l=l.replace(/\x0b([^\x0c]*)\x0c\x12([^\x13]*)\x13/g,(m,a,sc)=>'<span class="mo psc" role="button" tabindex="0" data-s="'+sc+'">'+a+'</span>').replace(/\x12[^\x13]*\x13/g,'');
     l=pre+l.replace(/\x02\u2063/g,'<i class="it">').replace(/\x02/g,'<i class="gr">').replace(/\x03/g,'</i>').replace(/\x04/g,'<span class="ex">').replace(/\x05/g,'</span>').replace(/\x06/g,'<b class="exb">').replace(/\x07/g,'</b>').replace(/\x0b/g,'<span class="mo">').replace(/\x0c/g,'</span>').replace(/\x0e/g,'<span class="et">').replace(/\x0f/g,'</span>').replace(/\x10/g,'<span class="nl">').replace(/\x11/g,'</span>')+(ex?'</span>':'')+(g?'</i>':'')+(et?'</span>':'');
     if(L==='syr')l=l.replace(/<span class="ex">([\s\S]*?)<\/span>/g,(m,t)=>'<span class="ex">'+t.replace(/[\u0700-\u074F](?:[\u0700-\u074F\u0300-\u036F\s]*[\u0700-\u074F\u0300-\u036F])?/g,'<b class="exb">$&</b>')+'</span>');
-    return `<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
-  }).join('');
+    const cp0=cpanS;cpanS='';return cp0+`<span class="l${cls}">${l.trim()?l:'&nbsp;'}</span>`;
+  }).join('')+(cfb?'</div>':'');
 }
 const GLOSS={'b-crum':'en','b-bar':'ru','b-bailly':'fr','b-lane':'en','b-psm':'en','b-graf':'de','b-brk':'la','b-ml':'en','b-kun':'fr de','b-che':'la','b-agwb':'de','b-cos':'fr','b-ccl':'en de fr','b-dil':'la','b-gez':'la','b-grc':'ru','b-hy':'en','b-heb':'en','b-hyf':'fr','b-dyach':'ru','b-ka':'ru','b-kac':'ru','b-la':'ru','b-laen':'en','b-lafr':'fr','b-lade':'de','b-mis':'la','b-rai':'it','b-syr':'la'};
 const LATDEF=new Set(['b-syr','b-brk','b-gez','b-dil','b-mis','b-che']);
