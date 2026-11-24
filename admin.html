@@ -172,7 +172,7 @@ $('#epv').onclick=async ev=>{const b=ev.target.closest('[data-eact]');if(!b||!ec
   try{const j=await api(`/admin/edits/${ecur.id}/${act}`,{method:'POST',body});ecur.status=j.status;ecur.anote=body.note;if(body.head){ecur.head=body.head;ecur.text=body.text}
     const id=ecur.id;eRender();ePreview(id);$('#emsg').className='msg ok';$('#emsg').textContent=act==='accept'?I.e_da:I.e_dr}
   catch(err){$('#emsg').className='msg err';$('#emsg').textContent=err.status===409?I.e_chg:err.message;document.querySelectorAll('#epv [data-eact]').forEach(x=>x.disabled=false)}};
-async function eLoad(){try{EALL=await api('/admin/edits')}catch(e){EALL=[]}eRender();const h=+(location.hash.split('-')[1]||0);if(h)ePreview(h)}
+async function eLoad(){let er='';try{EALL=await api('/admin/edits')}catch(e){EALL=[];er=e.message+(e.status?' ('+e.status+')':'')}eRender();if(er){$('#eempty').classList.remove('hidden');$('#eempty').textContent='⚠ /admin/edits: '+er}const h=+(location.hash.split('-')[1]||0);if(h)ePreview(h)}
 function route(){const b=location.hash==='#builtins',ed=/^#edits/.test(location.hash);$('#bsec').classList.toggle('hidden',!b||!auth);$('#esec').classList.toggle('hidden',!ed||!auth);$('#app').classList.toggle('hidden',b||ed||!all.length&&!auth);$('#navB').classList.toggle('on2',b);$('#navE').classList.toggle('on2',ed);$('#navP').classList.toggle('on',!b&&!ed);if(b&&auth)bLoad();if(ed&&auth)eLoad()}
 addEventListener('hashchange',route);
 (async()=>{i18n();if(!auth){$('#deny').classList.remove('hidden');return}
