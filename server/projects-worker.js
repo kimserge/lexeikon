@@ -231,7 +231,7 @@ export default {
             if (!/^b-[a-z0-9-]{1,20}$/.test(e.dict)) return reply({ error: 'dict' }, 400);
             const path = 'data/' + e.dict.slice(2) + '.json', f = await getBig(env, path, 'main');
             if (!f) return reply({ error: 'file' }, 404);
-            const nt = patchEntry(f.text, e.okey, e.orig, head, text);
+            const nt = e.status === 'accepted' ? patchEntry(f.text, e.head, e.text, head, text) : patchEntry(f.text, e.okey, e.orig, head, text);
             if (nt === null) return reply({ error: 'changed' }, 409);
             await pushFile(env, path, nt, `${e.dict}: correction by ${author.nick} (${head}) — accepted by ${user.nick}`, 'main', f.sha);
             await db.prepare("UPDATE edits SET status='accepted', head=?1, text=?2, anote=?3, done=?4, updated=?4 WHERE id=?5").bind(head, text, note, t, e.id).run();
