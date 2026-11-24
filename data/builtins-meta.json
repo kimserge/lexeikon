@@ -90,6 +90,12 @@
   "cpy": "Comprehensive Coptic Lexicon v1.2 (2020), Feder, Kupreyev, Manning, Schroeder, Zeldes · KELLIA / Coptic Dictionary Online · CC BY-SA 4.0"
  },
  {
+  "id": "b-crum",
+  "sig": "Crum",
+  "name": "W. E. Crum, A Coptic Dictionary, Oxford: Clarendon Press, 1939",
+  "cpy": "Crum 1939 · public domain · transcription: Marcion (M. Konvička), Coptic Wiki (R. Komforty), ⲣⲉⲙⲛ̀Ⲭⲏⲙⲓ (remnqymi.com) · GPL-3.0"
+ },
+ {
   "id": "b-che",
   "sig": "Cheikho",
   "name": "Louis Cheikho, Lexicon Chrestomathiæ Arabicæ, in: Chrestomathia Arabica cum lexico variisque notis, Beryti: Typographia Patrum Societatis Jesu",
