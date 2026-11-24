@@ -111,7 +111,7 @@ function patchEntry(text, okey, orig, head, nt) {
 }
 async function pushFile(env, path, text, msg, branch = BRANCH, opt_sha) {
   await ensureBranch(env, branch);
-  const cur = opt_sha !== undefined ? { sha: opt_sha } : await getFile(env, path, branch);
+  const cur = opt_sha === null ? null : opt_sha !== undefined ? { sha: opt_sha } : await getFile(env, path, branch);
   const bytes = new TextEncoder().encode(text);let bin = '';for (const b of bytes) bin += String.fromCharCode(b);
   const r = await gh(env, '/contents/' + encodeURI(path), { method: 'PUT', body: JSON.stringify({ message: msg, content: btoa(bin), branch, sha: cur ? cur.sha : undefined }) });
   if (!r.ok) throw new Error('push ' + r.status);
@@ -229,7 +229,20 @@ export default {
           if (request.method === 'POST' && P[3] === 'accept') {
             const head = clean(b.head, 300) || e.head, text = String(b.text ?? e.text).slice(0, 200000);
             if (!/^b-[a-z0-9-]{1,20}$/.test(e.dict)) return reply({ error: 'dict' }, 400);
-            const path = 'data/' + e.dict.slice(2) + '.json', f = await getBig(env, path, 'main');
+            const path = 'data/' + e.dict.slice(2) + '.json', meta = await gh(env, '/contents/' + encodeURI(path) + '?ref=main');
+            if (!meta.ok) return reply({ error: 'file' }, 404);
+            if (((await meta.json()).size || 0) > 1500000) {
+              // large dictionaries: corrections go to a small overlay file data/fix/<id>.json, applied by the site on load
+              const fp = 'data/fix/' + e.dict.slice(2) + '.json', ff = await getFile(env, fp, 'main');
+              let L = []; try { L = ff ? JSON.parse(ff.text) : []; } catch (x) { L = []; }
+              const rec = { id: e.id, okey: e.okey, orig: e.orig, head, text }, k = L.findIndex((r) => r.id === e.id);
+              if (k >= 0) L[k] = rec; else L.push(rec);
+              await pushFile(env, fp, JSON.stringify(L), `${e.dict}: correction by ${author.nick} (${head}) — accepted by ${user.nick}`, 'main', ff ? ff.sha : null);
+              await db.prepare("UPDATE edits SET status='accepted', head=?1, text=?2, anote=?3, done=?4, updated=?4 WHERE id=?5").bind(head, text, note, t, e.id).run();
+              await mail(env, author.email, 'LexEikôn: ' + head, msg(author, 'eacc', head, note));
+              return reply({ ok: true, status: 'accepted' });
+            }
+            const f = await getBig(env, path, 'main');
             if (!f) return reply({ error: 'file' }, 404);
             const nt = e.status === 'accepted' ? patchEntry(f.text, e.head, e.text, head, text) : patchEntry(f.text, e.okey, e.orig, head, text);
             if (nt === null) return reply({ error: 'changed' }, 409);
