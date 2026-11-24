@@ -266,7 +266,11 @@ export default {
         if (!p) return reply({ error: 'not found' }, 404);
         const owner = await db.prepare('SELECT * FROM users WHERE id=?1').bind(p.user_id).first();
         const cards = (await db.prepare('SELECT * FROM cards WHERE project_id=?1 ORDER BY id').bind(p.id).all()).results, dict = toDict(owner, p, cards);
-        if (request.method === 'GET' && !P[3]) return reply(dict);
+        if (request.method === 'GET' && !P[3]) {
+          // forms of cards changed after the last submission (still "in progress" for the author)
+          const wip = []; for (const c of cards) if (!p.pushed || c.updated > p.pushed) { try { const x = JSON.parse(c.data); if (x.a && x.a.f) wip.push(x.a.f); for (const y of x.b || []) if (y.f) wip.push(y.f); if (x.gf) wip.push(x.gf); } catch (e) {} }
+          return reply({ ...dict, wip });
+        }
         const t = now(), b = await body(), note = clean(b.note, 1000);
         if (request.method === 'POST' && P[3] === 'accept') {
           const file = 'data/u/' + dict.id + '.json';
