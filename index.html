@@ -446,7 +446,7 @@ body[data-tk=ru] .l:has(>.tk-ka):not(:has(>.tk-ru)):not(:has(>.sn)),body[data-tk
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.86 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.87 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -645,7 +645,7 @@ function detect(str){
 
 /* ---------- Latin input: consonant classes ---------- */
 const CL={
- syr:{sem:1,M:'ܐܘܝ',A:'ܐ',m:{')':'ܐ','(':'ܥ',b:'ܒ',v:'ܒ',g:'ܓ',d:'ܕ',h:'ܗܚ',w:'ܘ',z:'ܙ',x:'ܚ',t:'ܬܛ',y:'ܝ',j:'ܝ',k:'ܟ',l:'ܠ',m:'ܡ',n:'ܢ',s:'ܣܨܫ',c:'ܨ',p:'ܦ',f:'ܦ',q:'ܩ',r:'ܪ',sh:'ܫ',kh:'ܟܚ',th:'ܬ',dh:'ܕ',gh:'ܓ',ts:'ܨ'}},
+ syr:{sem:1,M:'ܐܘܝ',A:'ܐ',m:{')':'ܐ','(':'ܥ',b:'ܒ',v:'ܒ',g:'ܓ',d:'ܕ',h:'ܗܚ',w:'ܘ',z:'ܙ',x:'ܚ',t:'ܬܛ',y:'ܝ',j:'ܝ',k:'ܟ',l:'ܠ',m:'ܡ',n:'ܢ',s:'ܣܨܫ',c:'ܨ',p:'ܦ',f:'ܦ',q:'ܩ',r:'ܪ',kh:'ܟܚ',th:'ܬ',dh:'ܕ',gh:'ܓ',ts:'ܨ'}},
  ar:{sem:1,M:'اوي',A:'ا',m:{')':'اء','(':'عغ',b:'ب',p:'ب',t:'تطث',th:'ث',j:'ج',g:'جغ',gh:'غ',h:'هحخ',x:'خ',kh:'خ',d:'دضذ',dh:'ذ',r:'ر',z:'زظذ',s:'سصش',sh:'ش',c:'ص',f:'ف',v:'ف',q:'ق',k:'ك',l:'ل',m:'م',n:'ن',w:'و',y:'ي'}},
  he:{sem:1,M:'והי',A:'א',m:{')':'א','(':'ע',b:'ב',v:'בו',g:'ג',d:'ד',h:'הח',w:'ו',z:'ז',x:'ח',kh:'כח',ch:'ח',t:'טת',th:'ת',y:'י',j:'י',k:'כק',l:'ל',m:'מ',n:'נ',s:'סשצ',sh:'ש',c:'צ',ts:'צ',tz:'צ',p:'פ',f:'פ',ph:'פ',q:'ק',r:'ר'}},
  gez:{sem:1,M:'',A:'አ',m:{')':'አ','(':'ዐ',h:'ሀሐኀ',x:'ኀኸ',kh:'ኀኸ',l:'ለ',m:'መ',s:'ሰሠሸጸፀ',sh:'ሸ',r:'ረ',q:'ቀ',b:'በ',v:'ቨ',t:'ተጠ',c:'ቸጨጸ',ch:'ቸጨ',n:'ነኘ',k:'ከኸ',w:'ወ',z:'ዘዠ',y:'የ',d:'ደፀ',j:'ጀ',g:'ገጀ',p:'ፐጰ',f:'ፈ'}},
@@ -732,7 +732,7 @@ function arWords(d){if(d.av)return d.av;d.av=d.entries.map((e,i)=>{const t=Strin
 const ARC={b:'ب',t:'تة',th:'ث',ṯ:'ث',j:'ج',ǧ:'ج',g:'ج',ḥ:'ح',h:'هحة',x:'خ',ḫ:'خ',kh:'خ',d:'د',ḏ:'ذ',dh:'ذ',r:'ر',z:'ز',s:'س',š:'ش',sh:'ش',ṣ:'ص',ḍ:'ض',ṭ:'ط',ẓ:'ظ','(':'ع',ġ:'غ',gh:'غ',f:'ف',q:'ق',k:'ك',l:'ل',m:'م',n:'ن',w:'و',y:'ي',')':'ءأإؤئا'};
 const ARV={a:'َ',i:'ِ',u:'ُ'};
 /* Syriac: vocalized Latin → strict match on pointed words (West Syriac vowels; consonants without a vowel must be unpointed) */
-const SYC={')':'ܐ','(':'ܥ',b:'ܒ',v:'ܒ',g:'ܓ',gh:'ܓ',d:'ܕ',dh:'ܕ',h:'ܗܚ','ḥ':'ܚ',w:'ܘ',z:'ܙ',x:'ܚ',kh:'ܟܚ','ḫ':'ܚ','ṭ':'ܛ',t:'ܬܛ',th:'ܬ',y:'ܝ',j:'ܝ',k:'ܟ',l:'ܠ',m:'ܡ',n:'ܢ',s:'ܣܨ','ṣ':'ܨ',c:'ܨ',p:'ܦ',f:'ܦ',ph:'ܦ',q:'ܩ',r:'ܪ','š':'ܫ',sh:'ܫ'};
+const SYC={')':'ܐ','(':'ܥ',b:'ܒ',v:'ܒ',g:'ܓ',gh:'ܓ',d:'ܕ',dh:'ܕ',h:'ܗܚ','ḥ':'ܚ',w:'ܘ',z:'ܙ',x:'ܚ',kh:'ܟܚ','ḫ':'ܚ','ṭ':'ܛ',t:'ܬܛ',th:'ܬ',y:'ܝ',j:'ܝ',k:'ܟ',l:'ܠ',m:'ܡ',n:'ܢ',s:'ܣܨ','ṣ':'ܨ',c:'ܨ',p:'ܦ',f:'ܦ',ph:'ܦ',q:'ܩ',r:'ܪ','š':'ܫ'};
 const SYX='[̈݀-݊]*',SYN='(?![ܰ-ܾ])',SYV={a:'[ܰ-ܵ]','ā':'[ܳ-ܵ]',o:'[ܳ-ܵ]','ō':'[ܳ-ܵ]',e:'[ܶ-ܹ]','ē':'[ܶ-ܹ]ܝ?',i:'(?:[ܺ-ܼ]ܝ?|ܝ[ܺ-ܼ])','ī':'(?:[ܺ-ܼ]ܝ?|ܝ[ܺ-ܼ])',u:'(?:[ܾܽ]ܘ?|ܘ[ܾܽ])','ū':'(?:[ܾܽ]ܘ?|ܘ[ܾܽ])'};
 function buildSyrVoc(q){
   let src=q.normalize('NFC').toLowerCase().replace(/[ʾ’'ʼʔ]/g,')').replace(/[ʿ‘`ʻʕ]/g,'(').replace(/[âàá]/g,'ā').replace(/[êèé]/g,'ē').replace(/[îìí]/g,'ī').replace(/[ôòó]/g,'ō').replace(/[ûùú]/g,'ū').replace(/ə/g,'e');
