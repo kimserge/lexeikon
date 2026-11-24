@@ -197,7 +197,7 @@ body[data-tl=en] .tlb .en,body[data-tl=fr] .tlb .fr,body[data-tl=de] .tlb .de{co
 .def .l.f:first-child{margin-top:0}
 .def .l.s{margin-top:.45em}
 .def .l.s:first-child{margin-top:0}
-.def .l.s2{padding-inline-start:1.2em;margin-top:.2em}.l.s2.sa{margin-top:.45em}.l.si{margin-inline-start:1.2em}.l.si2{margin-inline-start:2.4em}
+.def .l.s2{padding-inline-start:1.2em;margin-top:.2em}.l.s2.sa{margin-top:.45em}.l.si{margin-inline-start:1.2em}.l.si2{margin-inline-start:2.4em}.l.si3{margin-inline-start:3.6em}.l.si4{margin-inline-start:4.8em}.l.cpos2{margin-top:.9em}.l.cfb{margin-top:1.1em}
 .def .l.s3{padding-inline-start:2.4em;margin-top:.15em}
 .def .l.q{padding-inline-start:.9em;border-inline-start:2px solid var(--line);margin-top:.3em}
 .def .l.x{padding-inline-start:.9em;margin-top:.45em;border-inline-start:2px solid var(--line)}
@@ -447,7 +447,7 @@ body[data-tk=ru] .l:has(>.tk-ka):not(:has(>.tk-ru)):not(:has(>.sn)),body[data-tk
       <dt data-i18n="cr_contact"></dt><dd><a id="mail" href="#" data-i18n="cr_mail"></a></dd>
     </dl></div>
     <div class="fpj"><h2 data-i18n="pj_h" style="white-space:pre-line"></h2><a class="pjb" href="proj.html"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M10 8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="pj_b"></span></a><p class="pjn" data-i18n="pj_n"></p><h2 class="offh" data-i18n="offh"></h2><p class="offl"><button type="button" class="upd" id="offB"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="offT"></span></button></p></div></div>
-    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.106 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
+    <p class="yrs">© 2005–2026 LexEikôn · Sergey Kim · v5.107 <button type="button" id="upd" class="upd" data-i18n-aria="upd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="upd"></span></button> <span class="oldv">(<a href="v1.64/">v1</a> · <a href="v2/">v2</a> · <a href="v3/">v3</a> · <a href="v4/">v4</a> · <b>v5</b>)</span></p>
   </div>
   <div class="vis" id="vis" hidden><button type="button" id="visB" aria-expanded="false" aria-controls="visP"><span data-i18n="vis_tab"></span><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="visP" hidden></div></div>
 </footer>
@@ -1242,7 +1242,7 @@ function formatDef0(raw,L,hw,noRoot){
     out+=h.slice(last);
     lines.push(...out.split('\n'));
   }
-  let g=false,ex=false,et=false,sub=false,csub=0,cforms=[];
+  let g=false,ex=false,et=false,sub=false,csub=0,cforms=[],cfb=0;
   return lines.filter(l=>l.trim()!=='@').map((l,li)=>{
     let lv=-1;l=l.replace(/^\uE010([0-2])([^\uE013]*)\uE013/,(m,a,b)=>{lv=+a;return '<b class="sn">'+b+'</b>'});
     let cls=(ex||/^\s*\x04/.test(l))?' x':(/^<b class="sn">/.test(l)?' s':'');if(lv>=0)cls=[' s',' s2',' s3'][lv];
@@ -1267,16 +1267,18 @@ function formatDef0(raw,L,hw,noRoot){
     }
     if(FMD==='b-lane'&&li>0&&!/\x0b√/.test(l)&&l.trim())cls+=' lb';
     if(FMD==='b-kac'&&/^\s*—\s*/.test(l)){l=l.replace(/^\s*—\s*/,'');cls+=' lb'}
-    if(FMD==='b-crum'&&li>0){const CP='[\u2c80-\u2cff\u03e2-\u03ef\u0300-\u036f~˜︧︤︥︦]';
+    if(FMD==='b-crum'&&li>0){const CP='[Ⲁ-⳿Ϣ-ϯ̀-ͯ~˜︧︤︥︦]',IND=n=>n<=0?'':[' si',' si2',' si3',' si4'][Math.min(n,4)-1],LV=c=>c===3?2:c?1:0;
+      const bold=t=>t.replace(new RegExp('^((?:'+CP+'+[-.,†⸗]?[\\s,]*)+?)(?=\\x02|[A-Za-z]|$)'),m=>'<b class="fm">'+m.replace(/[\s,]+$/,'')+'</b>'+(/[\s,]+$/.exec(m)||[''])[0]);
       if(/^\x0bCrum \d/.test(l)){cls=' crp';csub=0}
-      else if(/^(?:\x02[^\x03]*\x03\s*)+$/.test(l)){cls=' cpos';csub=0}
-      else if(/^\s*⸺\s*/.test(l)){l=l.replace(/^\s*⸺\s*/,'');cls+=' lb';csub=0}
-      else if(/^(?:I{1,3}|IV|VI{0,3})\.\s/.test(l)){cls=' s';l=l.replace(/^(\S+\.)\s/,'<b class="sn">$1</b> ');csub=0}
+      else if(l.startsWith('⁠')){l=bold(l.slice(1));cls=' f cfb';cfb=1;csub=0}
+      else if(/^(?:\x02[^\x03]*\x03\s*)+$/.test(l)){cls=cfb?' cpos2'+IND(cfb):' cpos';csub=0}
+      else if(/^\s*⸺\s*/.test(l)){l=l.replace(/^\s*⸺\s*/,'');cls+=' lb'+IND(cfb);csub=0}
+      else if(/^(?:I{1,3}|IV|VI{0,3})\.\s/.test(l)){cls=' s'+IND(cfb);l=l.replace(/^(\S+\.)\s/,'<b class="sn">$1</b> ');csub=0}
       else if(new RegExp('^'+CP).test(l)){const h0=l.split(':')[0],hd=h0.replace(/\x02[^\x03]*\x03/g,'').replace(/\([^()]*\)/g,'');
-        if(/[A-Za-z]{3,}/.test(hd)){const nest=(csub===1||csub===3)&&(/˜/.test(h0)||cforms.some(f=>h0.includes(f)));if(!nest)cforms=(h0.match(/\S+~/g)||[]);cls=' f'+(nest?' si':'');csub=nest?3:1;l=l.replace(new RegExp('^((?:'+CP+'+[-.,]?[\\s,]*)+?)(?=\\x02|[A-Za-z]|$)'),m=>'<b class="fm">'+m.replace(/[\s,]+$/,'')+'</b>'+(/[\s,]+$/.exec(m)||[''])[0])}
-        else{cls+=' lb si';csub=2}}
-      else if(/^\x02c\x03\s/.test(l)||/^\+\s/.test(l))cls+=' lb'+(csub===3?' si2':csub?' si':'');
-      else if(csub)cls+=csub===3?' si2':' si';
+        if(/[A-Za-z]{3,}/.test(hd)){const nest=(csub===1||csub===3)&&(/˜/.test(h0)||cforms.some(f=>h0.includes(f)));if(!nest)cforms=(h0.match(/\S+~/g)||[]);cls=' f'+IND(cfb+(nest?1:0));csub=nest?3:1;l=bold(l)}
+        else{cls+=' lb'+IND(cfb+Math.max(1,LV(csub)));csub=csub===3?3:2}}
+      else if(/^\x02c\x03\s/.test(l)||/^\+\s/.test(l))cls+=' lb'+IND(cfb+LV(csub));
+      else cls+=IND(cfb+LV(csub));
       l=l.replace(/~/g,'<span class="tld">~</span>').replace(/([^\s>(])?˜/g,(m,c)=>'<span class="tld2">'+(c||'')+'~</span>')}
     l=l.replace(/\(([^()]*\d[^()]*)\)/g,'<span class="ex">($1)</span>');
     let pre=(et?'<span class="et">':'')+(g?'<i class="gr">':'')+(ex?'<span class="ex">':'');
