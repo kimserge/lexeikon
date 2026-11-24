@@ -79,7 +79,7 @@ a{color:var(--lap)}.hidden{display:none!important}
 </style>
 </head>
 <body>
-<header class="top"><a href="./" id="hback" class="hback hidden">← <span data-t="hback"></span></a><h1><a href="./">LexEikôn</a> · <span data-t="title"></span></h1>
+<header class="top"><h1><a href="./">LexEikôn</a> · <span data-t="title"></span></h1>
 <div class="hrow"><select class="uil" id="uil" aria-label="Language"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select><button type="button" class="hupd" id="hupd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-t="upd"></span></button></div>
 <div class="sub" data-t="sub"></div><div class="sub" data-t="types"></div><div class="sub bigf" id="bigf"></div><div class="sub" id="who"></div>
 <nav class="tnav" id="tnav"><a href="./">LexEikôn</a><a href="#" data-nav="list" data-t="nav_m"></a><a href="#profile" data-nav="profile" data-t="profile"></a><a href="admin.html" data-nav="admin" class="hidden" data-t="admin"></a><button type="button" class="tlog" id="logout" data-t="logout"></button></nav><div class="hbk2"><a href="./" id="hback2" class="vbk">← <span data-t="hback"></span></a></div></header>
@@ -188,14 +188,14 @@ function i18n(){I=T[UIL];document.documentElement.lang=UIL;document.querySelecto
   if(cur&&!$('#vProj').classList.contains('hidden'))renderProj();if(!$('#vList').classList.contains('hidden'))renderList();if(!$('#ed').hidden)renderSides();pPrev();sigPrev()}
 document.addEventListener('click',e=>{if(e.target.id==='bigfA'){e.preventDefault();location.href='mailto:'+['sergey.kim','unil.ch'].join('@')+'?subject='+encodeURIComponent('LexEikôn: dictionary files')}});
 $('#mail').onclick=e=>{e.preventDefault();location.href='mailto:'+['sergey.kim','unil.ch'].join('@')+'?subject='+encodeURIComponent('LexEikôn')};
-$('#hback2').onclick=e=>$('#hback').onclick(e);$('#hback').onclick=e=>{try{const r=document.referrer&&new URL(document.referrer);if(r&&r.origin===location.origin&&history.length>1){e.preventDefault();history.back()}}catch(err){}};
+$('#hback2').onclick=e=>{try{const r=document.referrer&&new URL(document.referrer);if(r&&r.origin===location.origin&&history.length>1){e.preventDefault();history.back()}}catch(err){}};
 $('#uil').onchange=()=>{UIL=$('#uil').value;ls.set('lex_ui',UIL);i18n()};
 async function api(path,opt={}){
   let r;try{r=await fetch(API+path,{...opt,headers:{'Content-Type':'application/json',...(auth?{Authorization:'Bearer '+auth.token}:{})},body:opt.body?JSON.stringify(opt.body):undefined})}catch(e){throw new Error(I.e_net)}
   const j=await r.json().catch(()=>({}));
   if(r.status===401&&auth&&path!=='/login'){auth=null;ls.del('lexp_auth');show('auth');throw new Error(I.e_auth)}
   if(!r.ok)throw new Error(I['e_'+j.error]||(I.err+(j.error||r.status)));return j}
-function show(v){$('#hback').classList.toggle('hidden',!!auth);for(const k of ['Auth','List','Form','Proj'])$('#v'+k).classList.toggle('hidden',k.toLowerCase()!==v);$('#tnav').classList.toggle('hidden',!auth);document.querySelectorAll('#tnav [data-nav]').forEach(a=>a.classList.toggle('on',a.dataset.nav===(v==='list'&&location.hash==='#profile'?'profile':v==='list'||v==='proj'||v==='form'?'list':v)));if(v!=='list')$('#prof').classList.add('hidden');$('#who').textContent=auth?I.who+(auth.sig||auth.nick):'';scrollTo(0,0)}
+function show(v){for(const k of ['Auth','List','Form','Proj'])$('#v'+k).classList.toggle('hidden',k.toLowerCase()!==v);$('#tnav').classList.toggle('hidden',!auth);document.querySelectorAll('#tnav [data-nav]').forEach(a=>a.classList.toggle('on',a.dataset.nav===(v==='list'&&location.hash==='#profile'?'profile':v==='list'||v==='proj'||v==='form'?'list':v)));if(v!=='list')$('#prof').classList.add('hidden');$('#who').textContent=auth?I.who+(auth.sig||auth.nick):'';scrollTo(0,0)}
 /* ---- auth & profile ---- */
 function setMode(r){regMode=r;$('#tLogin').classList.toggle('pri',!r);$('#tReg').classList.toggle('pri',r);$('#regOnly').classList.toggle('hidden',!r);$('#aMail').required=r;$('#aPass').autocomplete=r?'new-password':'current-password';$('#aGo').textContent=r?I.doReg:I.doLogin;$('#aMsg').textContent=''}
 $('#tLogin').onclick=()=>setMode(false);$('#tReg').onclick=()=>setMode(true);
