@@ -13,7 +13,7 @@
  --lex:'Noto Serif','Noto Serif Georgian','Noto Serif Armenian','Noto Naskh Arabic','Noto Sans Syriac','Noto Sans Ethiopic','Noto Sans Coptic',serif}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Noto Sans',sans-serif}
 .top{background:var(--band);color:var(--bandink);padding:22px max(5vw,16px) 18px}
-.hback{display:inline-block;color:#fff;opacity:.85;text-decoration:none;font:600 14px 'Noto Sans',sans-serif;margin-bottom:8px}.hback:hover{opacity:1;text-decoration:underline}.bigf a{color:#fff;text-decoration:underline}.hrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.hbk2{margin-top:12px}.vbk{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:10px;border:1px solid rgb(255 255 255/.55);background:rgb(255 255 255/.16);color:var(--bandink);font:600 14px 'Noto Sans',sans-serif;text-decoration:none}.vbk:hover{background:rgb(255 255 255/.28)}.hback{display:inline-block;color:#fff;opacity:.85;text-decoration:none;font:600 14px 'Noto Sans',sans-serif;margin-bottom:8px}.hback:hover{opacity:1;text-decoration:underline}.bigf a{color:#fff;text-decoration:underline}.hrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
 .top h1{margin:0;font:700 26px/1.15 'Noto Serif',serif}.top h1 a{color:inherit;text-decoration:none}
 .top .sub{opacity:.85;margin-top:6px;font-size:14px}
 .tnav{display:flex;gap:4px 18px;flex-wrap:wrap;margin-top:12px}.tnav a{color:#fff;opacity:.8;text-decoration:none;font-weight:600;font-size:14px;padding:4px 0;border-bottom:2px solid transparent}.tnav a:hover{opacity:1}.tnav a.on{opacity:1;border-bottom-color:#fff}.tnav .tlog{margin-left:auto;all:unset;margin-left:auto;cursor:pointer;color:#fff;opacity:.8;font-weight:600;font-size:14px;padding:4px 0}.tnav .tlog:hover{opacity:1;text-decoration:underline}
@@ -82,7 +82,7 @@ a{color:var(--lap)}.hidden{display:none!important}
 <header class="top"><a href="./" id="hback" class="hback hidden">← <span data-t="hback"></span></a><h1><a href="./">LexEikôn</a> · <span data-t="title"></span></h1>
 <div class="hrow"><select class="uil" id="uil" aria-label="Language"><option value="ru">RU</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="it">IT</option></select><button type="button" class="hupd" id="hupd"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-t="upd"></span></button></div>
 <div class="sub" data-t="sub"></div><div class="sub" data-t="types"></div><div class="sub bigf" id="bigf"></div><div class="sub" id="who"></div>
-<nav class="tnav" id="tnav"><a href="./">LexEikôn</a><a href="#" data-nav="list" data-t="nav_m"></a><a href="#profile" data-nav="profile" data-t="profile"></a><a href="admin.html" data-nav="admin" class="hidden" data-t="admin"></a><button type="button" class="tlog" id="logout" data-t="logout"></button></nav></header>
+<nav class="tnav" id="tnav"><a href="./">LexEikôn</a><a href="#" data-nav="list" data-t="nav_m"></a><a href="#profile" data-nav="profile" data-t="profile"></a><a href="admin.html" data-nav="admin" class="hidden" data-t="admin"></a><button type="button" class="tlog" id="logout" data-t="logout"></button></nav><div class="hbk2"><a href="./" id="hback2" class="vbk">← <span data-t="hback"></span></a></div></header>
 <main>
 <section id="vAuth" class="hidden"><div class="card" style="max-width:480px">
  <div class="tabs"><button class="btn pri" id="tLogin" data-t="login"></button><button class="btn" id="tReg" data-t="register"></button></div>
@@ -188,7 +188,7 @@ function i18n(){I=T[UIL];document.documentElement.lang=UIL;document.querySelecto
   if(cur&&!$('#vProj').classList.contains('hidden'))renderProj();if(!$('#vList').classList.contains('hidden'))renderList();if(!$('#ed').hidden)renderSides();pPrev();sigPrev()}
 document.addEventListener('click',e=>{if(e.target.id==='bigfA'){e.preventDefault();location.href='mailto:'+['sergey.kim','unil.ch'].join('@')+'?subject='+encodeURIComponent('LexEikôn: dictionary files')}});
 $('#mail').onclick=e=>{e.preventDefault();location.href='mailto:'+['sergey.kim','unil.ch'].join('@')+'?subject='+encodeURIComponent('LexEikôn')};
-$('#hback').onclick=e=>{try{const r=document.referrer&&new URL(document.referrer);if(r&&r.origin===location.origin&&history.length>1){e.preventDefault();history.back()}}catch(err){}};
+$('#hback2').onclick=e=>$('#hback').onclick(e);$('#hback').onclick=e=>{try{const r=document.referrer&&new URL(document.referrer);if(r&&r.origin===location.origin&&history.length>1){e.preventDefault();history.back()}}catch(err){}};
 $('#uil').onchange=()=>{UIL=$('#uil').value;ls.set('lex_ui',UIL);i18n()};
 async function api(path,opt={}){
   let r;try{r=await fetch(API+path,{...opt,headers:{'Content-Type':'application/json',...(auth?{Authorization:'Bearer '+auth.token}:{})},body:opt.body?JSON.stringify(opt.body):undefined})}catch(e){throw new Error(I.e_net)}
