@@ -48,8 +48,12 @@ def prep(scan):
     return g
 
 def okhead(h):
-    t = re.split(r'[\s,—=-]+', h.strip())[0] if h.strip() else ''
-    return len(t) >= 2 and sum(c.isupper() for c in t) >= len(t) * 0.6
+    # a real entry start: headword (OCR often reads small caps as lowercase) followed by '—', '=' or ':';
+    # false starts are run-on lines beginning with a dash, or short scraps
+    h = h.strip(); t = re.split(r'[\s,—=-]+', h)[0] if h else ''
+    if not t or h[:1] in '—-–': return False
+    if len(t) >= 2 and sum(c.isupper() for c in t) >= len(t) * 0.6: return True
+    return len(t) >= 3 and bool(re.search(r'[—=:]', h[:60]))
 
 def blocks(scan):
     g = prep(scan)
@@ -81,7 +85,7 @@ def cols(segs, first):
     # column of every segment (left/right half of the scan); 'a' or 'a–b' if the entry runs on.
     # Left column of a scan from colmap.json (running heads, headcols.py), else from its position.
     def left(s): return CMAP.get(s, 2 * (s - first) + 1)
-    c = sorted({left(int(g[1:].split(':')[0])) + (int(g.split(':')[1].split(',')[0]) >= 500) for g in segs})
+    c = sorted({left(int(g[1:].split(':')[0])) + (int(g.split(':')[1].split(',')[0]) >= 300) for g in segs})
     return str(c[0]) if len(c) == 1 else '%d–%d' % (c[0], c[-1])
 
 def key(scan, b):
