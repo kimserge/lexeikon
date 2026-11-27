@@ -24,9 +24,9 @@ for i, r in enumerate(rows):
             q = pos[(s, bi)]
             if q in used or not (lo < q < hi) or abs(q - (lo if lo >= 0 else q)) > 60: continue
             T = toks(b['head'])
-            if not T or T[0][:1] != n[:1]: continue
+            if not T: continue
             x = sim(r[0], b) - (0 if s == pg else 0.08)
-            if x >= 0.7: cand.append((x, i, s, bi))
+            if x >= (0.7 if T[0][:1] == n[:1] else 0.8): cand.append((x, i, s, bi))   # OCR often spoils the first letter
 cand.sort(reverse=True); new = {}
 for x, i, s, bi in cand:
     if i in new or pos[(s, bi)] in used: continue
