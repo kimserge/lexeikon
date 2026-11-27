@@ -5,7 +5,7 @@ from run import sim, toks, key, cols
 from match import nz
 REPO = '/home/claude/lexeikon'
 FIRST = {1: 1012, 2: 2018, 3: 3004}
-d = json.loads(subprocess.run(['git', '-C', REPO, 'show', 'HEAD:data/srz.json'], capture_output=True, text=True).stdout)
+d = json.loads(subprocess.run(['git', '-C', REPO, 'show', 'b3952b0:data/srz.json'], capture_output=True, text=True).stdout)
 rows = [l.rstrip('\n').split('\t') for l in open('srz.tsv')]
 P = {int(os.path.basename(f)[:-5]): json.load(open(f)) for f in glob.glob('g/*.json')}
 def ok(n, b, sc):
