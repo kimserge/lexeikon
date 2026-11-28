@@ -11,3 +11,4 @@ Source: the three 300 dpi PDFs (vol. I А–К, II Л–П, III Р–Ѣ). PDF pa
 - Blocks rebuilt (`reblock.py`): small-caps headwords read as lowercase by OCR are no longer merged into the previous entry; full run `all.sh` (strict → align → relax → shared): 31458 entries.
 - 2026-11-28: neighbour checks in `align.py`/`relax.py` use anchors of the same part only (the index interleaves supplement and main volumes alphabetically): 32112 entries.
 - `relax.py write 0.55` (sample 20/20 correct): 33682 entries.
+- Columns without any entry start (a long entry running through a whole column) were dropped from the fragments (e.g. богъ lacked col. 138): `match.py` fixed, `fixfull.py` patches cached blocks. 33678 entries.

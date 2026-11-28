@@ -30,6 +30,7 @@ for i, r in enumerate(rows):
             T = toks(b['head'])
             if not T: continue
             x = sim(r[0], b) - (0 if s == pg else 0.08)
+            if x < 0.55 and abs(len(T[0]) - len(n)) > 2: continue   # weak match: lengths must agree
             if x >= (TH if T[0][:1] == n[:1] else TH + 0.1): cand.append((x, i, s, bi))   # OCR often spoils the first letter
 cand.sort(reverse=True); new = {}
 for x, i, s, bi in cand:
@@ -38,7 +39,7 @@ for x, i, s, bi in cand:
 print('new', len(new))
 if sys.argv[1:2] == ['dry']:
     import random; random.seed(4)
-    for i in random.sample(sorted(new), 15): s, bi = new[i]; print(rows[i][0], '|', P[s][bi]['head'][:45])
+    for i in random.sample(sorted(new), min(40, len(new))): s, bi = new[i]; print(rows[i][0], '|', P[s][bi]['head'][:45])
 else:
     allo = [(s, bi) for s in sorted(P) for bi in range(len(P[s]))]; ix = {o: k for k, o in enumerate(allo)}
     for i, (s, bi) in new.items():

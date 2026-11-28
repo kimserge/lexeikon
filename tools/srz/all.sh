@@ -1,7 +1,7 @@
 set -e
 python3 strict.py | tail -1
 python3 align.py write 0.5 | tail -1
-python3 relax.py write | tail -1
+python3 relax.py write 0.55 | tail -1
 python3 shared.py write | tail -1
 python3 - <<'P'
 import json,re,os,random

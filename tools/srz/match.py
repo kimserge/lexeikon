@@ -16,6 +16,7 @@ def page(path,scan,names):
             s=L[i][0];e=L[st[k+1]][0]-2 if k+1<len(st) else bot+3
             blocks.append(dict(col=ci,y0=s-8,y1=e,x0=c['x0']-4,x1=c['x1']+2,head=ocr(im,(L[i][2]-3,L[i][0]-3,c['x1'],L[i][1]+3))))
         # lines before first start in column = continuation
+        if not st and len(L)>1: blocks.append(dict(col=ci,y0=L[1][0]-4,y1=bot+3,x0=c['x0']-4,x1=c['x1']+2,head='',cont=1))   # whole column runs on
         if st and st[0]>1: blocks.insert(len(blocks)-len(st),dict(col=ci,y0=L[1][0]-4,y1=L[st[0]][0]-2,x0=c['x0']-4,x1=c['x1']+2,head='',cont=1))
     out={}
     def toks(h):
