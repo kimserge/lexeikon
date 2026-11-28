@@ -14,13 +14,17 @@ anch = {}
 for i, e in enumerate(d['entries']):
     m = re.search(r'\x12([^;\x13]*)', e[1])
     if m and m.group(1) in bykey: anch[i] = pos[bykey[m.group(1)]]
+def reg(s): return (s // 1000, s >= 3848)
 A = sorted(anch); mono = sum(anch[A[k]] < anch[A[k + 1]] for k in range(len(A) - 1)) / (len(A) - 1)
 used = set(anch.values())
 new = {}; MODE = sys.argv[1] if len(sys.argv) > 1 else 'dry'; THR = float(sys.argv[2]) if len(sys.argv) > 2 else 0.5
-for k in range(len(A) - 1):
-    a, b = A[k], A[k + 1]; pa, pb = anch[a], anch[b]
+RA = {}
+for i in A: RA.setdefault(reg(order[anch[i]][0]), []).append(i)
+pairs = [(v[k], v[k + 1]) for v in RA.values() for k in range(len(v) - 1)]
+for a, b in pairs:
+    pa, pb = anch[a], anch[b]
     if not (pa < pb) or b - a < 2 or pb - pa > 40: continue
-    E = [i for i in range(a + 1, b) if rows[i][4].isdigit() and '\x12' not in d['entries'][i][1]]
+    E = [i for i in range(a + 1, b) if rows[i][4].isdigit() and '\x12' not in d['entries'][i][1] and reg(int(rows[i][4])) == reg(order[pa][0])]
     F = [q for q in range(pa + 1, pb) if q not in used]
     if not E or not F: continue
     def w(i, q):

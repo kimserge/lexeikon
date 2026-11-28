@@ -1031,7 +1031,7 @@ async function loadUserDicts(){
   loadEdits();
   try{const r=await fetch(PAPI+'/dicts',{headers:{Authorization:'Bearer '+a.token}});if(!r.ok)return;const L=await r.json();
     for(const d of L){if(!d.entries||!d.entries.length)continue;dicts=dicts.filter(x=>(x.base||x.id)!==d.id);dicts.push(...userSplit(d,100,true))}refresh()}catch(e){}}
-const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','la','hy','mis','ccl','che','graf','kun','psm','heb','hyf','dyach','lane','bailly','bar','crum','srz'],BVER=135;const LAZY={lane:'ar',bailly:'grc',bar:'ar',crum:'cop',srz:'cu'},LAZYN={srz:40046,crum:5802,lane:49211,bailly:57186,bar:37976};let lazyBusy=false;
+const BUILTIN=['syr','brk','cos','ka','kac','agwb','grc','ml','dil','gez','la','hy','mis','ccl','che','graf','kun','psm','heb','hyf','dyach','lane','bailly','bar','crum','srz'],BVER=136;const LAZY={lane:'ar',bailly:'grc',bar:'ar',crum:'cop',srz:'cu'},LAZYN={srz:40046,crum:5802,lane:49211,bailly:57186,bar:37976};let lazyBusy=false;
 const latExtra=()=>({en:'laen',de:'lade',it:'laen',fr:'lafr'})[UIL];
 const BHID=new Set(),BNOS=new Set();
 async function loadBCfg(){try{const C=await (await fetch('data/builtins.json',{cache:'no-store'})).json();

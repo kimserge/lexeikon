@@ -70,6 +70,7 @@ def blocks(scan):
     return scan, M
 
 def toks(h):
+    h = h.lstrip('*•"\'«|.,:;!^ ') if h else h      # '*' marks new words in the supplement
     h = re.split(r'\s[—-]|\s=|=', h)[0] if h else ''
     return [t for t in re.split(r'[\s,;:.()]+', nz(h)) if t]
 

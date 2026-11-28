@@ -11,13 +11,17 @@ anch = {}
 for i, e in enumerate(d['entries']):
     m = re.search(r'\x12([^;\x13]*)', e[1])
     if m and m.group(1) in bykey: anch[i] = pos[bykey[m.group(1)]]
-A = sorted(anch); used = set(anch.values())
+used = set(anch.values())
+def reg(s): return (s // 1000, s >= 3848)
+RA = {}
+for i, q in anch.items(): RA.setdefault(reg(order[q][0]), []).append(i)
+for v in RA.values(): v.sort()
 cand = []
 for i, r in enumerate(rows):
     if i in anch or '\x12' in d['entries'][i][1] or not r[4].isdigit(): continue
+    pg = int(r[4]); n = nz(r[0]).replace(' ', ''); A = RA.get(reg(pg), [])
     k = bisect.bisect(A, i); lo = anch[A[k - 1]] if k else -1; hi = anch[A[k]] if k < len(A) else 10**9
     if lo >= hi: lo, hi = -1, 10**9
-    pg = int(r[4]); n = nz(r[0]).replace(' ', '')
     for s in (pg, pg - 1, pg + 1):
         for bi, b in enumerate(P.get(s, [])):
             if b.get('cont'): continue
