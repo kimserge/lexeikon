@@ -16,7 +16,7 @@ def reg(s): return (s // 1000, s >= 3848)
 RA = {}
 for i, q in anch.items(): RA.setdefault(reg(order[q][0]), []).append(i)
 for v in RA.values(): v.sort()
-cand = []
+cand = []; TH = float(sys.argv[2]) if len(sys.argv) > 2 else 0.7
 for i, r in enumerate(rows):
     if i in anch or '\x12' in d['entries'][i][1] or not r[4].isdigit(): continue
     pg = int(r[4]); n = nz(r[0]).replace(' ', ''); A = RA.get(reg(pg), [])
@@ -30,13 +30,13 @@ for i, r in enumerate(rows):
             T = toks(b['head'])
             if not T: continue
             x = sim(r[0], b) - (0 if s == pg else 0.08)
-            if x >= (0.7 if T[0][:1] == n[:1] else 0.8): cand.append((x, i, s, bi))   # OCR often spoils the first letter
+            if x >= (TH if T[0][:1] == n[:1] else TH + 0.1): cand.append((x, i, s, bi))   # OCR often spoils the first letter
 cand.sort(reverse=True); new = {}
 for x, i, s, bi in cand:
     if i in new or pos[(s, bi)] in used: continue
     new[i] = (s, bi); used.add(pos[(s, bi)])
 print('new', len(new))
-if sys.argv[1:] == ['dry']:
+if sys.argv[1:2] == ['dry']:
     import random; random.seed(4)
     for i in random.sample(sorted(new), 15): s, bi = new[i]; print(rows[i][0], '|', P[s][bi]['head'][:45])
 else:
